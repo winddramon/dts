@@ -2,6 +2,9 @@
 
 namespace cardbase
 {
+	$card_config_file = GAME_ROOT.'/include/modules/extra/card/cardbase/config/card.config.php';
+	$card_main_file = GAME_ROOT.'/include/modules/extra/card/cardbase/main.php';
+		
 	function init() {}
 	
 	function cardlist_decode($str){
@@ -180,7 +183,140 @@ namespace cardbase
 		return $ret;
 	}
 	
-	//获得卡的外壳，主要是数据库读写
+	//某些特殊模式的限定用卡，主要是enter_battlefield()过程调用
+	function get_enter_battlefield_card($card){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		//标准模式禁用卡片
+		if(0==$gametype){
+			$card = 0;
+		}
+		return $card;
+	}
+	
+	//效果是随机发动一张卡的卡片
+	function cardchange($card){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('cardbase'));
+		if(empty($cards[$card]['valid']['cardchange'])) return $card;
+		$cs = $cards[$card]['valid']['cardchange'];
+		//判定卡片概率，注意卡片设定里的几个概率是单项概率
+		$S_odds = !empty($cs['S_odds']) ? $cs['S_odds'] : 0;
+		$A_odds = !empty($cs['A_odds']) ? $cs['A_odds'] : 0;
+		$B_odds = !empty($cs['B_odds']) ? $cs['B_odds'] : 0;
+		$C_odds = !empty($cs['C_odds']) ? $cs['C_odds'] : 0;//实际上不顶用，SAB都没选到就一定是C
+		$forced = !empty($cs['forced']) ? $cs['forced'] : Array();
+		$ignore = !empty($cs['ignore_cards']) ? $cs['ignore_cards'] : Array();
+		
+		//实际随机卡片
+		$arr=array('0');
+		do{
+			$r=rand(1,100);
+			if(!empty($cs['real_random'])) {//真随机，把所有卡集合并
+				$arr = array_merge($cardindex['S'],$cardindex['A'],$cardindex['B'],$cardindex['C'],$cardindex['EB']);
+			}else{
+				if ($r<=$S_odds){
+					$arr=$cardindex['S'];
+					if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_S']);
+				}elseif($r - $S_odds <= $A_odds){
+					$arr=$cardindex['A'];
+					if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_A']);
+				}elseif($r - $S_odds - $A_odds <= $B_odds){
+					$arr=$cardindex['B'];
+					if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_B']);
+				}else{
+					$arr=$cardindex['C'];
+					if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_C']);
+				}
+			}
+			
+			$arr = array_merge($arr, $forced);
+			$arr = array_unique($arr);
+			shuffle($arr);
+			$ret = $arr[0];
+		}while($ret == $card || in_array($ret, $ignore));//必定选不到自己
+		return $ret;
+	}
+	
+	//进入游戏时根据所用卡片对玩家数据的操作
+	//输入$ebp即valid.func.php里初始化的玩家数组，$card是所用卡的编号
+	//返回Array($eb_pdata, $skills, $prefix)其中$skills是需要载入的技能列表，$prefix是消息中的玩家名前缀
+	function enter_battlefield_cardproc($ebp, $card){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('cardbase'));
+		
+		//先判定是否随机发动一张卡
+		if(!empty($cards[$card]['valid']['cardchange'])){
+			if(empty($cards[$card]['valid']['cardchange']['perm_change'])) $ebp['o_card'] = $card;//只要不是永久变化，就记录原本的卡
+			$card = cardchange($card);
+		}
+		
+		//获取卡片的具体设定
+		$card_valid_info = $cards[$card]['valid'];
+	
+		$cardname = $newscardname = $cards[$card]['name'];
+		$cardrare = $newscardrare = $cards[$card]['rare'];
+		
+		if(!empty($cards[$card]['title'])) $cardname = $cards[$card]['title'];//有定义了title的卡，用title来显示
+		
+		//如果卡片本身有换卡效果（随机卡等），在这里把消息用的卡名换回来
+		if(!empty($ebp['o_card'])) {
+			$newscardname=$cards[$ebp['o_card']]['name'];
+			$newscardrare=$cards[$ebp['o_card']]['rare'];
+		}
+		//生成玩家名前缀
+		$prefix = '<span class="'.$card_rarecolor[$newscardrare].'">'.$newscardname.'</span> ';
+		
+		///////////////////////////////////////////////////////////////
+		//实际卡片效果的载入
+		//////////////////////////////////////////////////////////////
+		$skills = Array();
+		foreach ($card_valid_info as $key => $value){
+			if('skills' == $key) {
+				//$skills = $value;
+				//考虑到跟rand_skill的顺序不确定，应该逐个赋值。也不能用array_merge()，至于理由，你可以试一试（
+				foreach($value as $sk => $sv){
+					$skills[$sk] = $sv;
+				}
+				continue;//技能另外判定，不直接写入，也不把skills写进$ebp
+			}elseif('rand_skills' == $key){//随机技能，rand_skills下每一个数组代表一组随机，rnum键名的元素代表选取数目
+				foreach($value as $rk => $rv){
+					$rnum = 1;
+					if(!empty($rv['rnum'])) $rnum = $rv['rnum'];
+					unset($rv['rnum']);
+					$rkeys = array_keys($rv);
+					shuffle($rkeys);
+					for($i = 1;$i <= $rnum;$i++){
+						$skills[$rkeys[$i]] = $rv[$rkeys[$i]];
+					}
+				}
+				continue;
+			}
+			$checkstr = substr($key,0,3);
+			if (in_array($checkstr, Array('wep','arb','arh','ara','arf','art','itm'))){//道具类的，如果是数组则随机选一个
+				if(is_array($value)){
+					shuffle($value);
+					$value = $value[0];
+				}
+			}
+			$ebp[$key] = $value;
+		}
+		
+		$ebp['card'] = $card;
+		$ebp['cardname'] = $cardname;
+		
+		return Array($ebp, $skills, $prefix);
+	}
+	
+	//判断一张卡当前是否在持有列表中
+	function check_card_in_ownlist($card, $card_ownlist){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		if(in_array($card,$card_ownlist) || (5==$gametype && in_array($card,array(182, 183, 184, 185)))) return true;
+		return false;
+	}
+	
+	//根据用户名或者玩家数据，从数据库查询当前所用卡片，主要是数据库读写
 	function get_card($ci,&$pa=NULL,$ignore_qiegao=0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -433,6 +569,92 @@ namespace cardbase
 		}
 	}
 	
+	//玩家加入战场时有一次性效果的卡片的处理，主要是修改gamevars等
+	function post_enterbattlefield_events(&$pa)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','cardbase'));
+		$ret = $chprocess($pa);
+		$card = $pa['card'];
+		//入场修改$gamevars
+		if(!empty($cards[$card]['valid']['gamevars'])) {
+			$cgarr = $cards[$card]['valid']['gamevars'];
+			foreach ($cgarr as $cgk => $cgv){
+				$gamevars[$cgk] = $cgv;
+			}
+		}
+		return $ret;
+	}
+	
+	//根据card.config.php的修改时间自动刷新$cardindex也就是各种罕贵的卡编号组成的数组，用于抽卡和随机卡
+	function parse_card_index(){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		
+		//生成文件名
+		//目前放在card.config.php里
+		//$card_index_file = GAME_ROOT.'./gamedata/cache/card_index.config.php';
+		
+		eval(import_module('sys','cardbase'));//载入$card_main_file和$card_config_file
+		//如果文件存在且最新，就不改变
+		if(file_exists($card_index_file) && filemtime($card_main_file) < filemtime($card_index_file) && filemtime($card_config_file) < filemtime($file)) return;
+		
+		$new_cardindex = Array(
+			'All' => Array(),//All是所有卡（无视开放情况和隐藏）
+			'S' => Array(),//可抽到的卡
+			'A' => Array(),
+			'B' => Array(),
+			'C' => Array(),//M卡算C卡
+			'EB' => Array(),//SABC和Event Bonus加一起是可获得的全部卡，注意有些只能事件获得的卡比如篝火，虽然在别的卡包，也算EB
+			'EB_S' => Array(),//奖励卡里区分SABC
+			'EB_A' => Array(),
+			'EB_B' => Array(),
+			'EB_C' => Array(),
+			'hidden' => Array(),//隐藏卡单开一列，一般不参与任何随机		
+		);
+		
+		foreach($cards as $ci => $cv){
+			//$new_cardindex['All'][] = $ci;
+			$pack = $cv['pack'];
+			if('hidden' == $pack) $new_cardindex['hidden'][] = $ci;//隐藏卡，注意隐藏卡不算卡包开放			
+			if(!$ci || !check_pack_availble($pack)) continue;//卡包未开放，则不继续判定；0号卡挑战者也不继续判定
+			$rare = !empty($cv['real_rare']) ? $cv['real_rare'] : $cv['rare'];//如果有真实罕贵则填真实罕贵
+			if('M' == $rare) $rare = 'C';//M卡实际罕贵是C
+			
+			$prefix = '';
+			//判定是要归到正常卡还是Event Bonus卡
+			if('Event Bonus' == $pack || !empty($cv['ignore_kuji']) || in_array($cv['pack'], $pack_ignore_kuji)) {
+				$new_cardindex['EB'][] = $ci;
+				$prefix = 'EB_';
+			}
+			if('S' == $rare) $new_cardindex[$prefix.'S'][] = $ci;
+			elseif('A' == $rare) $new_cardindex[$prefix.'A'][] = $ci;
+			elseif('B' == $rare) $new_cardindex[$prefix.'B'][] = $ci;
+			else $new_cardindex[$prefix.'C'][] = $ci;
+			
+		}
+		
+		if(empty($new_cardindex)) return;
+		
+		//开始生成文件
+		$contents = str_replace('?>','',$checkstr);//"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
+		$contents .= '$cardindex = Array('."\r\n";
+		$i = 1;$z = sizeof($new_cardindex);
+		foreach($new_cardindex as $nk => $nv){
+			$contents .= "  '$nk' => Array(\r\n";
+			foreach($nv as $nvi) {
+				$contents .= '    '.$nvi.', //'.$cards[$nvi]['name']."\r\n";
+			}
+			$contents .= ($i < $z ? '  ),' : '  )') . "\r\n";
+			$i++;
+		}
+		$contents .= ');';
+		//$contents .= '$cardindex = '.var_export($new_cardindex,1).';';
+		
+		file_put_contents($card_index_file, $contents);
+		chmod($card_index_file, 0777);
+		return;
+	}
+	
 	//如果成就或者卡片设定有变，更新卡片获得方式
 	function parse_card_gaining_method()
 	{
@@ -442,15 +664,14 @@ namespace cardbase
 		$filename = 'card_gaining_method';
 		$file = $dir.'/'.$filename.'.config.php';
 		
-		$card_config_file = GAME_ROOT.'/include/modules/extra/card/cardbase/config/card.config.php';
-		$card_main_file = GAME_ROOT.'/include/modules/extra/card/cardbase/main.php';
+		eval(import_module('sys','cardbase'));//载入$card_main_file和$card_config_file
 		$ach_config_file = GAME_ROOT.'/include/modules/extra/achievement/achievement_base/config/achievement_base.config.php';
 		
 		//如果文件存在且最新，就不改变
 		if(file_exists($file) && filemtime($card_main_file) < filemtime($file) && filemtime($card_config_file) < filemtime($file) && filemtime($ach_config_file) < filemtime($file)) return;
 		
 		$cgmethod = array();
-		eval(import_module('sys','cardbase'));
+		
 		//抽卡
 		foreach($cardindex as $ckey => $cval){
 			foreach($cval as $ci)
@@ -554,6 +775,8 @@ namespace cardbase
 		$cgmethod[203][] = '在「荣耀模式」模式击杀「全息实体 银白愿天使 Annabelle」后，使用缴获的★羽翼卡牌包★获得（15%概率）';
 		$cgmethod[204][] = '在「荣耀模式」模式击杀「全息实体 麻烦妖精 Sophia」后，使用缴获的★蠢萌的卡牌包★获得（15%概率）';
 		$cgmethod[211][] = '击杀场上所有NPC之后，击杀入场的「断罪女神 一一五」，之后使用缴获的★印着「Mind Over Matters」的卡牌包★获得（必定获得）';
+		
+		$cgmethod[190][] = '帮助游戏抓到BUG后由管理员奖励获得';
 		if(empty($cgmethod)) return;
 		$contents = str_replace('?>','',$checkstr);//"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
 
@@ -561,6 +784,143 @@ namespace cardbase
 		
 		file_put_contents($file, $contents);
 		chmod($file, 0777);
+	}
+	
+	//进入游戏前判定卡片是否可用
+	//传入$udata即用户数据，返回$card_disabledlist,$card_error两个数组
+	//$card_disabledlist：键值是卡片编号，errid为错误编号
+	//$card_error：错误编号的解释说明
+	function card_validate($udata){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','cardbase'));
+		
+		$nowcard = $udata['card'];
+		
+		$userCardData = get_user_cardinfo($udata['username']);
+		$card_ownlist = $userCardData['cardlist'];
+		$card_energy = $userCardData['cardenergy'];
+		$cardChosen = $userCardData['cardchosen'];
+		
+		/*
+		 * $card_disabledlist id => errid
+		 * id: 卡片ID errid: 不能使用这张卡的原因
+		 * 原因可以叠加
+		 * e0: S卡总体CD
+		 * e1: 单卡CD
+		 * e2: 有人于本局使用了同名卡
+		 * e3: 本游戏模式不可用
+		 *
+		 * $card_error errid => msg
+		 */
+		$card_disabledlist=Array();
+		$card_error=Array();
+		
+		$energy_recover_rate = get_energy_recover_rate($card_ownlist, $udata['gold']);
+		
+		//最低优先级错误原因：同名非C卡
+		$result = $db->query("SELECT card FROM {$tablepre}players WHERE type = 0");
+		$t=Array();
+		while ($cdata = $db->fetch_array($result)) $t[$cdata['card']]=1;
+		//限制同名卡片入场：在$card_prohibit_same_gtype中设定，instance文件夹下的各模块会修改这个变量，没有单独模块的游戏模式直接写在card.config.php里
+		//只有卡片模式、无限复活模式、荣耀房、极速房才限制卡片
+		if(in_array($gametype, $card_force_different_gtype)) 
+			foreach ($card_ownlist as $key)
+				if (!in_array($cards[$key]['rare'], array('C', 'M')) && isset($t[$key])) 
+				{
+					$card_disabledlist[$key][] = 'e2';
+					$card_error['e2'] = '这张卡片暂时不能使用，因为本局已经有其他人使用了这张卡片<br>请下局早点入场吧！';
+				}
+		
+		//次高优先级错误原因：单卡CD
+		foreach ($card_ownlist as $key)
+			if ($card_energy[$key]<$cards[$key]['energy'] && in_array($gametype, $card_need_charge_gtype))
+			{
+				$t=($cards[$key]['energy']-$card_energy[$key])/$energy_recover_rate[$cards[$key]['rare']];
+				$card_disabledlist[$key][] = 'e1'.$key;
+				$card_error['e1'.$key] = '这张卡片暂时不能使用，因为它目前正处于蓄能状态<br>这张卡片需要蓄积'.$cards[$key]['energy'].'点能量方可使用，预计在'.convert_tm($t).'后蓄能完成';
+			}
+		
+		//最高优先级错误原因：卡片类别时间限制
+		foreach($cardtypecd as $ct => $ctcd){
+			if(!empty($ctcd) && in_array($gametype, $card_need_charge_gtype)){
+				$ctcdstr = seconds2hms($ctcd);
+				$card_error['e0'.$ct] = '这张卡片暂时不能使用，因为最近'.$ctcdstr.'内你已经使用过'.$ct.'卡了<br>在'.convert_tm($ctcd-($now-$udata['cd_'.strtolower($ct)])).'后你才能再次使用'.$ct.'卡';
+		
+				if (($now-$udata['cd_'.strtolower($ct)]) < $ctcd){
+					foreach ($card_ownlist as $key)
+						if ($cards[$key]['rare']==$ct)
+							$card_disabledlist[$key][] = 'e0'.$ct;
+				}
+			}
+		}
+		
+		//最高优先级错误原因：本游戏模式不可用
+		$card_error['e3'] = '这张卡片在本游戏模式下禁止使用！';
+		
+		//获取各模式禁卡表
+		$card_disabledlist = card_validate_get_forbidden_cards($card_disabledlist, $card_ownlist);
+		
+		return array($card_disabledlist,$card_error);
+	}
+	
+	//获取各模式的特殊禁用卡表，各gtype模块可以继承这个函数
+	function card_validate_get_forbidden_cards($card_disabledlist, $card_ownlist){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		
+		if(0==$gametype) //标准模式禁用挑战者以外的一切卡
+		{
+			foreach($card_ownlist as $cv){
+				if($cv) $card_disabledlist[$cv][]='e3';
+			}
+		}
+//		elseif (2==$gametype)	//deathmatch模式禁用蛋服和炸弹人。死掉的模式不拆分了
+//		{
+//			if (in_array(97,$card_ownlist)) $card_disabledlist[97][]='e3';
+//			if (in_array(144,$card_ownlist)) $card_disabledlist[144][]='e3';
+//		}
+//		elseif (5==$gametype)	//圣诞模式只允许某4张卡，按理应该拆分掉的，不想改了！反正圣诞模式黑历史了
+//		{
+//			$tmp_add_hidden_list = array(182, 183, 184, 185);
+//			foreach($card_ownlist as $cv){
+//				if(!in_array($cv, $tmp_add_hidden_list)) $card_disabledlist[$cv][]='e3';
+//			}
+//		}
+		
+		return $card_disabledlist;
+	}
+	
+	//选卡界面的一些特殊显示，全是欺骗
+	//返回：
+	//$cardChosen当前选择卡片
+	//$card_ownlist拥有的卡片清单
+	//$packlist存在的卡包清单
+	//$hideDisableButton是否默认显示不可用卡片（并隐藏切换按钮）
+	function card_validate_display($cardChosen, $card_ownlist, $packlist, $hideDisableButton){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','cardbase'));
+		//标准模式自动选择挑战者
+		if(0==$gametype) //标准模式禁用挑战者以外的一切卡
+		{
+			$cardChosen = 0;//自动选择挑战者
+			$hideDisableButton = 0;
+		}
+//		elseif (5==$gametype)	//圣诞模式只允许某4张卡
+//		{
+//			$tmp_add_hidden_list = array(182, 183, 184, 185);
+//			if(!in_array($cardChosen, $tmp_add_hidden_list)) {
+//				$cardChosen = $tmp_add_hidden_list[0];//自动选择简单难度
+//			}
+//			foreach ($tmp_add_hidden_list as $adv){
+//				$card_ownlist[] = $adv;
+//				$cards[$adv]['pack'] = 'Difficulty';
+//			}
+//			$packlist[] = 'Difficulty';
+//			$hideDisableButton = 0;
+//		}
+		
+		
+		return array($cardChosen, $card_ownlist, $packlist, $hideDisableButton);
 	}
 }
 

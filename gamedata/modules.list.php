@@ -9,7 +9,6 @@ gameflow_antiafk,core/gameflow/gameflow_antiafk/,1
 logger,base/logger/,1
 skillbase,base/skillbase/,1
 replay,extra/misc/replay/,1
-elorating,extra/misc/elorating/,1
 bufficons,extra/misc/bufficons/,1
 explore,base/explore/,1
 noise,base/noise/,1
@@ -17,6 +16,7 @@ lvlctl,base/lvlctl/,1
 skill4,base/skills/skill4/,1
 npc,base/npc/,1
 itemmain,base/itemmain/,1
+elorating,extra/misc/elorating/,1
 metman,base/metman/,1
 itemmix,base/itemmix/itemmix/,1
 itemshop,base/itemshop/,1
@@ -34,22 +34,22 @@ item_slip,extra/item_extra/item_slip/,1
 itemmix_sync,base/itemmix/itemmix_sync/,1
 enemy,base/enemy/,1
 gameflow_duel,core/gameflow/gameflow_duel/,1
-instance8,extra/instance/instance8_proud/,1
 itemmix_overlay,base/itemmix/itemmix_overlay/,1
 team,base/team/,1
 battle,base/battle/,1
 gameflow_combo,core/gameflow/gameflow_combo/,1
 advteam,extra/misc/advteam/,1
 attack,base/attack/,1
-instance7,extra/instance/instance7_tutorial/,1
 instance0,extra/instance/instance0/,1
 cardbase,extra/card/cardbase/,1
 weapon,base/weapon/weapon/,1
 npcchat,base/npcchat/,1
 skill21,extra/club/skills/skill21/,1
-skill1000,extra/instance/instance7_tutorial/skill1000/,1
-set_gametype,extra/misc/set_gametype/,1
+instance8,extra/instance/instance8_proud/,1
+instance7,extra/instance/instance7_tutorial/,1
 kujibase,extra/card/kujibase/,1
+set_gametype,extra/misc/set_gametype/,1
+gtype6,extra/instance/gtype6_randomcard/,1
 clubbase,extra/club/clubbase/,1
 wep_n,base/weapon/wep_n/,1
 wep_p,base/weapon/wep_p/,1
@@ -64,6 +64,7 @@ skill2,base/skills/skill2/,1
 skill3,base/skills/skill3/,1
 item_uv,base/items/item_uv/,1
 npcchat_bubble,extra/misc/npcchat_bubble/,1
+skill1000,extra/instance/instance7_tutorial/skill1000/,1
 skill11,extra/club/skills/skill11/,1
 skill10,extra/club/skills/skill10/,1
 skill305,extra/achievement/skills/skill305/,1
@@ -248,6 +249,9 @@ skill516,extra/card/skills/skill516/,1
 club15,extra/club/clubs/club15/,1
 skill518,extra/card/skills/skill518/,1
 skill84,extra/club/skills/skill84/,1
+skill527,extra/card/skills/skill527/,1
+skill528,extra/card/skills/skill528/,1
+skill529,extra/card/skills/skill529/,1
 wep_g,base/weapon/wep_g/,1
 wep_j,base/weapon/wep_j/,1
 skill273,extra/club/skills/skill273/,1
@@ -399,8 +403,6 @@ addnpc,base/addnpc/,1
 skill50,extra/club/skills/skill50/,1
 skill245,extra/club/skills/skill245/,1
 skill252,extra/club/skills/skill252/,1
-gtype2,extra/instance/gtype2/main/,1
-gtype3,extra/instance/gtype3/main/,1
 skill270,extra/club/skills/skill270/,1
 skill604,extra/club/skills/skill604/,1
 ex_gender_attr,extra/attr/ex_gender_attr/,1
@@ -497,6 +499,7 @@ aprilfool2018,extra/activities/aprilfool2018/main/,1
 skill367,extra/achievement/skills/skill367/,1
 skill368,extra/achievement/skills/skill368/,1
 skill369,extra/achievement/skills/skill369/,1
+skill370,extra/achievement/skills/skill370/,1
 skill504,extra/card/skills/skill504/,1
 skill429,extra/instance/gtype1/skill429/,1
 searchmemory,extra/searchmemory/,1
@@ -511,6 +514,8 @@ skill365,extra/activities/aprilfool2018/skill365/,1
 skill505,extra/card/skills/skill505/,1
 skill80,extra/club/skills/skill80/,1
 skill366,extra/activities/aprilfool2018/skill366/,1
+gtype2,extra/instance/gtype2/main/,0
+gtype3,extra/instance/gtype3/main/,0
 gtype5,extra/instance/gtype5/main/,0
 skill1005,extra/instance/gtype5/skill1005/,0
 skill1004,extra/instance/gtype5/skill1004/,0

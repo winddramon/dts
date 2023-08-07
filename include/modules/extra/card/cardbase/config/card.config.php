@@ -1,5 +1,18 @@
 <?php
 namespace cardbase{
+
+//卡池运行时设定文件地址
+$card_index_file = GAME_ROOT.'./gamedata/cache/card_index.config.php';
+
+//禁止同名S、A、B卡入场的游戏模式
+$card_force_different_gtype = Array(2,4);//18,19
+
+//对卡片CD、类别CD有限制的游戏模式，基本上也是允许自选卡片的模式
+$card_need_charge_gtype = Array(2,4);//18,19
+
+//CD时间打折的模式，键名为gtype，键值为折数
+$card_cooldown_discount_gtype = Array();//18=>0.5,19=>0.5
+
 $cardtypecd=array(//卡片类别CD，单位秒
 	'S' => 43200,
 	'A' => 7200,
@@ -14,10 +27,13 @@ $packlist=array(
 	'Way of Life',
 	'Best DOTO',
 	'Balefire Rekindle',
+	'Cyber Zealots',
 	'Event Bonus',
+	
 	'Indev',
 	'hidden'
 );
+//卡包介绍
 $packdesc = array(
 	'Standard Pack' => '基本称号卡集。',
 	'Crimson Swear' => '以游戏阵营「红杀」组织以及其马甲「金龙通讯社」为主题的卡集。',
@@ -26,14 +42,19 @@ $packdesc = array(
 	'Best DOTO' => '以电竞元素和电竞圈为吐槽对象的卡集。',
 	'Balefire Rekindle' => '以游戏版本「复燃」的新增NPC角色和游戏设定为主题的卡集。',
 	'Event Bonus' => '其他一些零散成就和活动奖励卡。',
+	'Cyber Zealots' => '以赛博朋克和网络梗为捏他对象的卡集。',
 	'Indev' => '开发中的卡的暂存地',
 	'hidden' => '隐藏卡片，如果你看到这句话请联系天然呆管理员',
 );
+//不参与抽卡的卡包
+$pack_ignore_kuji = Array('Balefire Rekindle','Event Bonus');
+//卡包实装的时间戳，可以用来隐藏卡包
 $packstart = array(
+	'Cyber Zealots' => 4476654671,
 	'Indev' => 4476654671,
 	'hidden' => 4476654671,
 );
-$cardindex=array(
+$cardindex=array(//已停止更新，现在$cardindex是自动生成的，文件见下
 	'S'=>array(1,  5,  16, 38, 39, 40, 41, 64, 65, 67, 71, 95, 99, 100,101,102,117,145,152,153,168,174),
 	'A'=>array(2,  13, 14, 20, 22, 23, 26, 27, 32, 37, 43, 44, 45, 46, 47, 48, 49, 50, 68, 72, 75, 81, 103,104,105,106,120,121,124,135,136,137,139,141,148,154,169,173),
 	'B'=>array(3,  12, 15, 21, 24, 25, 28, 35, 51, 52, 53, 54, 55, 56, 66, 69, 70, 76, 78, 80, 83, 97, 108,109,110,111,112,123,140,142,144,146,147,149,157,161,163,164,170,171,210,187,188),
@@ -42,6 +63,9 @@ $cardindex=array(
 	//M卡的爆率实际属于C
 	//pop子实际爆率是B
 );
+
+if(file_exists($card_index_file)) include $card_index_file;//载入真正的$cardindex
+
 $card_rarecolor=array(
 	'S'=>'gold b ',
 	'A'=>'cyan b ',
@@ -68,6 +92,7 @@ $cards = array(
 	0 => array(
 		'name' => '挑战者',
 		'rare' => 'C',
+		'ignore_kuji' => true,
 		'pack' => 'Standard Pack',
 		'desc' => '默认的身份卡',
 		'effect' => '无',
@@ -804,7 +829,7 @@ $cards = array(
 		'desc' => '<span class="ltazure b">“蓝凝我觉得啊，<br>这个地方没什么好写的。<br>总之我比红暮可强得多了，<br>哈哈哈！”</span>',
 		'effect' => '<span class="ltazure b">“蓝凝觉得你进游戏实际体验一下<br>比较好哦！”</span>',
 		'desc_skills' => '<span class=\'ltazure b\'>“快进游戏实际体验一下吧！”</span>',
-		'energy' => 90,
+		'energy' => 60,
 		'valid' => array(
 			'hp' => '260',
 			'mhp' => '260',
@@ -814,6 +839,7 @@ $cards = array(
 				'12' => '0', 
 				'406' => '0',
 				'432' => '0', 
+				'462' => '0', 
 			),
 			'club' => '17',
 		)
@@ -963,10 +989,10 @@ $cards = array(
 		'rare' => 'B',
 		'pack' => 'Crimson Swear',
 		'desc' => '善于肉搏的红杀特工',
-		'effect' => '开局殴熟+35',
+		'effect' => '开局殴熟+50',
 		'energy' => 100,
 		'valid' => array(
-			'wp' => '35',
+			'wp' => '50',
 		)
 	),
 	52 => array(
@@ -974,10 +1000,10 @@ $cards = array(
 		'rare' => 'B',
 		'pack' => 'Crimson Swear',
 		'desc' => '善于使用冷兵器的红杀特工',
-		'effect' => '开局斩熟+35',
+		'effect' => '开局斩熟+50',
 		'energy' => 100,
 		'valid' => array(
-			'wk' => '35',
+			'wk' => '50',
 		)
 	),
 	53 => array(
@@ -985,10 +1011,10 @@ $cards = array(
 		'rare' => 'B',
 		'pack' => 'Crimson Swear',
 		'desc' => '善于使用飞行道具的红杀特工',
-		'effect' => '开局投熟+35',
+		'effect' => '开局投熟+50',
 		'energy' => 100,
 		'valid' => array(
-			'wc' => '35',
+			'wc' => '50',
 		)
 	),
 	54 => array(
@@ -996,10 +1022,10 @@ $cards = array(
 		'rare' => 'B',
 		'pack' => 'Crimson Swear',
 		'desc' => '善于使用枪械的红杀特工',
-		'effect' => '开局射熟+35',
+		'effect' => '开局射熟+50',
 		'energy' => 100,
 		'valid' => array(
-			'wg' => '35',
+			'wg' => '50',
 		)
 	),
 	55 => array(
@@ -1007,10 +1033,10 @@ $cards = array(
 		'rare' => 'B',
 		'pack' => 'Crimson Swear',
 		'desc' => '善于使用爆炸物的红杀特工',
-		'effect' => '开局爆熟+35',
+		'effect' => '开局爆熟+50',
 		'energy' => 100,
 		'valid' => array(
-			'wd' => '35',
+			'wd' => '50',
 		)
 	),
 	56 => array(
@@ -1018,14 +1044,14 @@ $cards = array(
 		'rare' => 'B',
 		'pack' => 'Crimson Swear',
 		'desc' => '战斗风格多变的红杀特工',
-		'effect' => '开局灵熟以外的熟练度+15',
+		'effect' => '开局灵熟以外的熟练度+20',
 		'energy' => 100,
 		'valid' => array(
-			'wp' => '15',
-			'wk' => '15',
-			'wc' => '15',
-			'wg' => '15',
-			'wd' => '15',
+			'wp' => '20',
+			'wk' => '20',
+			'wc' => '20',
+			'wg' => '20',
+			'wd' => '20',
 		)
 	),
 	57 => array(
@@ -1425,7 +1451,14 @@ $cards = array(
 		'effect' => '随机发动一张身份卡的效果<br>S:20% A:40% B:20% C:20%',
 		'energy' => 100,
 		'valid' => array(
-			'pls' => '0',
+			'cardchange' => Array(
+				'S_odds' => 20,
+				'A_odds' => 40,
+				'B_odds' => 20,
+				'C_odds' => 20,
+				'allow_EB' => true,//开启后会把Event Bonus等需要特殊方式才能获得的卡也一并考虑
+				'ignore_cards' => Array()//机制上必定选不到自己，这里可以放其他不想被选到的卡
+			)
 		)
 	),
 	82 => array(
@@ -2540,10 +2573,10 @@ $cards = array(
 		'rare' => 'B',
 		'pack' => 'Crimson Swear',
 		'desc' => '其实红杀里并没有超能力者。<br>不知道这个特工是哪儿来的。',
-		'effect' => '开局灵熟+35',
+		'effect' => '开局灵熟+50',
 		'energy' => 100,
 		'valid' => array(
-			'wf' => '35',
+			'wf' => '50',
 		)
 	),
 	162 => array(
@@ -2654,7 +2687,7 @@ $cards = array(
 		'pack' => 'Top Players',
 		'desc' => '曾经的ACFUN大逃杀开发者，<br>其脑洞对玩家十分<ruby>友<rt>bao</rt></ruby><ruby>好<rt>she</rt></ruby>',
 		'effect' => '咸鱼的目标从来不是杀死玩家',
-		'desc_skills' => '获得技能「鱼弹」<br>「鱼弹」：战斗技，本次物理伤害变成0，但对方随机一件防具的耐久值下降你的武器效果值<br>每局只能发动2次',
+		'desc_skills' => '获得技能「鱼弹」：战斗技，本次物理伤害变成0，但对方随机一件防具的耐久值下降你的武器效果值，每局只能发动2次',
 		'energy' => 100,
 		'valid' => array(
 			'skills' => array(
@@ -2952,7 +2985,7 @@ $cards = array(
 	186 => array(
 		'name' => '超魔理沙',
 		'rare' => 'S',
-		'pack' => 'Indev',
+		'pack' => 'Event Bonus',
 		'desc' => '晚上好，各位<br>刚刚这里好像有寿命论的气息啊，<br>真是被看扁了',
 		'effect' => '爱的力量，是无限的！',
 		'desc_skills' => '开局称号为超能力者，但技能为肌肉兄贵技能「活化」「金刚」「破巧」和根性兄贵技能「毅重」「代偿」「不屈」和「浴血」
@@ -3045,7 +3078,7 @@ $cards = array(
 		'pack' => 'Way of Life',
 		'desc' => '我相信着我的卡组！',
 		'effect' => '开局HP为1点，<br>额外携带1份游戏王卡牌包',
-		'energy' => 100,
+		'energy' => 0,
 		'valid' => array(
 			'hp' => 1,
 			'itm3' => '游戏王卡包',
@@ -3053,6 +3086,131 @@ $cards = array(
 			'itme3' => '1',
 			'itms3' => '1',
 			'itmsk3' => '',
+		)
+	),
+	190 => array(
+		'name' => 'ycNaN',
+		'rare' => 'A',
+		'pack' => 'Event Bonus',
+		'desc' => '过去经历一切不明的女骇客，<br>其typing能力就算在糟糕级骇客中也实际强大！',
+		'effect' => '如果你上一次操作在程序执行时没有顺利完成，你获得7点经验和全系熟练，还会给这个游戏的天然呆程序员发一封站内信。',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'528' => '0', 
+			),
+		),
+		'ignore_global_ach' => 1,//不参与终生成就判定
+	),
+	191 => array(
+		'name' => 'G.D.S 女秘书',
+		'rare' => 'C',
+		'pack' => 'Crimson Swear',
+		'desc' => '明天见总裁，要穿得诱惑一点',
+		'effect' => '总裁怎么是女生？',
+		'desc_skills' => '开局装备带有「热恋」属性的防具',
+		'energy' => 0,
+		'valid' => array(
+			'arb' => '性感女内衣',
+			'arbk' => 'DA',
+			'arbe' => '5',
+			'arbs' => '15',
+			'arbsk' => 'l',
+		)
+	),
+	192 => array(
+		'name' => '孤魂挑战者',
+		'rare' => 'C',
+		'pack' => 'Way of Life',
+		'desc' => '他很喜欢满身孤魂的感觉',
+		'effect' => '开局全身装备埃克法-孤魂',
+		'energy' => 0,
+		'valid' => array(
+			'wep' => '埃克法-孤魂',
+			'wepk' => 'WP',
+			'wepe' => '25',
+			'weps' => '1',
+			'wepsk' => 'cZ',
+			'arb' => '埃克法-孤魂',
+			'arbk' => 'DB',
+			'arbe' => '5',
+			'arbs' => '25',
+			'arbsk' => 'zZ',
+			'arh' => '埃克法-孤魂',
+			'arhk' => 'DH',
+			'arhe' => '5',
+			'arhs' => '25',
+			'arhsk' => 'zZ',
+			'ara' => '埃克法-孤魂',
+			'arak' => 'DA',
+			'arae' => '5',
+			'aras' => '25',
+			'arask' => 'zZ',
+			'arf' => '埃克法-孤魂',
+			'arfk' => 'DF',
+			'arfe' => '5',
+			'arfs' => '25',
+			'arfsk' => 'zZ',
+			'art' => '埃克法-孤魂',
+			'artk' => 'TN',
+			'arte' => '25',
+			'arts' => '1',
+			'artsk' => 'cZ',
+		)
+	),
+	193 => array(
+		'name' => 'G.D.S 社员',
+		'rare' => 'C',
+		'pack' => 'Crimson Swear',
+		'desc' => '刚入职，领导就让我当法人，我深受感动',
+		'effect' => '开局携带一张ID卡',
+		//'desc_skills' => '',
+		'energy' => 0,
+		'valid' => array(
+		  'itm5' => Array('社畜专用的ID卡', '社员砖用的ID卡', '社长专用的ID卡', '社恐专用的ID卡', '社员专甩的ID卡',
+		  '社员不用的ID卡', '社死专用的ID卡', '社保专用的ID卡', '社精专用的ID卡', '社会专用的ID卡',
+		  '社员专用的IC卡', '社员专用的IP卡', '社员专用的IQ卡', '社员专用的1D卡', '社员专用的IO卡', '社员专用的lD卡', '社员专用的|D卡', '社员专用的ＩＤ卡',
+		  '社元专用的ID卡', '社员专角的ID卡', '社贡专用的ID卡', '社员专卖的ID卡', '社员专享的ID卡',
+		  '社员专精的ID卡', '涩员专用的ID卡', '杜员专用的ID卡', '壮员专用的ID卡', '社员专月的ID卡',),
+			'itmk5' => 'Y',
+			'itme5' => '1',
+			'itms5' => '1',
+			'itmsk5' => '',
+		)
+	),
+	194 => array(
+		'name' => '除错挑战者',
+		'rare' => 'B',
+		'pack' => 'Way of Life',
+		'desc' => '年轻触手为打除错竟入场把萌新活活打死',
+		'effect' => '获得除错模式技能「整备」「谨慎」「阴谋」的其中随机一个',
+		'desc_skills' => '「整备」：恢复满HP、SP，并治好所有伤口和异常状态，可以升级来减少冷却时间
+		<br>「谨慎」：你受到的陷阱伤害减少，可以升级。你接收其他玩家的道具时有概率拒绝
+		<br>「阴谋」：你放置的陷阱伤害上升，可以升级',
+		'energy' => 100,
+		'valid' => array(
+		  'rand_skills' => array(
+		  	Array(
+			  	'426' => '0', 
+					'428' => '0', 
+					'429' => '0',
+					'rnum' => 1,
+		  	)				
+			),
+		)
+	),
+	195 => array(
+		'name' => '费马',
+		'rare' => 'C',
+		'pack' => 'Way of Life',
+		'desc' => '我超，我想到一张绝妙的好卡',
+		'effect' => '可惜效果栏太小，写不下',
+		'desc_skills' => '获得最强大脑技能「证伪」：战斗中敌人没有正常生效的减半防御属性类型将永久对你无效',
+		'energy' => 0,
+		'valid' => array(
+		  'skills' => array(
+				'243' => '0', 
+			),
 		)
 	),
 	/////////////////////////////////////////////////
@@ -3078,7 +3236,7 @@ $cards = array(
 		'rare' => 'A',
 		'pack' => 'Balefire Rekindle',
 		'desc' => '“银月哨兵是不死之身！”',
-		'effect' => '获得技能「无垠」：战斗中死亡时有30%概率复活，但之后因此复活的概率减半',
+		'effect' => '获得技能「无垠」：战斗中死亡时有50%概率复活，但之后因此复活的概率减半',
 		//：双方攻击结束时，如果你的HP<1，则有30%概率变为1。此技能每发动1次，这一概率减半。
 		'energy' => 120,
 		'valid' => array(
@@ -3227,6 +3385,7 @@ $cards = array(
 		'name' => 'pop子',
 		'title' => 'pop子',
 		'rare' => 'S',
+		'real_rare' => 'B',//真实的爆率
 		'pack' => 'Way of Life',
 		'desc' => '一月霸权动漫<br>《pop子与pipi美的日常》主角',
 		'effect' => '「生气了吗……？」',
@@ -3256,12 +3415,576 @@ $cards = array(
 			),
 		)
 	),
+	212 => array(
+		'name' => '只因',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '跳、唱、rap、篮球',
+		'effect' => '你干嘛，哎哟',
+		'desc_skills' => '开局获得5点歌魂和5点体力上限，并装备篮球和背带裤',
+		'energy' => 0,
+		'valid' => array(
+			'mhp' => 105,
+			'hp' => 105,
+			'mss' => 5,
+			'ss' => 5,
+			'wep' => '篮球',
+			'wepk' => 'WC',
+			'wepe' => '12',
+			'weps' => '1',
+			'wepsk' => '',
+			'arb' => '背带裤',
+			'arbk' => 'DB',
+			'arbe' => '5',
+			'arbs' => '15',
+			'arbsk' => '',
+		)
+	),
+	213 => array(
+		'name' => '反思怪',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '你应该反思',
+		'effect' => '获得拆弹专家技能「反思」',
+		'desc_skills' => '「反思」：使用爆系武器时，即使攻击没有命中，也可以获得1点经验值',
+		'energy' => 0,
+		'valid' => array(
+			'skills' => array(
+				'213' => '0', 
+			),
+		)
+	),
+	214 => array(
+		'name' => '源神',
+		'rare' => 'A',
+		'pack' => 'Cyber Zealots',
+		'desc' => '你说得对，但是《源神》是由上千主上自主研发的一款全新开放世界冒险游戏。游戏发生在一个被称作「源数网络」的幻想世界，在这里被神选中的人将被授予「源数之壁」，引导源批之力。你将扮演一位名为「源数直上」的神秘角色，在自由的旅行中邂逅性格各异、能力独特的源数之门们，和它们一起击败强敌，找回不存在的亲人的同时，逐步发掘「源数代码」的真相。',
+		'effect' => '获得技能「攻击」',
+		'desc_skills' => '「攻击」：你的攻击性有待提高。<br>每局最多4次，你可以在攻击结束时让你的的基础攻击力永久翻倍',
+		'bigdesc' => 1,
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'527' => '0', 
+			),
+		)
+	),
+	215 => array(
+		'name' => '超天酱',
+		'rare' => 'B',
+		'pack' => 'Cyber Zealots',
+		'desc' => '✝︎ 当代互联网小天使，堂堂降临! ✝︎',
+		'effect' => '即将化身为小天使的地雷',
+		'desc_skills' => '开局携带一枚效果值为800的陷阱，但最大生命值只有正常的一半',
+		'energy' => 100,
+		'valid' => array(
+		  'hp' => '200',
+		  'mhp' => '200',
+			'itm3' => '超天新龙 异色眼革命龙★12',
+			'itmk3' => 'TN12',
+			'itme3' => '800',
+			'itms3' => '1',
+			'itmsk3' => '',
+		)
+	),
+	216 => array(
+		'name' => '吧友',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '经验+3',
+		'effect' => '告辞',
+		'energy' => 0,
+		'valid' => array(
+		  'exp' => '3',
+		)
+	),
+	217 => array(
+		'name' => '章鱼猫',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '一种神奇的电子界生物，擅长版本控制和同性交友',
+		'effect' => '开局携带建立分叉和拉取请球',
+		//'desc_skills' => '',
+		'energy' => 0,
+		'valid' => array(
+		  'wep' => '建立分叉',
+			'wepk' => 'WK',
+			'wepe' => '120',
+			'weps' => '5',
+			'wepsk' => 'eg',
+			'itm3' => '拉取请球',
+			'itmk3' => 'DH',
+			'itme3' => '120',
+			'itms3' => '5',
+			'itmsk3' => 'eg',
+		)
+	),
+	218 => array(
+		'name' => '撸贷人',
+		'rare' => 'M',
+		'pack' => 'Cyber Zealots',
+		'desc' => '凭本事借的钱，为什么要还？',
+		'effect' => '他因为撸小贷被限制消费了',
+		'desc_skills' => '初始金额为100元，但获取金额时不能超过上限。可以消耗技能点还款来解除限制。',
+		'energy' => 0,
+		'valid' => array(
+		  'money' => '100',
+			'skills' => array(
+				'495' => '0', 
+			),
+		)
+	),
+	219 => array(
+		'name' => '福瑞控',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '24小时穿着等身大熊装的福瑞控',
+		'effect' => '开局装备【智代专用熊装】',
+		'desc_skills' => '但是没有防御属性',
+		'energy' => 0,
+		'valid' => array(
+		  'arb' => '【智代专用熊装】',
+			'arbk' => 'DB',
+			'arbe' => '80',
+			'arbs' => '20',
+			'arbsk' => '',
+		)
+	),
+	220 => array(
+		'name' => '钓鱼吧老哥',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '不知道，大概40斤吧',
+		'effect' => '开局装备钓鱼杆并携带他的收获',
+		//'desc_skills' => '但是没有防御属性',
+		'energy' => 0,
+		'valid' => array(
+		  'ara' => Array('钓鱼竿','钓鱼竿','钓鱼竿','钓鱼竿','钓鱼竿','钓鱼竿','钓鱼竿','钓鱼竿','钓鱼竿','钓鱼竿','钓鱼竿','钓鱼竿','钓鱼竿','钓鱼竿','钓鱼竿','钓鱼竿','钓鱼竿','钓鱼竿','钓鱼竿','《小黄的钓鱼竿》'),
+			'arak' => 'DA',
+			'arae' => '50',
+			'aras' => '70',
+			'arask' => '',
+			'itm3' => Array('垃圾','光盘','破鞋','塑料袋','石头','树枝','骨头','原型武器K','鲨鱼鳍','凸眼鱼'),
+			'itmk3' => Array('X','Y','HH','HS','HB','PB','PB2'),
+			'itme3' => '70',
+			'itms3' => '5',
+			'itmsk3' => 'z',
+		)
+	),
+	221 => array(
+		'name' => '221',
+		'rare' => 'B',
+		'pack' => 'Cyber Zealots',
+		'desc' => '上古著名职人',
+		'effect' => '开局携带『和谐你全家』',
+		//'desc_skills' => '',
+		'energy' => 100,
+		'valid' => array(
+		  'wep' => '『和谐你全家』',
+			'wepk' => 'WP',
+			'wepe' => '22',
+			'weps' => '1',
+			'wepsk' => 'uiewp',
+		)
+	),
+	222 => array(
+		'name' => '门锁',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '拍完记得装回去',
+		'effect' => '开局携带门锁',
+		'desc_skills' => '门锁可以变为探测仪器，但是装不回去了',
+		'energy' => 0,
+		'valid' => array(
+		  'wep' => '门锁',
+			'wepk' => 'WP',
+			'wepe' => '50',
+			'weps' => '1',
+			'wepsk' => 'j',
+		)
+	),
+	223 => array(
+		'name' => '汽车人',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '新能源汽车人才有机会直接落户上海',
+		'effect' => '你开局携带的面包的名字变为电池，矿泉水的名字变为探测器电池',
+		'energy' => 0,
+		'valid' => array(
+		  'itm1' => '电池',
+		  'itm2' => '探测器电池',
+		)
+	),
+	224 => array(
+		'name' => '翻唱职人',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '弹幕网站上那些翻唱名曲毁耳不倦的职人',
+		'effect' => '开局装备销魂之歌',
+		'energy' => 0,
+		'valid' => array(
+		  'wep' => '销魂之歌',
+			'wepk' => 'WK',
+			'wepe' => '50',
+			'weps' => '50',
+			'wepsk' => '',
+		)
+	),
+	225 => array(
+		'name' => '字幕职人',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '弹幕网站上那些把弹幕当积木摆的职人',
+		'effect' => '开局装备神字幕',
+		'energy' => 0,
+		'valid' => array(
+		  'wep' => '神字幕',
+			'wepk' => 'WC',
+			'wepe' => '50',
+			'weps' => '50',
+			'wepsk' => '',
+		)
+	),
+	226 => array(
+		'name' => '搬运职人',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '弹幕网站上那些搬运其他网站视频的职人',
+		'effect' => '开局装备搬运之拳',
+		'energy' => 0,
+		'valid' => array(
+		  'wep' => '搬运之拳',
+			'wepk' => 'WP',
+			'wepe' => '50',
+			'weps' => '50',
+			'wepsk' => '',
+		)
+	),
+	227 => array(
+		'name' => '专业喷子',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '一个普通的喷子，全身上下只有嘴是硬的',
+		'effect' => '开局装备嘴炮',
+		'energy' => 0,
+		'valid' => array(
+		  'wep' => '嘴炮',
+			'wepk' => 'WG',
+			'wepe' => '50',
+			'weps' => '50',
+			'wepsk' => '',
+		)
+	),
+	228 => array(
+		'name' => '小鬼',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '他很热衷于网络80',
+		'effect' => '开局装备网暴',
+		'energy' => 0,
+		'valid' => array(
+		  'wep' => '网暴',
+			'wepk' => 'WD',
+			'wepe' => '50',
+			'weps' => '50',
+			'wepsk' => '',
+		)
+	),
+	229 => array(
+		'name' => '车万人',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '车万人下雨不用伞',
+		'effect' => '开局装备符卡',
+		'energy' => 0,
+		'valid' => array(
+		  'wep' => '符卡',
+			'wepk' => 'WF',
+			'wepe' => '30',
+			'weps' => '50',
+			'wepsk' => '',
+		)
+	),
+	230 => array(
+		'name' => '老八',
+		'rare' => 'M',
+		'pack' => 'Cyber Zealots',
+		'desc' => '奥利给！干了兄弟们！',
+		'effect' => '你可以吃翔来表达对满场沙包的不屑',
+		'energy' => 0,
+		'valid' => array(
+		  'itm3' => '『我是说在座的各位都是垃圾』',
+			'itmk3' => 'Y',
+			'itme3' => '1',
+			'itms3' => '1',
+			'itmsk3' => '',
+		)
+	),
+	231 => array(
+		'name' => '卡片男',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '看，这个男人捡到一张神秘的小卡片',
+		'effect' => '开局携带一份卡牌包',
+		'energy' => 0,
+		'valid' => array(
+		  'itm3' => '卡牌包',
+			'itmk3' => 'VO9',
+			'itme3' => '1',
+			'itms3' => '1',
+			'itmsk3' => '',
+		)
+	),
+	232 => array(
+		'name' => '驴友',
+		'rare' => 'M',
+		'pack' => 'Cyber Zealots',
+		'desc' => '他觉得自己很懂野外生存',
+		'effect' => '开局不携带面包和矿泉水',
+		'energy' => 0,
+		'valid' => array(
+		  'itm1' => '我来幻境是我的自由',
+			'itmk1' => 'X',
+			'itme1' => '1',
+			'itms1' => '1',
+			'itmsk1' => '',
+			'itm2' => '你们怎么还不来救我？',
+			'itmk2' => 'X',
+			'itme2' => '1',
+			'itms2' => '1',
+			'itmsk2' => '',
+		)
+	),
+	233 => array(
+		'name' => '阿林百人众',
+		'rare' => 'A',
+		'pack' => 'Cyber Zealots',
+		'desc' => '据说林无月前两年已经死了，<br>现在管理幻境的都是她的亲友团<br>「阿林百人众」。<br>她临死前给每个人发了一个小本子，里面是一百多页如何扮演她的心得。',
+		'effect' => '开局能复制并获取场上存活NPC的一项技能',
+		'energy' => 100,
+		'valid' => array(
+		  'skills' => array(
+				'529' => '2', 
+			),
+		)
+	),
+	234 => array(
+		'name' => '黑莲花',
+		'rare' => 'A',
+		'pack' => 'Cyber Zealots',
+		'desc' => 'All their base are belong to us!',
+		'effect' => '<s>法力+3</s><br>获得锡安成员技能「网瘾」、「破解」及「探测」',
+		'desc_skills' => '「网瘾」：你干扰禁区的成功率为95%且完全无风险
+		<br>「破解」：通过消耗特定的物品来破解游戏系统，每次破解成功都会获得奖励
+		<br>「探测」：消耗1个技能点可以进行一次广域探测',
+		'energy' => 100,
+		'valid' => array(
+		  'skills' => array(
+				'233' => '0', 
+				'234' => '0', 
+				'235' => '0', 
+			),
+		)
+	),
+	235 => array(
+		'name' => '幻境助手 艾茵',
+		'title' => '幻境助手',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '哈啰？这里是幻境全息助手艾茵，<br>要探索幻境请务必找我哟！',
+		'effect' => '开局携带一个银色盒子',
+		'energy' => 0,
+		'valid' => array(
+		  'itm3' => '黯淡的银色盒子',
+			'itmk3' => 'p2',
+			'itme3' => '1',
+			'itms3' => '1',
+			'itmsk3' => '',
+		)
+	),
+	236 => array(
+		'name' => '模因测试员',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '今天没吃药，感觉自己萌萌哒',
+		'effect' => '开局携带15个模因原液',
+		'energy' => 0,
+		'valid' => array(
+		  'itm3' => '模因原液',
+			'itmk3' => Array('MA','MD','MH','MS','ME','MV'),
+			'itme3' => '1',
+			'itms3' => '5',
+			'itmsk3' => '',
+			'itm4' => '模因原液',
+			'itmk4' => Array('MA','MD','MH','MS','ME','MV'),
+			'itme4' => '1',
+			'itms4' => '5',
+			'itmsk4' => '',
+			'itm5' => '模因原液',
+			'itmk5' => Array('MA','MD','MH','MS','ME','MV'),
+			'itme5' => '1',
+			'itms5' => '5',
+			'itmsk5' => '',
+		)
+	),
+	237 => array(
+		'name' => '『维因·索菲尔』',
+		'title' => '维因·索菲尔',
+		'rare' => 'S',
+		'pack' => 'Cyber Zealots',
+		'desc' => '『时空护卫』的中坚力量之一，<br>能轻易记住其他超能力者的超能力，并用自己的方式施展出来。<br><br><span class="seagreen b">“就算在那群固执的疯子里<br>也是最固执而最疯的一个。”</span><br>——林苍月',
+		'effect' => '随机发动一张S级卡片的效果',
+		'energy' => 100,
+		'valid' => array(
+			'cardchange' => Array(
+				'S_odds' => 100,
+				'allow_EB' => true,
+				'forced' => Array(210),//无视概率强制加入选择的卡
+				'ignore_cards' => Array()//机制上必定选不到自己，这里可以放其他不想被选到的卡
+			)
+		)
+	),
+	238 => array(
+		'name' => '『黑衣少女』',
+		'title' => '黑衣少女',
+		'rare' => 'S',
+		'pack' => 'Cyber Zealots',
+		'desc' => '接管了整个林氏集团的神秘少女。<br>虽然她自称只是林无月的女儿，也没有干预幻境的运转，但她显露出的卓越洞察力和深不可测的举止，都表明她并不是凡庸之辈。<br><br><span class="ltcrimson b">“我们的敌人比预想的更加麻烦。”</span><br>——红暮',
+		'effect' => '只要你入场，连斗判定人数增加200名',
+		'energy' => 200,
+		'valid' => array(
+			'gamevars' => Array(
+				'combonum' => '+200',
+			)
+		)
+	),
+	239 => array(
+		'name' => '挂壁',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '小透不算开',
+		'effect' => '获得宛如疾风技能「天眼」：在战斗界面中你可以查看到对手的具体数值信息，且无视雾天影响',
+		//'desc_skills' => '',
+		'energy' => 0,
+		'valid' => array(
+		  'skills' => array(
+				'252' => '0', 
+			),
+		)
+	),
+	240 => array(
+		'name' => '网络爬虫',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '爬吗？',
+		'effect' => '爬',
+		'desc_skills' => '开局能复制并获得场上存活的NPC身上的一件道具',
+		'energy' => 100,
+		'valid' => array(
+		  'skills' => array(
+				'529' => '1', 
+			),
+		)
+	),
+	241 => array(
+		'name' => '✦复燃的烽火',
+		'rare' => 'B',
+		'pack' => 'Cyber Zealots',
+		'desc' => '神秘出现在大逃杀幻境里的一群<br>可爱萝莉',
+		'effect' => '开局携带能挡下所有攻击的防具，但是只能挡一点点',
+		//'desc_skills' => '',
+		'energy' => 100,
+		'valid' => array(
+		  'arh' => '✦烽火之恋',
+			'arhk' => 'DH',
+			'arhe' => '1',
+			'arhs' => '1',
+			'arhsk' => 'BbO',
+		)
+	),
+	242 => array(
+		'name' => '刀哥蝙蝠侠',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '我上回有活儿，咬个打火机，封号一个月，钱都扣了',
+		'effect' => '你有活儿，你玩',
+		'desc_skills' => '开局携带打火机',
+		'energy' => 0,
+		'valid' => array(
+		  'arh' => '打火机',
+			'arhk' => 'X',
+			'arhe' => '1',
+			'arhs' => '1',
+			'arhsk' => '',
+		)
+	),
+	243 => array(
+		'name' => '求生专家',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '我先叠个甲',
+		'effect' => '开局防御力变为200',
+		//'desc_skills' => '',
+		'energy' => 0,
+		'valid' => array(
+		  'def'=> '200',
+		)
+	),
+	244 => array(
+		'name' => '社博朋克',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '芯片又不能当饭吃',
+		'effect' => '开局携带可以吃的电子零件',
+		//'desc_skills' => '',
+		'energy' => 100,
+		'valid' => array(
+		  'itm5' => '某种电子零件',
+			'itmk5' => Array('HB','HB','HB','HB','HB','HB','HB','HB','HB','PB2'),
+			'itme5' => '199',
+			'itms5' => '5',
+			'itmsk5' => '',
+		)
+	),
+	245 => array(
+		'name' => '网抑云',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '这么晚还在打大逃杀，你一定也很寂寞吧',
+		'effect' => '开局携带寂寞',
+		//'desc_skills' => '',
+		'energy' => 100,
+		'valid' => array(
+		  'itm5' => '寂寞',
+			'itmk5' => Array('WP','WK','WD','WC','WG','WF','WB','PB2','DB','DH','DA','DF','A'),
+			'itme5' => '76',
+			'itms5' => '5',
+			'itmsk5' => '',
+		)
+	),
+	246 => array(
+		'name' => '箭怔人',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '顺我者屠殿大佬，逆我者无名沙包',
+		'effect' => '开局携带大量箭矢',
+		//'desc_skills' => '',
+		'energy' => 100,
+		'valid' => array(
+		  'itm5' => '箭症',
+			'itmk5' => 'GA',
+			'itme5' => '1',
+			'itms5' => '44',
+			'itmsk5' => Array('e', 'p', 'u', 'i', 'w'),
+		)
+	),
+	
 	
 	1000 => array(
 		'name'=>'补给品',
 		'rare'=>'C',
-		'desc'=>'教程模式用卡',
 		'pack'=>'hidden',
+		'desc'=>'教程模式用卡',
 		'effect'=>'教程模式技能载体',
 		'energy'=>0,
 		'valid' => array(
@@ -3276,29 +3999,22 @@ $cards = array(
 			)
 		)
 	),
-//	1001 => array(
-//		'name'=>'小白鼠',
-//		'rare'=>'C',
-//		'desc'=>'荣耀模式用卡',
-//		'pack'=>'hidden',
-//		'effect'=>'荣耀模式技能载体',
-//		'energy'=>0,
-//		'valid' => array(
-//			'itm4' => '紧急药剂',
-//			'itmk4' => 'Ca',
-//			'itme4' => '1',
-//			'itms4' => '3',
-//			'itmsk4' => '',
-//			'itm5' => '生命探测器',
-//			'itmk5' => 'ER',
-//			'itme5' => '3',
-//			'itms5' => '1',
-//			'itmsk5' => '',
-//			'skills'=>array(
-//				'1001'=>'0'
-//			)
-//		)
-//	),
+	1001 => array(
+		'name'=>'肉鸽来客',
+		'rare'=>'A',
+		'pack'=>'hidden',
+		'desc'=>'今天凹了一晚上，想要的卡一张没有',
+		'effect'=>'我草，怎么天亮了？',
+		'energy'=>120,
+		'valid' => array(
+			'cardchange' => Array(
+				'real_random' => true,//真随机，所有卡选1张
+				'perm_change' => true,//永久改变，换卡之后不会再把card字段切回来，也不会按这张卡判定成就
+				'forced' => Array(),//无视概率强制加入选择的卡
+				'ignore_cards' => Array()//机制上必定选不到自己，这里可以放其他不想被选到的卡
+			)
+		)
+	),
 );
 }
 ?>

@@ -297,17 +297,17 @@ namespace player
 		$hpcolor = 'cyan b';
 		if($hp <= $mhp*0.2) $hpcolor = 'red b';
 		elseif($hp <= $mhp*0.5) $hpcolor = 'yellow b';
-		$newhppre = 6+floor(155*(1-$hp/$mhp));
+		$newhppre = 6+floor(155*(1-$hp/max($mhp,1)));
 		$newhpimg = '<img src="img/hpman.gif" style="position:absolute; clip:rect('.$newhppre.'px,55px,160px,0px);">';
-		$hpltp = 3+floor(155*(1-$hp/$mhp));
+		$hpltp = 3+floor(155*(1-$hp/max($mhp,1)));
 		$hplt = '<img src="img/hplt.gif" style="position:absolute; clip:rect('.$hpltp.'px,55px,160px,0px);">';
 		
 		$spcolor = 'cyan b';
 		if($sp <= $msp*0.2) $spcolor = 'grey b';
 		elseif($sp <= $msp*0.5) $spcolor = 'yellow b';
-		$newsppre = 6+floor(155*(1-$sp/$msp));
+		$newsppre = 6+floor(155*(1-$sp/max($msp,1)));
 		$newspimg = '<img src="img/spman.gif" style="position:absolute; clip:rect('.$newsppre.'px,55px,160px,0px);">';
-		$spltp = 3+floor(155*(1-$sp/$msp));
+		$spltp = 3+floor(155*(1-$sp/max($msp,1)));
 		$splt = '<img src="img/splt.gif" style="position:absolute; clip:rect('.$spltp.'px,55px,160px,0px);">';
 		
 		//旧界面用的一些参数
@@ -420,10 +420,11 @@ namespace player
 //		$alivenum = $db->result($db->query("SELECT COUNT(*) FROM {$tablepre}players WHERE hp>0 AND type=0"), 0);
 //		$chprocess($where,$atime);
 //	}
-	
+	//在command_act.php执行到最后可以调用的一个接口，目前只有一个技能接管过这里……
 	function update_sdata()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return;
 	}
 	
 	
@@ -742,6 +743,7 @@ namespace player
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 	}
 	
+	//加入战场前的事件
 	function post_enterbattlefield_events(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;

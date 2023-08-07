@@ -3,10 +3,42 @@
 namespace instance9
 {
 	function init() {
-		eval(import_module('map','gameflow_combo','skillbase'));
+		eval(import_module('map','gameflow_combo','skillbase','cardbase'));
 		$areainterval[19] = 10;
 		$deathlimit_by_gtype[19] = 100;
 		$valid_skills[19] = array(1001,1002);
+		$card_force_different_gtype[] = 19;
+		$card_need_charge_gtype[] = 19;
+		$card_cooldown_discount_gtype[19] = 0.5;
+	}
+	
+	//极速模式禁用卡片
+	function card_validate_get_forbidden_cards($card_disabledlist, $card_ownlist){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		
+		$card_disabledlist = $chprocess($card_disabledlist, $card_ownlist);
+		if (19==$gametype)//极速模式禁用6D和CTY
+		{
+			if (in_array(123,$card_ownlist)) $card_disabledlist[123][]='e3';
+			if (in_array(124,$card_ownlist)) $card_disabledlist[124][]='e3';
+		}
+		return $card_disabledlist;
+	}
+	
+	//入场时，如果极速模式，增加全身装备和异常药
+	function init_enter_battlefield_items($ebp){
+		if (eval(__MAGIC__)) return $___RET_VALUE; 
+		$ebp = $chprocess($ebp);
+		eval(import_module('sys'));
+		if(19==$gametype){
+			$ebp['arb'] = '挑战者战斗服';$ebp['arbk'] = 'DB'; $ebp['arbe'] = 60; $ebp['arbs'] = 10; $ebp['arbsk'] = '';
+			$ebp['arh'] = '挑战者头盔';$ebp['arhk'] = 'DH'; $ebp['arhe'] = 37; $ebp['arhs'] = 5; $ebp['arhsk'] = '';
+			$ebp['ara'] = '挑战者护手';$ebp['arak'] = 'DA'; $ebp['arae'] = 37; $ebp['aras'] = 5; $ebp['arask'] = '';
+			$ebp['arf'] = '挑战者靴子';$ebp['arfk'] = 'DF'; $ebp['arfe'] = 37; $ebp['arfs'] = 5; $ebp['arfsk'] = '';
+			$ebp['itm5'] = '全恢复药剂'; $ebp['itmk5'] = 'Ca'; $ebp['itme5'] = 1; $ebp['itms5'] = 3;$ebp['itmsk5'] = '';
+		}
+		return $ebp;
 	}
 	
 	function get_npclist(){
