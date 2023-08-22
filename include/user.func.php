@@ -445,38 +445,38 @@ function real_ip()
 		elseif (isset($_SERVER['HTTP_CLIENT_IP']))  
 		{  
 			$realip = $_SERVER['HTTP_CLIENT_IP'];  
+		} 
+		# If a site is proxied through CloudFLare, we use the CloudFLare value here to grab the original IP of the user.
+		elseif (isset($_SERVER['HTTP_CF_CONNECTING_IP']))  
+		{  
+			$realip = $_SERVER['HTTP_CF_CONNECTING_IP'];  
+		} 
+		elseif (isset($_SERVER['REMOTE_ADDR']))  
+		{  
+			$realip = $_SERVER['REMOTE_ADDR'];  
 		}  
 		else 
 		{  
-			if (isset($_SERVER['REMOTE_ADDR']))  
-			{  
-				$realip = $_SERVER['REMOTE_ADDR'];  
-			}  
-			else 
-			{  
-				$realip = '0.0.0.0';  
-			}  
-		}  
+			$realip = '0.0.0.0';  
+		}
 	}
+	elseif (getenv('HTTP_X_FORWARDED_FOR'))  
+	{  
+		$realip = getenv('HTTP_X_FORWARDED_FOR');  
+	}  
+	elseif (getenv('HTTP_CLIENT_IP'))  
+	{  
+		$realip = getenv('HTTP_CLIENT_IP');  
+	}  
 	else 
 	{  
-		if (getenv('HTTP_X_FORWARDED_FOR'))  
-		{  
-			$realip = getenv('HTTP_X_FORWARDED_FOR');  
-		}  
-		elseif (getenv('HTTP_CLIENT_IP'))  
-		{  
-			$realip = getenv('HTTP_CLIENT_IP');  
-		}  
-		else 
-		{  
-			$realip = getenv('REMOTE_ADDR');  
-		}  
+		$realip = getenv('REMOTE_ADDR');  
 	}  
+	  
 	preg_match("/[\d\.]{7,15}/", $realip, $onlineip);  
 	$realip = !empty($onlineip[0]) ? $onlineip[0] : '0.0.0.0';  
-	global $cuser;
-	if($cuser == 'Yoshiko' || $cuser == 'Yoshiko_G'){$realip = '70.54.1.30';}
+//	global $cuser;
+//	if($cuser == 'Yoshiko' || $cuser == 'Yoshiko_G'){$realip = '70.54.1.30';}
 	return $realip;  
 } 
 
@@ -501,7 +501,7 @@ function convert_tm($t, $simple=0)
 	$s3=round(($t%3600)/60);
 	$ret='';
 	if ($s1>0) $ret.=$s1.'天';
-	if($simple) $s2 = round(($t%86400)/3600);
+	if($simple && $s1 > 0 && $s3 > 30) $s2 += 1;//如果$simple，有天数显示（则不显示分钟数），那么如果分钟数大于30则小时数+1
 	if($s2 > 0) $ret.=$s2.'小时';
 	if($s1 <= 0 || !$simple) $ret.=$s3.'分钟';//超过1天，在$simple时不显示详细分钟数
 	return $ret;

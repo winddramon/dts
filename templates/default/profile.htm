@@ -8,9 +8,13 @@
 				</tr>
 				<tr>
 					<td colspan="3" class="b1">
-						<span>
-							$uip['cardname_show'] $name
+						<!--{if defined('MOD_CARDBASE')}-->
+							{template MOD_CARDBASE_PROFILE_CARDNAME}
+						<!--{else}-->
+						<span id="name">
+							$name
 						</span>
+						<!--{/if}-->						
 					</td>
 					<td colspan="1" class="b1"><span>{$sexinfo[$gd]}{$sNo}号</span></td>
 					<!--{if defined('MOD_WEATHER')}-->
@@ -19,7 +23,7 @@
 					<td colspan="2" class="b1"></td>
 					<!--{/if}-->
 					<td colspan="1" class="b1">
-							<!--{if ($gamestate == 40 ||($gametype == 17 && \skillbase\skill_getvalue(1000,'step')>=206))}--><span class="yellow b">{lang combo}</span><!--{/if}--><!--{if $gamestate == 50 }--><span class="red b">{lang duel}</span><!--{/if}--> 
+						<!--{if \gameflow_duel\is_gamestate_duel(1)}--><span class="red b">{lang duel}</span><!--{elseif \gameflow_combo\is_gamestate_combo(1)}--><span class="yellow b">{lang combo}</span><!--{/if}--> 
 						{template MOD_MAP_PROFILE_AREAINFO}
 					</td>
 				</tr>
@@ -55,7 +59,9 @@
 								<!--{/if}-->
 							</tr>
 							<tr>
-								<!--{if defined('MOD_BUFFICONS')}-->
+								<!--{if defined('MOD_TUTORIAL') && 17==$gametype}-->
+								{template MOD_TUTORIAL_TUTORIAL_EXIT_BUTTON}
+								<!--{elseif defined('MOD_BUFFICONS')}-->
 								{template MOD_BUFFICONS_PROFILE}
 								<!--{else}-->
 								<td colspan=2 style="height:40px;text-align:middle;vertical-align:middle"></td>

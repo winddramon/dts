@@ -77,13 +77,13 @@ namespace searchmemory
 	}
 	
 	//保存玩家数据到数据库之前，把$searchmemory转义
-	function player_save($data){
+	function player_save($data, $in_proc = 0){
 		if (eval(__MAGIC__)) return $___RET_VALUE;		
 		$tmp_searchmemory = $data['searchmemory'];
 		if(is_array($data['searchmemory'])) {
 			$data['searchmemory'] = gencode($data['searchmemory']);
 		}
-		$chprocess($data);
+		$chprocess($data, $in_proc);
 		//哇，这只虫找了我两个小时
 		//某些流程在player_save()后还会对$player数据进行处理，比如获胜，必须把$searchmemory还原回去
 		//低于8.0的php不会报FATAL ERROR，非adv模式运行路径不同也不会报错，坑爹死我了
@@ -149,6 +149,7 @@ namespace searchmemory
 	function add_memory($marr, $showlog = 1){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','player','logger','searchmemory'));
+		if(!empty($marr['smtype']) && $marr['smtype'] == 'corpse' && \gameflow_combo\is_gamestate_combo()) return;//连斗后不会把尸体加入视野
 		if(searchmemory_available() && $marr){
 			//获取实际的视野和记忆数
 			$searchmemory_real_slotnum = calc_memory_slotnum();
@@ -347,7 +348,7 @@ namespace searchmemory
 				searchmemory_discover($smn);
 			//逃跑时记录敌人数据
 			}elseif(($mode == 'combat' && $command == 'back')
-				 || ($gamestate < 40 && $mode == 'corpse' && ($command == 'menu' || (check_keep_corpse_in_searchmemory() && $command != 'destroy')))){//测试，荣耀模式只要不销毁尸体，视野都留着
+				 || (!\gameflow_combo\is_gamestate_combo() && $mode == 'corpse' && ($command == 'menu' || (check_keep_corpse_in_searchmemory() && $command != 'destroy')))){//测试，荣耀模式只要不销毁尸体，视野都留着
 				$eid = str_replace('enemy','',str_replace('corpse','',$action));
 				$smedata = \player\fetch_playerdata_by_pid($eid);
 				$amarr = array('pid' => $smedata['pid'], 'Pname' => $smedata['name'], 'pls' => $pls, 'smtype' => 'unknown', 'unseen' => 0);
@@ -507,7 +508,11 @@ namespace searchmemory
 					return;
 				}
 				$nmarr=$db->fetch_array($result);
-				if($nmarr['hp']<=0 && $marr['smtype'] != 'corpse') {
+				if(!\metman\discover_player_filter_alive($nmarr)){//死斗后不会遇到NPC
+					$log .= '<span class="red b">角色已经不在原来的位置了……</span><br>';
+					$mode = 'command';
+					return;
+				}elseif($nmarr['hp']<=0 && $marr['smtype'] != 'corpse') {
 					$log .= '<span class="red b">角色已经不在原来的位置了，地上只有一摊血迹……</span><br>';
 					$mode = 'command';
 					return;

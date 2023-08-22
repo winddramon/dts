@@ -28,15 +28,16 @@ item_ub,base/items/item_ub/,1
 item_uee,base/items/item_uee/,1
 apm,base/apm/,1
 item_addarea,extra/item_extra/item_addarea/,1
+radar,base/items/radar/,1
 corpse,base/corpse/,1
 trap,base/items/trap/,1
-item_slip,extra/item_extra/item_slip/,1
 itemmix_sync,base/itemmix/itemmix_sync/,1
 enemy,base/enemy/,1
 gameflow_duel,core/gameflow/gameflow_duel/,1
 itemmix_overlay,base/itemmix/itemmix_overlay/,1
 team,base/team/,1
 battle,base/battle/,1
+item_slip,extra/item_extra/item_slip/,1
 gameflow_combo,core/gameflow/gameflow_combo/,1
 advteam,extra/misc/advteam/,1
 attack,base/attack/,1
@@ -288,7 +289,6 @@ skill260,extra/club/skills/skill260/,1
 skill492,extra/card/skills/skill492/,1
 skill261,extra/club/skills/skill261/,1
 skill274,extra/club/skills/skill274/,1
-radar,base/items/radar/,1
 skill203,extra/club/skills/skill203/,1
 dualwep,base/weapon/dualwep/,1
 ammunition,base/items/ammunition/,1

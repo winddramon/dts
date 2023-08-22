@@ -3,7 +3,8 @@
 //房间运转的大部分重要函数
 //gamedata/tmp/rooms下的文件现在只起一个开关作用。
 
-//检查并刷新所有房间状态，一般从首页调用
+//检查并刷新所有房间状态，一般从首页调用。
+//会导致严重的脏数据问题，当前已废弃，改为从首页多次发送对单个房间的routine()
 function room_all_routine($nowroom = NULL){
 	eval(import_module('sys'));
 	//startmicrotime();
@@ -676,6 +677,13 @@ function check_room_available($roomtypedata){
 	if(!empty($roomtypedata['available-end']) && $now > $roomtypedata['available-end']) $ret = false;
 	if(!empty($roomtypedata['req-mod']) && !defined('MOD_'.strtoupper($roomtypedata['req-mod']))) $ret = false;
 	return $ret;
+}
+
+//关闭房间，如果不提供$rid则关闭玩家当前所在的房间
+//只有当前存活玩家数为0的时候，房主才能关闭房间
+//
+function room_close_in_game($rid = 0){
+	eval(import_module('sys'));
 }
 
 /* End of file roommng.func.php */

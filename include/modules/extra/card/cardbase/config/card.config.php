@@ -14,12 +14,21 @@ $card_need_charge_gtype = Array(2,4);//18,19
 $card_cooldown_discount_gtype = Array();//18=>0.5,19=>0.5
 
 $cardtypecd=array(//卡片类别CD，单位秒
-	'S' => 43200,
-	'A' => 7200,
-	'B' => 3600,
+	'S' => 7200,//S卡类别CD：2小时
+	'A' => 3600,//A卡类别CD：1小时
+	'B' => 1800,//A卡类别CD：半小时
 	'C' => 0,
 	'M' => 0
 );
+
+$card_recrate_base=array(//单卡CD基础时间，单位秒
+	'S' => 7200,
+	'A' => 3600,
+	'B' => 1800,
+	'C' => 0,
+	'M' => 0
+);
+
 $packlist=array(
 	'Standard Pack',
 	'Crimson Swear',
@@ -30,7 +39,7 @@ $packlist=array(
 	'Cyber Zealots',
 	'Event Bonus',
 	
-	'Indev',
+	'Stealth',
 	'hidden'
 );
 //卡包介绍
@@ -43,15 +52,15 @@ $packdesc = array(
 	'Balefire Rekindle' => '以游戏版本「复燃」的新增NPC角色和游戏设定为主题的卡集。',
 	'Event Bonus' => '其他一些零散成就和活动奖励卡。',
 	'Cyber Zealots' => '以赛博朋克和网络梗为捏他对象的卡集。',
-	'Indev' => '开发中的卡的暂存地',
-	'hidden' => '隐藏卡片，如果你看到这句话请联系天然呆管理员',
+	'Stealth' => '一些需要显示卡片介绍的隐藏卡',
+	'hidden' => '隐藏卡片，不会悬浮显示卡片介绍，如果你看到这句话请联系天然呆管理员',
 );
 //不参与抽卡的卡包
 $pack_ignore_kuji = Array('Balefire Rekindle','Event Bonus');
 //卡包实装的时间戳，可以用来隐藏卡包
 $packstart = array(
 	'Cyber Zealots' => 4476654671,
-	'Indev' => 4476654671,
+	'Stealth' => 4476654671,
 	'hidden' => 4476654671,
 );
 $cardindex=array(//已停止更新，现在$cardindex是自动生成的，文件见下
@@ -157,12 +166,12 @@ $cards = array(
 		'effect' => '开局全熟+5',
 		'energy' => 0,
 		'valid' => array(
-			'wp' => '5',
-			'wk' => '5',
-			'wc' => '5',
-			'wg' => '5',
-			'wf' => '5',
-			'wd' => '5',
+			'wp' => '+5',
+			'wk' => '+5',
+			'wc' => '+5',
+			'wg' => '+5',
+			'wf' => '+5',
+			'wd' => '+5',
 		)
 	),
 	5 => array(
@@ -648,10 +657,10 @@ $cards = array(
 		'rare' => 'C',
 		'pack' => 'Standard Pack',
 		'desc' => '其实他也不是特别有钱',
-		'effect' => '起始金钱为100',
+		'effect' => '起始金钱为100元',
 		'energy' => 0,
 		'valid' => array(
-			'money' => '100',
+			'money' => '+80',
 		)
 	),
 	30 => array(
@@ -659,10 +668,10 @@ $cards = array(
 		'rare' => 'C',
 		'pack' => 'Way of Life',
 		'desc' => '和全世界为敌的男人',
-		'effect' => '起始怒气为100',
+		'effect' => '起始怒气增加100点',
 		'energy' => 0,
 		'valid' => array(
-			'rage' => '100',
+			'rage' => '+100',
 		)
 	),
 	31 => array(
@@ -713,6 +722,7 @@ $cards = array(
 		'pack' => 'Standard Pack',
 		'desc' => '孤高的拳法家，<br>对各种小伎俩不屑一顾',
 		'effect' => '拳法家不需要多余的技能',
+		'desc_skills' => '开局HP、最大HP、殴熟和攻击力都增加50，但失去大部分技能',
 		'energy' => 0,
 		'valid' => array(
 			'club' => '14',
@@ -721,10 +731,10 @@ $cards = array(
 				'11' => '0', 
 				'12' => '0', 
 			),
-			'hp' => '450',
-			'mhp' => '450',
-			'wp' => '50',
-			'att' => '150',
+			'hp' => '+50',
+			'mhp' => '+50',
+			'wp' => '+50',
+			'att' => '+50',
 		)
 	),
 	34 => array(
@@ -775,31 +785,32 @@ $cards = array(
 		'pack' => 'Way of Life',
 		'desc' => '美国著名新闻工作者',
 		'effect' => '初始属性不知道高到哪里去了',
+		'desc_skills' => '开局HP、最大HP、SP、最大SP、攻击力、防御力、金钱和全系熟练度都增加50点',
 		'energy' => 150,
 		'valid' => array(
-			'hp' => '450',
-			'mhp' => '450',
-			'sp' => '450',
-			'msp' => '450',
-			'att' => '150',
-			'def' => '150',
-			'money' => '50',
-			'wp' => '50',
-			'wk' => '50',
-			'wc' => '50',
-			'wg' => '50',
-			'wd' => '50',
-			'wf' => '50',
+			'hp' => '+50',
+			'mhp' => '+50',
+			'sp' => '+50',
+			'msp' => '+50',
+			'att' => '+50',
+			'def' => '+50',
+			'money' => '+50',
+			'wp' => '+50',
+			'wk' => '+50',
+			'wc' => '+50',
+			'wg' => '+50',
+			'wd' => '+50',
+			'wf' => '+50',
 		)
 	),
 	38 => array(
-		'name' => '『芙蓉（Fleur）』',
-		'title' => '『芙蓉』',
+		'name' => '『芙蓉』',
+		'ruby' => 'Fleur',
 		'rare' => 'S',
 		'pack' => 'Crimson Swear',
 		'desc' => '低调行事的年轻女性，<br>红暮的青梅竹马。<br>目前是红暮的影一样的存在。<br>担当红杀组织中并不存在的<br>隐秘行动课程的教头。',
 		'effect' => '获得技能「疾走」：<br>被发现率降低15%，爆系和斩系伤害提高20%',
-		'energy' => 100,
+		'energy' => 50,
 		'valid' => array(
 			'skills' => array(
 				'405' => '0', 
@@ -807,8 +818,8 @@ $cards = array(
 		)
 	),
 	39 => array(
-		'name' => '『红暮（Crimson）』',
-		'title' => '『红暮』',
+		'name' => '『红暮』',
+		'ruby' => 'Crimson',
 		'rare' => 'S',
 		'pack' => 'Crimson Swear',
 		'desc' => '英姿飒爽的年轻女性。<br>表面上是城内世家的千金，以及湾城最大的实业『金龙通讯社』的CEO，<br>实际是佣兵组织『红杀』的现任当家',
@@ -822,8 +833,8 @@ $cards = array(
 		)
 	),
 	40 => array(
-		'name' => '『蓝凝（Azure）』',
-		'title' => '『蓝凝』',
+		'name' => '『蓝凝』',
+		'ruby' => 'Azure',
 		'rare' => 'S',
 		'pack' => 'Crimson Swear',
 		'desc' => '<span class="ltazure b">“蓝凝我觉得啊，<br>这个地方没什么好写的。<br>总之我比红暮可强得多了，<br>哈哈哈！”</span>',
@@ -831,8 +842,9 @@ $cards = array(
 		'desc_skills' => '<span class=\'ltazure b\'>“快进游戏实际体验一下吧！”</span>',
 		'energy' => 60,
 		'valid' => array(
-			'hp' => '260',
-			'mhp' => '260',
+			'hp' => '-140',
+			'mhp' => '-140',
+			'club' => '17',
 			'skills' => array(
 				'10' => '0', 
 				'11' => '0', 
@@ -841,12 +853,11 @@ $cards = array(
 				'432' => '0', 
 				'462' => '0', 
 			),
-			'club' => '17',
 		)
 	),
 	41 => array(
-		'name' => '『丁香（Lila）』',
-		'title' => '『丁香』',
+		'name' => '『丁香』',
+		'ruby' => 'Lila',
 		'rare' => 'S',
 		'pack' => 'Crimson Swear',
 		'desc' => '芙蓉的妹妹，现年初二，<br>在一般的平民初中就读。是学校演剧部的部长，也备有无数的戏服用品。<br>爱好是写剧本和读其他人的剧本',
@@ -873,8 +884,8 @@ $cards = array(
 		)
 	),
 	43 => array(
-		'name' => '『飞龙（Wyvern）』',
-		'title' => '『飞龙』',
+		'name' => '『飞龙』',
+		'ruby' => 'Wyvern',
 		'rare' => 'A',
 		'pack' => 'Crimson Swear',
 		'desc' => '红暮和蓝凝的爷爷。<br>前代红杀将军。<br>在二人的父亲『幻铁』行踪不明后，抚养二人长大。目前隐居在城外的乡村中卖中药为生。',
@@ -887,8 +898,8 @@ $cards = array(
 		)
 	),
 	44 => array(
-		'name' => '『翼虎（Manticore）』',
-		'title' => '『翼虎』',
+		'name' => '『翼虎』',
+		'ruby' => 'Manticore',
 		'rare' => 'A',
 		'pack' => 'Crimson Swear',
 		'desc' => '『飞龙』的好友。<br>前代红杀菁英。<br>据说只要他的盾还在身上，<br>没什么东西能伤得了他。<br>目前他的盾由红暮收藏，他自己则在飞龙之前就已经退役了。',
@@ -901,8 +912,8 @@ $cards = array(
 		)
 	),
 	45 => array(
-		'name' => '『铁城（Rook）』',
-		'title' => '『铁城』',
+		'name' => '『铁城』',
+		'ruby' => 'Rook',
 		'rare' => 'A',
 		'pack' => 'Crimson Swear',
 		'desc' => '红杀的拳脚教头',
@@ -915,8 +926,8 @@ $cards = array(
 		)
 	),
 	46 => array(
-		'name' => '『灵翼（Bishop）』',
-		'title' => '『灵翼』',
+		'name' => '『灵翼』',
+		'ruby' => 'Bishop',
 		'rare' => 'A',
 		'pack' => 'Crimson Swear',
 		'desc' => '红杀的火器教头',
@@ -929,8 +940,8 @@ $cards = array(
 		)
 	),
 	47 => array(
-		'name' => '『破石（Knight）』',
-		'title' => '『破石』',
+		'name' => '『破石』',
+		'ruby' => 'Knight',
 		'rare' => 'A',
 		'pack' => 'Crimson Swear',
 		'desc' => '红杀的冷兵器教头',
@@ -943,8 +954,8 @@ $cards = array(
 		)
 	),
 	48 => array(
-		'name' => '『银锤（Pawn）』',
-		'title' => '『银锤』',
+		'name' => '『银锤』',
+		'ruby' => 'Pawn',
 		'rare' => 'A',
 		'pack' => 'Crimson Swear',
 		'desc' => '红杀的爆炸物教头',
@@ -957,8 +968,8 @@ $cards = array(
 		)
 	),
 	49 => array(
-		'name' => '『电返（King）』',
-		'title' => '『电返』',
+		'name' => '『电返』',
+		'ruby' => 'King',
 		'rare' => 'A',
 		'pack' => 'Crimson Swear',
 		'desc' => '红杀的信息技术教头',
@@ -971,8 +982,8 @@ $cards = array(
 		)
 	),
 	50 => array(
-		'name' => '『三步（Queen）』',
-		'title' => '『三步』',
+		'name' => '『三步』',
+		'ruby' => 'Queen',
 		'rare' => 'A',
 		'pack' => 'Crimson Swear',
 		'desc' => '红杀的轻功体能教头',
@@ -992,7 +1003,7 @@ $cards = array(
 		'effect' => '开局殴熟+50',
 		'energy' => 100,
 		'valid' => array(
-			'wp' => '50',
+			'wp' => '+50',
 		)
 	),
 	52 => array(
@@ -1003,7 +1014,7 @@ $cards = array(
 		'effect' => '开局斩熟+50',
 		'energy' => 100,
 		'valid' => array(
-			'wk' => '50',
+			'wk' => '+50',
 		)
 	),
 	53 => array(
@@ -1014,7 +1025,7 @@ $cards = array(
 		'effect' => '开局投熟+50',
 		'energy' => 100,
 		'valid' => array(
-			'wc' => '50',
+			'wc' => '+50',
 		)
 	),
 	54 => array(
@@ -1025,7 +1036,7 @@ $cards = array(
 		'effect' => '开局射熟+50',
 		'energy' => 100,
 		'valid' => array(
-			'wg' => '50',
+			'wg' => '+50',
 		)
 	),
 	55 => array(
@@ -1036,7 +1047,7 @@ $cards = array(
 		'effect' => '开局爆熟+50',
 		'energy' => 100,
 		'valid' => array(
-			'wd' => '50',
+			'wd' => '+50',
 		)
 	),
 	56 => array(
@@ -1044,14 +1055,14 @@ $cards = array(
 		'rare' => 'B',
 		'pack' => 'Crimson Swear',
 		'desc' => '战斗风格多变的红杀特工',
-		'effect' => '开局灵熟以外的熟练度+20',
+		'effect' => '开局灵熟以外的熟练度+40',
 		'energy' => 100,
 		'valid' => array(
-			'wp' => '20',
-			'wk' => '20',
-			'wc' => '20',
-			'wg' => '20',
-			'wd' => '20',
+			'wp' => '+40',
+			'wk' => '+40',
+			'wc' => '+40',
+			'wg' => '+40',
+			'wd' => '+40',
 		)
 	),
 	57 => array(
@@ -1060,11 +1071,11 @@ $cards = array(
 		'rare' => 'C',
 		'pack' => 'Crimson Swear',
 		'desc' => '在时空特使里默默无闻的工作人员。<br>某次事件之后就消失了',
-		'effect' => '开局攻防为123',
+		'effect' => '开局攻防增加23点',
 		'energy' => 0,
 		'valid' => array(
-			'att' => '123',
-			'def' => '123',
+			'att' => '+23',
+			'def' => '+23',
 		)
 	),
 	58 => array(
@@ -1105,8 +1116,8 @@ $cards = array(
 		'effect' => '初始攻击大幅降低，防御大幅提高',
 		'energy' => 0,
 		'valid' => array(
-			'att' => '15',
-			'def' => '155',
+			'att' => '-80',
+			'def' => '+80',
 		)
 	),
 	61 => array(
@@ -1114,12 +1125,12 @@ $cards = array(
 		'rare' => 'M',
 		'pack' => 'Crimson Swear',
 		'desc' => '由于长期坐办公室，<br>他的身材已经严重走形了',
-		'effect' => '初始经验值为65，但体力大幅下降',
+		'effect' => '初始经验值增加65点，但体力大幅下降',
 		'energy' => 0,
 		'valid' => array(
-			'sp' => '40',
-			'msp' => '40',
-			'exp' => '65',
+			'sp' => '-360',
+			'msp' => '-360',
+			'exp' => '+65',
 		)
 	),
 	62 => array(
@@ -1321,8 +1332,8 @@ $cards = array(
 		'effect' => '初始生命+300，体力+300',
 		'energy' => 0,
 		'valid' => array(
-			'hp' => '700',
-			'sp' => '700',
+			'hp' => '+300',
+			'sp' => '+300',
 		)
 	),
 	75 => array(
@@ -1410,8 +1421,8 @@ $cards = array(
 		'effect' => '最大生命值大幅提高，但是无法选择称号',
 		'energy' => 0,
 		'valid' => array(
-			'hp' => '800',
-			'mhp' => '800',
+			'hp' => '+400',
+			'mhp' => '+400',
 			'club' => '17',
 			'skills' => array(
 				'12' => '0', 
@@ -1469,8 +1480,8 @@ $cards = array(
 		'effect' => '初始攻防和行动CD都提高<br>推荐网速不佳的时候使用这张卡',
 		'energy' => 0,
 		'valid' => array(
-			'att' => '250',
-			'def' => '250',
+			'att' => '+150',
+			'def' => '+150',
 			'skills' => array(
 				'417' => '0', 
 			),
@@ -1592,7 +1603,7 @@ $cards = array(
 				'73' => '0', 
 				'59' => '0', 
 			),
-			'skillpoint' => '5',
+			'skillpoint' => '+5',
 		)
 	),
 	91 => array(
@@ -1682,8 +1693,8 @@ $cards = array(
 		)
 	),
 	95 => array(
-		'name' => '『冰炎（Rimefire）』',
-		'title' => '『冰炎』',
+		'name' => '『冰炎』',
+		'ruby' => 'Rimefire',
 		'rare' => 'S',
 		'pack' => 'Crimson Swear',
 		'desc' => '可能是家庭暴力的受害者',
@@ -2015,7 +2026,7 @@ $cards = array(
 		'effect' => '开局金钱为0元',
 		'energy' => 0,
 		'valid' => array(
-			'money' => 0,
+			'money' => '-20',
 		)
 	),
 	119 => array(
@@ -2344,10 +2355,10 @@ $cards = array(
 			'skills' => array(
 				'474' => '0', 
 			),
-			'hp' => '500',
-			'mhp' => '500',
-			'sp' => '500',
-			'msp' => '500',
+			'hp' => '+100',
+			'mhp' => '+100',
+			'sp' => '+100',
+			'msp' => '+100',
 		)
 	),
 	151 => array(
@@ -2402,7 +2413,7 @@ $cards = array(
 		'effect' => '开局赠送600点歌魂。对歌魂小于30的玩家和NPC造成的伤害+30%',
 		'energy' => 100,
 		'valid' => array(
-			'ss' => 600,
+			'ss' => '+600',
 			'skills' => array(
 				'477' => '0', 
 			),
@@ -2432,7 +2443,7 @@ $cards = array(
 		'effect' => '以4000点LP开局。面包替换为掘豆盘。',
 		'energy' => 100,
 		'valid' => array(
-			'hp' => 4000,
+			'hp' => '+3600',
 			'itm1' => '掘豆盘',
 			'itmk1' => 'DA',
 			'itme1' => '25',
@@ -2520,7 +2531,7 @@ $cards = array(
 		'pack' => 'Event Bonus',
 		'desc' => '宝石噩梦才刚刚开始，亲爱的',
 		'effect' => '称号固定为宝石骑士，且每隔一段时间能生成一个方块。开局包裹里道具全部变为随机方块。',
-		'energy' => 150,
+		'energy' => 100,
 		'valid' => array(
 			'club' => '20',
 			'skills' => array(
@@ -2573,10 +2584,10 @@ $cards = array(
 		'rare' => 'B',
 		'pack' => 'Crimson Swear',
 		'desc' => '其实红杀里并没有超能力者。<br>不知道这个特工是哪儿来的。',
-		'effect' => '开局灵熟+50',
+		'effect' => '开局灵熟+70',
 		'energy' => 100,
 		'valid' => array(
-			'wf' => '50',
+			'wf' => '+70',
 		)
 	),
 	162 => array(
@@ -2587,8 +2598,8 @@ $cards = array(
 		'effect' => '开局歌魂+30',
 		'energy' => 0,
 		'valid' => array(
-			'ss' => '30',
-			'mss' => '30',
+			'ss' => '+30',
+			'mss' => '+30',
 		)
 	),
 	163 => array(
@@ -2611,20 +2622,20 @@ $cards = array(
 		'rare' => 'B',
 		'pack' => 'Way of Life',
 		'desc' => '这个人有两大爱好，一是叫爸爸，二是假装自己是SCP',
-		'effect' => '开局金钱是88，经验、怒气、全熟、歌魂和最大歌魂都是8',
+		'effect' => '开局金钱是88，经验、怒气、全熟、歌魂和最大歌魂都增加8',
 		'energy' => 88,
 		'valid' => array(
-			'money' => '88',
-			'exp' => '8',
-			'rage' => '8',
-			'wp' => '8',
-			'wk' => '8',
-			'wg' => '8',
-			'wc' => '8',
-			'wd' => '8',
-			'wf' => '8',
-			'ss' => '8',
-			'mss' => '8',
+			'money' => '+68',
+			'exp' => '+8',
+			'rage' => '+8',
+			'wp' => '+8',
+			'wk' => '+8',
+			'wg' => '+8',
+			'wc' => '+8',
+			'wd' => '+8',
+			'wf' => '+8',
+			'ss' => '+8',
+			'mss' => '+8',
 		)
 	),
 	165 => array(
@@ -3091,9 +3102,12 @@ $cards = array(
 		'rare' => 'A',
 		'pack' => 'Event Bonus',
 		'desc' => '过去经历一切不明的女骇客，<br>其typing能力就算在糟糕级骇客中也实际强大！',
-		'effect' => '如果你上一次操作在程序执行时没有顺利完成，你获得7点经验和全系熟练，还会给这个游戏的天然呆程序员发一封站内信。',
+		'effect' => '开局经验、金钱和怒气都是77点。<br>如果你上一次操作在程序执行时<br>没有顺利完成，你获得7点经验和全系熟练，还会给这个游戏的天然呆程序员发一封站内信。',
 		'energy' => 100,
 		'valid' => array(
+			'money' => '+77',
+			'exp' => '+77',
+			'rage' => '+77',
 			'skills' => array(
 				'528' => '0', 
 			),
@@ -3209,6 +3223,17 @@ $cards = array(
 		  'skills' => array(
 				'243' => '0', 
 			),
+		)
+	),
+	196 => array(
+		'name' => '占位测试符',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '超过48张卡占位测试',
+		'effect' => '超过48张卡占位测试',
+		'energy' => 0,
+		'valid' => array(
+			'hp' => 99,
 		)
 	),
 	/////////////////////////////////////////////////
@@ -3353,8 +3378,8 @@ $cards = array(
 		)
 	),
 	208 => array(
-		'name' => '『无我（Absentia）』',
-		'title' => '『无我』',
+		'name' => '『无我』',
+		'ruby' => 'Absentia',
 		'rare' => 'S',
 		'pack' => 'Balefire Rekindle',
 		'desc' => '狂飙最珍视的朋友和最厉害的对手，每次比赛总让狂飙屈居亚军。<br>然而她的时间永远定格在了3年前。<br>狂飙再也没有机会<br>从她那里夺回冠军宝座了。',
@@ -3420,13 +3445,13 @@ $cards = array(
 		'pack' => 'Cyber Zealots',
 		'desc' => '跳、唱、rap、篮球',
 		'effect' => '你干嘛，哎哟',
-		'desc_skills' => '开局获得5点歌魂和5点体力上限，并装备篮球和背带裤',
+		'desc_skills' => '开局获得5点生命、最大生命、歌魂和最大歌魂，并装备篮球和背带裤',
 		'energy' => 0,
 		'valid' => array(
-			'mhp' => 105,
-			'hp' => 105,
-			'mss' => 5,
-			'ss' => 5,
+			'mhp' => '+5',
+			'hp' => '+5',
+			'mss' => '+5',
+			'ss' => '+5',
 			'wep' => '篮球',
 			'wepk' => 'WC',
 			'wepe' => '12',
@@ -3477,8 +3502,8 @@ $cards = array(
 		'desc_skills' => '开局携带一枚效果值为800的陷阱，但最大生命值只有正常的一半',
 		'energy' => 100,
 		'valid' => array(
-		  'hp' => '200',
-		  'mhp' => '200',
+		  'hp' => '-200',
+		  'mhp' => '-200',
 			'itm3' => '超天新龙 异色眼革命龙★12',
 			'itmk3' => 'TN12',
 			'itme3' => '800',
@@ -3494,7 +3519,7 @@ $cards = array(
 		'effect' => '告辞',
 		'energy' => 0,
 		'valid' => array(
-		  'exp' => '3',
+		  'exp' => '+3',
 		)
 	),
 	217 => array(
@@ -3527,7 +3552,7 @@ $cards = array(
 		'desc_skills' => '初始金额为100元，但获取金额时不能超过上限。可以消耗技能点还款来解除限制。',
 		'energy' => 0,
 		'valid' => array(
-		  'money' => '100',
+		  'money' => '+80',
 			'skills' => array(
 				'495' => '0', 
 			),
@@ -3827,8 +3852,7 @@ $cards = array(
 		)
 	),
 	237 => array(
-		'name' => '『维因·索菲尔』',
-		'title' => '维因·索菲尔',
+		'name' => '『零·虚光』',
 		'rare' => 'S',
 		'pack' => 'Cyber Zealots',
 		'desc' => '『时空护卫』的中坚力量之一，<br>能轻易记住其他超能力者的超能力，并用自己的方式施展出来。<br><br><span class="seagreen b">“就算在那群固执的疯子里<br>也是最固执而最疯的一个。”</span><br>——林苍月',
@@ -3845,7 +3869,6 @@ $cards = array(
 	),
 	238 => array(
 		'name' => '『黑衣少女』',
-		'title' => '黑衣少女',
 		'rare' => 'S',
 		'pack' => 'Cyber Zealots',
 		'desc' => '接管了整个林氏集团的神秘少女。<br>虽然她自称只是林无月的女儿，也没有干预幻境的运转，但她显露出的卓越洞察力和深不可测的举止，都表明她并不是凡庸之辈。<br><br><span class="ltcrimson b">“我们的敌人比预想的更加麻烦。”</span><br>——红暮',
@@ -3922,11 +3945,11 @@ $cards = array(
 		'rare' => 'C',
 		'pack' => 'Cyber Zealots',
 		'desc' => '我先叠个甲',
-		'effect' => '开局防御力变为200',
+		'effect' => '开局防御力+200',
 		//'desc_skills' => '',
 		'energy' => 0,
 		'valid' => array(
-		  'def'=> '200',
+		  'def'=> '+200',
 		)
 	),
 	244 => array(
@@ -3980,16 +4003,16 @@ $cards = array(
 	
 	
 	1000 => array(
-		'name'=>'补给品',
-		'rare'=>'C',
-		'pack'=>'hidden',
-		'desc'=>'教程模式用卡',
-		'effect'=>'教程模式技能载体',
+		'name'=>'萌新',
+		'rare'=>'A',
+		'pack'=>'Stealth',
+		'desc'=>'<span class="linen" style="font-weight:bold">“这是「卡片」，是「虚拟幻境」给与的能力的其中一个载体。<br>不同的卡片拥有不同的效果，你可以之后自行探究。”</span>',
+		'effect'=>'<span class="linen" style="font-weight:bold">“而现在，如果你不想落地成盒的话，就不要东张西望，认真听我说。”</span>',
 		'energy'=>0,
 		'valid' => array(
-			'club' => '17',
-			'itm3' => '紧急药剂',
-			'itmk3' => 'Ca',
+			'pls' => 33,
+			'itm3' => '解毒剂',
+			'itmk3' => 'Cp',
 			'itme3' => '1',
 			'itms3' => '10',
 			'itmsk3' => '',

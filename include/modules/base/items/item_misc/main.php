@@ -26,7 +26,7 @@ namespace item_misc
 			}elseif ($n == '游戏解除钥匙') {
 				$ret .= '使用后达成『锁定解除』胜利';
 			}elseif ($n == '奇怪的按钮') {
-				$ret .= '警告：高度危险！';
+				$ret .= '警告：极度危险！';
 			}elseif ($n == '『C.H.A.O.S』') {
 				$ret .= '献祭包裹里的全部物品以获得通往『幻境解离』的必备道具。需要持有黑色发卡，当前歌魂不少于600，攻击力减去防御力不多于2000，且击杀玩家数不能过多。';
 			}elseif ($n == '『S.C.R.A.P』') {
@@ -208,7 +208,7 @@ namespace item_misc
 					$itm1='美味补给';$itmk1 = 'HB';$itmsk1 = '';$itme1 = 2777;$itms1 = 277;
 					$itm2='全恢复药剂';$itmk2 = 'Ca';$itmsk2 = '';$itme2 = 1;$itms2 = 44;
 					$itm3='食堂的剩饭';$itmk3 = 'HR';$itmsk3 = '';$itme3 = 100;$itms3 = 15;
-					$itm4='量子雷达';$itmk4 = 'ER';$itmsk4 = '2';$itme4 = 20;$itms4 = 1;
+					$itm4='哔哔小马';$itmk4 = 'ER';$itmsk4 = '5';$itme4 = 20;$itms4 = 1;
 					$itm5='聪明药';$itmk5 = 'ME';$itmsk5 = '';$itme5 = 100;$itms5 = 4;
 					//$itm5='游戏解除钥匙';$itmk5 = 'Y';$itmsk5 = '';$itme5 = 1;$itms5 = 1;
 					$arb='代码聚合体的长袍';$arbk = 'DB';$arbsk = 'Bb';$arbe = 5000;$arbs = 1000;
@@ -259,7 +259,7 @@ namespace item_misc
 					\player\load_playerdata($sdata);
 				}
 				return;
-			} else if (substr($itm,0,strlen('任务指令书'))=='任务指令书') {
+			} elseif (substr($itm,0,strlen('任务指令书'))=='任务指令书') {
 				if ($itm == '任务指令书A') {
 					$log .= '指令书上这样写着：<br>“很高兴大家能来参与幻境系统的除错工作。”<br>“我们对系统进行了一些调整，就算遭遇袭击和陷阱也不会造成致命伤害，所以请尽管放心。”<br>“任务结束后我们会根据工作量发放相应的奖励。”<br>';
 				} else if ($itm == '任务指令书B') {
@@ -366,7 +366,7 @@ namespace item_misc
 			} elseif(strpos($itm,'测试用阻塞设备')!==false){
 				sleep(10);
 				$log .= "刚才那是什么，是卡了么？<br>";
-				$hp = 1;
+				//$hp = 1;
 				return;
 			} elseif('『我是说在座的各位都是垃圾』' === $itm){
 				$mhpdown = 100;

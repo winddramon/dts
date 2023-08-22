@@ -190,15 +190,15 @@ background-image: url("../../img/footer_line.gif");
 .clearfix {display: inline-table;} /* Hides from IE-mac \*/ * html .clearfix {height: 1%;} .clearfix {display: block;} /* End hide from IE-mac */ 
 
 input.cmdbutton{
-	width:80px;height:25px;margin:2;
+	min-width:80px;height:25px;margin:2;
 }
 
 input.dropbutton{
-	width:75px;height:23px;margin:1;
+	min-width:75px;height:23px;margin:1;
 }
 
 input.bigbutton{
-	width:120px;height:25px;margin:2;
+	min-width:120px;height:25px;margin:2;
 }
 
 .auto-style1 {
@@ -264,7 +264,7 @@ div.bubblebox_container{
 .shoprow .leftbox{
 	width:50px;float:left;margin-right:5px;
 }
-.shoprow .leftbox input{width:50px;}
+.shoprow .leftbox input{min-width:50px;}
 .shoprow .rightbox{
 	width:60px;float:right;
 }
@@ -326,9 +326,24 @@ div.skilllearn_desc_container{
 	filter:alpha(opacity=95); opacity:0.95; background-color:#000000
 }
 /*==========卡片==========*/
+.cardframe_show div{
+	position:absolute;
+}
+.cardframe_show span{
+	font-weight:normal;
+}
 .lockcard
 {
 	filter:alpha(opacity=0.55); -moz-opacity:0.55;opacity: 0.55;
+}
+div.cardpanel
+{
+	position:absolute; white-space:nowrap;
+	left:0px; top:0px; 
+	padding:10px;
+	height:310px; width:710px; 
+	text-align:left; 
+	overflow-x:auto; overflow-y:hidden;
 }
 div.cardpack_bar{
 	position:relative;
@@ -387,6 +402,11 @@ div.card_bar div.card_err{
 	height:25px;
 	width:170px;
 }
+div.card_frame_inner rt{
+	font-size:12px; 
+  transform: scale(1);
+  -webkit-transform: scale(1);
+}
 /*==========进度条==========*/
 #progressbar-border
 {
@@ -410,6 +430,24 @@ div.card_bar div.card_err{
 	left: 135px;
 	color: #ffffff;
 	top: -16px; 
+}
+/*==========滚动条==========*/
+.gscroll::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.6);
+	background-color: #CCCCCC;
+}
+
+.gscroll::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+.gscroll::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+	border: 2px solid #555555;
 }
 /*==========对话气泡==========*/
 .dialogue-bubble-container{ 

@@ -2,12 +2,18 @@
 
 namespace radar
 {
-	global $radardata, $radar_npctplist;
+	global $radardata, $radar_tplist;
 	
 	function init()
 	{
 		eval(import_module('itemmain'));
 		$iteminfo['ER'] = '探测仪器';
+	}
+	
+	//使用雷达前的事件
+	function pre_radar_event($radarsk = 0){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return false;
 	}
 	
 	//探测仪器的属性数字代表其类型
@@ -29,8 +35,9 @@ namespace radar
 		}
 		
 		$existing_npctp = array();
+		$radardata_raw = $radardata = array();
 		//第一轮循环，得到原始的存活角色数据
-		$radardata_raw = array();
+		
 		$result = $db->query("SELECT name,type,pls,hp FROM {$tablepre}players");
 		while($cd = $db->fetch_array($result)) {
 			$cdname = $cd['name']; $cdtype = $cd['type']; $cdpls = $cd['pls']; $cdhp = $cd['hp'];
@@ -45,9 +52,10 @@ namespace radar
 				if(in_array($cdtype, array(0, 2, 5, 7, 11, 14, 20, 21, 22, 45, 46))) $radardata_raw[$cdpls][$cdtype]['namelist'][] = $cdname;
 			}
 		}
-		$radar_npctplist = get_radar_npc_type_list($radarsk, $existing_npctp);
+		
+		$radar_tplist = array_merge(Array(0), get_radar_npc_type_list($radarsk, $existing_npctp));
+		
 		//第二轮循环，形成显示用数据
-		$radardata = array();
 		foreach($plsinfo as $plsi => $plsn) {
 			$radardata[$plsi] = array();
 			if(array_search($plsi,$arealist) <= $areanum && !$hack) {
@@ -56,8 +64,9 @@ namespace radar
 				$radardata[$plsi] = '?';//探测不到，全部写问号
 			} else {
 				$radardata[$plsi] = array();
-				foreach($radar_npctplist as $typei){
-					if(!empty($radardata_raw[$plsi][$typei]['num'])) {
+				//玩家是一定显示的，其他NPC则要根据死斗情况判定是否显示
+				foreach($radar_tplist as $typei){
+					if((!\gameflow_duel\is_gamestate_duel() || !$typei) && !empty($radardata_raw[$plsi][$typei]['num'])) {
 						$radardata[$plsi][$typei]['num'] = $radardata_raw[$plsi][$typei]['num'];
 						if(3 == $radarsk && !in_array($typei, array(6, 90))) $radardata[$plsi][$typei]['namelist'] = radar_parse_namelist($radardata_raw[$plsi][$typei]['namelist']);
 						elseif(4 == $radarsk && in_array($typei, array(21,45,46))) $radardata[$plsi][$typei]['namelist'] = radar_parse_namelist($radardata_raw[$plsi][$typei]['namelist']);
@@ -72,19 +81,7 @@ namespace radar
 		if($radarsk == 3 || $radarsk == 4) $log .= '鼠标悬停于带[ ]的数字可查看NPC名字列表。<br>';
 		$log .= '<br>';
 		//避难所探测器增加buff，不会显示特殊指令页面
-		if(5 == $radarsk) {
-			eval(import_module('skill84'));
-			//如果没有获得84号技能，则获得之
-			if(!\skillbase\skill_query(84)) {
-				\skillbase\skill_acquire(84);
-			}
-			if(!\skill84\check_skill84_state($sdata)) {
-				\skillbase\skill_setvalue(84,'start',$now);
-				\skillbase\skill_setvalue(84,'end',$now+\skill84\get_skill84_time($sdata));
-			}
-			$remtime = \skillbase\skill_getvalue(84,'end') - $now;
-			$log .= '在<span class="lime b">'.$remtime.'秒</span>内你可以无消耗使用避难所生命探测器，且你的<span class="lime b">先制率+'.round(\skill84\get_skill84_effect($sdata)*100-100).'%</span>。<br><br>';
-		}else{//其他探测器显示特殊指令页面（就是要返回一下
+		if(check_include_radar_cmdpage($radarsk)) {
 			ob_start();
 			include template(MOD_RADAR_RADARCMD);
 			$cmd = ob_get_contents();
@@ -95,17 +92,30 @@ namespace radar
 		return;
 	}
 	
+	//判断是否显示特殊指令页面（就是有返回按钮的那个页面）
+	function check_include_radar_cmdpage($radarsk = 0){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return true;
+	}
+	
+	//使用雷达完毕后的事件
+	function post_radar_event($radarsk = 0){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return false;
+	}
+	
 	function radar_parse_namelist($arr){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		if(empty($arr)) return '';
 		else return str_replace('"',"'",implode('<br>',$arr));
 	}
 	
+	//根据雷达类型返回能显示的NPC类型
 	function get_radar_npc_type_list($radarsk, $existing_npctp=array()){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
-		//基本显示：玩家、杂兵、全息幻象、豆腐、猴子、幻影执行官、职人、女主
-		$ret = Array(0,90,2,5,6,7,11,14);
+		//基本显示：杂兵、全息幻象、豆腐、猴子、幻影执行官、职人、女主
+		$ret = Array(90,2,5,6,7,11,14);
 		if(!empty($existing_npctp)){
 			//如果幻影执行官没入场，不会显示执行官
 			if(!in_array(7, $existing_npctp)) $ret = array_diff($ret, array(7));
@@ -117,6 +127,22 @@ namespace radar
 			}
 		}
 		return $ret;
+	}
+	
+	//雷达道具消耗电力
+	function item_radar_reduce(&$theitem)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('logger'));
+		$itm=&$theitem['itm']; $itmk=&$theitem['itmk'];
+		$itme=&$theitem['itme']; $itms=&$theitem['itms']; $itmsk=&$theitem['itmsk'];
+		
+		$itme--;//雷达以效果值判定电力
+		$log .= "消耗了<span class=\"yellow b\">$itm</span>的电力。<br>";
+		if ($itme <= 0) {
+			$log .= $itm . '的电力用光了，请使用电池充电。<br>';
+		}
+		return true;
 	}
 
 	function itemuse(&$theitem) 
@@ -131,15 +157,13 @@ namespace radar
 		if (strpos ( $itmk, 'ER' ) === 0) {//雷达
 			if ($itme > 0) {
 				$log .= "使用了<span class=\"red b\">$itm</span>。<br>";
-				$skill84_state = \skill84\check_skill84_state($sdata);
+				pre_radar_event($itmsk);
+				
 				use_radar ( $itmsk );
-				if(5 != $itmsk || !$skill84_state){//避难所探测器生效中不需要消耗电力
-					$itme--;
-					$log .= "消耗了<span class=\"yellow b\">$itm</span>的电力。<br>";
-					if ($itme <= 0) {
-						$log .= $itm . '的电力用光了，请使用电池充电。<br>';
-					}
-				}
+				
+				item_radar_reduce($theitem);
+				
+				post_radar_event($itmsk);
 			} else {
 				$itme = 0;
 				$log .= $itm . '没有电了，请先充电。<br>';
