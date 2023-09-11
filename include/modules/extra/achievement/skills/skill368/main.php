@@ -9,7 +9,7 @@ namespace skill368
 	
 	//各级显示的要求，如果不存在则取低的
 	$ach368_desc= array(
-		1=>'在场上没有存活的NPC的情况下获得游戏胜利（死斗状态下无效）',
+		1=>'获胜时场上无存活NPC且非死斗。仅限标准、自选、随机和荣耀模式',
 	);
 	
 	$ach368_proc_words = '获得纪录';
@@ -55,7 +55,7 @@ namespace skill368
 		$ret = $chprocess($pa, $data, $achid);
 		if($achid == 368){
 			eval(import_module('sys'));
-			if($winner === $pa['name'] && $gamestate < 50) {
+			if(\sys\is_winner($pa['name'],$winner) && $gamestate < 50) {
 				//判定场上是否没有存活着的NPC了
 				$result = $db->query("SELECT pid,hp FROM {$tablepre}players WHERE type > 0 AND hp > 0");
 				if(!$db->num_rows($result))

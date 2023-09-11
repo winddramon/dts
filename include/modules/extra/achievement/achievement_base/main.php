@@ -4,7 +4,7 @@ namespace achievement_base
 {
 	$ach_list = $ach_expired_list = Array();
 	
-	define('POSITIVE_PLAYER_DESC','与你IP不同、获得金钱不少于1000且APM不少于10');
+	define('POSITIVE_PLAYER_DESC','与你IP不同且APM不少于10');
 	function init() {
 	}
 	
@@ -47,9 +47,11 @@ namespace achievement_base
 		return $ret;
 	}
 	
-	function skill_onload_event(&$pa)//技能模块载入时直接加载所有成就
+	//进入游戏时加载所有成就
+	function post_enterbattlefield_events(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess($pa);
 		eval(import_module('sys','achievement_base'));
 		$alist = array();
 		foreach($achlist as $atk => $atv){
@@ -68,7 +70,7 @@ namespace achievement_base
 				&& !\skillbase\skill_query($av,$pa))
 			\skillbase\skill_acquire($av,$pa);
 		}
-		$chprocess($pa);
+		return $ret;
 	}
 	
 	//传入成就数组，进行成就编码
@@ -181,6 +183,7 @@ namespace achievement_base
 	}
 	
 	//更新单个玩家的成就记录
+	//注意这个函数不负责写数据库，实际写数据库在gameover()判定的最后完成
 	function update_achievements_by_udata(&$udata, &$pdata)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -677,10 +680,10 @@ namespace achievement_base
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		list($vapm, $aapm) = \apm\calc_apm($pe);
 
-		if($pe['type']) return false;
-		if($pl['ip'] == $pe['ip'] || $vapm < 10) return false;
-		$skill1003_got = \skillbase\skill_getvalue(1003,'money_got', $pe);	
-		if($skill1003_got < 1000) return false;
+		if($pe['type']) return false;//排除NPC
+		if($pl['ip'] == $pe['ip'] || $vapm < 10) return false;//排除双方IP相同，或者对方VAPM<10
+//		$skill1003_got = \skillbase\skill_getvalue(1003,'money_got', $pe);	
+//		if($skill1003_got < 1000) return false;
 		return true;
 		//return !$pl['type'] && $pl['lvl'] >= 7 && $pl['money'] >= 1000;
 	}

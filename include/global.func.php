@@ -42,6 +42,7 @@ function gexit($message = '',$file = '', $line = 0) {
 	defined('STYLEID') || define('STYLEID', '1');
 	defined('TEMPLATEID') || define('TEMPLATEID', '1');
 	defined('TPLDIR') || define('TPLDIR', './templates/default');
+	
 	if (defined('IN_DAEMON'))
 	{
 		if (defined('GEXIT_RETURN_JSON'))
@@ -53,6 +54,7 @@ function gexit($message = '',$file = '', $line = 0) {
 		}
 		else
 		{
+			global $bbsurl,$homepage;
 			ob_clean();
 			throw new Exception( include template('error'));
 		}
@@ -69,6 +71,7 @@ function gexit($message = '',$file = '', $line = 0) {
 		}
 		else
 		{
+			global $bbsurl,$homepage;
 			ob_clean();
 			include template('error');
 			exit();
@@ -322,7 +325,6 @@ function dir_clear($dir) {
 //读取文件
 function readover($filename,$method="rb"){
 	strpos($filename,'..')!==false && debug_print_backtrace() && exit('Forbidden');
-	//$filedata=file_get_contents($filename);
 	$handle=fopen($filename,$method);
 	if(flock($handle,LOCK_SH)){
 		$filedata='';
@@ -715,6 +717,11 @@ function gurl(){
 	$ret = $gameurl;
 	if(substr($gameurl, strlen($gameurl)-1, 1) != '/' ) $ret .= '/';
 	return $ret;
+}
+
+//md5并取前$i个字符
+function md5sub($str, $i){
+	return substr(md5($str),0,$i);
 }
 
 //----------------------------------------

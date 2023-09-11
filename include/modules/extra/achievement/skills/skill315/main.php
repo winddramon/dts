@@ -9,7 +9,7 @@ namespace skill315
 	
 	//各级显示的要求，如果不存在则取低的
 	$ach315_desc= array(
-		1=>'战斗击杀<:threshold:>名<span class="yellow b" title=\''.POSITIVE_PLAYER_DESC.'\'>活跃玩家</span>',
+		1=>'战斗击杀<:threshold:>名<span class="yellow b" title=\''.POSITIVE_PLAYER_DESC.'\'>活跃玩家</span>。伐木和解离模式不能完成',
 	);
 	
 	$ach315_proc_words = '击杀总数';
@@ -48,7 +48,7 @@ namespace skill315
 	function player_kill_enemy(&$pa,&$pd,$active){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa, $pd, $active);		
-		if ( \skillbase\skill_query(315,$pa) && !$pd['type'] && $pd['hp'] <= 0)
+		if ( \skillbase\skill_query(315,$pa) && !$pd['type'])
 		{
 			//对方为活跃玩家
 			if(\achievement_base\ach_check_positive_player($pa,$pd)){

@@ -10,7 +10,7 @@ namespace skill350
 	
 	//各级显示的要求，如果不存在则取低的
 	$ach350_desc= array(
-		1=>'在<span class="red b">极速模式</span>中达成锁定解除结局<:threshold:>次',
+		1=>'在<span class="red b">极速模式</span>中锁定解除<:threshold:>次',
 	);
 	
 	$ach350_proc_words = '目前进度';
@@ -58,7 +58,7 @@ namespace skill350
 		$ret = $chprocess($pa, $data, $achid);
 		if($achid == 350){
 			eval(import_module('sys'));
-			if($winner === $pa['name'] && 19==$gametype && 3==$winmode) $ret += 1;
+			if(\sys\is_winner($pa['name'],$winner) && 19==$gametype && 3==$winmode) $ret += 1;
 		}
 		return $ret;
 	}

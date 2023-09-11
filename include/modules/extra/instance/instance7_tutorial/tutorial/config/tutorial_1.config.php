@@ -107,7 +107,12 @@ $tutorial_story[1] = Array(
 			'itmk' => Array('Ca','Cp'),
 		),
 		'pulse' => ".itmsingle :contains('解毒剂') __BUTTON__",
-		'prog' => '“如果已经处理完了，请随便执行一次行动。”<br>',
+		
+		'prog' => Array(
+		'inf!=p' => '“如果已经处理完了，请随便执行一次行动。”<br>',
+		'hp<mhp*0.5' => '“中毒后每次探索和移动都会损失生命值，务必及时<span class="lime b">回复生命</span>。”<br>',
+		'“如果你提前把解毒剂炫完了，那就到处搜索一下吧，路边偶尔是能出现解毒剂的。”<br>'
+		),
 		'next' => 1300
 	),
 	1300 => Array(
@@ -197,16 +202,17 @@ $tutorial_story[1] = Array(
 		'object' => 'itembuy',
 		'obj2' => Array(
 			'item' => '【红杀铁剑】',
+			'min_money' => 1000
 		),
 		'pulse' => Array('#buy_f1b3f633'),
 		'prog' => Array(
-			'money<1300' => '“钱不够了？在<span class="yellow b">天使队移动格纳库</span>能找到我留下的一些盘缠。”<br>',
-			'“不要乱买东西，后面还需要用到钱的。”',//注意如果要修改编号，得把事件相关给改了
+			'money<1000' => '“钱不够了？在<span class="yellow b">天使队移动格纳库</span>能找到我留下的一些盘缠。”<br>',
+			'“选择<span class="red b">【红杀铁剑】</span>并购买吧。”',
 		),
 		'next' => 2400	
 	),
 	2400 => Array(
-		'tips' => '“这把剑显然比你的初始武器好多了。<br><span class="lime b">商店购买</span>、<span class="lime b">地图探索</span>，或者拾取<span class="lime b">战利品</span>，都有可能给你带来更好的武器，如何尽快获得高级武器是一门学问。”<br>',
+		'tips' => '“这把剑显然比你的初始武器好多了，它的<span class="yellow b">效果值</span>较高，能够造成更高伤害；同时它的<span class="yellow b">耐久值</span>适中，不至于很快就损坏了。<br><span class="lime b">商店购买</span>、<span class="lime b">地图探索</span>，或者拾取<span class="lime b">战利品</span>，都有可能给你带来更好的武器，如何尽快获得高级武器是一门学问。”<br>',
 		'object' => 'continue',
 		'obj2' => Array(
 			'addchat' => Array(
@@ -355,7 +361,7 @@ $tutorial_story[1] = Array(
 		'next' => 3400	
 	),
 	3400 => Array(
-		'tips' => '“成功了！现在你在武器上已经有优势了。不过，要发挥武器的最大威力，还需要你提升对应的<span class="yellow b">【武器熟练度】</span>。<br><span class="yellow b">使用武器作战</span>是提升对应的熟练度的主要途径，也就是熟能生巧；不过，也有一些道具能快速提升熟练度。<br><br>先回到<span class="yellow b">【商店】</span>所在的地图吧。”<br>',
+		'tips' => '“成功了！<br>【红杀铁剑·雷击】不只是效果值更高了，它拥有的<span class="yellow b">电击</span>和<span class="red b">火焰</span>属性也能造成额外的伤害，<span class="white b">碎甲</span>属性更能够迅速破会对方的防具。强大的武器往往具有一系列能造成伤害的属性。<br>现在你在武器上已经有优势了，不过，要发挥武器的最大威力，还需要你提升对应的<span class="yellow b">【武器熟练度】</span>。<br><span class="yellow b">使用武器作战</span>是提升对应的熟练度的主要途径，也就是熟能生巧；不过，也有一些道具能快速提升熟练度。<br><br>先回到<span class="yellow b">【商店】</span>所在的地图吧。”<br>',
 		'object' => 'move',
 		'obj2' => Array('shop'),
 		'pulse' => Array('#wk','#wkv','#moveto'),
@@ -363,10 +369,15 @@ $tutorial_story[1] = Array(
 		'next' => 3500
 	),
 	3500 => Array(
-		'tips' => '“可以在商店购买【技能书】来提升你的熟练度。<br>刀剑类武器对应<span class="yellow b">【斩熟】</span>，其技能书位于<span class="yellow b">【商店页面】→【书籍】→【斩系指南】</span>。”<br>',
+		'tips' => '“可以在商店购买【技能书】来提升你的熟练度。<br>刀剑类武器对应<span class="yellow b">【斩熟】</span>，其技能书位于<span class="yellow b">【商店页面】→【书籍】→《斩系指南》</span>。”<br>',
 		'object' => 'itembuy',
 		'obj2' => Array(
-			'item' => '《斩系指南》'
+			'item' => '《斩系指南》',
+			'min_money' => 300
+		),
+		'prog' => Array(
+			'money<300' => '“钱不够了？在<span class="yellow b">天使队移动格纳库</span>能找到我留下的一些盘缠。”<br>',
+			'“赶紧回去购买《斩系指南》吧。”',
 		),
 		'pulse' => Array('#c','#bshop10','#buy_6c086eaf'),
 		'next' => 3600	

@@ -73,7 +73,7 @@ $cardindex=array(//已停止更新，现在$cardindex是自动生成的，文件
 	//pop子实际爆率是B
 );
 
-if(file_exists($card_index_file)) include $card_index_file;//载入真正的$cardindex
+if(file_exists($card_index_file)) include_once $card_index_file;//载入真正的$cardindex
 
 $card_rarecolor=array(
 	'S'=>'gold b ',
@@ -118,11 +118,11 @@ $cards = array(
 		'effect' => '开局获得11份经验药',
 		'energy' => 100,
 		'valid' => array(
-			'itm5' => '思念数据',
-			'itmk5' => 'ME',
-			'itme5' => '9',
-			'itms5' => '11',
-			'itmsk5' => '',
+			'itm6' => '思念数据',
+			'itmk6' => 'ME',
+			'itme6' => '9',
+			'itms6' => '11',
+			'itmsk6' => '',
 		)
 	),
 	2 => array(
@@ -408,7 +408,7 @@ $cards = array(
 		'effect' => '开局获得3个技能点',
 		'energy' => 0,
 		'valid' => array(
-			'skillpoint' => '3',
+			'skillpoint' => '+3',
 		)
 	),
 	18 => array(
@@ -709,11 +709,11 @@ $cards = array(
 		'effect' => '自带雷达',
 		'energy' => 80,
 		'valid' => array(
-			'itm3' => '雷达',
-			'itmk3' => 'ER',
-			'itme3' => '44',
-			'itms3' => '44',
-			'itmsk3' => '2',
+			'itm6' => '雷达',
+			'itmk6' => 'ER',
+			'itme6' => '44',
+			'itms6' => '44',
+			'itmsk6' => '2',
 		)
 	),
 	33 => array(
@@ -824,7 +824,7 @@ $cards = array(
 		'pack' => 'Crimson Swear',
 		'desc' => '英姿飒爽的年轻女性。<br>表面上是城内世家的千金，以及湾城最大的实业『金龙通讯社』的CEO，<br>实际是佣兵组织『红杀』的现任当家',
 		'effect' => '揍起人来当然也是一把好手',
-		'desc_skills' => '获得技能「烈击」<br>「烈击」：战斗时有60%概率提高物理伤害75%',
+		'desc_skills' => '获得技能「烈击」：战斗时有60%概率提高物理伤害75%',
 		'energy' => 180,
 		'valid' => array(
 			'skills' => array(
@@ -1245,11 +1245,11 @@ $cards = array(
 		'effect' => '开局携带【风神的神德】',
 		'energy' => 100,
 		'valid' => array(
-			'itm3' => '【风神的神德】',
-			'itmk3' => 'WF',
-			'itme3' => '233',
-			'itms3' => '10',
-			'itmsk3' => 'z',
+			'itm6' => '【风神的神德】',
+			'itmk6' => 'WF',
+			'itme6' => '233',
+			'itms6' => '10',
+			'itmsk6' => 'z',
 		)
 	),
 	69 => array(
@@ -1260,11 +1260,11 @@ $cards = array(
 		'effect' => '开局携带驱云弹',
 		'energy' => 200,
 		'valid' => array(
-			'itm3' => '驱云弹',
-			'itmk3' => 'EW',
-			'itme3' => '1',
-			'itms3' => '1',
-			'itmsk3' => '1',
+			'itm6' => '驱云弹',
+			'itmk6' => 'EW',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => '1',
 		)
 	),
 	70 => array(
@@ -1287,7 +1287,7 @@ $cards = array(
 		'rare' => 'S',
 		'pack' => 'Top Players',
 		'desc' => '著名的小黄系列玩家，设计了《小黄的大师球》和初版游戏王的合成',
-		'effect' => '获得技能「鹰眼」：<br>600秒内必中（爆系和重枪无效），发动时每有1点投熟额外延长1秒，每局只能使用1次。',
+		'effect' => '获得技能「鹰眼」：<br>600秒内必中（爆系和重枪无效），发动时每有1点投熟额外延长4秒，每局只能使用1次。',
 		'energy' => 100,
 		'valid' => array(
 			'skills' => array(
@@ -1406,11 +1406,11 @@ $cards = array(
 		'desc_skills' => '实际上携带的是「杏仁豆腐的ID卡模样的杏仁豆腐」',
 		'energy' => 100,
 		'valid' => array(
-			'itm3' => '杏仁豆腐的ID卡模样的杏仁豆腐',
-			'itmk3' => 'HB',
-			'itme3' => '77',
-			'itms3' => '77',
-			'itmsk3' => 'Z',
+			'itm6' => '杏仁豆腐的ID卡模样的杏仁豆腐',
+			'itmk6' => 'HB',
+			'itme6' => '77',
+			'itms6' => '77',
+			'itmsk6' => 'Z',
 		)
 	),
 	79 => array(
@@ -1698,8 +1698,8 @@ $cards = array(
 		'rare' => 'S',
 		'pack' => 'Crimson Swear',
 		'desc' => '可能是家庭暴力的受害者',
-		'effect' => '每次通常合成物品经验+3，全熟+3',
-		'energy' => 90,
+		'effect' => '每次通常合成物品经验+6，全熟+4',
+		'energy' => 100,
 		'valid' => array(
 			'skills' => array(
 				'431' => '0', 
@@ -1711,7 +1711,7 @@ $cards = array(
 		'rare' => 'S',
 		'pack' => 'Event Bonus',
 		'desc' => '可能是家庭暴力的受害者',
-		'effect' => '每次通常合成物品经验+3，全熟+3',
+		'effect' => '每次通常合成物品经验+6，全熟+4',
 		'energy' => 50,
 		'valid' => array(
 			'skills' => array(
@@ -2006,12 +2006,12 @@ $cards = array(
 	),
 	117 => array(
 		'name' => '星莲船挑战者',
-		'rare' => 'S',
+		'rare' => 'A',
 		'pack' => 'Top Players',
 		'desc' => 'AC大逃杀元老人物之一，<br>擅长上班摸鱼、下班挖坑',
 		'effect' => '获得技能「挖坑」，但不能选到肌肉兄贵称号',
 		'desc_skills' => '「挖坑」：在你当前地点放置两个毒性陷阱，效果值为基础攻击力x距上次挖坑的分钟数(最多为3)<br>此外你不会遭遇自己放置的陷阱',
-		'energy' => 150,
+		'energy' => 180,
 		'valid' => array(
 			'skills' => array(
 				'247' => '0', 
@@ -2109,6 +2109,169 @@ $cards = array(
 			),
 		)
 	),
+	//这里曾经有10张卡的空白，后来被我填满了。所以这部分卡跟之前和之后的卡是有代沟的
+	125 => array(
+		'name' => '植物人',
+		'rare' => 'C',
+		'pack' => 'Way of Life',
+		'desc' => '第一次见到肥料就一口啃下去的萌新',
+		'effect' => '开局携带肥料',
+		'energy' => 0,
+		'valid' => array(
+			'itm6' => '肥料',
+			'itmk6' => 'HB',
+			'itme6' => '200',
+			'itms6' => '1',
+			'itmsk6' => '',
+		)
+	),
+	126 => array(
+		'name' => '闹球肾',
+		'rare' => 'C',
+		'pack' => 'Top Players',
+		'desc' => '一个半角引号引发的血案',
+		'effect' => '开局携带\' OR 1',
+		'energy' => 0,
+		'valid' => array(
+			'itm6' => '’ OR 1',
+			'itmk6' => 'WF',
+			'itme6' => '190',
+			'itms6' => '5',
+			'itmsk6' => '',
+		)
+	),
+	127 => array(
+		'name' => '坂田铜时',
+		'rare' => 'C',
+		'pack' => 'Top Players',
+		'desc' => '对幻境使用受王拳吧',
+		'effect' => '使用效果值大于10000的殴系武器时，不会损耗耐久值',
+		'energy' => 0,
+		'valid' => array(
+			'skills' => array(
+				'532' => '0', 
+			),
+		)
+	),
+	128 => array(
+		'name' => '网魔',
+		'rare' => 'C',
+		'pack' => 'Way of Life',
+		'desc' => '谁把天才变成了魔兽？',
+		'effect' => '获得锡安成员技能「网瘾」',
+		'desc_skills' => '「网瘾」：使用移动PC解除禁区成功率为95%，且完全无风险',
+		'energy' => 0,
+		'valid' => array(
+		  'skills' => array(
+				'233' => '0', 
+			),
+		)
+	),
+	129 => array(
+		'name' => '吉祥物',
+		'rare' => 'M',
+		'pack' => 'Standard Pack',
+		'desc' => '总之就是非常可爱',
+		'effect' => '称号固定为走路萌物',
+		//'desc_skills' => '「网瘾」：使用移动PC解除禁区成功率为95%，且完全无风险',
+		'energy' => 0,
+		'valid' => array(
+		  'club' => '17',
+			'skills' => array(
+				'10' => '0', 
+				'11' => '0', 
+				'12' => '0',
+			),
+		)
+	),
+	130 => array(
+		'name' => '士兵 丁',
+		'rare' => 'M',
+		'pack' => 'Top Players',
+		'desc' => '远古时期参与出征265g，为dts菜鸟们长脸的神秘黑客高手',
+		'effect' => '称号固定为装逼战士。开局携带能增长全系熟练度的药剂',
+		//'desc_skills' => '「网瘾」：使用移动PC解除禁区成功率为95%，且完全无风险',
+		'energy' => 0,
+		'valid' => array(
+		  'club' => '97',
+			'skills' => array(
+				'10' => '0', 
+				'11' => '0', 
+				'12' => '0',
+			),
+			'itm6' => 'DTS.EXE',
+			'itmk6' => 'MV',
+			'itme6' => '1',
+			'itms6' => '100',
+			'itmsk6' => '',
+		)
+	),
+	131 => array(
+		'name' => '北京推倒你',
+		'rare' => 'B',
+		'pack' => 'Top Players',
+		'desc' => '虽然代码令人一言难尽，但他创造了宝石强化系统',
+		'effect' => '开局携带『祝福宝石』',
+		//'desc_skills' => '「网瘾」：使用移动PC解除禁区成功率为95%，且完全无风险',
+		'energy' => 100,
+		'valid' => array(
+			'itm6' => '『祝福宝石』',
+			'itmk6' => 'Y',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => '',
+		)
+	),
+	132 => array(
+		'name' => '搬运⑨课',
+		'rare' => 'C',
+		'pack' => 'Top Players',
+		'desc' => '弹幕网站上古时期的一群知名UP主，<br>也是这个游戏最早的一批玩家',
+		'effect' => '看看弹幕的力量！',
+		'desc_skills' => '开局携带10颗重装弹药',
+		'energy' => 0,
+		'valid' => array(
+			'itm6' => '重装子弹',
+			'itmk6' => 'GBh',
+			'itme6' => '1',
+			'itms6' => '10',
+			'itmsk6' => '',
+		)
+	),
+	133 => array(
+		'name' => '777',
+		'rare' => 'A',
+		'pack' => 'Top Players',
+		'desc' => '桃箱服的提供者，为常磐系大逃杀的延续赌上了自己的备案',
+		'effect' => '开局携带「背岸之盾」',
+		'desc_skills' => '「背岸之盾」：拥有777防御的随机单防手部防具',
+		'energy' => 100,
+		'valid' => array(
+			'ara' => '背岸之盾',
+			'arak' => 'DA',
+			'arae' => '777',
+			'aras' => '7',
+			'arask' => Array('P','K','G','C','D','F','U','I','E','q','W','R'),
+		)
+	),
+	134 => array(
+		'name' => '我是高达',
+		'rare' => 'C',
+		'pack' => 'Top Players',
+		'desc' => '这是什么？是尸体，凸一下',
+		'effect' => '尸体为什么会有无敌时间呢？',
+		'desc_skills' => '开局携带凸眼鱼',
+		'energy' => 0,
+		'valid' => array(
+			'itm6' => '凸眼鱼',
+			'itmk6' => Array('HB','HS','HH','PB','PH','PS'),
+			'itme6' => '120',
+			'itms6' => '5',
+			'itmsk6' => '',
+		)
+	),
+	
+	//10张卡的空白结束了
 	135 => array(
 		'name' => '旋风管家',
 		'rare' => 'A',
@@ -2210,16 +2373,16 @@ $cards = array(
 			'skills' => array(
 				'465' => '0', 
 			),
-			'itm3' => '火把',
-			'itmk3' => 'WP',
-			'itme3' => '40',
-			'itms3' => '3',
-			'itmsk3' => 'u',
-			'itm4' => '汽油',
-			'itmk4' => 'PS2',
-			'itme4' => '200',
-			'itms4' => '1',
-			'itmsk4' => '',
+			'itm5' => '火把',
+			'itmk5' => 'WP',
+			'itme5' => '40',
+			'itms5' => '3',
+			'itmsk5' => 'u',
+			'itm6' => '汽油',
+			'itmk6' => 'PS2',
+			'itme6' => '200',
+			'itms6' => '1',
+			'itmsk6' => '',
 		)
 	),
 	141 => array(
@@ -2421,18 +2584,18 @@ $cards = array(
 	),
 	153 => array(
 		'name' => '悲运挑战者',
-		'rare' => 'S',
+		'rare' => 'A',
 		'pack' => 'Top Players',
 		'desc' => '她说：“要有大逃杀。”<br>然后她就平地摔了',
-		'effect' => '开局携带《ACFUN大逃杀原案》。',
+		'effect' => '开局携带《ACFUN大逃杀原案》',
 		'desc_skills' => '《ACFUN大逃杀原案》：使用后获得100点全系熟练度，但是之后你会更加倒霉',
-		'energy' => 130,
+		'energy' => 150,
 		'valid' => array(
-			'itm3' => '《ACFUN大逃杀原案》',
-			'itmk3' => 'VVS',
-			'itme3' => '100',
-			'itms3' => '1',
-			'itmsk3' => '478',
+			'itm6' => '《ACFUN大逃杀原案》',
+			'itmk6' => 'VVS',
+			'itme6' => '150',
+			'itms6' => '1',
+			'itmsk6' => '478',
 		)
 	),
 	154 => array(
@@ -2872,11 +3035,11 @@ $cards = array(
 		'effect' => '开局随机携带增幅设备、某种电子零件、手机、笔记本电脑、探测器电池中的其中一个',
 		'energy' => 0,
 		'valid' => array(
-			'itm5' => array('增幅设备','某种电子零件','手机','笔记本电脑','探测器电池'),
-			'itmk5' => 'X',
-			'itme5' => '1',
-			'itms5' => '1',
-			'itmsk5' => '',
+			'itm6' => array('增幅设备','某种电子零件','手机','笔记本电脑','探测器电池'),
+			'itmk6' => 'X',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => '',
 		)
 	),
 	180 => array(
@@ -2887,11 +3050,6 @@ $cards = array(
 		'effect' => '已申请采购全套灭鼠装备',
 		'energy' => 0,
 		'valid' => array(
-			'itm3' => array('捕鼠夹','捕鼠笼','捕鼠胶','粘鼠板','电子灭鼠器','灭鼠无人机'),
-			'itmk3' => 'TN',
-			'itme3' => '25',
-			'itms3' => '3',
-			'itmsk3' => '',
 			'itm4' => array('捕鼠夹','捕鼠笼','捕鼠胶','粘鼠板','电子灭鼠器','灭鼠无人机'),
 			'itmk4' => 'TN',
 			'itme4' => '25',
@@ -2902,6 +3060,11 @@ $cards = array(
 			'itme5' => '25',
 			'itms5' => '3',
 			'itmsk5' => '',
+			'itm6' => array('捕鼠夹','捕鼠笼','捕鼠胶','粘鼠板','电子灭鼠器','灭鼠无人机'),
+			'itmk6' => 'TN',
+			'itme6' => '25',
+			'itms6' => '3',
+			'itmsk6' => '',
 		)
 	),
 	181 => array(
@@ -3074,11 +3237,11 @@ $cards = array(
 		'effect' => '开局携带一张随机歌词卡片',
 		'energy' => 100,
 		'valid' => array(
-			'itm3' => Array('小苹果', 'Alicemagic', 'Crow Song', '驱寒颂歌', '雨だれの歌', '快说小仓唯唱歌贼！好！听！', '黄鸡之歌'),
-			'itmk3' => 'ss',
-			'itme3' => '1',
-			'itms3' => '1',
-			'itmsk3' => 'z',
+			'itm6' => Array('小苹果', 'Alicemagic', 'Crow Song', '驱寒颂歌', '雨だれの歌', '快说小仓唯唱歌贼！好！听！', '黄鸡之歌'),
+			'itmk6' => 'ss',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => 'z',
 		)
 	),
 	189 => array(
@@ -3090,11 +3253,11 @@ $cards = array(
 		'energy' => 0,
 		'valid' => array(
 			'hp' => 1,
-			'itm3' => '游戏王卡包',
-			'itmk3' => 'ygo',
-			'itme3' => '1',
-			'itms3' => '1',
-			'itmsk3' => '',
+			'itm6' => '游戏王卡包',
+			'itmk6' => 'ygo',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => '',
 		)
 	),
 	190 => array(
@@ -3102,7 +3265,7 @@ $cards = array(
 		'rare' => 'A',
 		'pack' => 'Event Bonus',
 		'desc' => '过去经历一切不明的女骇客，<br>其typing能力就算在糟糕级骇客中也实际强大！',
-		'effect' => '开局经验、金钱和怒气都是77点。<br>如果你上一次操作在程序执行时<br>没有顺利完成，你获得7点经验和全系熟练，还会给这个游戏的天然呆程序员发一封站内信。',
+		'effect' => '开局经验、金钱和怒气都增加77点。<br>如果你上一次操作在程序执行时<br>没有顺利完成，你获得7点经验和全系熟练，还会给这个游戏的天然呆程序员发一封站内信。',
 		'energy' => 100,
 		'valid' => array(
 			'money' => '+77',
@@ -3179,15 +3342,15 @@ $cards = array(
 		//'desc_skills' => '',
 		'energy' => 0,
 		'valid' => array(
-		  'itm5' => Array('社畜专用的ID卡', '社员砖用的ID卡', '社长专用的ID卡', '社恐专用的ID卡', '社员专甩的ID卡',
+		  'itm6' => Array('社畜专用的ID卡', '社员砖用的ID卡', '社长专用的ID卡', '社恐专用的ID卡', '社员专甩的ID卡',
 		  '社员不用的ID卡', '社死专用的ID卡', '社保专用的ID卡', '社精专用的ID卡', '社会专用的ID卡',
 		  '社员专用的IC卡', '社员专用的IP卡', '社员专用的IQ卡', '社员专用的1D卡', '社员专用的IO卡', '社员专用的lD卡', '社员专用的|D卡', '社员专用的ＩＤ卡',
 		  '社元专用的ID卡', '社员专角的ID卡', '社贡专用的ID卡', '社员专卖的ID卡', '社员专享的ID卡',
 		  '社员专精的ID卡', '涩员专用的ID卡', '杜员专用的ID卡', '壮员专用的ID卡', '社员专月的ID卡',),
-			'itmk5' => 'Y',
-			'itme5' => '1',
-			'itms5' => '1',
-			'itmsk5' => '',
+			'itmk6' => 'Y',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => '',
 		)
 	),
 	194 => array(
@@ -3226,19 +3389,62 @@ $cards = array(
 		)
 	),
 	196 => array(
-		'name' => '占位测试符',
-		'rare' => 'C',
-		'pack' => 'Cyber Zealots',
-		'desc' => '超过48张卡占位测试',
-		'effect' => '超过48张卡占位测试',
-		'energy' => 0,
+		'name' => '低维生物',
+		'rare' => 'A',
+		'pack' => 'Top Players',
+		'desc' => '“虫子，在这个宇宙中，对于一个种族文明程度的统一度量就是这个种族所进入的空间维度，只有进入六维以上空间的种族才具备加入文明大家庭的起码条件，我们尊敬的神的一族已能够进入十一维空间。<br>吞食帝国已能在实验室中小规模地进入四维空间，只能算是银河系中一个未开化的原始群落……”',
+		'effect' => '“而你们在神的眼里，<br>也就是杂草和青苔一类的东西！”',
+		'desc_skills' => '游戏中仅1次，如果你的武器效果值不小于7000点，你可以发动「降维」从而把自己转移到另外一场随机的游戏中。<br>降维后你会位于【三体星】并手持 维度跌落「二向箔」，但其他装备道具和金钱都会丢失。<br>你不会降维到除错、伐木和教程模式',
+		'bigdesc' => 1,
+		'energy' => 100,
 		'valid' => array(
-			'hp' => 99,
+			'skills' => array(
+				'530' => '0', 
+			),
 		)
 	),
-	/////////////////////////////////////////////////
+	197 => array(
+		'name' => '萤火抑智',
+		'rare' => 'C',
+		'pack' => 'hidden',
+		'desc' => '今天吃鸡腿',
+		'effect' => '你的角色名显示为学号，学号显示为角色名',
+		'energy' => 0,
+		'valid' => array(
+			'pls' => '0',//todo
+		)
+	),
+	198 => array(
+		'name' => '非常非常二',
+		'rare' => 'B',
+		'pack' => 'hidden',
+		'desc' => 'IG空间，全称Imaginary Geometry虚数几何空间，只有极少数擅长钻空子的能力者才能把物质自由地送到那里',
+		'effect' => '获得技能【空子】：你能把道具存进虚数空间或者从中取出，最多同时储存两个道具',
+		'energy' => 0,
+		'valid' => array(
+			'pls' => '0',//todo
+		)
+	),
+	199 => array(
+		'name' => '武侠强者 李天明',
+		'title' => '武侠强者',
+		'rare' => 'A',
+		'pack' => 'Event Bonus',
+		'desc' => '<span class="linen b">“对一一五来说，面前这四个触手比十亿个杀人魔更恐怖…更可怕呀！”</span>',
+		'effect' => '开局装备「红杀铁剑」。此外，涉及到你的描述伤害的进行状况都改用强者语',
+		'energy' => 100,
+		'valid' => array(
+			'wep' => '【红杀铁剑】',
+			'wepk' => 'WK',
+			'wepe' => '50',
+			'weps' => '15',
+			'wepsk' => '',
+			'skills' => array(
+				'531' => '0', 
+			),
+		)
+	),
 	
-	//////////////////////////////////////////////////
 	200 => array(
 		'name' => '幻影斗将神 S.A.S',
 		'title' => '幻影斗将神',
@@ -3504,11 +3710,11 @@ $cards = array(
 		'valid' => array(
 		  'hp' => '-200',
 		  'mhp' => '-200',
-			'itm3' => '超天新龙 异色眼革命龙★12',
-			'itmk3' => 'TN12',
-			'itme3' => '800',
-			'itms3' => '1',
-			'itmsk3' => '',
+			'itm6' => '超天新龙 异色眼革命龙★12',
+			'itmk6' => 'TN12',
+			'itme6' => '800',
+			'itms6' => '1',
+			'itmsk6' => '',
 		)
 	),
 	216 => array(
@@ -3536,11 +3742,11 @@ $cards = array(
 			'wepe' => '120',
 			'weps' => '5',
 			'wepsk' => 'eg',
-			'itm3' => '拉取请球',
-			'itmk3' => 'DH',
-			'itme3' => '120',
-			'itms3' => '5',
-			'itmsk3' => 'eg',
+			'itm6' => '拉取请球',
+			'itmk6' => 'DH',
+			'itme6' => '120',
+			'itms6' => '5',
+			'itmsk6' => 'eg',
 		)
 	),
 	218 => array(
@@ -3588,11 +3794,11 @@ $cards = array(
 			'arae' => '50',
 			'aras' => '70',
 			'arask' => '',
-			'itm3' => Array('垃圾','光盘','破鞋','塑料袋','石头','树枝','骨头','原型武器K','鲨鱼鳍','凸眼鱼'),
-			'itmk3' => Array('X','Y','HH','HS','HB','PB','PB2'),
-			'itme3' => '70',
-			'itms3' => '5',
-			'itmsk3' => 'z',
+			'itm6' => Array('垃圾','光盘','破鞋','塑料袋','石头','树枝','骨头','原型武器K','鲨鱼鳍','凸眼鱼'),
+			'itmk6' => Array('X','Y','HH','HS','HB','PB','PB2'),
+			'itme6' => '70',
+			'itms6' => '5',
+			'itmsk6' => 'z',
 		)
 	),
 	221 => array(
@@ -3737,11 +3943,11 @@ $cards = array(
 		'effect' => '你可以吃翔来表达对满场沙包的不屑',
 		'energy' => 0,
 		'valid' => array(
-		  'itm3' => '『我是说在座的各位都是垃圾』',
-			'itmk3' => 'Y',
-			'itme3' => '1',
-			'itms3' => '1',
-			'itmsk3' => '',
+		  'itm6' => '『我是说在座的各位都是垃圾』',
+			'itmk6' => 'Y',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => '',
 		)
 	),
 	231 => array(
@@ -3752,11 +3958,11 @@ $cards = array(
 		'effect' => '开局携带一份卡牌包',
 		'energy' => 0,
 		'valid' => array(
-		  'itm3' => '卡牌包',
-			'itmk3' => 'VO9',
-			'itme3' => '1',
-			'itms3' => '1',
-			'itmsk3' => '',
+		  'itm6' => '卡牌包',
+			'itmk6' => 'VO9',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => '',
 		)
 	),
 	232 => array(
@@ -3784,7 +3990,7 @@ $cards = array(
 		'rare' => 'A',
 		'pack' => 'Cyber Zealots',
 		'desc' => '据说林无月前两年已经死了，<br>现在管理幻境的都是她的亲友团<br>「阿林百人众」。<br>她临死前给每个人发了一个小本子，里面是一百多页如何扮演她的心得。',
-		'effect' => '开局能复制并获取场上存活NPC的一项技能',
+		'effect' => '开局能复制并获取场上存活NPC的一项技能（包括称号技能）',
 		'energy' => 100,
 		'valid' => array(
 		  'skills' => array(
@@ -3819,11 +4025,11 @@ $cards = array(
 		'effect' => '开局携带一个银色盒子',
 		'energy' => 0,
 		'valid' => array(
-		  'itm3' => '黯淡的银色盒子',
-			'itmk3' => 'p2',
-			'itme3' => '1',
-			'itms3' => '1',
-			'itmsk3' => '',
+		  'itm6' => '黯淡的银色盒子',
+			'itmk6' => 'p2',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => '',
 		)
 	),
 	236 => array(
@@ -3834,11 +4040,6 @@ $cards = array(
 		'effect' => '开局携带15个模因原液',
 		'energy' => 0,
 		'valid' => array(
-		  'itm3' => '模因原液',
-			'itmk3' => Array('MA','MD','MH','MS','ME','MV'),
-			'itme3' => '1',
-			'itms3' => '5',
-			'itmsk3' => '',
 			'itm4' => '模因原液',
 			'itmk4' => Array('MA','MD','MH','MS','ME','MV'),
 			'itme4' => '1',
@@ -3849,6 +4050,11 @@ $cards = array(
 			'itme5' => '1',
 			'itms5' => '5',
 			'itmsk5' => '',
+			'itm6' => '模因原液',
+			'itmk6' => Array('MA','MD','MH','MS','ME','MV'),
+			'itme6' => '1',
+			'itms6' => '5',
+			'itmsk6' => '',
 		)
 	),
 	237 => array(
@@ -3961,11 +4167,11 @@ $cards = array(
 		//'desc_skills' => '',
 		'energy' => 100,
 		'valid' => array(
-		  'itm5' => '某种电子零件',
-			'itmk5' => Array('HB','HB','HB','HB','HB','HB','HB','HB','HB','PB2'),
-			'itme5' => '199',
-			'itms5' => '5',
-			'itmsk5' => '',
+		  'itm6' => '某种电子零件',
+			'itmk6' => Array('HB','HB','HB','HB','HB','HB','HB','HB','HB','PB2'),
+			'itme6' => '199',
+			'itms6' => '5',
+			'itmsk6' => '',
 		)
 	),
 	245 => array(
@@ -3977,11 +4183,11 @@ $cards = array(
 		//'desc_skills' => '',
 		'energy' => 100,
 		'valid' => array(
-		  'itm5' => '寂寞',
-			'itmk5' => Array('WP','WK','WD','WC','WG','WF','WB','PB2','DB','DH','DA','DF','A'),
-			'itme5' => '76',
-			'itms5' => '5',
-			'itmsk5' => '',
+		  'itm6' => '寂寞',
+			'itmk6' => Array('WP','WK','WD','WC','WG','WF','WB','PB2','DB','DH','DA','DF','A'),
+			'itme6' => '76',
+			'itms6' => '5',
+			'itmsk6' => '',
 		)
 	),
 	246 => array(
@@ -3993,14 +4199,50 @@ $cards = array(
 		//'desc_skills' => '',
 		'energy' => 100,
 		'valid' => array(
-		  'itm5' => '箭症',
-			'itmk5' => 'GA',
-			'itme5' => '1',
-			'itms5' => '44',
-			'itmsk5' => Array('e', 'p', 'u', 'i', 'w'),
+		  'itm6' => '箭症',
+			'itmk6' => 'GA',
+			'itme6' => '1',
+			'itms6' => '44',
+			'itmsk6' => Array('e', 'p', 'u', 'i', 'w'),
 		)
 	),
-	
+	247 => array(
+		'name' => '女骑士',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '咕、杀了我',
+		'effect' => '获得技能【挖矿】：你的休息、治疗和静养不会回复体力和生命，而是每休息1秒有概率获得1元',
+		//'desc_skills' => '「网瘾」：使用移动PC解除禁区成功率为95%，且完全无风险',
+		'energy' => 0,
+		'valid' => array(
+		  'skills' => array(
+				'233' => '0', //todo
+			),
+		)
+	),
+	248 => array(
+		'name' => '臭名昭著的B.I.G',
+		'rare' => 'S',
+		'pack' => 'hidden',
+		'desc' => '被BIG吃掉了！',
+		'effect' => '因为已经是尸体，所以也无法再杀死他了！',
+		'desc_skills' => '你被杀死时将在场上复制一个与你数据完全相同的NPC。你每额外获得这张卡一次，复制NPC的数目也会额外增加一个',
+		'energy' => 0,
+		'valid' => array(//todo
+		  
+		)
+	),
+	249 => array(
+		'name' => '水仙女人鱼',
+		'rare' => 'M',
+		'pack' => 'hidden',
+		'desc' => '家人们，水懂啊，这个科乐美要枪尖我',
+		'effect' => '敌方使用的枪械对你来说都视为重枪',
+		'energy' => 0,
+		'valid' => array(
+			'pls' => '0',//todo
+		)
+	),
 	
 	1000 => array(
 		'name'=>'萌新',

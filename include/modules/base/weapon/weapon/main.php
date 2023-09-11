@@ -240,7 +240,7 @@ namespace weapon
 		$primary_dmg_fixed = get_primary_fixed_dmg($pa, $pd, $active);
 		if($primary_dmg_fixed) {
 			$damage += $primary_dmg_fixed;
-			$pa['mult_words_pridmgbs'] .= '+'.$pa['mult_words_pridmgfxdbs'];
+			$pa['mult_words_pridmgbs'] = \attack\add_format($pa['mult_words_pridmgfxdbs'],$pa['mult_words_pridmgbs']);
 		}
 		return $damage;
 	}
@@ -381,7 +381,10 @@ namespace weapon
 		$z=calculate_wepimp_rate($pa, $pd, $active);
 		if (!$is_hit && $z<1000) return;	//没有击中，且非消耗性武器，不会损失耐久
 		$dice=rand(0,99);
-		if ($dice<$z) $pa['wepimp']++;
+		if ($dice<$z) {
+			if(empty($pa['wepimp'])) $pa['wepimp'] = 1;
+			else $pa['wepimp']++;
+		}
 	}
 	
 	//武器伤害计算后事件
@@ -458,12 +461,8 @@ namespace weapon
 		else  if ($wepimprate[$pa['wep_kind']]<1000)
 				$log .= "{$pa['name']}的<span class=\"red b\">{$pa['wep']}</span>使用过度，已经损坏，无法再装备了！<br>";
 			else  $log .= "{$pa['name']}的<span class=\"red b\">{$pa['wep']}</span>用光了！<br>";
-			
-		$pa['wep'] = '拳头';
-		$pa['wepk'] = 'WN';
-		$pa['wepe']= 0;
-		$pa['weps']= $nosta;
-		$pa['wepsk']= '';
+		
+		\itemmain\item_destroy_core('wep', $pa);
 	}
 	
 	function apply_weapon_imp(&$pa, &$pd, $active)
@@ -573,8 +572,7 @@ namespace weapon
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		
-		eval(import_module('lvlctl'));
-		if ($pa['physical_dmg_dealt'] > 0) //有伤害才获得经验
+		if($pa['hp'])	//存活才能获得经验
 			\lvlctl\getexp(calculate_attack_exp_gain($pa, $pd, $active), $pa);
 	}
 	
@@ -601,9 +599,11 @@ namespace weapon
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		
-		apply_attack_exp_gain($pa, $pd, $active);
+		if($pa['physical_dmg_dealt'] > 0) $exp_flag = 1;//有造成过伤害才增加经验值
 		
 		$chprocess($pa, $pd, $active);
+		
+		if(!empty($exp_flag)) apply_attack_exp_gain($pa, $pd, $active);
 	}
 		
 	function calculate_counter_rate(&$pa, &$pd, $active)

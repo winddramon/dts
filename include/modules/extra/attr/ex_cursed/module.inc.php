@@ -3,8 +3,8 @@
 namespace ex_cursed
 {
 	////////// MODULE HEADER START ///////////////
-	$___MODULE_dependency = 'itemmain logger attrbase weapon armor armor_art';
-	$___MODULE_dependency_optional = '';
+	$___MODULE_dependency = 'itemmain logger attrbase weapon armor armor_art team';
+	$___MODULE_dependency_optional = 'skill23';
 	$___MODULE_conflict = '';
 	$___MODULE_codelist = 'main.php';
 	$___MODULE_templatelist = '';

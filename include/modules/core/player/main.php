@@ -168,6 +168,8 @@ namespace player
 		return $data;
 	}
 	
+	//根据输入的$pdata的值，重置$sdata以及player命名空间下的所有变量
+	//这个过程中不是player表的字段会丢失
 	//注意！全局变量$sdata虽然是个数组，但是其中的每一个键值都是引用，单纯复制这个数组会导致引用问题！
 	function load_playerdata($pdata)//其实最早这个函数是显示用的
 	{
@@ -248,7 +250,7 @@ namespace player
 		}
 		if(!$arbs) {
 			$arb = $noarb;$arbk = 'DN'; $arbsk = '';
-			$arbe = 0; $arbs = $nosta;
+			$arbe = 0; $arbs = 0;
 		}
 	}
 	
@@ -420,13 +422,20 @@ namespace player
 //		$alivenum = $db->result($db->query("SELECT COUNT(*) FROM {$tablepre}players WHERE hp>0 AND type=0"), 0);
 //		$chprocess($where,$atime);
 //	}
-	//在command_act.php执行到最后可以调用的一个接口，目前只有一个技能接管过这里……
+
+	//一个被大量调用但是完全没有其他模块重载的奇怪函数
 	function update_sdata()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		return;
 	}
-	
+		
+	//command执行到最后需要调用的函数
+	function before_last_player_save_event()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return;
+	}
 	
 	//返回一个只有数据库合法字段键名的pdata数组
 	function player_format_with_db_structure($data){
@@ -543,7 +552,7 @@ namespace player
 		$lwname = $typeinfo [$pd['type']] . ' ' . $pd['name'];
 		$lstwd = \player\get_player_lastword($pd);
 		\sys\addchat(3, $lstwd, '【'.$plsinfo[$pd['pls']].'】 '.$lwname);
-		if ($pd['sourceless']) $x=''; else $x=$pa['name'];
+		if (!empty($pd['sourceless'])) $x=''; else $x=$pa['name'];
 		\sys\addnews ( $now, 'death' . $pd['state'], $pd['name'], $pd['type'], $x , $pa['attackwith'], $lstwd );
 	}
 	

@@ -565,22 +565,27 @@ namespace cardbase
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess();
 		eval(import_module('sys','player','cardbase'));
-		//卡片名称显示
-		if($cardname == $cards[$card]['name']) {
-			if(!empty($cards[$card]['title'])) 
-				$uip['cardname_show'] = $cards[$card]['title'];
-			else
-				$uip['cardname_show'] = $cards[$card]['name'];
-		}else{
-			$uip['cardname_show'] = $cardname;
+		
+		//显示的卡名一定是$cardname
+		$uip['cardname_show'] = $cardname;
+		//罕贵和卡面显示
+		$real_cardid = check_realcard($card, $cardname);
+		if($real_cardid && 'hidden' != $cards[$real_cardid]['pack']) $uip['cardinfo_show'] = $cards[$real_cardid];
+		$uip['cardrare_show'] = $card_rarecolor[$cards[$real_cardid]['rare']];
+
+		$uip['card_rarecolor'] = $card_rarecolor;//备用
+	}
+	
+	//通过记录卡名与卡号判定实际卡号
+	function check_realcard($c, $cn) {
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('cardbase'));
+		$ret = $c;
+		//卡名与卡号不符，并且卡名与头衔不符，那么认为是篝火等随机卡片，需通过反查确定显示的卡片信息
+		if($cn != $cards[$c]['name'] && (empty($cards[$c]['title']) || $cn != $cards[$c]['title'])) {
+			$ret = $cardindex_reverse[md5sub($cn,10)];
 		}
-		//卡片罕贵显示
-		$uip['cardrare_show'] = $card_rarecolor[$cards[$card]['rare']];
-		//卡片本体渲染
-		if($card && 'hidden' != $cards[$card]['pack']) {//挑战者和隐藏卡就不显示了
-			$uip['cardinfo_show'] = $cards[$card];
-			$uip['card_rarecolor'] = $card_rarecolor;
-		}
+		return $ret;
 	}
 	
 	//战斗界面显示敌方卡片
@@ -616,6 +621,7 @@ namespace cardbase
 	}
 	
 	//根据card.config.php的修改时间自动刷新$cardindex也就是各种罕贵的卡编号组成的数组，用于抽卡和随机卡
+	//并生成一个卡名转卡号的数组$cardindex_reverse用于反查
 	function parse_card_index(){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		
@@ -625,7 +631,7 @@ namespace cardbase
 		
 		eval(import_module('sys','cardbase'));//载入$card_main_file和$card_config_file
 		//如果文件存在且最新，就不改变
-		if(file_exists($card_index_file) && filemtime($card_main_file) < filemtime($card_index_file) && filemtime($card_config_file) < filemtime($file)) return;
+		if(file_exists($card_index_file) && filemtime($card_main_file) < filemtime($card_index_file) && filemtime($card_config_file) < filemtime($card_index_file)) return;
 		
 		$new_cardindex = Array(
 			'All' => Array(),//All是所有卡（无视开放情况和隐藏）
@@ -641,6 +647,8 @@ namespace cardbase
 			'EB_C' => Array(),
 			'hidden' => Array(),//隐藏卡单开一列，一般不参与任何随机		
 		);
+		
+		$new_cardindex_reverse = Array();
 		
 		foreach($cards as $ci => $cv){
 			//$new_cardindex['All'][] = $ci;
@@ -661,11 +669,13 @@ namespace cardbase
 			elseif('B' == $rare) $new_cardindex[$prefix.'B'][] = $ci;
 			else $new_cardindex[$prefix.'C'][] = $ci;
 			
+			if(!empty($cv['title'])) $new_cardindex_reverse[md5sub($cv['title'],10)] = $ci;
+			else $new_cardindex_reverse[md5sub($cv['name'],10)] = $ci;
 		}
 		
 		if(empty($new_cardindex)) return;
 		
-		//开始生成文件
+		//开始生成文件。这里不直接用var_export()是为了生成方便查看的文件结构
 		$contents = str_replace('?>','',$checkstr);//"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
 		$contents .= '$cardindex = Array('."\r\n";
 		$i = 1;$z = sizeof($new_cardindex);
@@ -677,8 +687,10 @@ namespace cardbase
 			$contents .= ($i < $z ? '  ),' : '  )') . "\r\n";
 			$i++;
 		}
-		$contents .= ');';
-		//$contents .= '$cardindex = '.var_export($new_cardindex,1).';';
+		$contents .= ");\r\n\r\n";
+		
+		//反查数组就无所谓了
+		$contents .= '$cardindex_reverse = '.var_export($new_cardindex_reverse,1).';';
 		
 		file_put_contents($card_index_file, $contents);
 		chmod($card_index_file, 0777);

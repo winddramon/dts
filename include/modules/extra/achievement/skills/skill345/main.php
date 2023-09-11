@@ -9,7 +9,7 @@ namespace skill345
 	
 	//各级显示的要求，如果不存在则取低的
 	$ach345_desc= array(
-		1=>'使用【小黄的】武器击杀<:threshold:>名<span class="yellow b" title=\''.POSITIVE_PLAYER_DESC.'\'>活跃玩家</span>',
+		1=>'使用【小黄的】武器击杀<:threshold:>名<span class="yellow b" title=\''.POSITIVE_PLAYER_DESC.'\'>活跃玩家</span>。伐木、解离模式不能完成',
 	);
 	
 	$ach345_proc_words = '击杀总数';
@@ -53,7 +53,7 @@ namespace skill345
 	function player_kill_enemy(&$pa,&$pd,$active){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa, $pd, $active);		
-		if ( \skillbase\skill_query(345,$pa) && !$pd['type'] && $pd['hp'] <= 0)
+		if ( \skillbase\skill_query(345,$pa) && !$pd['type'])
 		{
 			//武器为小黄，且对方为活跃玩家
 			if(check_wep345($pa['o_wep']) && \achievement_base\ach_check_positive_player($pa,$pd)){

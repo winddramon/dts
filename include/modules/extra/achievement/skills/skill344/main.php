@@ -9,7 +9,7 @@ namespace skill344
 	
 	//各级显示的要求，如果不存在则取低的
 	$ach344_desc= array(
-		1=>'使用【KEY系】武器击杀<:threshold:>名<span class="yellow b" title=\''.POSITIVE_PLAYER_DESC.'\'>活跃玩家</span>',
+		1=>'使用【KEY系】武器击杀<:threshold:>名<span class="yellow b" title=\''.POSITIVE_PLAYER_DESC.'\'>活跃玩家</span>。伐木、解离模式不能完成',
 	);
 	
 	$ach344_proc_words = '击杀总数';
@@ -53,7 +53,7 @@ namespace skill344
 	function player_kill_enemy(&$pa,&$pd,$active){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa, $pd, $active);		
-		if ( \skillbase\skill_query(344,$pa) && !$pd['type'] && $pd['hp'] <= 0)
+		if ( \skillbase\skill_query(344,$pa) && !$pd['type'])
 		{
 			//武器为KEY系，且对方为活跃玩家
 			if(check_wep344($pa['o_wep']) && \achievement_base\ach_check_positive_player($pa,$pd)){

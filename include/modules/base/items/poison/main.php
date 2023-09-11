@@ -15,7 +15,10 @@ namespace poison
 	function parse_itmk_words($k_value, $reveal=0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (isset($k_value[0]) && $k_value[0]=='P' && !$reveal) $k_value[0]='H';
+		if (strpos($k_value, 'P')===0 && !$reveal) {
+			//$k_value[0]='H';
+			$k_value = 'H'.substr($k_value, 1);
+		}
 		return $chprocess($k_value);
 	}
 	
@@ -120,7 +123,9 @@ namespace poison
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','player','logger','input'));
-		if ( $itmp < 1 || $itmp > 6 ) {
+		
+		//竟然是直接从input里传入$itmp，有点危险
+		if ( $itmp < 1 || $itmp > 6 || $itmn < 1 || $itmn > 6) {
 			$log .= '此道具不存在，请重新选择。';
 			$mode = 'command';
 			return;
@@ -130,11 +135,7 @@ namespace poison
 		$poisone = & ${'itme'.$itmp};
 		$poisons = & ${'itms'.$itmp};
 		$poisonsk = & ${'itmsk'.$itmp};
-		if ( $itmn < 1 || $itmn > 6 ) {
-			$log .= '此道具不存在，请重新选择。';
-			$mode = 'command';
-			return;
-		}
+
 		$itm = & ${'itm'.$itmn};
 		$itmk = & ${'itmk'.$itmn};
 		$itmsk = & ${'itmsk'.$itmn};

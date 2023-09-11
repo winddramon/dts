@@ -266,6 +266,7 @@ namespace attack
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		player_damaged_enemy($pa,$pd,$active);
 		post_player_damaged_enemy_event($pa,$pd,$active);
+//这是废弃的更改，不需要每一次都记录wep_kind，仅在有必要的时候（比如双系武器）进行记录
 //		$pa_o_wepkind = $pa['wep_kind'];
 //		$pd_o_wepkind = $pd['wep_kind'];
 		if ($pd['hp']<=0){
@@ -331,7 +332,7 @@ namespace attack
 		return $str.$msign.$var;
 	}
 	
-	//生成XXX x XXX = XXX这样格式的玩意
+	//乘算伤害，并生成XXX x XXX = XXX这样格式的玩意
 	//如果给了$style，$mult_words的等号右边数字会用一个span套住
 	//如果$reptxt为真，$mult_words_2的第一个数字会用$reptxt替换，且会自动给$reptxt加括号
 	//返回一个数组，请用list()截获
@@ -365,6 +366,7 @@ namespace attack
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$spanstr = $style ? '<span class="'.$style.'">' : '<span>';
+		
 		$esign = strpos($str,' + ')!==false ? ' = ' : '=';
 		if(strpos($str,'+')!==false || strpos($str,'×')!==false) 
 			return $str.$esign.$spanstr.$var.'</span>';

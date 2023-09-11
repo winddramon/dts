@@ -11,7 +11,7 @@ namespace skill347
 	
 	//各级显示的要求，如果不存在则取低的
 	$ach347_desc= array(
-		1=>'在开场超过10分钟且至少有1名存活玩家时入场并获胜<:threshold:>次',
+		1=>'在开场超过10分钟且至少有1名存活玩家时入场并获胜<:threshold:>次。房间外或荣耀、极速模式才能完成',
 	);
 	
 	$ach347_proc_words = '当前纪录';
@@ -79,7 +79,7 @@ namespace skill347
 		$ret = $chprocess($pa, $data, $achid);
 		if($achid == 347){
 			eval(import_module('sys'));
-			if($winner === $pa['name'] && 1==\skillbase\skill_getvalue(347,'valid',$pa)) $ret += 1;
+			if(\sys\is_winner($pa['name'],$winner) && 1==\skillbase\skill_getvalue(347,'valid',$pa)) $ret += 1;
 		}
 		return $ret;
 	}
