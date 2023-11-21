@@ -18,15 +18,18 @@ namespace itemmain
 	
 	function parse_interface_gameinfo() {
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player','logger'));
+		eval(import_module('player'));
 		if($itm0 && $itmk0 && $itms0) {
-			$tpldata['itmk0_words']=parse_itmk_words($itmk0);
-			$tpldata['itmsk0_words']=parse_itmsk_words($itmsk0);
+			eval(import_module('sys','logger'));
+			if(!empty($tpldata['itm0_words_noelli'])) $itm = $tpldata['itm0_words_noelli'];
+			else $itm = $itm0;
+			//$tpldata['itmk0_words']=parse_itmk_words($itmk0);
+			$tpldata['itmsk0_words']=parse_itmsk_words($itmsk0);//获取的道具属性是完整显示的
 			//if(!empty(trim($log))) $log .= '<br>';
-			if(false === strpos($log, $itm0)) $log .= "<br>发现了物品 <span class='yellow b'>{$itm0}</span>，<br>";
-			else $log .= "<br>你正握着物品 <span class='yellow b'>{$itm0}</span>，<br>";
+			if(false === strpos($log, $itm0)) $log .= "<br>发现了物品 <span class='yellow b'>{$itm}</span>，<br>";
+			else $log .= "<br>你正握着物品 <span class='yellow b'>{$itm}</span>，<br>";
 			$log .= "类型：{$tpldata['itmk0_words']}";
-			if ($itmsk0 && !is_numeric($itmsk0)) $log .= "，属性：{$tpldata['itmsk0_words']}";
+			if ($itmsk0 && !is_numeric($itmsk0) && !empty($tpldata['itmsk0_words'])) $log .= "，属性：{$tpldata['itmsk0_words']}";
 			$log .= "，效：{$itme0}，耐：{$itms0}。";
 		}
 		$chprocess();
@@ -37,6 +40,7 @@ namespace itemmain
 		eval(import_module('sys','player'));
 //		$tpldata['itmk0_words']=parse_itmk_words($itmk0);
 //		$tpldata['itmsk0_words']=parse_itmsk_words($itmsk0);
+		if(empty($itms0)) return;
 		ob_start();
 		include template(MOD_ITEMMAIN_ITEMFIND);
 		$cmd = ob_get_contents();
@@ -317,15 +321,12 @@ namespace itemmain
 			$mode = 'command';
 			return;
 		}
-		//$log .= '你的包裹已经满了。想要丢掉哪个物品？<br>';
+		
+		//这里在parse_interface_profile()之前，需要单独生成每个道具的itm_words
+		//在网页里生成吧
 		include template(MOD_ITEMMAIN_ITEMDROP0);
 		$cmd = ob_get_contents();
 		ob_clean();
-	//	$cmd .= '<input type="hidden" name="mode" value="itemmain"><br><input type="radio" name="command" id="dropitm0" value="dropitm0" checked><a onclick=sl("dropitm0"); href="javascript:void(0);" >'."$itm0/$itme0/$itms0".'</a><br><br>';
-	//
-	//	for($i = 1;$i <= 6;$i++){
-	//		$cmd .= '<input type="radio" name="command" id="swapitm'.$i.'" value="swapitm'.$i.'"><a onclick=sl("swapitm'.$i.'"); href="javascript:void(0);" >'."${'itm'.$i}/${'itme'.$i}/${'itms'.$i}".'</a><br>';
-	//	}
 		return;
 	}
 

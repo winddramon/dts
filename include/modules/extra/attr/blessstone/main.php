@@ -86,6 +86,11 @@ namespace blessstone
 			$mode = 'command';
 			return;
 		}
+		if(strpos ( $itmsk, '|' ) !== false) {
+			$log .= '咦，你要强化的道具还装着东西呢，先取下来再强化吧!DA☆ZE<br>';
+			$mode = 'command';
+			return;
+		}
 		
 		$o_itm = $itm;
 		if(!preg_match("/\[\+[0-9]+?\]/",$itm)){
@@ -186,14 +191,23 @@ namespace blessstone
 	function use_sewing_kit(&$theitem)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		
-		eval(import_module('sys','player','itemmain','logger'));
 		$ret = $chprocess($theitem);
 		if($ret && \itemmain\check_in_itmsk('Z', $arbsk)) {
+			eval(import_module('sys','player','itemmain','logger'));
 			$log .= "打上补丁之后，装备显得朴素多了。<br><span class='yellow b'>$arb</span>失去了<span class='yellow b'>{$itemspkinfo['Z']}</span>属性！<br>";
-			$arbsk = str_replace('Z','',$arbsk);
+			$arbsk = \itemmain\replace_in_itmsk('Z','',$arbsk);
 		}
 		return $ret;
+	}
+	
+	function autosewingkit_finish_event($sewing_results, &$theitem, &$sewingkit){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$chprocess($sewing_results, $theitem, $sewingkit);
+		if(\itemmain\check_in_itmsk('Z', $theitem['itmsk'])){
+			eval(import_module('itemmain','logger'));
+			$log .= "叠完甲之后，装备显得朴素多了。<br><span class='yellow b'>{$theitem['itm']}</span>失去了<span class='yellow b'>{$itemspkinfo['Z']}</span>属性！<br>";
+			$theitem['itmsk'] = \itemmain\replace_in_itmsk('Z','',$theitem['itmsk']);
+		}
 	}
 	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())

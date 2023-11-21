@@ -40,16 +40,11 @@ if($mode == 'edit') {
 		//$passqry = '';
 		$gamedata['innerHTML']['info'] .= $_INFO['pass_failure'].'<br />';
 	}
-	
-	$carr = explode('_',$udata['cardlist']);
-	$cflag=0;
-	foreach ($carr as $val){
-		if ($val==$card){
-			$cflag=true;
-			break;
-		}
+	$cardlist = \cardbase\get_cardlist_energy_from_udata($udata)[0];
+	if(!in_array($card, $cardlist)) {
+		$card = 0;
 	}
-	if (!$cflag) $card=0;
+
 	$updarr = array(
 		'gender' => $gender,
 		'icon' => $icon,
@@ -81,6 +76,7 @@ if($mode == 'edit') {
 	$userCardData = \cardbase\get_user_cardinfo($cuser);
 	$card_ownlist = $userCardData['cardlist'];;
 	$card_energy = $userCardData['cardenergy'];
+	$card_data_fetched = $userCardData['card_data'];
 	$cardChosen = $userCardData['cardchosen'];
 	$card_disabledlist=Array();
 	$card_error=Array();

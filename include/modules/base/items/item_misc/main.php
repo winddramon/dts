@@ -5,7 +5,7 @@ namespace item_misc
 	function init() 
 	{
 		eval(import_module('itemmain'));
-		$iteminfo['U']='扫雷设备';
+		
 		if (defined('MOD_NOISE'))
 		{
 			eval(import_module('noise'));
@@ -16,9 +16,8 @@ namespace item_misc
 	function parse_itmuse_desc($n, $k, $e, $s, $sk){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$ret = $chprocess($n, $k, $e, $s, $sk);
-		if(strpos($k,'U')===0) {
-			$ret .= '使用后将扫除当前地区1枚效果值不小于'.$e.'的陷阱';
-		}elseif(strpos($k,'Y')===0 || strpos($k,'Z')===0){
+		
+		if(strpos($k,'Y')===0 || strpos($k,'Z')===0){
 			if ($n == '凸眼鱼'){
 				$ret .= '使用后可以销毁整个战场现有的尸体';
 			}elseif ($n == '■DeathNote■') {
@@ -51,25 +50,7 @@ namespace item_misc
 		$itm=&$theitem['itm']; $itmk=&$theitem['itmk'];
 		$itme=&$theitem['itme']; $itms=&$theitem['itms']; $itmsk=&$theitem['itmsk'];
 		
-		if ($itmk=='U') 
-		{
-			$trapresult = $db->query("SELECT * FROM {$tablepre}maptrap WHERE pls = '$pls' AND itme>='$itme'");
-			$trpnum = $db->num_rows($trapresult);
-			if ($trpnum>0){
-				$itemno = rand(0,$trpnum-1);
-				$db->data_seek($trapresult,$itemno);
-				$mi=$db->fetch_array($trapresult);
-				$deld = $mi['itm'];
-				$delp = $mi['tid'];
-				$db->query("DELETE FROM {$tablepre}maptrap WHERE tid='$delp'");
-				if($itm=='☆混沌人肉探雷车★') $log.="远方传来一阵爆炸声，伟大的<span class=\"yellow b\">{$itm}</span>用生命和鲜血扫除了<span class=\"yellow b\">{$deld}</span>。<br><span class=\"red b\">实在是大快人心啊！</span><br>";
-				else $log.="远方传来一阵爆炸声，<span class=\"yellow b\">{$itm}</span>扫除了<span class=\"yellow b\">{$deld}</span>。<br>";
-			}else{
-				$log.="你使用了<span class=\"yellow b\">{$itm}</span>，但是没有发现陷阱。<br>";
-			}
-			\itemmain\itms_reduce($theitem);
-			return;
-		}elseif (strpos ( $itmk, 'Y' ) === 0 || strpos ( $itmk, 'Z' ) === 0) {	
+		if (strpos ( $itmk, 'Y' ) === 0 || strpos ( $itmk, 'Z' ) === 0) {	
 			if ($itm == '御神签') {
 				$log .= "使用了<span class=\"yellow b\">$itm</span>。<br>";
 				divining ();
@@ -210,7 +191,7 @@ namespace item_misc
 					$itm1='美味补给';$itmk1 = 'HB';$itmsk1 = '';$itme1 = 2777;$itms1 = 277;
 					$itm2='全恢复药剂';$itmk2 = 'Ca';$itmsk2 = '';$itme2 = 1;$itms2 = 44;
 					$itm3='食堂的剩饭';$itmk3 = 'HR';$itmsk3 = '';$itme3 = 100;$itms3 = 15;
-					$itm4='哔哔小马';$itmk4 = 'ER';$itmsk4 = '5';$itme4 = 20;$itms4 = 1;
+					$itm4='哔哔小马';$itmk4 = 'ER';$itmsk4 = '^rdsk58';$itme4 = 20;$itms4 = 1;
 					$itm5='聪明药';$itmk5 = 'ME';$itmsk5 = '';$itme5 = 100;$itms5 = 4;
 					//$itm5='游戏解除钥匙';$itmk5 = 'Y';$itmsk5 = '';$itme5 = 1;$itms5 = 1;
 					$arb='代码聚合体的长袍';$arbk = 'DB';$arbsk = 'Bb';$arbe = 5000;$arbs = 1000;
@@ -219,7 +200,7 @@ namespace item_misc
 					$arf='代码聚合体的鞋子';$arfk = 'DF';$arfsk = 'Mm';$arfe = 5000;$arfs = 1000;
 					$art='Untainted Glory';$artk = 'A';$artsk = '';$arte = 1;$arts = 1;
 					if (defined('MOD_CLUBBASE')) eval(import_module('clubbase'));
-					foreach(array(1010,1011) as $skv){
+					foreach(array(1010,1011,1012) as $skv){
 						if(defined('MOD_SKILL'.$skv)) {
 							if (!\skillbase\skill_query($skv)) {
 								$log.="你获得了技能「<span class=\"yellow b\">$clubskillname[$skv]</span>」！<br>";
@@ -369,6 +350,17 @@ namespace item_misc
 				sleep(10);
 				$log .= "刚才那是什么，是卡了么？<br>";
 				//$hp = 1;
+				return;
+			} elseif(strpos($itm,'测试用查看常量设备')!==false){
+				eval(import_module('clubbase'));
+				for($i=10;$i<610;$i++){
+					if(defined('MOD_SKILL'.$i.'_INFO')) {
+						$log .= $i.'号技能「'.$clubskillname[$i].'」标签：'.constant('MOD_SKILL'.$i.'_INFO').'<br>';
+					}
+				}
+				return;
+			} elseif(strpos($itm,'测试道具A')!==false){
+				var_dump(\attrbase\config_process_encode_comp_itmsk('z^res_<:comp_itmsk:>{测试成功,HB,2,2,,}1Z'));
 				return;
 			} elseif('『我是说在座的各位都是垃圾』' === $itm){
 				$mhpdown = 100;

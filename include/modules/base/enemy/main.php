@@ -126,7 +126,8 @@ namespace enemy
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		
-		eval(import_module('sys','map','player','logger','metman','input'));
+		eval(import_module('sys','map','player','logger','metman'));
+		
 		if($command == 'enter')
 			$sdata['keep_enemy'] = 1;
 		if($mode == 'combat') 
@@ -155,7 +156,7 @@ namespace enemy
 			}
 		
 			$edata=\player\fetch_playerdata_by_pid($enemyid);
-			extract($edata,EXTR_PREFIX_ALL,'w');
+			extract($edata,EXTR_PREFIX_ALL,'w');//恶臭的旧代码兼容
 			
 			if ($edata ['pls'] != $pls) {
 				$log .= "<span class=\"yellow b\">" . $edata ['name'] . "</span>已经离开了<span class=\"yellow b\">$plsinfo[$pls]</span>。<br>";

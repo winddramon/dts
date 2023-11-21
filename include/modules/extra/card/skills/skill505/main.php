@@ -8,7 +8,7 @@ namespace skill505
 	
 	function init() 
 	{
-		define('MOD_SKILL505_INFO','card;unique;');
+		define('MOD_SKILL505_INFO','card;');
 		eval(import_module('clubbase'));
 		$clubskillname[505] = '一决';
 	}
@@ -170,6 +170,15 @@ namespace skill505
 		$chprocess($pa,$pd,$active);
 	}
 	
+	//复活一票否决，比其他复活判定优先级更高
+	function revive_veto(&$pa, &$pd)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		//如果灯泡被打碎，否决所有复活
+		if(!empty($pd['skill505_fatal'])) return true;
+		return $chprocess($pa, $pd);
+	}
+	
 	//平时操作完成后，如果灯泡在身上、地上都不存在，则死亡
 	function act(){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -229,11 +238,66 @@ namespace skill505
 		eval(import_module('sys','player','skill505','logger'));
 		$itm=&${$t1}; 
 		if($itm == $skill505_keyitm){
-			$log.='在灯泡上镶嵌宝石是会坏的！<br>';
+			$log.='在灯泡上镶嵌宝石是会坏的！<br>* 担忧的猫叫声 *<br>';
 			$mode = 'command';
 			return;
 		}
 		$chprocess($t1, $t2);
+	}
+	
+	function autosewingkit($itmn = 0)//自动针线包
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;	
+		eval(import_module('sys','player','skill505','logger'));
+		if(${'itm'.(int)$itmn} == $skill505_keyitm) {//2023.10.14现在ADV_COMBINE模式可以支持可变变量名写法了，但还是建议不要搞太多的花活
+			$log.='在灯泡上叠甲的话，肯定要坏掉的啊！<br>* 担忧的猫叫声 *<br>';
+			$mode = 'command';
+			return;
+		}
+
+		$chprocess($itmn);
+	}
+	
+	function use_armor_empower($itmn = 0)//防具改造
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','player','skill505','logger'));
+		if(${'itm'.(int)$itmn} == $skill505_keyitm) {
+			$log.='灯泡经不起敲敲打打的啊！<br>* 担忧的猫叫声 *<br>';
+			$mode = 'command';
+			return;
+		}
+
+		$chprocess($itmn);
+	}
+	
+	function use_armor(&$theitem, $pos = '')//使用外甲
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','player','armor','skill505','logger'));		
+		$itm=&$theitem['itm']; $itmk=&$theitem['itmk'];			
+		if(!$pos) {
+			if(strpos ( $itmk, 'DB' ) === 0) {
+				$pos = 'arb';
+				$noeqp = 'DN';
+			}elseif(strpos ( $itmk, 'DH' ) === 0) {
+				$pos = 'arh';
+				$noeqp = '';
+			}elseif(strpos ( $itmk, 'DA' ) === 0) {
+				$pos = 'ara';
+				$noeqp = '';
+			}elseif(strpos ( $itmk, 'DF' ) === 0) {
+				$pos = 'arf';
+				$noeqp = '';
+			}
+		}	
+		if (false !== strpos(substr($itmk,2),'S') && ${$pos} == $skill505_keyitm)
+		{
+			$log .= "你抱着灯泡，腾不出手来装备<span class=\"yellow b\">{$itm}</span>。<br>";
+			$mode = 'command';
+			return;
+		}
+		$chprocess($theitem, $pos);
 	}
 	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())

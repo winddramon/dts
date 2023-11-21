@@ -7,32 +7,234 @@ namespace cardbase
 		
 	function init() {}
 	
+	//============3202.10.15 改写卡片系统的数据库储存==========
+	//旧思路：卡片和能量都以类似csv的形式（用下划线分隔）作为字符串储存，好处是易读易改，坏处是能量非常容易跟卡片错位，而且能量是带小数的，空间浪费特别厉害
+	//新思路：$card_data是一个数组（储存进数据库用gencode），以卡片id为键名，键值为子数组，储存卡片id（备用）、能量和其他一些用来扩展的数据（比如未来可以做卡片罕贵）。好处是扩展性强，坏处是修改起来比原来麻烦
+	
+	//新版的初始化函数，从传入的$udata返回$cardlist、$cardenergy、$card_data三个重要变量
+	//$cardlist和$cardenergy的格式仍维持原样用于兼容。其他数据请直接访问$card_data
+	//实际编写完成之后发现$card_data变量基本没有大用（因为其他功能没专门储存这个变量），主要还是靠修改$udata实现卡片的修改
+	//返回值请用list接收
+	function get_cardlist_energy_from_udata($udata)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		
+		//调用global.func.php下的gdecode()函数获得$card_data的内容
+		$card_data = get_decoded_card_data($udata);
+		
+		//兼容性代码：如果数据库缺乏字段，自动新建字段。
+		//在旧服数据稳定之后可以删除这一句
+		if(1){
+			$column_existed = 0;
+			eval(import_module('sys'));
+			$result = $db->query("SHOW COLUMNS FROM {$gtablepre}users");
+			while($r = $db->fetch_array($result)){
+				if($r['Field'] == 'card_data') {
+					$column_existed = 1;
+					break;
+				}
+			}
+			if(!$column_existed) {
+				$db->query("ALTER TABLE {$gtablepre}users ADD COLUMN `card_data` text NOT NULL DEFAULT '' AFTER `icon`");
+			}
+		}
+		
+		//兼容性代码：如果只有旧版数据，读取旧版数据。save时会保存到新版格式，旧版就被封存了
+		if(empty($card_data) && !empty($udata['cardlist'])) 
+		{
+			eval(import_module('sys','cardbase'));
+			$cardlist = get_user_cards_process($udata);
+			$cardenergy = Array();
+			$t = explode('_',$udata['cardenergy']);
+			for ($i=0; $i<count($cardlist); $i++)
+				if ($i<count($t))
+				{
+					$cardenergy[$cardlist[$i]]=(double)$t[$i];
+				}
+				else
+				{
+					$cardenergy[$cardlist[$i]] = $cards[$cardlist[$i]]['energy'];
+				}
+		}
+		//有新版数据的情况下在这里处理
+		else
+		{
+			list($cardlist, $cardenergy) = get_cardlist_energy_from_card_data($card_data);
+		}
+		
+		return Array($cardlist, $cardenergy, $card_data);
+	}
+	
+	//上面的的核心函数，从$card_data获取$cardlist和$cardenergy
+	function get_cardlist_energy_from_card_data($card_data)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$cardlist = $cardenergy = Array();
+		
+		foreach($card_data as $cid => $cv) {
+			//由于可能存在非数字id的键名，以键值的id为准
+			if(isset($cv['cardid'])) {
+				$cardlist[] = $cv['cardid'];
+				$cardenergy[$cid] = $cv['cardenergy'];//相当于自动对齐$cardenergy
+			}
+		}
+		
+		return Array($cardlist, $cardenergy, $card_data);
+	}
+	
+	//新版的储存函数，把$cardlist、$cardenergy和$card_data保存到$udata中并编码，新版实际上只修改$card_data
+	//返回修改后的$udata。因为是引用，$card_data、$udata也会被同时更新
+	//注意这个函数不会储存数据库，请手动update
+	function put_cardlist_energy_to_udata($cardlist, $cardenergy, &$card_data, &$udata)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$card_data = put_cardlist_energy_to_card_data($cardlist, $cardenergy, $card_data);
+		put_encoded_card_data($udata, $card_data);
+		return $udata;
+	}
+	
+	//上面的的核心函数，把$cardlist和$cardenergy保存到$card_data
+	//会把$cardlist新增的卡片加入$card_data，然后根据$cardenergy更新$card_data对应值
+	//$cardlist和$cardenergy没给的卡不会动，因此可以用来对单卡进行更新
+	//如果$allow_delete=1则会把$cardlist里不存在的卡片删掉
+	//返回修改过的$card_data。因为是引用，$card_data也会被同时更新
+	function put_cardlist_energy_to_card_data($cardlist, $cardenergy, &$card_data, $allow_delete = 0)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('cardbase'));
+		
+		$card_data_keys = array_keys($card_data);
+		$add_cards = array_diff($cardlist, $card_data_keys);
+		$del_cards = array_diff($card_data_keys, $cardlist);
+		
+		if(!in_array(0, $card_data_keys)) $add_cards[] = 0;//必定拥有0号卡挑战者
+		
+		//有新增卡片的情况。由于增加了碎闪的判定，获得单项新卡并不是在这里进行了，这里只是一个保底
+		if(!empty($add_cards)) {
+			foreach($add_cards as $cid) {
+				$card_data[$cid] = init_card_data_single($cid);
+				$cardenergy[$cid] = $cards[$cid]['energy'];
+			}
+		}
+		
+		//根据$cardenergy更新$card_data对应值
+		foreach($cardenergy as $cid => $cen) {
+			if(isset($card_data[$cid]) && $card_data[$cid]['cardenergy'] != $cen){
+				$card_data[$cid]['cardenergy'] = $cen;
+			}
+		}
+		
+		//如果$allow_delete不为0，则会判定是否删除卡片
+		//会忽略非数字的键名
+		if(!empty($allow_delete) && !empty($del_cards)) {
+			foreach($del_cards as $cid) {
+				if(is_numeric($cid)) {
+					unset($card_data[$cid]);
+				}
+			}
+		}
+		
+		ksort($card_data);//升序排列
+		
+		return $card_data;
+	}
+	
+	//创建并返回新卡数组。需要用模块添加的新值可以继承这个函数
+	function init_card_data_single($cardid)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return Array(
+			'cardid' => $cardid,
+			'cardenergy' => 0, //新增卡片能量都是0，新卡充能在put_cardlist_energy_to_card_data()里实现
+		);
+	}
+	
+	//从传入的$udata返回解码后的$card_data
+	//不会更改传参$udata的内容
+	function get_decoded_card_data($udata)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = Array();
+		if(!empty($udata['card_data'])) $ret = gdecode($udata['card_data'], 1);
+		if(!is_array($ret)) $ret = Array();
+		return $ret;
+	}
+	
+	//把传入的$card_data_arr编码后覆盖到$udata
+	//会更改传参$udata的内容，同时也会把更改过的$udata作为结果返回
+	//返回值不是引用的，应该没有人在$udata里放奇怪的东西吧？
+	function put_encoded_card_data(&$udata, $card_data_arr)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+
+		if(is_array($card_data_arr)) //传参$card_data_arr是数组才会执行。但不会检查数组合法性
+			$udata['card_data'] = gencode($card_data_arr);
+		
+		return $udata;
+	}
+	
+	//更新卡片能量
+	//返回更新过的$cardenergy数组，注意不会直接修改$card_data
+	function card_energy_update($cardlist, $cardenergy, $udata)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','cardbase'));
+		$energy_recover_rate = get_energy_recover_rate($cardlist, $udata['gold']);
+		$lastupd = $udata['cardenergylastupd'];
+		
+		foreach ($cardenergy as $cid => &$cen) {
+			$rare = $cards[$cid]['rare'];
+			$energy = $cards[$cid]['energy'];
+			if(in_array($rare, array('C','M'))) {//C、M卡直接设为上限
+				$cen = $energy;
+			}else{//其他罕贵的卡才计算能量
+				$cen = (double)$cen + ($now-$lastupd) * $energy_recover_rate[$rare];
+				if($cen > $energy - 1e-5) $cen = $energy;//双精度误差控制
+			}
+		}
+		
+		return $cardenergy;
+	}
+	
+	//============以下是旧的卡片存取函数，旧服将只在兼容模式使用，新服将弃用==========
+	
 	function cardlist_decode($str){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$ret = explode('_',$str);
+		if(strpos(debug_backtrace()[2]['function'],'get_cardlist_energy_from_udata')===false)
+			gexit('trying to use function cardlist_decode from '.debug_backtrace()[2]['function']);
+		if(!is_array($str)) $ret = explode('_',$str);
 		if(empty($ret)) $ret[] = '0';
 		return $ret;
 	}
 	
 	function cardlist_encode($arr){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		gexit('trying to use function cardlist_encode');
 		$ret = implode('_',$arr);
 		return $ret;
 	}
-
+	
+	//============以上是旧的卡片存取函数，旧服将只在兼容模式使用，新服将弃用==========
+	
+	//从用户名获得玩家卡片数组，这个函数似乎已经被架空了
 	function get_user_cards($username){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		gexit('trying to use function get_user_cards');
 		$udata = fetch_udata_by_username($username);
 		$cardlist = get_user_cards_process($udata);
 		return $cardlist;
 	}	
 	
+	//从$udata获得玩家卡片数组。即将弃用
 	function get_user_cards_process($udata){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if(strpos(debug_backtrace()[1]['function'],'get_cardlist_energy_from_udata')===false)
+			gexit('trying to use function get_user_cards_process from '.debug_backtrace()[1]['function']);
 		$cardlist = cardlist_decode($udata['cardlist']);
 		return $cardlist;
 	}
 	
+	//根据$cardlist和$qiegao的值计算卡片能量恢复效率
 	function get_energy_recover_rate($cardlist, $qiegao)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -93,43 +295,73 @@ namespace cardbase
 			$udata = fetch_udata_by_username($who);
 		}
 		
-		$cardlist = get_user_cards_process($udata);		//仅包含玩家拥有卡片的编号
-		$energy_recover_rate = get_energy_recover_rate($cardlist, $udata['gold']);
+		//这是获得$cardlist唯一的入口，把这里修改成新的
+		list($cardlist, $cardenergy, $card_data) = get_cardlist_energy_from_udata($udata);
 		
-		$cardenergy=Array();
-		if ($udata['cardenergy']=="") $t=Array(); else $t=explode('_',$udata['cardenergy']);
-		$lastupd = $udata['cardenergylastupd'];
+		//更新卡片能量
+		$o_cardenergy = $cardenergy;
+		$cardenergy = card_energy_update($cardlist, $cardenergy, $udata);
+		if($o_cardenergy != $cardenergy) {//如果能量有修改，直接保存一次数据库。这里也会同时修改传入的$card_data和$udata
+			save_cardenergy_to_db($cardlist, $cardenergy, $card_data, $udata);
+		}
 		
-		for ($i=0; $i<count($cardlist); $i++)
-			if ($i<count($t))
-			{
-				$cardenergy[$cardlist[$i]]=((double)$t[$i])+($now-$lastupd)*$energy_recover_rate[$cards[$cardlist[$i]]['rare']];
-				if (in_array($cards[$cardlist[$i]]['rare'], array('C','M')) || $cardenergy[$cardlist[$i]] > $cards[$cardlist[$i]]['energy']-1e-5)
-					$cardenergy[$cardlist[$i]] = $cards[$cardlist[$i]]['energy'];
-			}
-			else
-			{
-				$cardenergy[$cardlist[$i]] = $cards[$cardlist[$i]]['energy'];
-			}
+		//以下是老代码
+		
+//		$cardlist = get_user_cards_process($udata);		//仅包含玩家拥有卡片的编号
+//		$energy_recover_rate = get_energy_recover_rate($cardlist, $udata['gold']);
+//		
+//		$cardenergy=Array();
+//		if ($udata['cardenergy']=="") $t=Array(); else $t=explode('_',$udata['cardenergy']);
+//		$lastupd = $udata['cardenergylastupd'];
+//		
+//		for ($i=0; $i<count($cardlist); $i++)
+//			if ($i<count($t))
+//			{
+//				$cardenergy[$cardlist[$i]]=((double)$t[$i])+($now-$lastupd)*$energy_recover_rate[$cards[$cardlist[$i]]['rare']];
+//				if (in_array($cards[$cardlist[$i]]['rare'], array('C','M')) || $cardenergy[$cardlist[$i]] > $cards[$cardlist[$i]]['energy']-1e-5)
+//					$cardenergy[$cardlist[$i]] = $cards[$cardlist[$i]]['energy'];
+//			}
+//			else
+//			{
+//				$cardenergy[$cardlist[$i]] = $cards[$cardlist[$i]]['energy'];
+//			}
 		
 		$ret=Array(
 			'cardlist' => $cardlist,
 			'cardenergy' => $cardenergy,
 			'cardchosen' => $udata['card'],
 			'cardenergylastupd' => $now,
+			'card_data' => $card_data,
 		);
 		
-		if($t != $cardenergy) {
-			save_cardenergy($ret, $who);
-		}
+//		if($t != $cardenergy) {
+//			save_cardenergy($ret, $who);
+//		}
 			
 		return $ret;
 	}
 	
+	//单把卡片能量更新到数据库，因为有多处调用所以单独做一个函数
+	//返回$card_data
+	function save_cardenergy_to_db($cardlist, $cardenergy, &$card_data, &$udata)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		put_cardlist_energy_to_udata($cardlist, $cardenergy, $card_data, $udata);
+		$upd=Array(
+			'card_data' => $udata['card_data'],
+			'cardenergylastupd' => $now,
+		);
+		update_udata_by_username($upd, $udata['username']);
+		return $card_data;
+	}
+	
 	//更新卡片能量数据库，会自动将能量值转化为浮点数
+	//这个函数已废弃
 	function save_cardenergy($data, $who)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		gexit('trying to use function save_cardenergy');
 		eval(import_module('sys'));
 		if(is_array($data['cardenergy'])) {
 			$cd_n='';
@@ -149,8 +381,10 @@ namespace cardbase
 		update_udata_by_username($upd, $who);
 	}
 	
-	//生成一条获得卡片的站内信，返回值为1则表示是新卡
-	function get_card_message($ci,$ext='',&$pa=NULL)
+	//生成一条获得卡片的站内信
+	//$ci为卡号，$ext是额外显示的文本，$blink代表碎闪等级
+	//会自动判定是不是新卡，返回值为1则表示是新卡
+	function get_card_message($ci,$ext='',$blink=0,&$pa=NULL)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','player','cardbase'));
@@ -160,20 +394,23 @@ namespace cardbase
 			if (isset($pa['username'])) $n=$pa['username'];
 			else $n=$pa['name'];
 		}
-		//判定卡片是不是新卡
-		$result = fetch_udata_by_username($n,'cardlist');
+		//判定卡片是不是新卡，当场显示用
+		$result = fetch_udata_by_username($n);
 		if(empty($result)) return;
+		
 		//if(!empty($ext)) $ext.='<br>';
+		$prizecode = 'getcard_'.$ci.';';
+		if(!empty($blink)) $prizecode .= 'getcardblink_'.$blink.';';
 		include_once './include/messages.func.php';
 		message_create(
 			$n,
 			'获得卡片',
 			$ext.'查收本消息即可获取此卡片，如果已有此卡片则会转化为切糕。',
-			'getcard_'.$ci
+			$prizecode
 		);
 		
 		$ret = 0;
-		$clist = explode('_',$result['cardlist']);
+		$clist = get_cardlist_energy_from_udata($result)[0];
 		if (!in_array($ci,$clist)) $ret = 1;
 		return $ret;
 	}
@@ -200,6 +437,7 @@ namespace cardbase
 		$A_odds = !empty($cs['A_odds']) ? $cs['A_odds'] : 0;
 		$B_odds = !empty($cs['B_odds']) ? $cs['B_odds'] : 0;
 		$C_odds = !empty($cs['C_odds']) ? $cs['C_odds'] : 0;//实际上不顶用，SAB都没选到就一定是C
+		$packlimit = !empty($cs['packlimit']) ? $cs['packlimit'] : '';
 		$forced = !empty($cs['forced']) ? $cs['forced'] : Array();
 		$ignore = !empty($cs['ignore_cards']) ? $cs['ignore_cards'] : Array();
 		
@@ -209,6 +447,7 @@ namespace cardbase
 			if(!empty($cs['real_random'])) {//真随机，把所有卡集合并
 				$arr = array_merge($arr,$cardindex['S'],$cardindex['A'],$cardindex['B'],$cardindex['C'],$cardindex['EB']);
 			}else{
+				//判定随机到的卡的罕贵
 				$r=rand(1,100);
 				if ($r<=$S_odds){
 					$arr=$cardindex['S'];
@@ -223,6 +462,14 @@ namespace cardbase
 					$arr=$cardindex['C'];
 					if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_C']);
 				}
+			}
+			
+			if(!empty($packlimit)){//有卡包限制，那么对选择集挨个判定一遍卡包
+				foreach($arr as $i => $v) {
+					if($cards[$v]['pack'] != $packlimit) 
+						unset($arr[$i]);
+				}
+				$arr = array_filter($arr);
 			}
 			
 			$arr = array_merge($arr, $forced);
@@ -247,18 +494,6 @@ namespace cardbase
 			//有些问题，先这样
 			
 			if(empty($cards[$card])) {
-				//这游戏有一种另类的debug办法
-				eval(import_module('sys'));
-				include_once './include/messages.func.php';
-				foreach(Array('admin','Yoshiko_G') as $v){
-					$r = fetch_udata('uid', "username='$v'");
-					if(empty($r)) continue;
-					message_create(
-						$v,
-						'截获big',
-						($groomtype ? '房间' : '') . "第{$gamenum}局中，{$name}在入场时随到了空白的卡。卡片编号：".$card
-					);
-				}	
 				$card = 0;				
 			}
 		}
@@ -330,17 +565,22 @@ namespace cardbase
 	}
 	
 	//判断一张卡当前是否在持有列表中
+	//gtype5这个部分应该拆出去
 	function check_card_in_ownlist($card, $card_ownlist){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
-		if(in_array($card,$card_ownlist) || (5==$gametype && in_array($card,array(182, 183, 184, 185)))) return true;
+		if(0===(int)$card || in_array($card,$card_ownlist) || (5==$gametype && in_array($card,array(182, 183, 184, 185)))) return true;
 		return false;
 	}
 	
-	//根据用户名或者玩家数据，从数据库查询当前所用卡片，主要是数据库读写
+	//玩家获得卡片的判定
+	//传参：$ci为卡片编号，$pa为玩家数组（会用来做用户名判定），$ignore_qiegao为真则会忽略切糕的判定
+	//会自动修改数据库
+	//这个函数好像已经被架空了，彻底弃用吧
 	function get_card($ci,&$pa=NULL,$ignore_qiegao=0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		gexit('trying to use function get_card');
 		eval(import_module('sys','player','cardbase'));
 		if ($pa==NULL){
 			$n=$name;
@@ -351,8 +591,11 @@ namespace cardbase
 		$pu = fetch_udata_by_username($n);
 		$ret = get_card_process($ci,$pu,$ignore_qiegao);
 		
+		//3202.10.15这里改成用新模式，先调整$card_data然后保存
+		$card_data = put_cardlist_energy_to_udata($pi['cardlist'], $pu['cardenergy'], $pu['card_data'], $pu);
+		
 		$upd = array(
-			'cardlist' => $pu['cardlist'],
+			'card_data' => $card_data,
 			'gold' => $pu['gold'],
 		);
 		update_udata_by_username($upd, $n);
@@ -361,8 +604,11 @@ namespace cardbase
 	
 	//获得卡片和切糕的核心判定，如果卡重复，则换算成切糕
 	//会自动判定输入的cardlist键值是字符串还是数组
+	//这里是获得卡片的唯一入口
+	//目前已废弃
 	function get_card_process($ci,&$pa,$ignore_qiegao=0){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		gexit('trying to use function get_card_process from '.debug_backtrace()[2]['function']);
 		if(!is_array($pa['cardlist'])) {
 			$cl_changed = 1;
 			$pa['cardlist'] = explode('_',$pa['cardlist']);
@@ -376,6 +622,73 @@ namespace cardbase
 			$ret = 1;
 		}
 		if(!empty($cl_changed)) $pa['cardlist'] = implode('_',$pa['cardlist']);
+		
+		return $ret;
+	}
+	
+	//获得卡时判定闪烁等级（也就是类似游戏王镜碎啦闪卡啦这种东西）
+	//目前有两种等级$blink=20代表镜碎，$blink=10代表闪，概率对应config里$card_blink_rate_20和$card_blink_rate_10两个
+	//M卡目前不能获得任何闪烁等级，C卡不能获得镜碎等级
+	function get_card_calc_blink($cardid, &$udata)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('cardbase'));
+		$rare = $cards[$cardid]['rare'];
+		$r = rand(0,99);
+		if(!empty($card_blink_rate_20[$rare]) && $r < $card_blink_rate_20[$rare]) return 20;
+		if(!empty($card_blink_rate_10[$rare]) && $r < $card_blink_rate_10[$rare]) return 10;
+		return 0;
+	}
+	
+	//新模式的获得卡片判定。如果卡片重复则换算成切糕
+	//会自动更新$udata里$card_data的值，但不会写数据库
+	//返回一个数组array($isnew, $qiegao)，$isnew为真则表示获得卡片，$qiegao则代表转化成的切糕数
+	function get_card_alternative($cardid, &$udata, $ignore_qiegao=0, $blink=0)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		list($cardlist, $cardenergy, $card_data) = get_cardlist_energy_from_udata($udata);
+		if(in_array($cardid, $cardlist))//卡存在，原卡换算成切糕，如果闪碎等级高则会刷新闪碎等级
+		{
+			$getqiegao = 0;
+			$o_blink = !empty($card_data[$cardid]['blink']) ? $card_data[$cardid]['blink'] : 0;//把原卡按闪碎等级和罕贵换算成切糕
+			if(!$ignore_qiegao) {
+				//按原卡和新卡里闪碎等级较小的那个判定切糕
+				$getqiegao = get_card_transfer_to_qiegao($cardid, $udata, min($o_blink, $blink));
+				$udata['gold'] += $getqiegao;
+				//如果新卡闪碎等级高于原卡，那么更新原卡的闪碎等级。只有$ignore_qiegao=0才会生效
+				if($blink > $o_blink) {
+					$card_data[$cardid]['blink'] = $blink;
+					put_cardlist_energy_to_udata($cardlist, $cardenergy, $card_data, $udata);
+				}
+			}
+				
+			$ret = Array(false, $getqiegao);
+		}
+		else//卡不存在，但是由于可能有闪碎等级，不能直接交给put_cardlist_energy_to_udata()
+		{
+			eval(import_module('cardbase'));
+			$cardlist[] = $cardid;
+			$card_data[$cardid] = init_card_data_single($cardid);
+			$cardenergy[$cardid] = $cards[$cardid]['energy'];
+			if(!empty($blink)) {
+				$card_data[$cardid]['blink'] = $blink;
+			}
+			//其实这里可以直接用put_encoded_card_data()，但保留原来的逻辑吧
+			put_cardlist_energy_to_udata($cardlist, $cardenergy, $card_data, $udata);
+			$ret = Array(true, 0);
+		}
+		return $ret;
+	}
+	
+	//计算卡片转换成切糕的数值（不会直接修改$udata）
+	function get_card_transfer_to_qiegao($cardid, &$udata, $blink=0)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('cardbase'));
+		$ret = $card_price[$cards[$cardid]['rare']];
+		if(!empty($blink) && !empty($card_price_blink_rate[$blink])) {
+			$ret *= $card_price_blink_rate[$blink];
+		}
 		return $ret;
 	}
 	
@@ -464,24 +777,6 @@ namespace cardbase
 		get_qiegao($qiegaogain,$pa);
 	}
 	
-	/*
-	function itemmix_success()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player','logger','map','cardbase'));
-		if (!in_array($gametype,$qiegao_ignore_mode)){
-			if (($itm0=="绝冲大剑【神威】")&&(($areanum/$areaadd)<2)){
-				if (get_card(42)==1){
-					$log.="恭喜您获得了活动奖励卡<span class=\"orange\">Fleur</span>！<br>";
-				}else{
-					$log.="您已经拥有活动奖励卡了，系统奖励您<span class=\"yellow b\">100</span>切糕！<br>";
-					get_qiegao(100);
-				}
-			}
-		}
-		$chprocess();	
-	}*/
-	
 	function get_card_pack($card_pack_name) {
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('cardbase'));
@@ -513,8 +808,8 @@ namespace cardbase
 		if (defined('MOD_KUJIBASE')) {
 			$kr=\kujibase\kujidraw($ktype, $pa, $is_dryrun);
 			if (!is_array($kr)){
-				if ($kr==-1){
-					return -1;
+				if (empty($kr) || $kr==-1){
+					return $kr;
 				}else{
 					$dr=array($kr);
 				}
@@ -541,20 +836,21 @@ namespace cardbase
 	}
 	
 	//卡包过滤器核心代码，过滤没开放的卡包
-	function check_pack_availble($pn){
+	function check_pack_availble($pn, $ignore_kuji = 0){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','cardbase'));
-		$ret = true;
-		if(isset($packstart[$pn]) && $packstart[$pn] > $now) $ret = false;
-		return $ret;
+		if(in_array($pn, Array('hidden', 'stealth'))) return false;
+		if(!empty($packstart[$pn]) && $packstart[$pn] > $now) return false;
+		if($ignore_kuji && in_array($pn,$pack_ignore_kuji)) return false;
+		return true;
 	}
 	
 	//卡包过滤器，过滤没开放的卡包。
-	function pack_filter($packlist){
+	function pack_filter($packlist, $ignore_kuji = 0){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$n_packlist = array();
 		foreach($packlist as $pv){
-			if(check_pack_availble($pv)) $n_packlist[]=$pv;
+			if(check_pack_availble($pv, $ignore_kuji)) $n_packlist[]=$pv;
 		}
 		return $n_packlist;
 	}
@@ -566,14 +862,41 @@ namespace cardbase
 		$chprocess();
 		eval(import_module('sys','player','cardbase'));
 		
-		//显示的卡名一定是$cardname
-		$uip['cardname_show'] = $cardname;
-		//罕贵和卡面显示
-		$real_cardid = check_realcard($card, $cardname);
-		if($real_cardid && 'hidden' != $cards[$real_cardid]['pack']) $uip['cardinfo_show'] = $cards[$real_cardid];
-		$uip['cardrare_show'] = $card_rarecolor[$cards[$real_cardid]['rare']];
+		list($show_cardid, $uip['cardname_show'], $show_rare, $show_cardblink, $uip['cardinfo_show']) = parse_card_show_data($sdata);
+		
+		//如果卡片是挑战者或者是隐藏卡片，不予显示卡面
+		if(!$show_cardid || 'hidden' == $cards[$show_cardid]['pack']) {
+			unset($uip['cardinfo_show']);
+		}
+		//用于显示用的罕贵类型
+		$uip['cardrare_show'] = $card_rarecolor[$show_rare];
+		
+		//碎闪等级的显示
+		if(!empty($uip['cardinfo_show']) && $show_cardblink) $uip['cardinfo_show']['blink'] = $show_cardblink;
 
 		$uip['card_rarecolor'] = $card_rarecolor;//备用
+	}
+	
+	//从player表数据获得卡名和卡面显示的数据
+	//返回一个数组，元素分别是显示的卡片id、显示的卡名、显示的罕贵（字母）、显示的碎闪等级和用于card_frame的$nowcard数据
+	function parse_card_show_data($pdata)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('cardbase'));
+		//显示的卡名，通常情况下是$cardname
+		$show_cardname = !empty($pdata['cardname']) ? $pdata['cardname'] : $cards[$pdata['card']]['name'];
+		//用显示卡名反查显示卡的id
+		$show_cardid = check_realcard($pdata['card'], $show_cardname);
+		//获得罕贵等级
+		$show_rare = $cards[$show_cardid]['rare'];
+		//获得$nowcard数据
+		$show_cardinfo = $cards[$show_cardid];
+		//碎闪等级的显示（借用skill1003，由于pdata可能是没有经过skillbase处理的，需要处理裸数据）
+		$show_cardblink = 0;
+		if(defined('MOD_SKILL1003')) {
+			$show_cardblink = (int)\skillbase\skill_getvalue_direct(1003,'nowcard_blink',$pdata['nskillpara']);
+		}
+		return Array($show_cardid, $show_cardname, $show_rare, $show_cardblink, $show_cardinfo);
 	}
 	
 	//通过记录卡名与卡号判定实际卡号
@@ -596,7 +919,9 @@ namespace cardbase
 		eval(import_module('sys','player','metman','cardbase'));
 		
 		$tdata['cardinfo'] = '';
-		if(!empty($w_cardname)){
+		
+		if(!empty($w_cardname) && (!\weather\check_fog() || $ismeet))
+		{
 			if(!empty($cards[$w_card]['title']))
 				$tdata['cardinfo'] = $cards[$w_card]['title'];
 			else $tdata['cardinfo'] = $w_cardname;
@@ -604,6 +929,7 @@ namespace cardbase
 	}
 	
 	//玩家加入战场时有一次性效果的卡片的处理，主要是修改gamevars等
+	//把卡片碎闪等级写入skill1003也在这里
 	function post_enterbattlefield_events(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -616,6 +942,11 @@ namespace cardbase
 			foreach ($cgarr as $cgk => $cgv){
 				$gamevars[$cgk] = $cgv;
 			}
+		}
+		//读当前玩家数据并且写入碎闪等级
+		$card_data = \cardbase\get_cardlist_energy_from_udata($cudata)[2];
+		if(!empty($card_data[$card]['blink']) && defined('MOD_SKILL1003')) {
+			\skillbase\skill_setvalue(1003,'nowcard_blink',$card_data[$card]['blink'],$pa);
 		}
 		return $ret;
 	}
@@ -691,6 +1022,7 @@ namespace cardbase
 		
 		//反查数组就无所谓了
 		$contents .= '$cardindex_reverse = '.var_export($new_cardindex_reverse,1).';';
+		$contents .= "\r\n/* End of file card_index.config.php */";
 		
 		file_put_contents($card_index_file, $contents);
 		chmod($card_index_file, 0777);
@@ -799,7 +1131,7 @@ namespace cardbase
 		
 		//特判
 		$cgmethod[0][] = '注册账号即有';
-		//$cgmethod[63][] = '在四禁前使锡安成员技能「破解」达到50层以上获得（只在标准、卡片、荣耀或极速模式有效）';
+		//$cgmethod[63][] = '在四禁前使边缘行者技能「破解」达到50层以上获得（只在标准、卡片、荣耀或极速模式有效）';
 		$cgmethod[72][] = '完成竞速挑战「不动的大图书馆」获得';
 		$cgmethod[78][] = '完成竞速挑战「烈火疾风」获得';
 		$cgmethod[88][] = '完成战斗成就「谈笑风生」获得';
@@ -846,6 +1178,7 @@ namespace cardbase
 		$userCardData = get_user_cardinfo($udata['username']);
 		$card_ownlist = $userCardData['cardlist'];
 		$card_energy = $userCardData['cardenergy'];
+		$card_data_fetched = $userCardData['card_data'];
 		$cardChosen = $userCardData['cardchosen'];
 		
 		/*
@@ -968,6 +1301,22 @@ namespace cardbase
 		
 		
 		return array($cardChosen, $card_ownlist, $packlist, $hideDisableButton);
+	}
+	
+	//⑨卡头像特判放这里，毕竟⑨没有自己的模块
+	function icon_parser_valid(&$pdata=NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if(!$pdata) {
+			eval(import_module('player'));
+			$pdata = &$sdata;
+		}
+		$ret = $chprocess($pdata);
+		if(!$ret && !empty($pdata['card']) && !empty($pdata['cardname'])) {
+			if(check_realcard($pdata['card'], $pdata['cardname'])==299)
+				$ret = true;
+		}
+		return $ret;
 	}
 }
 

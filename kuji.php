@@ -21,17 +21,20 @@ extract($udata);
 $userCardData = \cardbase\get_user_cardinfo($cuser);
 $oc = $userCardData['cardlist'];
 
+//刷新卡包cardindex
+\cardbase\parse_card_index();
 
-if ($ktype==1 || $choice>0)
+if ($ktype==1 || $choice>0 || !empty($packchoice))
 {
 	eval(import_module('kujibase'));
 	
 	$kreq=$kujicost;
-
+	
 	$kres=\cardbase\kuji($ktype,$udata);
 
+  //抽卡成功的显示
 	if (is_array($kres)){
-		if ($ktype==0 || $ktype==2)	//单抽可以4选1
+		if ($ktype==0 || $ktype==2)	//单抽4选1生成其他3张假结果
 		{
 			$t=Array(); $tmp=Array();
 			for ($i=1; $i<=4; $i++)
@@ -43,6 +46,28 @@ if ($ktype==1 || $choice>0)
 			$kres=$t;
 		}
 		$isnew=array();
+		//单抽、8抽4的高亮显示
+		$ishighlight=Array();
+		if ($ktype==0 || $ktype==2) 
+		{
+			for ($i=1; $i<=4; $i++) $ishighlight[$i]=($i==$choice);
+		}
+		elseif($kujinum_in_pack[$ktype] > 0) {
+			//8抽4结果倒序排列
+			$kres = array_reverse($kres);
+			//卡包内的高亮显示。注意由于倒序排列，这里是倒着来的
+			for ($i=$kujinum[$ktype]; $i>$kujinum[$ktype]-$kujinum_in_pack[$ktype]; $i--) {
+				$ishighlight[$i-1]=1;
+			}
+		}
+		//把卡片编号和镜碎等级分离
+		$isblink = Array();
+		foreach($kres as $key => $val) {
+			if(strpos($val, '_')!==false){
+				list($kres[$key], $isblink[$key]) = explode('_', $val);
+			}
+		}
+		//判定哪些卡是新获得的卡
 		foreach($kres as $key => $val){
 			if (($ktype==0 || $ktype==2) && $choice!=$key)	//单抽没有真正获得的卡不显示new字样
 			{
@@ -54,12 +79,6 @@ if ($ktype==1 || $choice>0)
 				$isnew[$key]="";
 			}
 		}
-		$ishighlight=Array();
-		if ($ktype==0 || $ktype==2) 
-		{
-			for ($i=1; $i<=4; $i++) $ishighlight[$i]=($i==$choice);
-		}
-		
 		include template('kujiresult');
 	}else{
 		gexit($_ERROR['kuji_failure'], __file__, __line__);

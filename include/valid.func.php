@@ -61,7 +61,7 @@ function enter_battlefield($xuser,$xpass,$xgender,$xicon,$card=0,$ip='')
 	//游戏账户判定以及留言等的赋值
 	global $gamefounder, $cuser;
 	if($xuser != $cuser) {
-		$r = fetch_udata_by_username($xuser, 'groupid,motto,killmsg,lastword,cardlist');
+		$r = fetch_udata_by_username($xuser, 'groupid,motto,killmsg,lastword,cardlist,card_data');
 		if(empty($r)) return;
 	}else{
 		$r = $cudata;
@@ -125,7 +125,8 @@ function enter_battlefield($xuser,$xpass,$xgender,$xicon,$card=0,$ip='')
 	
 	//如果卡片合法，记录改变的卡
 	$upd_card = !empty($o_card) ? $o_card : $card;
-	if(!empty($upd_card) && \cardbase\check_card_in_ownlist($upd_card, explode('_', $r['cardlist']))) $updatearr['card'] = $upd_card;
+	$cardlist = \cardbase\get_cardlist_energy_from_udata($r)[0];
+	if(!empty($upd_card) && \cardbase\check_card_in_ownlist($upd_card, $cardlist)) $updatearr['card'] = $upd_card;
 	
 	update_udata_by_username($updatearr, $xuser);
 	
@@ -149,11 +150,13 @@ function enter_battlefield($xuser,$xpass,$xgender,$xicon,$card=0,$ip='')
 	
 	///////////////////////////////////////////////////////////////
 	//发布游戏内消息
+	
+	list($valid_disp_user, $valid_disp_sex_sNo_info) = \sys\get_valid_disp_user_info($sk_pdata);
 
 	if($gamestate >= 30 && ($groupid >= 6 || $xuser == $gamefounder)){
-		addnews($now,'newgm', $prefix.' '.$xuser,"{$sexinfo[$sk_pdata['gd']]}{$sk_pdata['sNo']}号");
+		addnews($now,'newgm', $prefix.' '.$valid_disp_user,$valid_disp_sex_sNo_info);
 	}else{
-		addnews($now,'newpc', $prefix.' '.$xuser,"{$sexinfo[$sk_pdata['gd']]}{$sk_pdata['sNo']}号");
+		addnews($now,'newpc', $prefix.' '.$valid_disp_user,$valid_disp_sex_sNo_info);
 	}
 	
 	//在这里判定一次游戏停止激活……？还有这种事？

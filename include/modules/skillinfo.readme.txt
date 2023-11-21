@@ -16,9 +16,9 @@
 
 club 		称号		表明这个技能是一个称号技能。所有称号技能都必须带上这个标签，否则可能导致不参与很多判断
 
-card		卡片		表明这个技能是卡片技能。目前只是个标签，没有特殊的用处
+card		卡片		表明这个技能是卡片技能。目前只是个标签，没有特殊的判定
 
-unique		独有		表明这个技能是独有技能，与卡片技能高度重合，主要用在NPC技能的显示和进化失去技能的判断上。
+unique		独有		表明这个技能是NPC独有技能，主要用在NPC技能的显示和进化失去技能的判断上。这个标签有很多跟card重合，有些未来可能会给NPC用的技能也标了unique 
 
 achievement	成就		表明这个技能是成就。成就不参与任何技能的判定。
 
@@ -42,15 +42,17 @@ hidden	隐藏	这个技能不会在技能页面中显示。有这个标签的技
 feature	称号特性	标明这个技能是称号特性。有这个标签的技能自动视为locked。
 
 limited	有限	这个技能有次数限制。有这个标签的技能自动视为locked。
-				
-name		名字		如果既没有locked标签也没有hidden标签则这个标签必须存在，代表技能的名字。格式是name=名字;
+
+debuff  状态  表明这个技能是时效性负面状态（如果你愿意也可以做成增益状态，但是在某些判定时会被当做负面状态给清掉）
 
 假如你的称号技能在技能页面中有“升级”以外的可用操作（或者你的操作有特殊需要），
 请一律将变量设置为mode='special' command='skill编号_special' subcmd='你的操作'，
-然后接管\player\act()进行处理（记住subcmd和用户提交的其他变量需要import_module('input')才能使用）。
+然后接管\player\act()进行处理
+（$mode和$command变量可以通过eval(import_module('sys'))来获得，$subcmd和用户提交的其他变量需要get_var_in_module($varname, 'input')才能使用
+如果确实必要，也可以import_module('input')虽然不建议）。
 
 提供了5个html变量标签，分别为skillpara1,skillpara2,skillpara3,skillpara4,skillpara5;
-有需要的可以自己在按钮处用$('skillpara1').value=XXX;赋值作为参数，然后处理函数里import_module('input')就能用了。
+有需要的可以自己在按钮处用$('skillpara1').value=XXX;赋值作为参数，然后处理函数里$skillpara1=get_var_in_module('skillpara1','input')就能用了。
 请不要再自己开新的html变量标签了。
 
 示例：

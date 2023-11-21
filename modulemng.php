@@ -46,27 +46,30 @@ if($_GET['mode']=='advmng')
 	//$edfmt = Array('___MOD_CODE_ADV1'=>'int','___MOD_CODE_ADV2'=>'int','___MOD_CODE_ADV3'=>'int','___MOD_SRV'=>'int');
 	if($_GET['action'] == 'turn_on') $edvar = 1;
 	elseif($_GET['action'] == 'turn_off') $edvar = 0;
-	if($_GET['type'] == 1) {
+	if($_GET['type'] == 10) {
 		if ($edvar) $edcfg = array('___MOD_CODE_ADV1' => 1);
 		else $edcfg = array('___MOD_CODE_ADV1' => 0, '___MOD_CODE_ADV2' => 0, '___MOD_CODE_ADV3' => 0, '___MOD_SRV' => 0);
-	} elseif($_GET['type'] == 2) {
+	} elseif($_GET['type'] == 20) {
 		if ($edvar) $edcfg = array('___MOD_CODE_ADV1' => 1, '___MOD_CODE_ADV2' => 1);
 		else $edcfg = array('___MOD_CODE_ADV2' => 0, '___MOD_CODE_ADV3' => 0, '___MOD_SRV' => 0);
-	} elseif($_GET['type'] == 3) {
+	} elseif($_GET['type'] == 25) {
+		if ($edvar) $edcfg = array('___MOD_CODE_ADV1' => 1, '___MOD_CODE_ADV2' => 1, '___MOD_CODE_COMBINE' => 1);
+		else $edcfg = array('___MOD_CODE_COMBINE' => 0);
+	} elseif($_GET['type'] == 30) {
 		if ($edvar) $edcfg = array('___MOD_CODE_ADV1' => 1, '___MOD_CODE_ADV2' => 1, '___MOD_CODE_ADV3' => 1);
 		else $edcfg = array('___MOD_CODE_ADV3' => 0);
-	} elseif($_GET['type'] == 4) {
+	} elseif($_GET['type'] == 40) {
 		if ($edvar) $edcfg = array('___MOD_CODE_ADV1' => 1, '___MOD_CODE_ADV2' => 1, '___MOD_SRV' => 1);
 		else $edcfg = array('___MOD_SRV' => 0);
 	}
 	
 	if(isset($edcfg) && isset($edvar)){
+		$mf=GAME_ROOT.'./include/modulemng/modulemng.config.php';
+		$config_cont = file_get_contents($mf);
 		foreach($edcfg as $ek => $ev){
-			$mf=GAME_ROOT.'./include/modulemng/modulemng.config.php';
-			$config_cont = file_get_contents($mf);
 			$config_cont = preg_replace("/[$]{$ek}\s*\=\s*-?[0-9]+;/is", "\${$ek} = {$ev};", $config_cont);
-			file_put_contents($mf,$config_cont);
 		}
+		file_put_contents($mf,$config_cont);
 	}
 	include GAME_ROOT.'./include/modulemng/modulemng.config.php';
 }
@@ -175,7 +178,7 @@ if($page == 'index') {
 	echo show_adv_state().'<br>';
 	echo '<a href="modulemng.php?mode=edit" style="text-decoration: none"><span><font color="red">[进入编辑模式]</font></span></a> 添加或修改模块可用性。<br>';
 	echo '<a href="modulemng.php?action=save" style="text-decoration: none"><span><font color="green">[重设代码缓存]</font></span></a> 整体重设模块结构和adv模式代码。<br>';
-	echo '<a href="modulemng.php?action=save&mode=quick" style="text-decoration: none"><span><font color="green">[重设代码缓存（快速）]</font></span></a> 只重设有改动的代码函数。新增模块、函数，或模块依赖顺序有调整时切勿使用！<br><br>';  
+	echo '<a href="modulemng.php?action=save&mode=quick" style="text-decoration: none"><span><font color="green">[重设代码缓存（快速）]</font></span></a> 只重设有改动的代码函数。新增模块、函数，或模块依赖顺序有调整时切勿使用，建议只在微调config文件时使用。<br><br>';  
 	//printmodtable(GAME_ROOT.'./gamedata/modules.list.php',1);
 	
 }elseif($page == 'edit'){

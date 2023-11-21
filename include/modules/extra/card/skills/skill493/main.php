@@ -10,7 +10,7 @@ namespace skill493
 	
 	function init() 
 	{
-		define('MOD_SKILL493_INFO','card;unique;upgrade;locked;');
+		define('MOD_SKILL493_INFO','card;upgrade;');
 		eval(import_module('clubbase'));
 		$clubskillname[493] = '通感';
 	}
@@ -129,12 +129,11 @@ namespace skill493
 		return $chprocess($pa, $pd, $active);
 	}
 	
-	//攻击结束时根据所选项来转化
-	function post_player_damaged_enemy_event(&$pa,&$pd,$active)
+	//单次攻击结束时，根据所选项转化
+	function attack_finish(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('rage'));
-		
+		$chprocess($pa,$pd, $active);
 		foreach(array(&$pa, &$pd) as &$pl){
 			if($pl['hp'] > 0 && \skillbase\skill_query(493,$pl) && check_unlocked493($pl)){
 				$skill493var = \skillbase\skill_getvalue(493,'choice');
@@ -149,8 +148,27 @@ namespace skill493
 				elseif(2==$skill493var) \lvlctl\getexp($allup, $pl);
 				else \rage\get_rage($allup, $pl);
 			}
+		}		
+	}
+	
+	//在重置$sdata前后，记录skill493的值
+	function load_playerdata($pdata)//其实最早这个函数是显示用的
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if(\skillbase\skill_query(493,$pdata)) {
+			eval(import_module('player'));//写在这里是为了后面使用$sdata
+			foreach(array('skill493_o_skillup','skill493_o_expup','skill493_o_rageup') as $nval){
+				${$nval.'before_load_playerdata'} = !empty($pdata[$nval]) ? $pdata[$nval] : 0;
+			}
 		}
-		$chprocess($pa,$pd, $active);
+		$chprocess($pdata);
+		//注意由于这个函数对$pdata是传值，而实际修改的是$sdata，后边这里也得是$sdata
+		foreach(array('skill493_o_skillup','skill493_o_expup','skill493_o_rageup') as $nval){
+			if(!empty(${$nval.'before_load_playerdata'})) {
+				$sdata[$nval] = ${$nval.'before_load_playerdata'};
+			}
+			${$nval.'before_load_playerdata'} = !empty($pdata[$nval]) ? $pdata[$nval] : 0;
+		}
 	}
 }
 

@@ -149,9 +149,10 @@ namespace skill272
 		$effect_num = 0;
 		$itmsk_after = $itmsk;
 		$affected_arr = array();
+		//吸光这里好像是倒过来效率更高，就单独实现吧，不调用replace_in_itmsk()了
 		if(!empty($itmsk)) {
 			//echo $itmsk.'=>';
-			$itmsk_arr = \itemmain\get_itmsk_array($itmsk);
+			$itmsk_arr = \itemmain\get_itmsk_array($itmsk,1);//不忽略竖线
 			foreach($itmsk_arr as &$isk){
 				if(in_array($isk, $effect_list)){
 					$effect_num ++ ;

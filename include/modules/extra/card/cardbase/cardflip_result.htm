@@ -7,13 +7,16 @@
 		cursor:pointer;
 		position:relative; -moz-border-radius:8px; 
 		-webkit-border-radius:8px;
-		border-radius:8px; height:340px; width:240px; overflow:hidden; 
+		border-radius:8px; height:340px; width:240px; overflow:visible; 
 		"
 		title="点击返回"
 		onclick="bubblebox_hide_all();"
 		>
-		<!--{eval $nowcard=$cards[$get_card_id];$nownew=$is_new?1:0;$showpack=1;}-->
-		{template MOD_CARDBASE_CARD_FRAME}
+		<!--{eval $nowcard=$cards[$get_card_id];$nownew=$is_new?1:0;$showpack=1;$nowcard['blink']=$blink;}-->
+		<div class="cardbox" id="nowcardbox">
+			{template MOD_CARDBASE_CARD_BACK_FRONT_BOX}
+		</div>
+		
 	</div>
 {template MOD_BUBBLEBOX_END}
-<img style="display:none;" type="hidden" src="img/blank.png" onload="bubblebox_show('cardresult');">
+<img style="display:none;" type="hidden" src="img/blank.png" onload="bubblebox_show('cardresult');$('nowcardbox').classList.toggle('card_flipped');">

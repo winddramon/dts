@@ -31,6 +31,7 @@ if ($___MOD_SRV)
 		//开始执行
 		if (!empty($_POST['is_root'])) $___TEMP_is_root=1; else $___TEMP_is_root=0;
 		
+		//清除所有超级全局变量。保证command.php调用自身时不陷入死循环应该也是这里清掉了$_POST['conn_passwd']所致
 		unset($_COOKIE); unset($_POST); unset($_GET); unset($_REQUEST); unset($_FILES);
 		
 		//执行时间设定，介于$___MOD_SRV_MIN_EXECUTION_TIME与$___MOD_SRV_MAX_EXECUTION_TIME之间
@@ -178,10 +179,12 @@ if ($___MOD_SRV)
 						
 						//更新访问数
 						$___TEMP_WORKNUM=1;
+						$___TEMP_MEMORYSIZE = memory_get_usage();
 						if(file_exists(GAME_ROOT.'./gamedata/tmp/server/'.$___TEMP_CONN_PORT.'/worknum')) {
-							$___TEMP_WORKNUM += (int)file_get_contents(GAME_ROOT.'./gamedata/tmp/server/'.$___TEMP_CONN_PORT.'/worknum');
+							list($___TEMP_WORKNUM, $null) = explode(',', file_get_contents(GAME_ROOT.'./gamedata/tmp/server/'.$___TEMP_CONN_PORT.'/worknum'));
+							$___TEMP_WORKNUM = (int)$___TEMP_WORKNUM + 1;
 						}
-						file_put_contents(GAME_ROOT.'./gamedata/tmp/server/'.$___TEMP_CONN_PORT.'/worknum', $___TEMP_WORKNUM);
+						file_put_contents(GAME_ROOT.'./gamedata/tmp/server/'.$___TEMP_CONN_PORT.'/worknum', $___TEMP_WORKNUM.','.$___TEMP_MEMORYSIZE);
 						
 						eval(import_module('sys','map','player','logger','itemmain','input'));
 						
@@ -410,8 +413,8 @@ if ($___MOD_SRV)
 						__SOCKET_DEBUGLOG__("进程{$sid}异常，跳过。"); 
 						continue;
 					}
-					//该进程即将结束，跳过（比主动结束早15秒）
-					if(time()-filemtime(GAME_ROOT.'./gamedata/tmp/server/'.((string)$sid).'/start_time')+$___MOD_SRV_WAKETIME+15>$___TEMP_max_time){
+					//该进程即将结束，跳过（比主动结束早20秒）
+					if(time()-filemtime(GAME_ROOT.'./gamedata/tmp/server/'.((string)$sid).'/start_time')+$___MOD_SRV_WAKETIME+20>$___TEMP_max_time){
 						__SOCKET_DEBUGLOG__("进程{$sid}即将结束，跳过。"); 
 						continue;
 					}
@@ -484,6 +487,19 @@ else	//未开启server-client模式，正常执行准备流程
 ////////////////////////////////////////////////////////////////////////////
 
 if(isset($command)){
+	if(3 == date('H', $now) && $___MOD_SRV) {//凌晨3点有访问时自动维护，需要开启$___MOD_SRV
+		//另开一个进程异步处理
+		include_once GAME_ROOT.'./include/auto_maintain/auto_maintain_misc.func.php';
+		if(am_is_last_maintain_old_enough()) {
+			curl_post(
+				url_dir().'command.php',
+				array('command'=>'maintain'),
+				NULL,
+				0.1
+			);
+		}
+	}
+	
 	if('area_timing_refresh' == $command){//刷新禁区时间
 		//\sys\routine();
 		\map\init_areatiming();
@@ -495,10 +511,10 @@ if(isset($command)){
 		return;
 	}elseif('room_routine_single' == $command){//刷新房间内游戏状态。什么都不用做，command.php被唤醒时自动routine()过了
 		return;
-	}elseif('maintain' == $command || 3 == date('H', $now)){//凌晨3点有访问时自动维护，也可以手动启动维护
+	}elseif('maintain' == $command){//手动启动维护
 		include_once GAME_ROOT.'./include/auto_maintain/auto_maintain_misc.func.php';
 		am_main(1+2+4+8+16+32);
-		if('maintain' == $command) return;
+		return;
 	}
 }
 
@@ -506,6 +522,7 @@ if(isset($command)){
 //////////////////////////执行页面//////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 
+//command.php调用自身时才会实际执行这里
 if(!isset($page) || 'command' == $page) {
 	$___CURSCRIPT = 'ACT';
 	include GAME_ROOT.'./include/pages/command_act.php';

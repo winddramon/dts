@@ -119,6 +119,7 @@ namespace clubbase
 		return $ret;
 	}
 	
+	//玩家选择称号技能的指令处理
 	function player_selectclub($id)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -181,6 +182,54 @@ namespace clubbase
 		$chprocess();
 	}
 	
+	//NPC获得称号和技能，是对NPC原始数据进行处理
+	//继承NPC模块的函数
+	function init_npcdata($npc, $plslist=array()){
+		if (eval(__MAGIC__)) return $___RET_VALUE; 
+		$npc = $chprocess($npc, $plslist);
+		init_npcdata_skills($npc);
+		return $npc;
+	}
+	
+	function init_npcdata_skills(&$npc)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE; 
+		if (!empty($npc['club']) || (!empty($npc['skills']) && is_array($npc['skills']))){
+			$npc['pid'] = -2;//0和-1都会出问题
+			
+			$npc['nskill'] = $npc['nskillpara'] = '';
+			\skillbase\skillbase_load($npc, 1);
+			
+			//NPC先获得称号技能
+			check_npc_clubskill_load($npc);
+			
+			if(!empty($npc['skills']) && is_array($npc['skills'])){
+				$npc['skills']['460']='0';
+				//再获得特有技能
+				init_npcdata_skills_get_custom($npc);
+			}			
+			
+			\skillbase\skillbase_save($npc);
+			unset($npc['pid']);
+		}
+	}
+	
+	function init_npcdata_skills_get_custom(&$npc){
+		if (eval(__MAGIC__)) return $___RET_VALUE; 
+		foreach ($npc['skills'] as $key=>$value){
+			if (defined('MOD_SKILL'.$key)){
+				\skillbase\skill_acquire($key,$npc);
+				if(is_array($value)){
+					foreach($value as $vk => $vv){
+						\skillbase\skill_setvalue($key,$vk,$vv,$npc);
+					}
+				}elseif ($value>0){
+					\skillbase\skill_setvalue($key,'lvl',$value,$npc);
+				}
+			}	
+		}
+	}
+	
 	function skill_query_unlocked($id,$who=NULL)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -212,7 +261,8 @@ namespace clubbase
 	//6以后自定义
 	//6:神击特殊提示
 	//7:浴血特殊提示
-	//8:不能对NPC发动
+	//8:不能对NPC发动（追猎，其他技能要使用需要自行判定）
+	//9:已经标记了该NPC（鬼叫，其他技能要使用需要自行判定）
 	function check_battle_skill_unactivatable(&$ldata,&$edata,$skillno)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -288,26 +338,20 @@ namespace clubbase
 	function get_battle_skill_entry(&$edata,$which)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if ($which==3) $zflag = 1; else $zflag = 0;
 		eval(import_module('sys','clubbase','player'));
 		//一次性获得所有战斗技能，然后根据$which的值来生成页面
 		//会占用$uip['blist']
-		if(!isset($uip['blist'])) $uip['blist'] = get_battle_skill_entry_array($edata);
-		foreach($uip['blist'] as $key){
-			$which--;
-			if ($which==0)
-			{
-				if ($zflag && 2 != $u_templateid) echo '<span style="display:block;height:6px;">&nbsp;</span>';
-				ob_start();
-				include template(MOD_CLUBBASE_BATTLECMD_COMMON);
-				$default = ob_get_contents();
-				ob_end_clean();
-				//兼容旧模式，请勿在battlecmd_common.htm里写任何非空格的意外输出，注释也不行
-				if (empty(trim($default))) include template(constant('MOD_SKILL'.$key.'_BATTLECMD'));
-				else echo $default;
-				return;
-			}
+		if(!isset($uip['blist'])) {
+			$uip['blist'] = get_battle_skill_entry_array($edata);
 		}
+		$key = $uip['blist'][$which];
+		ob_start();
+		include template(MOD_CLUBBASE_BATTLECMD_COMMON);
+		$default = ob_get_contents();
+		ob_end_clean();
+		//兼容旧模式，请勿在battlecmd_common.htm里写任何非空格的意外输出，注释也不行
+		if (empty(trim($default))) include template(constant('MOD_SKILL'.$key.'_BATTLECMD'));
+		else echo $default;
 	}
 					
 	function get_profile_skill_buttons()
@@ -348,23 +392,42 @@ namespace clubbase
 		
 	}
 	
+	//生成技能表页面
+	//为了调整显示顺序，不是按获得顺序直接显示的
 	function get_skillpage()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('player','clubbase'));
-		$___TEMP_inclist = Array();
-		$clubskill_list = array();
+		startmicrotime();
+		$checked_list = $___TEMP_inclist = Array();
+		//第一顺位，生命、攻防、治疗三大件，固定顺序（肌肉和根性的同名技能视为生命和攻防，先写死在这里吧）
+		foreach(Array(10, 29, 11, 39, 12) as $key) {
+			if (defined('MOD_SKILL'.$key.'_INFO') && \skillbase\skill_query($key)) {
+				array_push($___TEMP_inclist,template(constant('MOD_SKILL'.$key.'_DESC')));
+				$checked_list[] = $key;
+			}
+		}
+		//第二顺位，本系的其他技能
 		if($club) {
 			$clubskill_list = $clublist[$club]['skills'];
-			foreach ($clubskill_list as $key) 
-				if (defined('MOD_SKILL'.$key.'_INFO') && \skillbase\check_skill_info($key, 'club') && !\skillbase\check_skill_info($key, 'hidden') && \skillbase\skill_query($key)) 
+			foreach ($clubskill_list as $key) {
+				if (defined('MOD_SKILL'.$key.'_INFO') && !in_array($key, $checked_list) && \skillbase\check_skill_info($key, 'club') && !\skillbase\check_skill_info($key, 'hidden') && \skillbase\skill_query($key)) {
 					array_push($___TEMP_inclist,template(constant('MOD_SKILL'.$key.'_DESC')));
+					$checked_list[] = $key;
+				}
+			}
 		}
-		foreach (\skillbase\get_acquired_skill_array() as $key) 
-			if (!in_array($key,$clubskill_list))
-				if (defined('MOD_SKILL'.$key.'_INFO') && !\skillbase\check_skill_info($key, 'achievement') && !\skillbase\check_skill_info($key, 'hidden')) 
-					array_push($___TEMP_inclist,template(constant('MOD_SKILL'.$key.'_DESC'))); 
-		foreach ($___TEMP_inclist as $___TEMP_template_name) include $___TEMP_template_name;
+		//第三顺位，其他技能
+		foreach (\skillbase\get_acquired_skill_array() as $key) {
+			if (defined('MOD_SKILL'.$key.'_INFO') && !in_array($key, $checked_list) && !\skillbase\check_skill_info($key, 'achievement') && !\skillbase\check_skill_info($key, 'hidden')) {
+				array_push($___TEMP_inclist,template(constant('MOD_SKILL'.$key.'_DESC'))); 
+				$checked_list[] = $key;
+			}
+		}
+		foreach ($___TEMP_inclist as $___TEMP_template_name) {
+			include $___TEMP_template_name;
+		}
+//		logmicrotime('完成处理');
 	}
 	
 	//载入玩家发动的攻击技能

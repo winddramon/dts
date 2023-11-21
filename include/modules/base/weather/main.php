@@ -315,15 +315,20 @@ namespace weather
 		}
 	}
 	
-	function init_playerdata()
+//	function init_playerdata()
+//	{
+//		if (eval(__MAGIC__)) return $___RET_VALUE;
+//		eval(import_module('player'));
+//		$fog = check_fog();
+//		$chprocess();
+//	}
+	
+	//2023.09.29厌烦了每次调用$fog都得把冗长的player模组import一遍，加了一个这个函数。以后尽量把$fog的判定都改成这个吧
+	function check_fog()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player','weather'));
-		if($weather_fog[$weather]) 
-		{
-			$fog = true;
-		}
-		$chprocess();
+		eval(import_module('sys','weather'));
+		return !empty($weather_fog[$weather]);
 	}
 	
 	function itemuse(&$theitem) 
@@ -391,8 +396,8 @@ namespace weather
 	function apply_fog_meetenemy_effect($ismeet)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player','metman'));
-		if ($fog && !$ismeet)
+		eval(import_module('metman'));
+		if (check_fog() && !$ismeet)
 		{
 			$tdata['sNoinfo'] = '？？？';
 			$tdata['iconImg'] = 'question.gif';

@@ -61,6 +61,8 @@
 							<tr>
 								<!--{if defined('MOD_TUTORIAL') && 17==$gametype}-->
 								{template MOD_TUTORIAL_TUTORIAL_EXIT_BUTTON}
+								<!--{elseif !$hp && defined('MOD_INSTANCE_CLOSE_BUTTON') && \instance_close_button\check_instance_close_available()}-->
+								{template MOD_INSTANCE_CLOSE_BUTTON_INSTANCE_CLOSE_BUTTON}
 								<!--{elseif defined('MOD_BUFFICONS')}-->
 								{template MOD_BUFFICONS_PROFILE}
 								<!--{else}-->
@@ -159,8 +161,12 @@
 								<!--{/if}-->
 							</tr>
 							<tr>
+								<!--{if defined('MOD_SKILL538') && defined('MOD_GTYPE1') && defined('MOD_SKILLBASE') && $gametype!=1 && \skillbase\skill_query(538)}-->
+								{template MOD_GTYPE1_SHOWHACKLEVEL}
+								<!--{else}-->
 								<td class="b2" height="20"><span></span></td>
 								<td class="b3"><span></span></td>
+								<!--{/if}-->
 							</tr>
 						</table>
 					</td>

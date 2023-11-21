@@ -82,7 +82,7 @@ function message_disp($messages)
 {
 	global $udata;
 	if(defined('MOD_CARDBASE')) eval(import_module('cardbase'));
-	$user_cards = explode('_',$udata['cardlist']);
+	$user_cards = \cardbase\get_cardlist_energy_from_udata($udata)[0];
 	//显示卡片的基本参数
 	$showpack=1;
 	foreach($messages as $mi => &$mv){
@@ -107,6 +107,7 @@ function message_disp($messages)
 			if($getcard) {
 				$nowcard = $cards[$getcard];
 				$nownew = !in_array($getcard, $user_cards);
+				$nowcard['blink'] = message_get_encl_num($mv['enclosure'], 'getcardblink');
 				ob_start();
 				include template(MOD_CARDBASE_CARD_FRAME);
 				$tmp_cardpage = ob_get_contents();
@@ -129,10 +130,7 @@ function message_check($checklist, $messages)
 	global $udata,$db,$gtablepre,$info;
 	if(defined('MOD_CARDBASE')) eval(import_module('cardbase'));
 	if(!defined('MOD_CARDBASE')) return;
-	if(!is_array($udata['cardlist'])) {
-		$cl_changed = 1;
-		$udata['cardlist'] = explode('_',$udata['cardlist']);
-	}
+	
 	$getqiegaosum = $getcardflag = $getkarmasum = 0;
 	
 	foreach($checklist as $cid){
@@ -149,11 +147,14 @@ function message_check($checklist, $messages)
 			if($getcard) {
 				$getname = $cards[$getcard]['name'];
 				$getrare = $cards[$getcard]['rare'];
-				if(!in_array($getcard, $udata['cardlist'])) $info[] = '获得了卡片“<span class="'.$card_rarecolor[$getrare].'">'.$getname.'</span>”！';
-				else $info[] = '已有卡片“<span class="'.$card_rarecolor[$getrare].'">'.$getname.'</span>”，转化为了'.$card_price[$getrare].'切糕！';
 				//\cardbase\get_card($getcard, $udata);
 				//不直接写数据库，最后统一写
-				\cardbase\get_card_process($getcard, $udata);
+				//获得卡片的碎闪等级
+				$blink = message_get_encl_num($messages[$cid]['enclosure'], 'getcardblink');
+				//$blink = \cardbase\get_card_calc_blink($getcard, $udata);//不再随机生成，而是需要在生成站内信时就决定卡片的罕贵
+				list($isnew, $cardqiegao) = \cardbase\get_card_alternative($getcard, $udata, 0, $blink);
+				if($isnew) $info[] = '获得了卡片“<span class="'.$card_rarecolor[$getrare].'">'.$getname.'</span>”！';
+				if($cardqiegao) $info[] = '已有卡片“<span class="'.$card_rarecolor[$getrare].'">'.$getname.'</span>”，转化为了'.$cardqiegao.'切糕！';
 				$getcardflag = 1;
 			}
 			//获得因果
@@ -164,13 +165,17 @@ function message_check($checklist, $messages)
 			}
 		}
 	}
-	if(!empty($cl_changed)) $udata['cardlist'] = implode('_',$udata['cardlist']);
+	//if(!empty($cl_changed)) $udata['cardlist'] = implode('_',$udata['cardlist']);
 	if($getqiegaosum || $getcardflag || $getkarmasum) {
 		$n = $udata['username'];
+		//3202.10.15 这里保存一次$card_data
+		//游戏内获得卡片的时候$pa是即时读取的，站内信和抽卡则会有一段距离，这中间对$cardlist的修改会丢失。不过$cardlist本来也不是引用，应该不算问题
+		//每次get_card_alternative()之后$card_data就是编码过的了
 		$upd = array(
 			'gold' => $udata['gold']+$getqiegaosum,
 			'gold2' => $udata['gold2']+$getkarmasum,
-			'cardlist' => $udata['cardlist'],
+			//'cardlist' => $udata['cardlist'],
+			'card_data' => $udata['card_data'],
 		);
 		update_udata_by_username($upd, $udata['username']);
 	}

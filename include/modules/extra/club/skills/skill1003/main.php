@@ -13,12 +13,15 @@
 //上一次击杀的方式 last_kill_method
 //击杀过的重要NPC killed_vip
 //攻击过的重要NPC attacked_vip
-//本局实际使用的卡片 actual_card 位于valid.func.php
 //上一次唱过的歌 songkind 位于base/items/song
 //上一次唱到的地方 songpos 位于base/items/song
+//已学会的歌 learnedsongs 位于base/items/song
 //是否已跳过开局剧情 opening_skip 位于base/opening
 //上一次拾取尸体道具的毫秒数 last_corpse_time 位于extra/searchmemory
 //上一次拾取尸体的pid last_corpse_pid 位于extra/searchmemory
+//怪伞技能记录pid sk580_sid 位于extra/card/skills/skill580
+//当前使用卡片的碎闪等级 nowcard_blink 位于extra/card/cardbase
+//迷梦技能标记 sk599_flag 位于extra/card/skills/skill599
 
 namespace skill1003
 {
@@ -41,6 +44,12 @@ namespace skill1003
 	function lost1003(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+	}
+	
+	function check_unlocked1003(&$pa)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return 1;
 	}
 	
 	function pre_act(){//每次行动记录得到的金钱

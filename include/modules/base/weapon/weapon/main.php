@@ -21,17 +21,34 @@ namespace weapon
 		return $ret;
 	}
 	
+	//武器耐久值低下的提示
+	function parse_item_words($edata, $simple = 0, $elli = 0)	
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess($edata, $simple, $elli);
+		eval(import_module('weapon'));
+		//非枪、弓武器
+		if(strpos($edata['wepk'], 'G')===false && strpos($edata['wepk'], 'J')===false && strpos($edata['wepk'], 'B')===false){
+			if(is_numeric($edata['weps'])){
+				if($edata['weps'] <= 3) $ret['weps_words'] = '<span class="red b">'.$ret['weps_words'].'</span>';
+				elseif($edata['weps'] <= 6) $ret['weps_words'] = '<span class="yellow b">'.$ret['weps_words'].'</span>';
+			}
+		//枪和弓
+		}else{
+			if($nosta == $edata['weps']) $ret['weps_words'] = '<span class="red b">'.$ret['weps_words'].'</span>';
+		}
+		return $ret;
+	}
+	
 	function get_internal_att(&$pa,&$pd,$active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('weapon'));
 		return $pa['att'];
 	}
 	
 	function get_external_att(&$pa,&$pd,$active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('weapon'));
 		return $pa['wepe']*2;		//维持奇葩的老设定，实际计算效果是面板数值*2
 	}
 	
@@ -425,21 +442,14 @@ namespace weapon
 		weapon_strike($pa,$pd,$active);
 	}
 	
+	//攻击方式宣言和一些基本变量的准备
 	function strike_prepare(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		
 		eval(import_module('weapon','logger'));
-		if(isset($attinfo2[$pa['wep_kind']])) $attwords = $attinfo2[$pa['wep_kind']];
-		else $attwords = $attinfo[$pa['wep_kind']];
-		if ($active)
-		{
-			$log .= "使用{$pa['wep']}<span class=\"yellow b\">{$attwords}</span>{$pd['name']}！<br>";
-		}
-		else  
-		{
-			$log .= "{$pa['name']}使用{$pa['wep']}<span class=\"yellow b\">{$attwords}</span>你！<br>";
-		}
+		
+		$log .= get_attackwords($pa, $pd, $active);
 		
 		$pd['deathmark']=$wepdeathstate[$pa['wep_kind']];
 		$pa['attackwith']=$pa['wep'];
@@ -447,6 +457,26 @@ namespace weapon
 		$pa['fin_hitrate']=get_hitrate($pa,$pd,$active);
 		
 		$chprocess($pa, $pd, $active);
+	}
+	
+	//返回攻击方式的$log描述
+	function get_attackwords(&$pa, &$pd, $active)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		
+		eval(import_module('weapon'));
+		if(isset($attinfo2[$pa['wep_kind']])) $att_method_words = $attinfo2[$pa['wep_kind']];
+		else $att_method_words = $attinfo[$pa['wep_kind']];
+		
+		if ($active)
+		{
+			$ret = "使用{$pa['wep']}<span class=\"yellow b\">{$att_method_words}</span>{$pd['name']}！<br>";
+		}
+		else  
+		{
+			$ret = "{$pa['name']}使用{$pa['wep']}<span class=\"yellow b\">{$att_method_words}</span>你！<br>";
+		}
+		return $ret;
 	}
 	
 	function weapon_break(&$pa, &$pd, $active)

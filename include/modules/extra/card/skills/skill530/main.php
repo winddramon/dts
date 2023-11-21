@@ -4,7 +4,7 @@ namespace skill530
 {
 	function init() 
 	{
-		define('MOD_SKILL530_INFO','card;unique;');
+		define('MOD_SKILL530_INFO','card;');
 		eval(import_module('clubbase'));
 		$clubskillname[530] = '降维';
 	}
@@ -49,8 +49,9 @@ namespace skill530
 		}
 		
 		include_once './include/roommng/room.func.php';
+		$starttime_threshold = $now - 900;//不可跳到开启时间小于15分钟的房间
 		//第一步，获取适用的房间：房间开启且游戏已开放，但不判定连斗（就算连斗也能空降过去），房间类别合适，且不存在同名玩家
-		$result = $db->query("SELECT groomid,gametype FROM {$gtablepre}game WHERE groomid != '$room_id' AND groomstatus>=40 AND gamestate > 10");
+		$result = $db->query("SELECT groomid,gametype FROM {$gtablepre}game WHERE groomid != '$room_id' AND groomstatus>=40 AND gamestate >= 20 AND starttime <= '$starttime_threshold'");
 		$gamepool = Array();
 		while($rarr = $db->fetch_array($result)){
 			if(!in_array($rarr['gametype'], Array(1, 15, 17))) {//不会空降到除错、伐木、教程房
@@ -126,7 +127,7 @@ namespace skill530
 		//发进行状况，这是抵达的
 		addnews ( $now, 'jumpin530', $name );
 		//提前发一个log
-		\logger\logsave($tmp_pid, $now, '<span class="cyan b">你成功地抵达了这个维度！</span>但作为代价，你的装备几乎都遗失了。' ,'b');
+		\logger\logsave($tmp_pid, $now, '<span class="cyan b">你成功地抵达了这个维度！</span>但作为代价，你的装备几乎都遗失了。' ,'s');
 
 		//把房间号改回来
 		$room_id = $o_room_id;
@@ -188,10 +189,10 @@ namespace skill530
 		eval(import_module('sys','player'));
 		if($news == 'death46') 
 		{
-			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}发动了技能「降维」并把自己的复制体送去了另一个空间，而其本体已在此过程中彻底湮灭！</span></li>";
+			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}发动了技能「降维」并把自己的复制体送去了另一个维度，而其本体已在此过程中彻底湮灭！</span></li>";
 		}elseif($news == 'jumpin530') 
 		{
-			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"yellow b\">{$a}从另一个空间跳跃而来！</span></li>";
+			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"yellow b\">{$a}从另一个维度跳跃而来！</span></li>";
 		} 
 		return $chprocess($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr);
 	}

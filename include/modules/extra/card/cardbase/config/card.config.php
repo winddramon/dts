@@ -37,6 +37,7 @@ $packlist=array(
 	'Best DOTO',
 	'Balefire Rekindle',
 	'Cyber Zealots',
+	'東埔寨Protoject',//中文卡集名测试
 	'Event Bonus',
 	
 	'Stealth',
@@ -46,12 +47,13 @@ $packlist=array(
 $packdesc = array(
 	'Standard Pack' => '基本称号卡集。',
 	'Crimson Swear' => '以游戏阵营「红杀」组织以及其马甲「金龙通讯社」为主题的卡集。',
-	'Top Players' => '以本游戏发展史上那些著名玩家和重要开发者为纪念/捏他对象的卡集。',
+	'Top Players' => '以本游戏发展史上那些著名玩家和重要协助者为纪念/捏他对象的卡集。',
 	'Way of Life' => '大杂烩，主要以游戏方式以及同类游戏为捏他对象的卡集。',
 	'Best DOTO' => '以电竞元素和电竞圈为吐槽对象的卡集。',
 	'Balefire Rekindle' => '以游戏版本「复燃」的新增NPC角色和游戏设定为主题的卡集。',
 	'Event Bonus' => '其他一些零散成就和活动奖励卡。',
 	'Cyber Zealots' => '以赛博朋克和网络梗为捏他对象的卡集。',
+	'東埔寨Protoject' => '以东之国旗舰级同人企划『朹方Project』为主题的卡集，与幻想作品如有雷同纯属必然。',
 	'Stealth' => '一些需要显示卡片介绍的隐藏卡',
 	'hidden' => '隐藏卡片，不会悬浮显示卡片介绍，如果你看到这句话请联系天然呆管理员',
 );
@@ -60,6 +62,7 @@ $pack_ignore_kuji = Array('Balefire Rekindle','Event Bonus');
 //卡包实装的时间戳，可以用来隐藏卡包
 $packstart = array(
 	'Cyber Zealots' => 4476654671,
+	//'東埔寨Protoject' => 4476654671,
 	'Stealth' => 4476654671,
 	'hidden' => 4476654671,
 );
@@ -73,7 +76,7 @@ $cardindex=array(//已停止更新，现在$cardindex是自动生成的，文件
 	//pop子实际爆率是B
 );
 
-if(file_exists($card_index_file)) include_once $card_index_file;//载入真正的$cardindex
+if(file_exists($card_index_file)) include $card_index_file;//载入真正的$cardindex
 
 $card_rarecolor=array(
 	'S'=>'gold b ',
@@ -89,6 +92,17 @@ $card_rarity_html = array(
 	'C'=>'<span class="'.$card_rarecolor['C'].'">C</span>',
 	'M'=>'<span class="'.$card_rarecolor['M'].'">M</span>'
 );	
+$card_blink_rate_20 = Array(//碎卡比例（百分比），先判定是不是碎卡再判定是不是闪卡。对应$blink=20
+	'S' => 1,
+	'A' => 1,
+	'B' => 1,
+);
+$card_blink_rate_10 = Array(//闪卡比例（百分比）。对应$blink=10。注意是累计概率，也就是这边减上面才是单项概率
+	'S' => 6,
+	'A' => 6,
+	'B' => 6,
+	'C' => 6,
+);
 //卡片返回切糕的价格
 $card_price = array(
 	'S'=>499,
@@ -96,6 +110,11 @@ $card_price = array(
 	'B'=>49,
 	'C'=>30,
 	'M'=>99
+);
+//碎卡和闪卡换算成切糕的倍率
+$card_price_blink_rate =array(
+	20=>25,
+	10=>5,
 );
 $cards = array(
 	0 => array(
@@ -177,7 +196,7 @@ $cards = array(
 	5 => array(
 		'name' => '虚子',
 		'rare' => 'S',
-		'pack' => 'Top Players',
+		'pack' => 'Way of Life',
 		'desc' => '这个小卡片系统的作者，<br>爱好是红暮和加强斩系',
 		'effect' => '可选称号里必然有见敌必斩和黑衣组织；斩系技能强化；开局装备寻星者',
 		'energy' => 150,
@@ -346,7 +365,7 @@ $cards = array(
 	13 => array(
 		'name' => '熊本熊',
 		'rare' => 'A',
-		'pack' => 'Top Players',
+		'pack' => 'Way of Life',
 		'desc' => '日本熊本县的吉祥物，<br>和大逃杀没有任何关系',
 		'effect' => '获得技能「直死1」',
 		'desc_skills' => '「直死1」：战斗时有微小概率直接杀死敌人',
@@ -458,7 +477,7 @@ $cards = array(
 	20 => array(
 		'name' => '十万只脚本狗',
 		'rare' => 'A',
-		'pack' => 'Top Players',
+		'pack' => 'Way of Life',
 		'desc' => 'SC出品的<br>一秒钟能合两把A刀的恐怖AI',
 		'effect' => '获得技能「追击1」，但踩雷率提高',
 		'desc_skills' => '「追击1」：战斗时有8%概率再次发动攻击',
@@ -809,8 +828,8 @@ $cards = array(
 		'rare' => 'S',
 		'pack' => 'Crimson Swear',
 		'desc' => '低调行事的年轻女性，<br>红暮的青梅竹马。<br>目前是红暮的影一样的存在。<br>担当红杀组织中并不存在的<br>隐秘行动课程的教头。',
-		'effect' => '获得技能「疾走」：<br>被发现率降低15%，爆系和斩系伤害提高20%',
-		'energy' => 50,
+		'effect' => '获得技能「疾走」：被发现率降低15%，主动探索先攻率增加10%，爆系和斩系伤害提高20%',
+		'energy' => 100,
 		'valid' => array(
 			'skills' => array(
 				'405' => '0', 
@@ -861,7 +880,8 @@ $cards = array(
 		'rare' => 'S',
 		'pack' => 'Crimson Swear',
 		'desc' => '芙蓉的妹妹，现年初二，<br>在一般的平民初中就读。是学校演剧部的部长，也备有无数的戏服用品。<br>爱好是写剧本和读其他人的剧本',
-		'effect' => '获得技能「红石」：<br>生命值高于一半则把防御力的一半加到攻击力上，反之则把攻击力的一半加到防御力上',
+		'effect' => '获得技能「红石」：生命值高于一半则把攻击力的一半加到防御力上，反之则把防御力的一半加到攻击力上',
+		'desc_skills' => '增加值不会超过10万',
 		'energy' => 100,
 		'valid' => array(
 			'skills' => array(
@@ -875,8 +895,8 @@ $cards = array(
 		'rare' => 'S',
 		'pack' => 'Event Bonus',
 		'desc' => '低调行事的年轻女性，<br>红暮的青梅竹马。<br>目前是红暮的影一样的存在。<br>担当红杀组织中并不存在的<br>隐秘行动课程的教头。',
-		'effect' => '获得技能「疾走」：<br>被发现率降低15%，爆系和斩系伤害提高20%',
-		'energy' => 50,
+		'effect' => '获得技能「疾走」：被发现率降低15%，主动探索先攻率增加10%，爆系和斩系伤害提高20%',
+		'energy' => 100,
 		'valid' => array(
 			'skills' => array(
 				'405' => '0', 
@@ -1070,7 +1090,7 @@ $cards = array(
 		'title' => '书卷使',
 		'rare' => 'C',
 		'pack' => 'Crimson Swear',
-		'desc' => '在时空特使里默默无闻的工作人员。<br>某次事件之后就消失了',
+		'desc' => '<span class="white b">『时空特使里默默无闻的工作人员。<br>某次事件之后就消失了。』</span>',
 		'effect' => '开局攻防增加23点',
 		'energy' => 0,
 		'valid' => array(
@@ -1152,7 +1172,7 @@ $cards = array(
 		'rare' => 'S',
 		'pack' => 'Event Bonus',
 		'desc' => '不愿透露姓名的究极神牛，<br>代码力深不可测',
-		'effect' => '称号固定为锡安成员，技能「过载」大幅强化，且开局即解锁',
+		'effect' => '称号固定为边缘行者，技能「过载」大幅强化，且开局即解锁',
 		'energy' => 80,
 		'valid' => array(
 			'club' => '7',
@@ -1175,9 +1195,9 @@ $cards = array(
 	64 => array(
 		'name' => '"Topcoder"',
 		'rare' => 'S',
-		'pack' => 'Top Players',
+		'pack' => 'Way of Life',
 		'desc' => '不愿透露姓名的究极神牛，<br>代码力深不可测',
-		'effect' => '称号固定为锡安成员，技能「过载」强化，且开局即解锁',
+		'effect' => '称号固定为边缘行者，技能「过载」强化，且开局即解锁',
 		'energy' => 100,
 		'valid' => array(
 			'club' => '7',
@@ -1430,11 +1450,11 @@ $cards = array(
 		)
 	),
 	80 => array(
-		'name' => '兵马俑',
+		'name' => '赛博精神病',
 		'rare' => 'B',
 		'pack' => 'Standard Pack',
-		'desc' => '熟练的西安成员玩家',
-		'effect' => '称号固定为锡安成员',
+		'desc' => '熟练的边缘行者玩家',
+		'effect' => '称号固定为边缘行者',
 		'energy' => 100,
 		'valid' => array(
 			'club' => '7',
@@ -1468,7 +1488,7 @@ $cards = array(
 				'B_odds' => 20,
 				'C_odds' => 20,
 				'allow_EB' => true,//开启后会把Event Bonus等需要特殊方式才能获得的卡也一并考虑
-				'ignore_cards' => Array(237)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array(237, 300, 344)//机制上必定选不到自己，这里可以放其他不想被选到的卡
 			)
 		)
 	),
@@ -1882,7 +1902,7 @@ $cards = array(
 		'rare' => 'B',
 		'pack' => 'Best DOTO',
 		'desc' => '它最喜欢的装备是BKB、<br>林肯和分身斧',
-		'effect' => '基础攻击力视为0，基础防御力提高70%',
+		'effect' => '基础攻击力视为减半，基础防御力视为1.7倍',
 		'energy' => 60,
 		'valid' => array(
 			'skills' => array(
@@ -1896,7 +1916,7 @@ $cards = array(
 		'pack' => 'Best DOTO',
 		'desc' => '虽然还非常年轻，<br>但他已是魔霭族裔中知识水平最高者',
 		'effect' => '获得技能「死线」：发动后30秒内免疫一切战斗伤害，每局只能使用1次',
-		'energy' => 120,
+		'energy' => 180,
 		'valid' => array(
 			'skills' => array(
 				'446' => '0', 
@@ -2007,7 +2027,7 @@ $cards = array(
 	117 => array(
 		'name' => '星莲船挑战者',
 		'rare' => 'A',
-		'pack' => 'Top Players',
+		'pack' => 'Way of Life',
 		'desc' => 'AC大逃杀元老人物之一，<br>擅长上班摸鱼、下班挖坑',
 		'effect' => '获得技能「挖坑」，但不能选到肌肉兄贵称号',
 		'desc_skills' => '「挖坑」：在你当前地点放置两个毒性陷阱，效果值为基础攻击力x距上次挖坑的分钟数(最多为3)<br>此外你不会遭遇自己放置的陷阱',
@@ -2498,7 +2518,7 @@ $cards = array(
 		'name' => '殁境神蚀者',
 		'rare' => 'B',
 		'pack' => 'Best DOTO',
-		'desc' => '三流过气偶像',
+		'desc' => '目光清澈，极度自信，且智商逐年<br>升高，最后完全变成天才',
 		'effect' => '你的攻击会消耗相当于9%当前体力值的体力并附加相同的伤害',
 		'energy' => 100,
 		'valid' => array(
@@ -2571,7 +2591,7 @@ $cards = array(
 	152 => array(
 		'name' => '唱戲挑戰者',
 		'rare' => 'S',
-		'pack' => 'Top Players',
+		'pack' => 'Way of Life',
 		'desc' => '你沒戲唱了，快去死吧！',
 		'effect' => '开局赠送600点歌魂。对歌魂小于30的玩家和NPC造成的伤害+30%',
 		'energy' => 100,
@@ -2584,12 +2604,12 @@ $cards = array(
 	),
 	153 => array(
 		'name' => '悲运挑战者',
-		'rare' => 'A',
-		'pack' => 'Top Players',
+		'rare' => 'S',
+		'pack' => 'Way of Life',
 		'desc' => '她说：“要有大逃杀。”<br>然后她就平地摔了',
 		'effect' => '开局携带《ACFUN大逃杀原案》',
-		'desc_skills' => '《ACFUN大逃杀原案》：使用后获得100点全系熟练度，但是之后你会更加倒霉',
-		'energy' => 150,
+		'desc_skills' => '《ACFUN大逃杀原案》：使用后获得150点全系熟练度，但是之后你会更加倒霉',
+		'energy' => 120,
 		'valid' => array(
 			'itm6' => '《ACFUN大逃杀原案》',
 			'itmk6' => 'VVS',
@@ -2643,7 +2663,7 @@ $cards = array(
 	157 => array(
 		'name' => '洩矢诹访子',
 		'rare' => 'B',
-		'pack' => 'Way of Life',
+		'pack' => '東埔寨Protoject',
 		'desc' => '曾经统领着一个王国，<br>拥有着令人吃惊的信仰心',
 		'effect' => '被你攻击的敌人会眩晕1秒',
 		'energy' => 130,
@@ -2807,7 +2827,7 @@ $cards = array(
 		'pack' => 'Event Bonus',
 		'desc' => '猫用四条腿走路！',
 		'effect' => '所以不是猫！',
-		'desc_skills' => '找到并装备【巨大灯泡】以后，你将免疫一切战斗和陷阱伤害。<br>但是如果你装备、包裹及视野中都不存在【巨大灯泡】，你会立即从这局游戏中消失',
+		'desc_skills' => '找到并装备「巨大灯泡」以后，你将免疫一切战斗和陷阱伤害。<br>但是如果你装备、包裹及视野中都不存在【巨大灯泡】，你会立即从这局游戏中消失',
 		'energy' => 120,
 		'valid' => array(
 			'skills' => array(
@@ -2861,12 +2881,15 @@ $cards = array(
 		'pack' => 'Top Players',
 		'desc' => '曾经的ACFUN大逃杀开发者，<br>其脑洞对玩家十分<ruby>友<rt>bao</rt></ruby><ruby>好<rt>she</rt></ruby>',
 		'effect' => '咸鱼的目标从来不是杀死玩家',
-		'desc_skills' => '获得技能「鱼弹」：战斗技，本次物理伤害变成0，但对方随机一件防具的耐久值下降你的武器效果值，每局只能发动2次',
+		'desc_skills' => '开局装备有「碎甲」属性的饰品',
+		//'desc_skills' => '获得技能「鱼弹」：战斗技，本次物理伤害变成0，但对方随机一件防具的耐久值下降你的武器效果值，每局只能发动2次',
 		'energy' => 100,
 		'valid' => array(
-			'skills' => array(
-				'517' => '0', 
-			),
+			'art' => Array('油炖萌物「金鲤」', '油炖萌物「石斑」'),
+			'artk' => 'A',
+			'arte' => '12',
+			'arts' => '450',
+			'artsk' => 'z^ac1',
 		)
 	),
 	170 => array(
@@ -3072,7 +3095,7 @@ $cards = array(
 		'title' => '幽灵',
 		'rare' => 'S',
 		'pack' => 'Event Bonus',
-		'desc' => '<span style="font-size:10px">　　说到幽灵，Big 52的幽灵传说仍在继续，尽管它现在比起事实，更像是个噩梦夜的鬼故事。据说，当太阳落山、月亮升起以后，会有一个鬼影踩着滑板车在大路上游荡，随风而来，寂静无声。它直奔坏蛋而去，追索着奴隶贩子、劫掠者和阴谋家的性命。至少有两队劫掠者真的死在了大路上。他们外表毫发无伤，武器上膛、如临大敌，却依然横尸街头，原因成谜，凶手却没有留下一丝线索。说了这么多，我只想问你一个问题…</span>',
+		'desc' => '　　说到幽灵，Big 52的幽灵传说仍在继续，尽管它现在比起事实，更像是个噩梦夜的鬼故事。据说，当太阳落山、月亮升起以后，会有一个鬼影踩着滑板车在大路上游荡，随风而来，寂静无声。它直奔坏蛋而去，追索着奴隶贩子、劫掠者和阴谋家的性命。至少有两队劫掠者真的死在了大路上。他们外表毫发无伤，武器上膛、如临大敌，却依然横尸街头，原因成谜，凶手却没有留下一丝线索。说了这么多，我只想问你一个问题…',
 		'effect' => '<span class="red b">你 相 信 有 幽 灵 吗 ？</span>',
 		'desc_skills' => '称号固定为亡灵骑士，复活技能替换为「幽灵」并获得技能「纯洁」
 		<br>「幽灵」：你被战斗和陷阱杀死时必然复活，冷却时间6分钟
@@ -3406,23 +3429,27 @@ $cards = array(
 	197 => array(
 		'name' => '萤火抑智',
 		'rare' => 'C',
-		'pack' => 'hidden',
+		'pack' => 'Best DOTO',
 		'desc' => '今天吃鸡腿',
-		'effect' => '你的角色名显示为学号，学号显示为角色名',
+		'effect' => '在入场讯息和当前幸存页面，<br>你的角色名和学号互换',
 		'energy' => 0,
 		'valid' => array(
-			'pls' => '0',//todo
+			'skills' => array(
+				'533' => '1', 
+			),
 		)
 	),
 	198 => array(
 		'name' => '非常非常二',
 		'rare' => 'B',
-		'pack' => 'hidden',
-		'desc' => 'IG空间，全称Imaginary Geometry虚数几何空间，只有极少数擅长钻空子的能力者才能把物质自由地送到那里',
-		'effect' => '获得技能【空子】：你能把道具存进虚数空间或者从中取出，最多同时储存两个道具',
-		'energy' => 0,
+		'pack' => 'Top Players',
+		'desc' => 'IG空间，全称 <ruby>虚数几何空间<rt>Imaginary Geometry</rt></ruby>，<br>只有极少数擅长钻空子的能力者才能把物质自由地送到那里',
+		'effect' => '获得技能「空子」：你能把道具存进异空间或者从中取出。<br>最多同时储存两个道具',
+		'energy' => 100,
 		'valid' => array(
-			'pls' => '0',//todo
+			'skills' => array(
+				'534' => '2', 
+			),
 		)
 	),
 	199 => array(
@@ -3465,12 +3492,12 @@ $cards = array(
 		'rare' => 'A',
 		'pack' => 'Balefire Rekindle',
 		'desc' => '“银月哨兵是不死之身！”',
-		'effect' => '获得技能「无垠」：战斗中死亡时有50%概率复活，但之后因此复活的概率减半',
+		'effect' => '获得技能「无垠」：战斗中死亡时有100%概率复活，但之后因此复活的概率减半',
 		//：双方攻击结束时，如果你的HP<1，则有30%概率变为1。此技能每发动1次，这一概率减半。
 		'energy' => 120,
 		'valid' => array(
 			'skills' => array(
-				'486' => '1', 
+				'486' => '2', 
 			),
 		)
 	),
@@ -3637,7 +3664,7 @@ $cards = array(
 		'rare' => 'S',
 		'pack' => 'Balefire Rekindle',
 		'desc' => '身为主播，运气是非常重要的。<br>这位朋友问我的运气？你觉得呢？',
-		'effect' => '获得技能「胜天」：你的防御和抹消属性失效概率减半，被贯穿概率减半',
+		'effect' => '获得技能「胜天」：你的减半防御和抹消类属性不会自然失效，控伤失效和被贯穿概率减半',
 		'energy' => 100,
 		'valid' => array(
 			'skills' => array(
@@ -3730,23 +3757,23 @@ $cards = array(
 	),
 	217 => array(
 		'name' => '章鱼猫',
-		'rare' => 'C',
+		'rare' => 'B',
 		'pack' => 'Cyber Zealots',
 		'desc' => '一种神奇的电子界生物，擅长版本控制和同性交友',
 		'effect' => '开局携带建立分叉和拉取请球',
 		//'desc_skills' => '',
-		'energy' => 0,
+		'energy' => 100,
 		'valid' => array(
 		  'wep' => '建立分叉',
 			'wepk' => 'WK',
-			'wepe' => '120',
-			'weps' => '5',
-			'wepsk' => 'eg',
+			'wepe' => '133',
+			'weps' => '7',
+			'wepsk' => 'fOrk',
 			'itm6' => '拉取请球',
 			'itmk6' => 'DH',
-			'itme6' => '120',
-			'itms6' => '5',
-			'itmsk6' => 'eg',
+			'itme6' => '133',
+			'itms6' => '7',
+			'itmsk6' => 'g',
 		)
 	),
 	218 => array(
@@ -3835,7 +3862,7 @@ $cards = array(
 	),
 	223 => array(
 		'name' => '汽车人',
-		'rare' => 'C',
+		'rare' => 'B',
 		'pack' => 'Cyber Zealots',
 		'desc' => '新能源汽车人才有机会直接落户上海',
 		'effect' => '你开局携带的面包的名字变为电池，矿泉水的名字变为探测器电池',
@@ -3849,8 +3876,9 @@ $cards = array(
 		'name' => '翻唱职人',
 		'rare' => 'C',
 		'pack' => 'Cyber Zealots',
-		'desc' => '弹幕网站上那些翻唱名曲毁耳不倦的职人',
+		'desc' => '弹幕网站上翻唱名曲毁耳不倦的职人',
 		'effect' => '开局装备销魂之歌',
+		'desc_skills' => '还有ACFUN的账号',
 		'energy' => 0,
 		'valid' => array(
 		  'wep' => '销魂之歌',
@@ -3858,14 +3886,20 @@ $cards = array(
 			'wepe' => '50',
 			'weps' => '50',
 			'wepsk' => '',
+			'art' => 'ACFUN的账号',
+			'artk' => 'A',
+			'arte' => '20',
+			'arts' => '10',
+			'artsk' => Array('l','g'),
 		)
 	),
 	225 => array(
 		'name' => '字幕职人',
 		'rare' => 'C',
 		'pack' => 'Cyber Zealots',
-		'desc' => '弹幕网站上那些把弹幕当积木摆的职人',
+		'desc' => '弹幕网站上把弹幕当积木摆的职人',
 		'effect' => '开局装备神字幕',
+		'desc_skills' => '还有ACFUN的账号',
 		'energy' => 0,
 		'valid' => array(
 		  'wep' => '神字幕',
@@ -3873,14 +3907,20 @@ $cards = array(
 			'wepe' => '50',
 			'weps' => '50',
 			'wepsk' => '',
+			'art' => 'ACFUN的账号',
+			'artk' => 'A',
+			'arte' => '20',
+			'arts' => '10',
+			'artsk' => Array('l','g'),
 		)
 	),
 	226 => array(
 		'name' => '搬运职人',
 		'rare' => 'C',
 		'pack' => 'Cyber Zealots',
-		'desc' => '弹幕网站上那些搬运其他网站视频的职人',
+		'desc' => '弹幕网站上搬运其他网站视频的职人',
 		'effect' => '开局装备搬运之拳',
+		'desc_skills' => '还有ACFUN的账号',
 		'energy' => 0,
 		'valid' => array(
 		  'wep' => '搬运之拳',
@@ -3888,6 +3928,11 @@ $cards = array(
 			'wepe' => '50',
 			'weps' => '50',
 			'wepsk' => '',
+			'art' => 'ACFUN的账号',
+			'artk' => 'A',
+			'arte' => '20',
+			'arts' => '10',
+			'artsk' => Array('l','g'),
 		)
 	),
 	227 => array(
@@ -3896,6 +3941,7 @@ $cards = array(
 		'pack' => 'Cyber Zealots',
 		'desc' => '一个普通的喷子，全身上下只有嘴是硬的',
 		'effect' => '开局装备嘴炮',
+		'desc_skills' => '还有ACFUN的账号',
 		'energy' => 0,
 		'valid' => array(
 		  'wep' => '嘴炮',
@@ -3903,6 +3949,11 @@ $cards = array(
 			'wepe' => '50',
 			'weps' => '50',
 			'wepsk' => '',
+			'art' => 'ACFUN的账号',
+			'artk' => 'A',
+			'arte' => '20',
+			'arts' => '10',
+			'artsk' => Array('l','g'),
 		)
 	),
 	228 => array(
@@ -3911,6 +3962,7 @@ $cards = array(
 		'pack' => 'Cyber Zealots',
 		'desc' => '他很热衷于网络80',
 		'effect' => '开局装备网暴',
+		'desc_skills' => '他也有ACFUN的账号',
 		'energy' => 0,
 		'valid' => array(
 		  'wep' => '网暴',
@@ -3918,6 +3970,11 @@ $cards = array(
 			'wepe' => '50',
 			'weps' => '50',
 			'wepsk' => '',
+			'art' => 'ACFUN的账号',
+			'artk' => 'A',
+			'arte' => '20',
+			'arts' => '10',
+			'artsk' => Array('l','g'),
 		)
 	),
 	229 => array(
@@ -3926,11 +3983,12 @@ $cards = array(
 		'pack' => 'Cyber Zealots',
 		'desc' => '车万人下雨不用伞',
 		'effect' => '开局装备符卡',
+		'desc_skills' => '他不屑于在ACFUN注册账号',
 		'energy' => 0,
 		'valid' => array(
 		  'wep' => '符卡',
 			'wepk' => 'WF',
-			'wepe' => '30',
+			'wepe' => '50',
 			'weps' => '50',
 			'wepsk' => '',
 		)
@@ -3952,14 +4010,14 @@ $cards = array(
 	),
 	231 => array(
 		'name' => '卡片男',
-		'rare' => 'C',
+		'rare' => 'B',
 		'pack' => 'Cyber Zealots',
 		'desc' => '看，这个男人捡到一张神秘的小卡片',
 		'effect' => '开局携带一份卡牌包',
 		'energy' => 0,
 		'valid' => array(
 		  'itm6' => '卡牌包',
-			'itmk6' => 'VO9',
+			'itmk6' => Array('VO3', 'VO2', 'VO2', 'VO2', 'VO9', 'VO9', 'VO9', 'VO9', 'VO9', 'VO9'),
 			'itme6' => '1',
 			'itms6' => '1',
 			'itmsk6' => '',
@@ -4069,7 +4127,7 @@ $cards = array(
 				'S_odds' => 100,
 				'allow_EB' => true,
 				'forced' => Array(),//无视概率强制加入选择的卡
-				'ignore_cards' => Array(81)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array(300)//机制上必定选不到自己，这里可以放其他不想被选到的卡
 			)
 		)
 	),
@@ -4102,7 +4160,7 @@ $cards = array(
 	),
 	240 => array(
 		'name' => '网络爬虫',
-		'rare' => 'C',
+		'rare' => 'B',
 		'pack' => 'Cyber Zealots',
 		'desc' => '爬吗？',
 		'effect' => '爬',
@@ -4115,19 +4173,25 @@ $cards = array(
 		)
 	),
 	241 => array(
-		'name' => '✦复燃的烽火',
-		'rare' => 'B',
-		'pack' => 'Cyber Zealots',
-		'desc' => '神秘出现在大逃杀幻境里的一群<br>可爱萝莉',
-		'effect' => '开局携带能挡下所有攻击的防具，但是只能挡一点点',
-		//'desc_skills' => '',
-		'energy' => 100,
+		'name' => '海丽丝',
+		'ruby' => 'H.A.I.Lice',
+		'rare' => 'S',
+		'pack' => '東埔寨Protoject',
+		'desc' => '「東埔寨Protoject」的创作者，独自搭建了庞大幻想世界的奇异少女，最喜欢喝的东西是东之国的啤酒。<br>谁也没有在线下见过她，许多爱好者据此脑补她并非人类，而是一个<br>拥有实体的高等人工智能。<br><br>但她的真身其实是一名妖怪。<br>在这个赛博末法时代隐居起来的、<br>真正的妖怪。',
+		'effect' => '随机发动一张「東埔寨Protoject」卡包的S、A或B卡的效果',
+		'desc_skills' => 'S卡、A卡和B卡的几率分别为25%、30%和45%',
+		'bigdesc' => 1,
+		'energy' => 50,
 		'valid' => array(
-		  'arh' => '✦烽火之恋',
-			'arhk' => 'DH',
-			'arhe' => '1',
-			'arhs' => '1',
-			'arhsk' => 'BbO',
+			'cardchange' => Array(
+				'S_odds' => 25,
+				'A_odds' => 35,
+				'B_odds' => 45,
+				'packlimit' => '東埔寨Protoject',
+				'allow_EB' => false,
+				'forced' => Array(),//无视概率强制加入选择的卡
+				'ignore_cards' => Array(344)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+			)
 		)
 	),
 	242 => array(
@@ -4165,7 +4229,7 @@ $cards = array(
 		'desc' => '芯片又不能当饭吃',
 		'effect' => '开局携带可以吃的电子零件',
 		//'desc_skills' => '',
-		'energy' => 100,
+		'energy' => 0,
 		'valid' => array(
 		  'itm6' => '某种电子零件',
 			'itmk6' => Array('HB','HB','HB','HB','HB','HB','HB','HB','HB','PB2'),
@@ -4178,11 +4242,21 @@ $cards = array(
 		'name' => '网抑云',
 		'rare' => 'C',
 		'pack' => 'Cyber Zealots',
-		'desc' => '这么晚还在打大逃杀，你一定也很寂寞吧',
-		'effect' => '开局携带寂寞',
+		'desc' => '这么晚还在打大逃杀，<br>你一定也很寂寞吧',
+		'effect' => '开局携带3个寂寞',
 		//'desc_skills' => '',
-		'energy' => 100,
+		'energy' => 0,
 		'valid' => array(
+			'itm4' => '寂寞',
+			'itmk4' => Array('WP','WK','WD','WC','WG','WF','WB','PB2','DB','DH','DA','DF','A'),
+			'itme4' => '76',
+			'itms4' => '5',
+			'itmsk4' => '',
+			'itm5' => '寂寞',
+			'itmk5' => Array('WP','WK','WD','WC','WG','WF','WB','PB2','DB','DH','DA','DF','A'),
+			'itme5' => '76',
+			'itms5' => '5',
+			'itmsk5' => '',
 		  'itm6' => '寂寞',
 			'itmk6' => Array('WP','WK','WD','WC','WG','WF','WB','PB2','DB','DH','DA','DF','A'),
 			'itme6' => '76',
@@ -4191,19 +4265,19 @@ $cards = array(
 		)
 	),
 	246 => array(
-		'name' => '箭怔人',
+		'name' => '豪有根',
 		'rare' => 'C',
-		'pack' => 'Cyber Zealots',
-		'desc' => '顺我者屠殿大佬，逆我者无名沙包',
+		'pack' => '東埔寨Protoject',
+		'desc' => '神灵庙出产的人形大萝卜，有两个尖',
 		'effect' => '开局携带大量箭矢',
 		//'desc_skills' => '',
-		'energy' => 100,
+		'energy' => 0,
 		'valid' => array(
-		  'itm6' => '箭症',
+		  'itm6' => '雷矢「元兴寺的旋风」',
 			'itmk6' => 'GA',
 			'itme6' => '1',
-			'itms6' => '44',
-			'itmsk6' => Array('e', 'p', 'u', 'i', 'w'),
+			'itms6' => '99',
+			'itmsk6' => 'e',
 		)
 	),
 	247 => array(
@@ -4211,12 +4285,11 @@ $cards = array(
 		'rare' => 'C',
 		'pack' => 'Cyber Zealots',
 		'desc' => '咕、杀了我',
-		'effect' => '获得技能【挖矿】：你的休息、治疗和静养不会回复体力和生命，而是每休息1秒有概率获得1元',
-		//'desc_skills' => '「网瘾」：使用移动PC解除禁区成功率为95%，且完全无风险',
+		'effect' => '获得技能「挖矿」：你在休息、治疗和静养时无法得到恢复，改为每秒有10%概率获得1元',
 		'energy' => 0,
 		'valid' => array(
 		  'skills' => array(
-				'233' => '0', //todo
+				'535' => '0',
 			),
 		)
 	),
@@ -4233,14 +4306,1231 @@ $cards = array(
 		)
 	),
 	249 => array(
-		'name' => '水仙女人鱼',
-		'rare' => 'M',
-		'pack' => 'hidden',
-		'desc' => '家人们，水懂啊，这个科乐美要枪尖我',
-		'effect' => '敌方使用的枪械对你来说都视为重枪',
+		'name' => '✦复燃的烽火',
+		'rare' => 'B',
+		'pack' => 'Cyber Zealots',
+		'desc' => '神秘出现在大逃杀幻境里的一群<br>可爱萝莉',
+		'effect' => '开局携带能挡下所有攻击的防具，但是只能挡一点点',
+		//'desc_skills' => '',
+		'energy' => 100,
+		'valid' => array(
+		  'arh' => '✦烽火之恋',
+			'arhk' => 'DH',
+			'arhe' => '1',
+			'arhs' => '1',
+			'arhsk' => 'BbO',
+		)
+	),
+	
+	250 => array(
+		'name' => '功德仙人',
+		'rare' => 'B',
+		'pack' => 'Way of Life',
+		'desc' => '随喜赞叹放生功德',
+		'effect' => '看，矿泉水它舍不得走，它要报恩！',
+		'desc_skills' => '可以在清水池和风祭森林进行放生',
+		'energy' => 100,
+		'valid' => array(
+			'skills'=>array(
+				'551' => '0'
+			)
+		)
+	),
+	251 => array(
+		'name' => '伐木挑战者',
+		'rare' => 'A',
+		'pack' => 'Way of Life',
+		'desc' => '伐伐伐伐伐木工',
+		'effect' => '要致富 先撸树',
+		'desc_skills' => '获得技能「伐木」：只能发动一次，可将武器改造为伐木斧，使用该武器击杀敌人时获得额外金钱',
+		'energy' => 100,
+		'valid' => array(
+			'skills'=>array(
+				'552' => '0'
+			)
+		)
+	),
+	252 => array(
+		'name' => '炸鸡勇者',
+		'rare' => 'C',
+		'pack' => 'Way of Life',
+		'desc' => 'V我50.jpg',
+		'effect' => '星期四入场开局补给大幅强化，<br>但是，代价是什么呢？',
 		'energy' => 0,
 		'valid' => array(
-			'pls' => '0',//todo
+			'skills' => array(
+				'553' => '0'
+			)
+		)
+	),
+	253 => array(
+		'name' => '蟑螂',
+		'rare' => 'B',
+		'pack' => 'Best DOTO',
+		'desc' => '一个命名了智力计量单位的人',
+		'effect' => '他根本不需要视力',
+		'desc_skills' => '获得最强大脑称号特性「脑力」，但视野只有两格',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'80' => '0',
+				'554' => '0'
+			)
+		)
+	),
+	254 => array(
+		'name' => '河童',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '通知：光学迷彩服严禁用于带薪拉屎',
+		'effect' => '获得技能「迷彩」：发动后20秒内，你探索时不会遇到任何敌人和尸体',
+		//'desc_skills' => '',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'555' => '0'
+			)
+		)
+	),
+	255 => array(
+		'name' => '编乎用户',
+		'rare' => 'B',
+		'pack' => 'Cyber Zealots',
+		'desc' => '分享你刚编的故事',
+		'effect' => '开局获得20点技能点，但直到30级前都不能再获得技能点',
+		//'desc_skills' => '',
+		'energy' => 100,
+		'valid' => array(
+			'skillpoint' => '+20',
+			'skills' => array(
+				'537' => '0',
+			),
+		)
+	),
+	256 => array(
+		'name' => '彩虹小马',
+		'rare' => 'B',
+		'pack' => 'Way of Life',
+		'desc' => '逃杀就是魔法！',
+		'effect' => '小马子，露出黑脚了吧',
+		'desc_skills' => '马有四条腿，可以穿两双鞋子',
+		'energy' => 100,
+		'valid' => array(
+			'skills'=>array(
+				'557' => '0'
+			)
+		)
+	),
+
+	257 => array(
+		'name' => '挑战挑战者者',
+		'rare' => 'B',
+		'pack' => 'Way of Life',
+		'desc' => '“DOMO，挑战者=SAN，<br>挑战挑战者者 DESU.”',
+		'effect' => '“挑战者，该战！”',
+		'desc_skills' => '获得技能「挑战」：战斗中对卡片名称中含有「挑战者」的玩家伤害+30%，但自己受到的反噬伤害也会+30%',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'558' => '0',  
+			),
+		)
+	),
+	258 => array(
+		'name' => '鬼叫王',
+		'rare' => 'A',
+		'pack' => '東埔寨Protoject',
+		'desc' => '靠着独有的配音征服了地狱的鬼，<br>那一声声凄厉的鬼叫刻断了不知多少听众的DNA',
+		'effect' => '获得战斗技「鬼叫」：放弃攻击并受到对方攻击，之后的游戏中对该角色的先制率上升15%',
+		//'desc_skills' => '',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'560' => '0',
+			),
+		)
+	),
+	259 => array(
+		'name' => '冻鳗婆罗门',
+		'rare' => 'A',
+		'pack' => 'Cyber Zealots',
+		'desc' => '愤怒了，这个游戏的制作者根本不懂<br>什么才是真正的冻鳗梗！',
+		'effect' => '我要好好教教你们真正的冻鳗姿势',
+		'desc_skills' => '根据内定称号，获得额外的合成姿势',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'563' => '0',
+			),
+		)
+	),	
+	260 => array(
+		'name' => '初动',
+		'ruby' => 'FirstMove',
+		'rare' => 'S',
+		'pack' => 'Standard Pack',
+		'desc' => '西之国于2017年制造的最先进的AI，下井字棋的水平远远超过人类。<br><br><span class="evergreen b">『它在完全信息博弈中是不败的。<br>可惜的是现实并不是一个<br>完全信息博弈游戏。』</span>',
+		'effect' => '称号固定为走路萌物，但每升5级可以从五个称号技能中选择一个学习（总共可学习10次，某些技能不可选）',
+		'energy' => 100,
+		'valid' => array(
+			'club' => '17',
+			'skills' => array(
+				'10' => '0', 
+				'11' => '0', 
+				'12' => '0',
+				'564' => '0',
+			),
+		)
+	),
+	261 => array(
+		'name' => '随机数眷顾者',
+		'rare' => 'B',
+		'pack' => 'Standard Pack',
+		'desc' => '每次抽签都有好结果的幸运儿<br><br><span class="evergreen b">『随机看起来最弱，<br>有时却是最强。』</span>',
+		'effect' => '称号固定为走路萌物，但开局时会随机获得1个称号特性和6个技能',
+		'energy' => 100,
+		'valid' => array(
+			'club' => '17',
+			'skills' => array(
+				'10' => '0', 
+				'11' => '0', 
+				'12' => '0',
+				'565' => '0',
+			),
+		)
+	),
+	262 => array(
+		'name' => 'S.G.G.K',
+		'rare' => 'A',
+		'pack' => '東埔寨Protoject',
+		'desc' => '“T O · M E · R U ! ! !”',
+		'effect' => '获得技能「百战」且开局即解锁，<br>但闪避率-20%',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'566' => '0',
+				'34' => '0',
+			),
+		)
+	),
+	263 => array(
+		'name' => '自律人偶M',
+		'rare' => 'A',
+		'pack' => '東埔寨Protoject',
+		'desc' => '看起来人畜无害的人偶妖怪，<br>要不摸一下试试',
+		'effect' => '试试就逝世',
+		'desc_skills' => '获得黑衣组织称号特性「淬毒」和「毒师」，以及技能<br>「毒雾」：自动给丢弃的无毒补给和敌人包裹内补给下毒',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'219' => '0',
+				'220' => '0',
+				'224' => '0',
+				'567' => '0',
+			),
+		)
+	),
+	264 => array(
+		'name' => '……',//我再想想怎么用梗
+		'rare' => 'B',
+		'pack' => 'hidden',
+		'desc' => '……',
+		'effect' => '开局装备能看到神秘数字的眼镜',
+		'energy' => 100,
+		'valid' => array(
+			'arh' => '战斗力指示器',
+			'arhk' => 'DH',
+			'arhe' => '76',
+			'arhs' => '54',
+			'arhsk' => 'c',
+			'skills' => array(
+				'568' => '0',
+			),
+		)
+	),
+	265 => array(
+		'name' => '未确认生命态',
+		'rare' => 'A',
+		'pack' => '東埔寨Protoject',
+		'desc' => '不过是路过的小石头而已',
+		'effect' => '开局携带可暂时隐身的药剂。如果<br>激活人数大于5，将所有其他玩家传送到墓地',
+		'energy' => 100,
+		'valid' => array(
+			'itm6' => '「被厌恶者的哲学」',
+			'itmk6' => 'MB',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => '^mbid246',
+			'skills' => array(
+				'569' => '0',
+			),
+		)
+	),
+	266 => array(
+		'name' => '鼠鼠',
+		'rare' => 'C',
+		'pack' => '東埔寨Protoject',
+		'desc' => '鼠鼠我啊，最喜欢钱了！',
+		'effect' => '开局携带硬币和金色方块',
+		'energy' => 0,
+		'valid' => array(
+			'wep' => '硬币',
+			'wepk' => 'WC',
+			'wepe' => '2',
+			'weps' => '233',
+			'wepsk' => '',
+			'itm6' => '金色方块',
+			'itmk6' => 'X',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => '',
+		)
+	),
+	267 => array(
+		'name' => '地震雷火事老爹',
+		'title' => '老爹',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '会表演用眼部激光煎鸡蛋的顽固老爹',
+		'effect' => '怒气上限为255',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'570' => '0',
+			),
+		)
+	),
+	268 => array(
+		'name' => 'G战队·闪光黑',
+		'rare' => 'C',
+		'pack' => '東埔寨Protoject',
+		'desc' => '才不是蟑螂！',
+		'effect' => '是萤火虫啦！',
+		'desc_skills' => '开局为空手，但带有集气属性',
+		'energy' => 0,
+		'valid' => array(
+			'wep' => '☆骑士飞踢☆',
+			'wepk' => 'WN',
+			'wepe' => '0',
+			'weps' => '∞',
+			'wepsk' => 'c',
+		)
+	),
+	269 => array(
+		'name' => '超次元巨大机器人',
+		'rare' => 'S',
+		'real_rare' => 'C',
+		'pack' => '東埔寨Protoject',
+		'desc' => '河童出品的高109米重约2吨的巨型<br>机器人',
+		'effect' => '它正是最强的无敌的魔神（大嘘）',
+		'desc_skills' => '攻击力和防御力是正常的上万倍（仅限显示）',
+		'energy' => 0,
+		'valid' => array(
+			'skills' => array(
+				'571' => '0',
+			),
+		)
+	),
+	270 => array(
+		'name' => '大番薯',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '堆肥桶不是冰箱！',
+		'effect' => '进场时地图上刷新额外的回复道具',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'572' => '0',
+			),
+		)
+	),
+	271 => array(
+		'name' => '稀神老仙',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '哎呀奶不死的啊，这怎么奶死嘛，<br>地上人骑脸怎么输？',
+		'effect' => '啊不好，说得太多作战就要失败了',
+		'desc_skills' => '进场时祝福在场的其他玩家',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'577' => '0',
+			),
+		)
+	),
+	272 => array(
+		'name' => '鼓哥',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '今天正局来视察我们乐团，给了我们好大的一个鼓啊！',
+		'effect' => '（翻页）<br>……哦，还有一个舞！',
+		'desc_skills' => '开局携带鼓棒和太鼓',
+		'energy' => 120,
+		'valid' => array(
+			'wep' => '达人的太鼓棍棒',
+			'wepk' => 'WP',
+			'wepe' => '7',
+			'weps' => '7',
+			'wepsk' => 'N',
+			'ara' => '达人的太鼓棍棒',
+			'arak' => 'WP',
+			'arae' => '6',
+			'aras' => '6',
+			'arask' => 'e',
+			'arf' => '太鼓乱舞',
+			'arfk' => 'WP',
+			'arfe' => '5',
+			'arfs' => '5',
+			'arfsk' => 'c',
+		)
+	),
+	273 => array(
+		'name' => '尼特姬',
+		'rare' => 'S',
+		'pack' => '東埔寨Protoject',
+		'desc' => '大家好啊，我是尼特姬<br>今天给大家来点不想看的难题啊',
+		'effect' => '把兔子剥皮烤熟就是火鸟了哦！',
+		'desc_skills' => '获得技能「难题」：战斗技，使对方玩家获得一个配方，该玩家未完成此配方时，探索无法遇到你且受到你攻击时所有技能无效；该玩家完成此配方时，自动将合成产物交给你。<br>15级时解锁，对每名玩家限一次',
+		'energy' => 120,
+		'valid' => array(
+			'skills' => array(
+				'575' => '0',
+			),
+		)
+	),
+	274 => array(
+		'name' => '船长',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '宝船『亲民号』的船长，超亲民',
+		'effect' => '東埔寨造舰一直不繁荣，为什么呢？',
+		'desc_skills' => '开局装备带有冻气、冰华和冲击属性的钝器',
+		'energy' => 100,
+		'valid' => array(
+			'wep' => '大建「沉船幽灵」',
+			'wepk' => 'WP',
+			'wepe' => '44',
+			'weps' => '648',
+			'wepsk' => 'ikN',
+		)
+	),
+	275 => array(
+		'name' => '饿灵',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '昔日吃不到八分饱的粉色恶魔，如今已是独当一面的路人甲了',
+		'effect' => '可以把「增殖的G」、夜雀歌谱和<br>牛肉汤当做龙料理使用',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'574' => '0',
+			),
+		)
+	),
+	276 => array(
+		'name' => '灵异巫女',
+		'rare' => 'C',
+		'pack' => '東埔寨Protoject',
+		'desc' => '东之国的某个小神社，有一名<br>拥有力量的巫女。<br>为了泄神社被破坏之愤，她带上御币和符札，誓将门中的魔物全部消灭',
+		'effect' => '假  的<br><br>实际上这是一个打砖块的游戏',
+		'desc_skills' => '开局获得御币和一个随机的方块',
+		'energy' => 0,
+		'valid' => array(
+			'wep' => '御币',
+			'wepk' => 'WP',
+			'wepe' => '15',
+			'weps' => '10',
+			'wepsk' => '',
+			'itm6' => array('红色方块', '白色方块', '黄色方块', '黑色方块', '绿色方块', 'X方块', 'Y方块'),
+			'itmk6' => 'Z',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => '',
+		)
+	),
+	277 => array(
+		'name' => '月战老兵',
+		'rare' => 'A',
+		'pack' => '東埔寨Protoject',
+		'desc' => '月兔不死，只会逐渐沦为大人物的<br>玩物',
+		'effect' => '开局获得枪械和弹药，并获得黑衣组织技能「衰弱」',
+		'desc_skills' => '「衰弱」：被你击中的敌人在10秒内无法处理伤口或异常状态',
+		'energy' => 100,
+		'valid' => array(
+			'wep' => '☆粉红毛兔兔☆',
+			'wepk' => 'WG',
+			'wepe' => '77',
+			'weps' => '1',
+			'wepsk' => 'wy',
+			'itm6' => '座药',
+			'itmk6' => 'GBe',
+			'itme6' => '1',
+			'itms6' => '55',
+			'itmsk6' => '',
+			'skills' => array(
+				'221' => '0', 
+			),
+		)
+	),
+	278 => array(
+		'name' => '淡水人鱼',
+		'rare' => 'C',
+		'pack' => '東埔寨Protoject',
+		'desc' => '在过于强大的同族灭绝之后，<br>她成为了需要保护的水产品',
+		'effect' => '开局位于墓地，并装备可能很稀有的投系武器',
+		'energy' => 0,
+		'valid' => array(
+			'pls' => '9',
+			'wep' => array('「珠泪哀歌族·梅洛人鱼」-仮', '「珠泪哀歌族·小美人鱼」-仮','「珠泪哀歌族·塞壬人鱼」-仮','「珠泪哀歌族·水仙女人鱼」-仮','「梦幻崩影·人鱼」-仮','浅水奇袭','浅水奇袭II','鱼弹突击'),
+			'wepk' => 'WC',
+			'wepe' => '33',
+			'weps' => '33',
+			'wepsk' => '',
+		)
+	),
+	279 => array(
+		'name' => '异色眼护伞',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '東埔寨人下雨根本不用伞，这让她为失去存在价值而愤怒',
+		'effect' => '在被探索发现时，可能会显示为发现<br>一个道具',
+		'desc_skills' => '要是拾取的话就会被吓一跳！',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'580' => '0', 
+			),
+		)
+	),
+	//已经填上了
+	//老板，来个20个卡位的空白
+	280 => array(
+		'name' => 'Acg_xilin',
+		'rare' => 'B',
+		'pack' => 'Top Players',
+		'desc' => 'ACFUN的创建者，是他在ACFUN主页上挂上了dts的链接，推动dts迈出了最重要的一步',
+		'effect' => '这就是你们把猴子杀了几万遍的理由吗？',
+		'desc_skills' => '开局携带游戏解除钥匙（一把锐器）',
+		'energy' => 100,
+		'valid' => array(
+			'itm6' => '「游戏解除钥匙」',
+			'itmk6' => 'WK',
+			'itme6' => '160',
+			'itms6' => '360',
+			'itmsk6' => Array('g', 'l'),
+		)
+	),
+	281 => array(
+		'name' => 'Azazil',
+		'rare' => 'B',
+		'pack' => 'Top Players',
+		'desc' => '简中环境下流传的各类php大逃杀的最初的编写者',
+		'effect' => '就算在十几年过去的今天，游戏代码的一些角落里依然能找到他当初的痕迹',
+		'desc_skills' => '开局携带■生 存 游 戏■源代码（一把拥有物抹+属抹的远程武器）',
+		'energy' => 100,
+		'valid' => array(
+			'itm6' => '■生 存 游 戏■源代码',
+			'itmk6' => 'WG',
+			'itme6' => '7',
+			'itms6' => '7',
+			'itmsk6' => 'oBbS',
+     
+		)
+	),
+	282 => array(
+		'name' => '银色盒子的触手',
+		'rare' => 'S',
+		'pack' => 'Standard Pack',
+		'desc' => '<span class="white b">『这就是所谓幻境的最终目标？<br>不，这只是一个开始。』</span>',
+		'effect' => '开局可以选择任意一个称号',
+		//'desc_skills' => '',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'275' => '0',
+			),
+		)
+	),
+	283 => array(
+		'name' => '随便',
+		'rare' => 'C',
+		'pack' => 'Standard Pack',
+		'desc' => '随便',
+		'effect' => '随便',
+		'desc_skills' => '开局随便选一个称号',
+		'energy' => 0,
+		'valid' => array(
+			'skills' => array(
+				'276' => '0',
+			),
+		)
+	),
+	284 => array(
+		'name' => '黄泉重女',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '就算在变态层出不穷的東埔寨，<br>她也是变态跟踪狂里最变态的那一个',
+		'effect' => '获得战斗技「追猎」：战斗中可以标记玩家，之后能持续获知该玩家的位置',
+		'desc_skills' => '10级时解锁。同时只能标记一名玩家',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'556' => '0',
+			),
+		)
+	),
+	285 => array(
+		'name' => '数字生命',
+		'rare' => 'B',
+		'pack' => 'Cyber Zealots',
+		'desc' => '这个月幻境的访问量多了26倍，你有什么头猪吗？',
+		'effect' => '连斗前不会显示在幸存名单中',
+		//'desc_skills' => '',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'536' => '0',
+			),
+		)
+	),
+	286 => array(
+		'name' => '小绵羊',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '饕餮为什么不上？',
+		'effect' => '今天，我手震；今天，我心疼。…为什么会这样？我付出一切，却得不到想要的一点爱。…蓝…蓝…我…我…<br>我是真的好很爱你的，为何你要这样对我呀？！<br>呜—哇——呱——咩——',
+		'desc_skills' => '获得亡灵骑士技能「黑暗」，但是开局体力上限-300
+		<br>「黑暗」：攻击敌人时有一定概率吸取对方1点全系熟练度和1点生命上限',
+		'energy' => 100,
+		'valid' => array(
+			'sp' => '-300',
+			'msp' => '-300',
+			'skills' => array(
+				'61' => '0',
+			),
+		)
+	),
+	287 => array(
+		'name' => '老板娘 有江露美',
+		'title' => '老板娘',
+		'rare' => 'C',
+		'pack' => '東埔寨Protoject',
+		'desc' => '有着暴躁的性格与谩骂顾客的口癖。对于一直不付钱的顾客会毫不留情地进行制裁。
+	<br>但这却获得了某方面人士们的好评，现在已经不再有会付钱的顾客',
+		'effect' => '开局携带随机一种饮料',
+		'energy' => 0,
+		'valid' => array(
+			'itm6' => Array('伏特加','一杯八分满的啤酒','咖啡酒','百利甜','柠檬汁','红石榴汁','牛肉汤','バカ⑨制冰块'),
+			'itmk6' => 'HB',
+			'itme6' => '100',
+			'itms6' => '1',
+			'itmsk6' => '',
+		)
+	),
+	288 => array(
+		'name' => '西瓜',
+		'rare' => 'C',
+		'pack' => '東埔寨Protoject',
+		'desc' => '伊吹县的名物',
+		'effect' => '开局携带西瓜',
+		'energy' => 0,
+		'valid' => array(
+			'itm6' => '西瓜',
+			'itmk6' => 'HB',
+			'itme6' => '60',
+			'itms6' => '5',
+			'itmsk6' => '',
+		)
+	),
+	289 => array(
+		'name' => '拷贝猫',
+		'rare' => 'B',
+		'pack' => 'Cyber Zealots',
+		'desc' => '这张图猫鼠队铁定跑不出来',
+		'effect' => '结算！',
+		'desc_skills' => '开局能复制并获取场上存活玩家的一项技能（包括称号技能）',
+		'energy' => 100,
+		'valid' => array(
+		  'skills' => array(
+				'529' => '3', 
+			),
+		)
+	),
+	290 => array(
+		'name' => '狱火鸡',
+		'rare' => 'S',
+		'pack' => '東埔寨Protoject',
+		'desc' => '不老不死。<br>没有比这个更不看前提条件、更强大的能力了吧',
+		'effect' => '数值……属性……称号……技能……<br>在不死的存在看来，一切都只是<br>游戏的规则而已',
+		'desc_skills' => '被杀死1分钟后你将复活。每次复活后，这个时间都将翻倍。在你死亡期间，其他玩家可以正常拾取你尸体上的道具，也会正常获得幸存等胜利',
+		'energy' => 100,
+		'valid' => array(
+		  'skills' => array(
+				'539' => '0', 
+			),
+		)
+	),
+	291 => array(
+		'name' => '根流',//TODO
+		'ruby' => 'root_stream',
+		'rare' => 'S',
+		'pack' => 'Cyber Zealots',
+		'desc' => '『肆起』的人工智能助手，『硅邦』的数字经济战略形象大使，也是『伊甸』的竞技场的电子播报员。为了方便它的主人朝令夕改，根流被赋予了极高的权限，可以轻易调动硅邦的一切资源，所幸它只是一个没法通过图灵测试的国产人工智能而已',
+		'effect' => '获得技能「提权」：你可以消耗5个升级点，更换可选的称号列表。此外，每个称号仅限一次，你可以在称号列表中任意切换称号，但切换后不保留原称号技能的数值',
+		'energy' => 100,
+		'valid' => array(
+		  'skills' => array(
+				'pls' => '0', //TODO
+			),
+		)
+	),
+	292 => array(
+		'name' => '邪教徒',
+		'rare' => 'A',
+		'pack' => 'Top Players',
+		'desc' => '他除错的力量无人能及',
+		'effect' => '获得除错模式特殊技能「除错」，每层都会让物理固定伤害增加3点，但20级之前不会获得金钱和技能点奖励',
+		'desc_skills' => '「除错」：提交指定的物品来追查病毒、修复幻境系统，除错成功会获得奖励。在某些等级会获得与正常除错模式不同的奖励',
+		'energy' => 100,
+		'valid' => array(
+		  'skills' => array(
+				'424' => '0',
+				'538' => '0',
+			),
+		)
+	),
+	293 => array(
+		'name' => '门番',
+		'rare' => 'C',
+		'pack' => '東埔寨Protoject',
+		'desc' => 'zzzzzZZZZZ',
+		'effect' => '这个门番在睡觉的时候大声喊出Z来假装自己在探索',
+		'desc_skills' => '在睡眠、治疗、静养时视为强袭姿态',
+		'energy' => 0,
+		'valid' => array(
+		  'skills' => array(
+				'579' => '0',
+			),
+		)
+	),
+	294 => array(
+		'name' => 'Martin_Chloride',
+		'title' => 'Martin',
+		'rare' => 'B',
+		'pack' => 'Top Players',
+		'desc' => '竞品游戏《东方大逃杀》的编写者。虽然游戏已经很久没更新了，但其代码给了本游戏不少启发',
+		'effect' => '开局携带一份特色合成配方：触手的力量 + 名字包含「蘑菇」的道具 + 名字包含「魔导书」的道具 = 码符「终极BUG·拉电闸」/灵力兵器/1000/6/连击',
+		//'desc_skills' => '',
+		'energy' => 100,
+		'valid' => array(
+		  'itm6' => '《东方大逃杀》源代码',
+			'itmk6' => 'R',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => '52',
+		)
+	),
+	295 => array(
+		'name' => '搞事铃',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '租书店的妖怪，种族是防撞桶，拥有作死程度的能力',
+		'effect' => '获得亡灵骑士技能「腐蚀」。开局携带妖魔书',
+		'desc_skills' => '「腐蚀」：每次发动提升50点生命上限，但降低自己的战斗伤害7%，每局最多使用7次',
+		'energy' => 100,
+		'valid' => array(
+		  'skills' => array(
+				'62' => '0',
+			),
+			'itm6' => '妖魔书',
+			'itmk6' => 'VF',
+			'itme6' => '50',
+			'itms6' => '1',
+			'itmsk6' => '',
+		)
+	),
+	296 => array(
+		'name' => '地狱三头犬',
+		'rare' => 'C',
+		'pack' => '東埔寨Protoject',
+		'desc' => '新作获得意外的高人气的<br>白毛红瞳兽娘',
+		'effect' => '开局携带两个捕兽夹',
+		'energy' => 0,
+		'valid' => array(
+	  	'wep' => '捕兽夹',
+			'wepk' => 'WPC',
+			'wepe' => '240',
+			'weps' => '2',
+			'wepsk' => '',
+			'ara' => '捕兽夹',
+			'arak' => 'WCP',
+			'arae' => '240',
+			'aras' => '2',
+			'arask' => '',
+		)
+	),
+	297 => array(
+		'name' => '毛玉',
+		'rare' => 'C',
+		'pack' => '東埔寨Protoject',
+		'desc' => '能在天上飞行的神秘毛球，<br>是杂鱼中的杂鱼',
+		'effect' => '开局携带P点和蓝点',
+		'energy' => 0,
+		'valid' => array(
+			'itm5' => '[Ｐ]',
+			'itmk5' => 'MA',
+			'itme5' => '1',
+			'itms5' => '50',
+			'itmsk5' => '',
+			'itm6' => '[点]',
+			'itmk6' => 'MS',
+			'itme6' => '1',
+			'itms6' => '50',
+			'itmsk6' => '',
+		)
+	),
+	298 => array(
+		'name' => '妖精队长',
+		'rare' => 'A',
+		'pack' => '東埔寨Protoject',
+		'desc' => '有这么一位角色，ta是某部漫画的主角，衣服的图案是星条旗，原本很弱小但经改造获得了强大的力量，投掷圆形的武器，在战争中占领过敌方的首都，还登陆过月球。请问ta是……',
+		'effect' => '开局携带能用来砸人的巨大月亮',
+		'energy' => 100,
+		'valid' => array(
+			'wep' => '「狂気の月」',
+			'wepk' => 'WC',
+			'wepe' => '1970',
+			'weps' => '13',
+			'wepsk' => 'N',
+		)
+	),
+	
+	299 => array(
+		'name' => '⑨',
+		'rare' => 'A',
+		'real_rare' => 'C',//真实的爆率
+		'print_rare_mark' => '⑨',//只在显示罕贵字母时用的
+		'pack' => '東埔寨Protoject',
+		'desc' => '最强！',
+		'effect' => '获得一个冰雪聪明的头像',
+		//'desc_skills' => '',
+		'energy' => 9,
+		'valid' => array(
+			'icon' => 'n_999.gif',
+			'sNo' => 9,
+		)
+	),
+	
+	300 => array(
+		'name' => '占位符，搞点大的',
+		'rare' => 'C',
+		'pack' => 'hidden',
+		'desc' => '占位符',
+		'effect' => '占位符占位符',
+		'desc_skills' => '占位符占位符占位符',
+		'energy' => 0,
+		'valid' => array(
+			'pls' => 0,
+		)
+	),
+	//这里有40张空位，是一个卡组
+	
+	341 => array(
+		'name' => '麻薯',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '连一刻也没有为主子的晚餐哀悼，<br>立刻赶到战场的是',
+		'effect' => '怎么只来了半个人？',
+		'desc_skills' => '在幸存名单中显示为0.5人，开局携带半个灵力武器材料',
+		'energy' => 100,
+		'valid' => array(
+			'itm6' => '★瓦衣山彐★',
+			'itmk6' => 'X',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => 'z',
+			'skills' => array(
+				'583' => '0'
+			)
+		)
+	),
+	342 => array(
+		'name' => '开门大吉猫咪',
+		'rare' => 'C',
+		'pack' => '東埔寨Protoject',
+		'desc' => '这里是肯東基，没有1+1，<br>也没有双吉',
+		'effect' => '获得技能「招福」：可选择探索时获得金钱但角色发现率降低；或失去金钱但角色发现率增加',
+		'energy' => 0,
+		'valid' => array(
+			'skills' => array(
+				'582' => '0'
+			)
+		)
+	),
+	343 => array(
+		'name' => '妖精女仆',
+		'rare' => 'M',
+		'pack' => '東埔寨Protoject',
+		'desc' => '主要负责增加女仆长的工作量',
+		'effect' => '不获得技能「疾风」「人杰」<br>「整备」「谨慎」「团结」',
+		'desc_skills' => '获得技能「摸鱼」：对NPC造成的战斗伤害降低',
+		'energy' => 0,
+		'valid' => array(
+			'skills' => array(
+				'494' => '0'
+			)
+		)
+	),
+	344 => array(
+		'name' => '油库里',
+		'rare' => 'M',
+		'pack' => '東埔寨Protoject',
+		'desc' => '一种形似馒头的生物，品种繁多',
+		'effect' => '<span style="font-size:9pt;font-family:Saitamaar,\'MS PGothic\',IPAMonaPGothic;">
+<br>＿人人人人人人人人人人人人人人人＿
+<br>＞　　　ゆっくりしていってね！！！　　　＜
+<br>￣^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^￣
+</span>',
+		'desc_skills' => '随机发动一张「東埔寨Protoject」卡，但称号固定为走路萌物，且只有技能「治愈」',
+		'energy' => 0,
+		'valid' => array(
+			//技能和称号的处理在skill584模块里
+			'cardchange' => Array(
+				'S_odds' => 20,
+				'A_odds' => 20,
+				'B_odds' => 30,
+				'C_odds' => 30,
+				'packlimit' => '東埔寨Protoject',
+				'allow_EB' => false,
+				'forced' => Array(117, 153, 157, 158, 186),//无视概率强制加入选择的卡（星莲船，冴冴，诹访子，灵梦，超魔理沙）
+				'ignore_cards' => Array(300)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+			),
+		)
+	),
+	345 => array(
+		'name' => '复读机',
+		'rare' => 'C',
+		'pack' => '東埔寨Protoject',
+		'desc' => '「yahoo——」<br>「yahoo——」<br><br>「我可爱吗？——」<br>「我可爱吗？——」',
+		'effect' => '「请关注博丽神社谢谢喵——」<br>「yahoo——」',
+		'desc_skills' => '当前地图存在其他复读机时，攻击时视为具有音波属性',
+		'energy' => 0,
+		'valid' => array(
+			'skills' => array(
+				'585' => '0'
+			)
+		)
+	),
+	346 => array(
+		'name' => '叛逆天人',
+		'title' => '逆天',
+		'rare' => 'A',
+		'pack' => '東埔寨Protoject',
+		'desc' => '她不具备天人应有的品行，叛逆的性格也与其他天人不同',
+		'effect' => '大家都把她称做',
+		'desc_skills' => '获得一次性技能「天变」「地异」<br>「天变」：随机改变天气，12级时解锁<br>「地异」：将地图顺序上下翻转，直到下一次禁区，12级时解锁',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'588' => '0',
+				'589' => '0',
+			),
+		)
+	),
+	347 => array(
+		'name' => '仓鼠挑战者',
+		'rare' => 'B',
+		'pack' => 'Way of Life',
+		'desc' => '为什么大家都不抽新卡，就因为没更新新卡吗？',
+		'effect' => '持有切糕越多，受到的战斗伤害越低（至多-20%）',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'590' => '0',
+			),
+		)
+	),
+	348 => array(
+		'name' => '太阳之子',
+		'rare' => 'S',
+		'pack' => '東埔寨Protoject',
+		'desc' => '架着神灵，身披大氅，<br>消灭一切害人狼！',
+		'effect' => '太阳的核子——就是我！<br>我的威力——就是强！',
+		'desc_skills' => '获得技能「熔毁」：战斗时有33%、66%、1%概率<br>提高物理伤害6%、66%、666%，6级时解锁',
+		'energy' => 120,
+		'valid' => array(
+			'skills' => array(
+				'591' => '0',
+			),
+		)
+	),
+	349 => array(
+		'name' => '绿眼葛笼',
+		'ruby' => 'Green-Eyes Jealous Monster',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '凭什么那张卡值8700万？',
+		'effect' => '我好嫉妒啊！',
+		'desc_skills' => '获得技能「嫉妒」：攻击时使对手获得临时的属性弱化和同等<br>时长的临时技能「嫉妒」，时长取决于对手卡片的稀有度',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'592' => '0',
+			),
+		)
+	),
+	350 => array(
+		'name' => '八意制药™',
+		'rare' => 'S',
+		'pack' => '東埔寨Protoject',
+		'desc' => '東埔寨著名的座药制造企业',
+		'effect' => '可以制造三无药品',
+		'desc_skills' => '获得技能「秘药」：每60秒可以获得1个随机药物，<br>距上一次发动时间越长越容易得到强力的药物',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'593' => '0',
+			),
+		)
+	),
+	351 => array(
+		'name' => 'M18 “地狱猫”',
+		'title' => '地狱猫',
+		'rare' => 'A',
+		'pack' => '東埔寨Protoject',
+		'desc' => '运送尸体的打火车，其敞篷设计在乘员中的差评率至今为零',
+		'effect' => '获得可以把尸体打包带走的技能',
+		'desc_skills' => '获得技能「猫车」：移动后将当前地点尽可能多的尸体加入视野，<br>可以把尸体上的全部道具和金钱一并带走。10级时解锁',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'597' => '20',
+			),
+		)
+	),
+	352 => array(
+		'name' => '上老师',
+		'rare' => 'A',
+		'pack' => '東埔寨Protoject',
+		'desc' => '寺子屋老师<br>和同姓职人没有任何关系',
+		'effect' => '言传水平一般，但是身教很有力',
+		'desc_skills' => '获得战斗技「劝学」：物理伤害+20%，使对手概率获得以下选项中的若干种：<br>晕眩2秒/头部受伤/经验值增加/全系熟练度增加。10级时解锁',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'595' => '0',
+			),
+		)
+	),
+	353 => array(
+		'name' => '自媒体',
+		'rare' => 'C',
+		'pack' => '東埔寨Protoject',
+		'desc' => '靠搜索引擎写报道的家里蹲小报记者',
+		'effect' => '可以用手机捏造新闻',
+		'desc_skills' => '开局携带手机并获得技能「念写」：可以使用手机，获得随机的<br>投系武器、强化药物或合成材料',
+		'energy' => 0,
+		'valid' => array(
+			'itm6' => '手机',
+			'itmk6' => 'X',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => '',
+			'skills' => array(
+				'596' => '0',
+			),
+		)
+	),
+	354 => array(
+		'name' => '小桶',
+		'rare' => 'C',
+		'pack' => '東埔寨Protoject',
+		'desc' => '和钓瓶妖怪一起<del>攻克难关</del>提桶跑路',
+		'effect' => '开局装备诅咒属性的腿部防具',
+		'energy' => 0,
+		'valid' => array(
+			'arf' => '木桶',
+			'arfk' => 'DF',
+			'arfe' => '50',
+			'arfs' => '30',
+			'arfsk' => 'O',
+		)
+	),
+	355 => array(
+		'name' => '勇☆仪☆王',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '她有40张符卡',
+		'effect' => '可以把游戏王武器当无属性的灵系武器使用',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'598' => '0',
+			),
+		)
+	),
+	356 => array(
+		'name' => '蚀梦貘',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '适度酗酒益脑，沉迷睡觉伤身',
+		'effect' => '获得一次性技能「迷梦」：使当前地图的玩家和生命值低于你的NPC变为治疗姿态和重视防御，并进入睡眠',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'599' => '0',
+			),
+		)
+	),
+	357 => array(
+		'name' => '「周六夜狂热」',
+		'rare' => 'A',
+		'pack' => '東埔寨Protoject',
+		'desc' => '身为龙宫使，负责传递来自龙神的<br>姿势',
+		'effect' => '现在《太平要术》和《占星术导论》都是幻境必修的舞蹈教材',
+		'desc_skills' => '获得技能「雷击」「预感」
+		<br>「雷击」：你埋设的陷阱对敌人造成的伤害+15%
+		<br>「预感」：你受到的陷阱伤害随机减少1~30%',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'249' => '0',
+				'250' => '0',
+			),
+		)
+	),
+	358 => array(
+		'name' => '烧烤与夜雀与夜色森林',
+		'title' => '烤夜雀',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '面对大型连锁餐厅，正在为自己的生意和鸟身安全担忧的烧烤摊老板娘',
+		'effect' => '有摇滚和烤串的绝活',
+		'desc_skills' => '开局获得带有变奏和激奏1属性的烤肉工具和补给',
+		'energy' => 100,
+		'valid' => array(
+			'ara' => '☆烤鳗鱼☆',
+			'arak' => 'HB',
+			'arae' => '300',
+			'aras' => '10',
+			'arask' => '^sa1',
+			'art' => '烤肉组合',
+			'artk' => 'A',
+			'arte' => '1',
+			'arts' => '1',
+			'artsk' => '^sv1',
+		)
+	),
+	359 => array(
+		'name' => '加班挑战者',
+		'rare' => 'C',
+		'pack' => 'Way of Life',
+		'desc' => '干到太晚然后在工位上睡着了',
+		'effect' => '我这是在哪？',
+		'desc_skills' => '开局处于睡眠状态，有30%概率获得额外的起始金钱',
+		'energy' => 0,
+		'valid' => array(
+			'skills' => array(
+				'562' => '0',
+			),
+		)
+	),
+	//空一下360
+	361 => array(
+		'name' => '纵火狂',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '喜欢放火的熊孩子',
+		'effect' => '开局携带使用后获得已升级的临时技能「聚能」的药物',
+		'energy' => 100,
+		'valid' => array(
+			'itm6' => '炎符「火烧命莲寺」',
+			'itmk6' => 'MB',
+			'itme6' => '100',
+			'itms6' => '1',
+			'itmsk6' => '^mbid26^mblvl2^mbtime480',
+		)
+	),
+	362 => array(
+		'name' => '阿加莎克里斯Q',
+		'title' => '阿Q',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => '人类村落的著名小说家，有着过目不忘的能力',
+		'effect' => '她意思之间，似乎觉得人生天地间，大约本来有时也未免要早夭的',
+		'desc_skills' => '视野与记忆上限为200格，但升级到30级后会死亡',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'701' => '0',
+			),
+		)
+	),
+	363 => array(
+		'name' => '十进制',
+		'rare' => 'M',
+		//'pack' => '東埔寨Protoject',
+		'pack' => 'hidden',
+		'desc' => '是——这样吗——',
+		'effect' => '开局装备发带。可以藏身于黑暗之中',
+		'desc_skills' => '获得技能「宵暗」：你发现其他角色和其他角色发现你时显示为？？？',
+		'energy' => 0,
+		'valid' => array(
+			'arh' => '红色的发带',
+			'arhk' => 'DH',
+			'arhe' => '10',
+			'arhs' => '10',
+			'arhsk' => '',
+			'skills' => array(
+				'702' => '0',
+			),
+		)
+	),
+	364 => array(
+		'name' => '月光蝶',
+		'rare' => 'C',
+		//'pack' => '東埔寨Protoject',
+		'pack' => 'hidden',
+		'desc' => '_____，这是最好的',
+		'effect' => '开局装备消音属性的饰品。你战斗时不会发出任何声音',
+		'energy' => 0,
+		'valid' => array(
+			'art' => '月光碎片',
+			'artk' => 'A',
+			'arte' => '1',
+			'arts' => '1',
+			'artsk' => 'S',
+			'skills' => array(
+				'703' => '0',
+			),
+		)
+	),
+	365 => array(
+		'name' => '大鹌鹑',
+		'rare' => 'C',
+		'pack' => 'Way of Life',
+		'desc' => '曾经登场于电波春节活动的大型野生动物（？）',
+		'effect' => '在攻击时可能会发出特殊的台词',
+		'energy' => 0,
+		'valid' => array(
+			'skills' => array(
+				'704' => '0',
+			),
+		)
+	),
+	366 => array(
+		'name' => '恶魔导书童',
+		'rare' => 'C',
+		'pack' => '東埔寨Protoject',
+		'desc' => '魔导图书馆非法雇佣的童工',
+		'effect' => '开局携带一本随机魔导书',
+		'energy' => 0,
+		'valid' => array(
+			'itm6' => array('☆魔导书整理☆','☆残页的魔导书☆','☆冰火之魔导书☆','☆创造之魔导书☆','☆奥义之魔导书☆','☆蜡板之魔导书☆','☆水卜之魔导书☆','☆恶灵之魔导书☆','☆律法之魔导书☆','☆死灵之魔导书☆','☆隐藏的魔导书☆'),
+			'itmk6' => array('VF','VF','VF','VF','VF','VF','VF','VS'),
+			'itme6' => '30',
+			'itms6' => '1',
+			'itmsk6' => '',
 		)
 	),
 	
@@ -4269,13 +5559,13 @@ $cards = array(
 		'pack'=>'hidden',
 		'desc'=>'今天凹了一晚上，想要的卡一张没有',
 		'effect'=>'我草，怎么天亮了？',
-		'energy'=>120,
+		'energy'=>0,
 		'valid' => array(
 			'cardchange' => Array(
 				'real_random' => true,//真随机，所有卡选1张
 				'perm_change' => true,//永久改变，换卡之后不会再把card字段切回来，也不会按这张卡判定成就
 				'forced' => Array(),//无视概率强制加入选择的卡
-				'ignore_cards' => Array(81, 237)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array(81, 237, 300, 344)//机制上必定选不到自己，这里可以放其他不想被选到的卡
 			)
 		)
 	),

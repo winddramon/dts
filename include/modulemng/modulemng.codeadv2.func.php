@@ -190,12 +190,12 @@ function check_eval_magic($modid, $tplfile, &$content, &$i2, &$ret)
 	if (!check_word($content,$i,'return')) return 0;
 	if (!check_word($content,$i,'$___RET_VALUE')) return 0;
 	if (!check_word($content,$i,';')) return 0;
-	global $___MOD_CODE_COMBINE;
+	global $___MOD_CODE_COMBINE, $now_funcname;
 	if($___MOD_CODE_COMBINE){
 		$i2=$i;
 		$ret = '';
 	}else{
-		$funcname = parse_get_funcname($content,$i2);
+		$now_funcname = $funcname = parse_get_funcname($content,$i2);
 		$i2=$i;	
 		$ret = get_magic_content(strtolower($funcname), $modid);
 		//测试
@@ -203,6 +203,18 @@ function check_eval_magic($modid, $tplfile, &$content, &$i2, &$ret)
 		//$ret='global $___TEMP_CALLS_COUNT; $___TEMP_CALLS_COUNT[\''.$funcname.'\']=1; '.$ret;
 		$ret=str_replace("\n",' ',$ret);
 	}
+	return 1;
+}
+
+function check_chprocess($modid, $tplfile, &$content, &$i2, &$ret)
+{
+	$i=$i2;
+	if (!check_word($content,$i,'$chprocess',1)) return 0;
+	if (!check_word($content,$i,'(')) return 0;
+	global $___TEMP_modfuncs, $now_funcname;
+	$i2=$i;
+	$ret = '\\'.$___TEMP_modfuncs[$modid][strtolower($now_funcname)]['chprocess'].'(';
+	
 	return 1;
 }
 
@@ -245,6 +257,7 @@ function token_get_all_adv($code){
 	//括号和控制类型层数是用数组元素数来计算
 	$brace_list = $paren_list = $cp_list = array();
 	$last_nw_token = $last_nw_token_2 = $last_cp_token = NULL;
+	$tmp_vv_brace_flag = 0;//可变变量名的大括号的层数
 	$line_start = 0;
 	$tokens = token_get_all($code);
 	foreach($tokens as $token){
@@ -253,9 +266,10 @@ function token_get_all_adv($code){
 		//后括号的位置都视为上一级，与前括号一致，所以需要在储存前就减掉括号层数
 		if(')' == $token_str && NULL === $token_type){
   		array_pop($paren_list);
-  	}elseif('}' == $token_str && NULL === $token_type){
+  	}elseif('}' == $token_str && NULL === $token_type && empty($tmp_vv_brace_flag)){//后大括号要额外判定一下是不是在可变变量定义中
   		array_pop($brace_list);
   	}
+		$last_cp_token = isset($cp_list[sizeof($cp_list)-1]) ? $cp_list[sizeof($cp_list)-1][1] : NULL;
 		$ret[$offset] = array(
   		'type' => $token_type,
   		'str' => $token_str,
@@ -264,31 +278,43 @@ function token_get_all_adv($code){
   		'brace' => sizeof($brace_list),
   		'last_nw_token' => $last_nw_token,
   		'last_nw_token_2' => $last_nw_token_2,
-  		'last_cp_token' => isset($cp_list[sizeof($cp_list)-1]) ? $cp_list[sizeof($cp_list)-1][1] : NULL
+  		'last_cp_token' => $last_cp_token
   	);
   	//前括号的位置视为上一级，那么在储存之后才增加括号层数
   	if('(' == $token_str && NULL === $token_type){
   		$paren_list[] = $last_nw_token;
   	}elseif(left_brace_check($token_str, $token_type)){
-  		//前大括号，对应的控制层数的括号开关修改
-  		if(!empty($cp_list) && sizeof($brace_list) == $cp_list[sizeof($cp_list)-1][2]){
-  			$cp_list[sizeof($cp_list)-1][0] = true;
-  		}
-  		$brace_list[] = $last_cp_token;
-  		$line_start = $offset + strlen($token_str);
+  		if('$'==$ret[$last_nw_token]['str']){
+  			//类似${XXX}这样的可变变量名表达式只是定义变量名，不应该增加大括号层数
+  			//注意：目前只支持${XX.${XX{$XX}}.XX}这样的嵌套，不支持更扭曲的写法（比如在可变变量名里用闭包之类）。写代码不是炫技，框架的弹性也不是无限的！
+  			$tmp_vv_brace_flag ++;
+  		}else{
+	  		//前大括号，对应的控制层数的括号开关修改
+	  		if(!empty($cp_list) && sizeof($brace_list) == $cp_list[sizeof($cp_list)-1][2]){
+	  			$cp_list[sizeof($cp_list)-1][0] = true;
+	  		}
+	  		$brace_list[] = $last_cp_token;
+	  		$line_start = $offset + strlen($token_str);
+	  	}
   	}elseif('}' == $token_str && NULL === $token_type){
-  		//与括号层数不同，前后括号的控制层数与控制符一致，所以必须在储存之后再增减
-  		if(!empty($cp_list) && $cp_list[sizeof($cp_list)-1][0] && sizeof($brace_list) == $cp_list[sizeof($cp_list)-1][2]){
-  			array_pop($cp_list);
-  			while(!empty($cp_list)){
-					$last_cp = array_pop($cp_list);
-					if($last_cp[0]){
-						$cp_list[] = $last_cp;
-						break;
+  		if($tmp_vv_brace_flag > 0) {
+  			//如果可变变量名层数不为零，认为在可变变量名定义中，不认为是后括号
+  			$tmp_vv_brace_flag --;
+  			if($tmp_vv_brace_flag < 0) $tmp_vv_brace_flag = 0;
+  		}else{  			
+  			//与括号层数不同，前后括号的控制层数与控制符一致，所以必须在储存之后再增减
+	  		if(!empty($cp_list) && $cp_list[sizeof($cp_list)-1][0] && sizeof($brace_list) == $cp_list[sizeof($cp_list)-1][2]){
+	  			array_pop($cp_list);
+	  			while(!empty($cp_list)){
+						$last_cp = array_pop($cp_list);
+						if($last_cp[0]){
+							$cp_list[] = $last_cp;
+							break;
+						}
 					}
-				}
-				$line_start = $offset + strlen($token_str);
-  		}
+					$line_start = $offset + strlen($token_str);
+	  		}
+  		}  		
   	}elseif(in_array($token_type, array(T_IF, T_ELSE, T_ELSEIF, T_FOR, T_FOREACH, T_WHILE, T_DO, T_CASE, T_DEFAULT))){
 			$cp_list[] = array(false, $offset, sizeof($brace_list), sizeof($paren_list));//第一个变量为是不是有大括号，第二个变量是偏移量，第三个偏移量为所在大括号层数
 		}elseif(';' == $token_str && NULL === $token_type){
@@ -723,7 +749,7 @@ function merge_replace_chprocess($ret_varname, $replacement, $subject, $modname,
 		if(empty($lval) || in_array($lval, $dumped_list) || in_array($lval, $chp_args_arr_exceptions)) continue;
 		$dump_name = '$__VAR_DUMP_MOD_'.$modname.'_VARS_'.substr($lval, 1);
 		$vdc_behind .= 'if(isset('.$lval.')) {'.$dump_name.' = '.$lval.'; } else {'.$dump_name.' = NULL;} ';
-		$vdc_ahead .= ''.$lval.' = '.$dump_name.'; ';
+		$vdc_ahead .= ''.$lval.' = '.$dump_name.'; unset('.$dump_name.');';
 		$dumped_list[] = $lval;
 	}
 	//引用变量优先级更高
@@ -969,7 +995,7 @@ function merge_contents_write($modid, $tplfile, $objfile){
 	writeover($objfile, $writing_contents);
 }
 
-//ADV2合并代码主函数
+//ADV2_COMBINE合并代码主函数
 function merge_contents_calc($modid)
 {
 	global $___TEMP_func_contents;
@@ -1226,6 +1252,11 @@ function parse($modid, $tplfile, $objfile)
 		{
 			$result.=$s; 
 		}
+		//2023.10.07 静态化$chprocess，加快执行速度 我怀疑COMBINE模式折腾半天其实就是省了这部分开销
+//		elseif (check_chprocess($modid, $tplfile, $content, $i, $s))
+//		{
+//			$result.=$s; 
+//		}
 		else  
 		{
 			$result.=$content[$i]; $i++;

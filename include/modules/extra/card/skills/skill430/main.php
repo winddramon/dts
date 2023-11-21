@@ -56,8 +56,12 @@ namespace skill430
 		do{
 			$i=rand(4,$in-1);//妈了个臀
 			list($iarea,$imap,$inum,$iname,$ikind,$ieff,$ista,$iskind) = explode(',',$itemlist[$i]);
-		} while (!is_numeric($iarea) || \itemmain\check_in_itmsk('x', $iskind));
-		$itm0=$iname;$itme0=$ieff;$itms0=$ista;$itmsk0=$iskind;$itmk0=$ikind;
+		} while (!is_numeric($iarea) || $iarea > 100 || \itemmain\check_in_itmsk('x', $iskind));
+		$itm0=$iname;
+		$itme0=$ieff;
+		$itms0=$ista;
+		$itmsk0=$iskind;
+		$itmk0=\attrbase\config_process_encode_comp_itmsk($ikind);
 		addnews ( 0, 'bskill430', $name,$iname );
 		\itemmain\itemget();
 	}

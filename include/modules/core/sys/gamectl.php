@@ -157,7 +157,7 @@ namespace sys
 			if(!empty($sdata) && $r['pid'] == $sdata['pid']){
 				$gameover_plist[$r['name']] = $sdata;
 			}else{
-				$gameover_plist[$r['name']] = \player\fetch_playerdata($r['name']);
+				$gameover_plist[$r['name']] = \player\fetch_playerdata($r['name']);//可能的性能瓶颈1号，循环中锁玩家并读数据库
 			}
 			if($gameover_plist[$r['name']]['hp'] > 0) $gameover_alivelist[$r['name']] = &$gameover_plist[$r['name']];
 		}
@@ -267,7 +267,7 @@ namespace sys
 		$starttime = $gamevars['o_starttime'];
 //		logmicrotime('房间'.$room_prefix.'-第'.$gamenum.'局-模式判断');
 		//以下开始真正处理gameover的各种数据修改
-		$time = $time ? $time : $now;
+		$time = !empty($time) ? $time : $now;
 		//计算当前是哪一局，以优胜列表为准
 		$result = $db->query("SELECT gid FROM {$wtablepre}history ORDER BY gid DESC LIMIT 1");
 		if($db->num_rows($result)&&($gamenum <= $db->result($result, 0))) {
@@ -314,8 +314,9 @@ namespace sys
 		rs_sttime();
 		
 		//进行天梯积分计算、录像处理之类的后期工作
-		post_gameover_events();
-//		logmicrotime('房间'.$room_prefix.'-第'.$gamenum.'局-录像等后续处理');
+//		startmicrotime();
+		post_gameover_events();//录像，可能的性能瓶颈2号
+//		logmicrotime('房间'.$room_prefix.'-第'.$gamenum.'局-录像等处理全部结束');
 		//echo '**游戏结束**';
 		
 		//这里把$gameover_ulist一起更新

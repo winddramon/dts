@@ -101,9 +101,14 @@ namespace skillbase
 		return array($ac_list, $para_list);
 	}
 	
+	//角色载入技能数据时进行的处理
+	//这个skill_onload_event()执行顺序很早，而且底层对$acquired_list $parameter_list $sdata $pa等的引用关系的设计有点问题，导致在这里进行过于复杂的处理如选称号等，处理结果会被覆盖
+	//涉及较复杂的判定建议延后处理，不要继承这个函数！
 	function skill_onload_event(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		//判定临时技能的失去
+		check_tempskill_process($pa);
 	}
 	
 	//格式化并储存技能参数，基本上只有player_save()调用
@@ -217,7 +222,7 @@ namespace skillbase
 		{
 			if ($pa == NULL) {
 				\player\update_sdata();
-				$pa=$sdata;
+				$pa=$sdata;//这句要不要加引用呢，原本是没加的，需要找个时间排查一下加了会带来什么
 			}
 			if(empty($acquired_list[$skillid])) {
 				$already = 0;
@@ -234,6 +239,8 @@ namespace skillbase
 		$func='skill'.$skillid.'\\acquire'.$skillid;
 		//称号技能重复获得时不会再次触发acquirexxx()
 		if (defined('MOD_SKILL'.$skillid) && !($already && $no_cover)) $func($pa);
+		//每次获得技能时把临时参数删掉，避免获得了非临时技能被临时技能删掉
+		skill_delvalue($skillid, 'tsk_expire', $pa);
 	}
 	
 	function skill_lost($skillid, &$pa = NULL)
@@ -402,6 +409,35 @@ namespace skillbase
 		}
 		return $ret;
 	}
+	
+	function check_tempskill_process(&$pa = NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$arr = get_acquired_skill_array($pa);
+		foreach ($arr as $key)
+		{
+			if (defined('MOD_SKILL'.$key.'_INFO') && (strpos(constant('MOD_SKILL'.$key.'_INFO'),'club;')!==false || strpos(constant('MOD_SKILL'.$key.'_INFO'),'card;')!==false))
+			{
+				check_skill_tempskill($key, $pa);
+			}
+		}
+	}
+	
+	function check_skill_tempskill($skillid, &$pa = NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		$tsk_expire = skill_getvalue($skillid, 'tsk_expire', $pa);
+		if (skill_query($skillid, $pa) && !empty($tsk_expire))
+		{
+			if ($now > $tsk_expire)
+			{
+				skill_lost($skillid, $pa);
+				skill_delvalue($skillid, 'tsk_expire', $pa);
+			}
+		}
+	}
+
 }
 
 ?>

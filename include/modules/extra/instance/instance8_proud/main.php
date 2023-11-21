@@ -4,7 +4,7 @@ namespace instance8
 {
 	function init() {
 		eval(import_module('skillbase', 'cardbase'));
-		$valid_skills[18] = array(1001);
+		$valid_skills[18] = array(1001,181);
 		$card_force_different_gtype[] = 18;
 		$card_need_charge_gtype[] = 18;
 		$card_cooldown_discount_gtype[18] = 0.5;
@@ -30,15 +30,15 @@ namespace instance8
 		}else return $chprocess();
 	}
 	
-//	function get_shopconfig(){
-//		if (eval(__MAGIC__)) return $___RET_VALUE; 
-//		eval(import_module('sys','instance8'));
-//		if (18 == $gametype){
-//			$file = __DIR__.'/config/shopitem.config.php';
-//			$l = openfile($file);
-//			return $l;
-//		}else return $chprocess();
-//	}
+	function get_shopconfig(){
+		if (eval(__MAGIC__)) return $___RET_VALUE; 
+		eval(import_module('sys','instance8'));
+		if (18 == $gametype){
+			$file = __DIR__.'/config/shopitem.config.php';
+			$l = openfile($file);
+			return $l;
+		}else return $chprocess();
+	}
 	
 	function get_itemfilecont(){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 

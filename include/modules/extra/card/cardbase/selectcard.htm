@@ -1,3 +1,4 @@
+<!--{eval if(empty($energy_recover_rate) && !empty($udata)) $energy_recover_rate=\cardbase\get_energy_recover_rate($card_ownlist, $udata['gold']); }-->
 <!--{eval if (!isset($cardChosen)) $cardChosen=0; }-->
 <!--{eval $chosencard=$cardChosen; }-->
 <!--{eval $current_pack = !in_array($cards[$chosencard]['pack'],$packlist) ? 0 : array_search($cards[$chosencard]['pack'],$packlist);}-->
@@ -194,11 +195,12 @@ cardSearchInit = function()
 		<span class="yellow b" style="line-height:30px">当前被选择的卡片</span>
 	</div>
 	<div style="position: relative;">
-		<!--{eval $showpack=1;}-->
+		<!--{eval $showpack=0;}-->
 		<!--{loop $cards $cardid $nowcard}-->
+			<!--{eval $nowcard['id']=$cardid;$nowcard['blink']=!empty($card_data_fetched[$cardid]['blink'])?$card_data_fetched[$cardid]['blink']:0;}-->
 			<!--{if in_array($cardid,$card_ownlist) && !in_array($cardid, array_keys($card_disabledlist))}-->
 				<!--{eval $card_achieved=in_array($cardid,$card_achieved_list);}-->
-				<div id="card{$cardid}" class="cardoption"<!--{if $chosencard!=$cardid}--> style="display:none"<!--{/if}-->>
+				<div id="card{$cardid}" class="cardoption"<!--{if $chosencard!=$cardid}--> style="display:none"<!--{/if}--> <!--{if !empty($nowcard['desc_skills'])}-->title="$nowcard['desc_skills']"<!--{/if}-->>
 					{template MOD_CARDBASE_CARD_FRAME}
 				</div>
 			<!--{/if}-->
@@ -209,13 +211,14 @@ cardSearchInit = function()
 	<span id="cardUnavailableHint" class="yellow b" style="line-height:30px">当前卡片暂时不可用，请重新选择！</span>
 	<!--{/if}-->
 	</div>
+	<div style="text-align:center;<!--{if !empty($no_select)}-->display:none;<!--{/if}-->">
+		<!--{if $cd_s+$cardtypecd['S']>$now}--><span class="gold b"><!--{eval echo convert_tm($cd_s+$cardtypecd['S']-$now);}-->后才可使用S级身份卡</span><br><!--{/if}-->
+		<!--{if $cd_a+$cardtypecd['A']>$now}--><span class="cyan b"><!--{eval echo convert_tm($cd_a+$cardtypecd['A']-$now);}-->后才可使用A级身份卡</span><br><!--{/if}-->
+		<!--{if $cd_b+$cardtypecd['B']>$now}--><span class="brickred b"><!--{eval echo convert_tm($cd_b+$cardtypecd['B']-$now);}-->后才可使用B级身份卡</span><br><!--{/if}-->
+	</div>
 </div>
 </div>
-<div style="position:absolute;left:200px;text-align:right;<!--{if !empty($no_select)}-->display:none;<!--{/if}-->">
-	<!--{if $cd_s+$cardtypecd['S']>$now}--><span class="gold b"><!--{eval echo convert_tm($cd_s+$cardtypecd['S']-$now);}-->后才可使用S级身份卡</span><br><!--{/if}-->
-	<!--{if $cd_a+$cardtypecd['A']>$now}--><span class="cyan b"><!--{eval echo convert_tm($cd_a+$cardtypecd['A']-$now);}-->后才可使用A级身份卡</span><br><!--{/if}-->
-	<!--{if $cd_b+$cardtypecd['B']>$now}--><span class="brickred b"><!--{eval echo convert_tm($cd_b+$cardtypecd['B']-$now);}-->后才可使用B级身份卡</span><br><!--{/if}-->
-</div>
+
 <!-- 悬浮错误提示框 -->
 <div id="cardErrMsg" style="position:fixed; left:0px; top:0px; display:none; text-align:left;  filter:alpha(opacity=95); opacity:0.95; background-color:#000000">
 <div id="cardErrMsgInner" class="noselect" style="margin-left:3px; margin-right:3px; margin-top:3px; margin-bottom:3px;">

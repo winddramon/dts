@@ -1,7 +1,10 @@
 <?php
 
 //房间运转的大部分重要函数
-//gamedata/tmp/rooms下的文件现在只起一个开关作用。
+//房间的主要信息储存在game数据表，gamedata/tmp/rooms下的文件现在只起一个开关作用。
+
+//正常会有三个地方对房间做修改：刷新首页，来自roomcmd.php和roomupdate.php的指令，还有一个藏得比较深的是sys模块的init()函数内
+//房间部分的判定又多又绕，挺屎山的，但是我也没啥好办法，求代码高手解救
 
 //检查并刷新所有房间状态，一般从首页调用。
 //会导致严重的脏数据问题，当前已废弃，改为从首页多次发送对单个房间的routine()
@@ -298,6 +301,12 @@ function room_upos_check($roomdata, $user=NULL){
 	$upos = -1;
 	$rdplist = room_get_vars($roomdata, 'player');
 	$rdpnum = room_get_vars($roomdata, 'pnum');
+	if(empty($rdpnum)) //会出现这个情况一般是从daemon调用的
+	{
+		global $roomtypelist;
+		include GAME_ROOT.'./include/roommng/roommng.config.php';
+		$rdpnum = room_get_vars($roomdata, 'pnum');
+	}
 	for ($i=0; $i < $rdpnum; $i++) {
 		if (!$rdplist[$i]['forbidden'] && $rdplist[$i]['name']==$user){
 			$upos = $i;

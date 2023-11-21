@@ -2,6 +2,24 @@
 	<!--{if !empty($card_achieved)}-->
 		<img class="card_achieved" src="img/card_achieved.png" />
 	<!--{/if}-->
+	<!--{if !empty($nownew)}-->
+		<div class="card_newflag"><span class="L5 b">NEW!</span></div>
+	<!--{/if}-->
+	<!--{if empty($lockcard) && !empty($nowcard['blink'])}-->
+		<!--{if $nowcard['blink']>=20}-->
+			<div class="card_blink_container blink_maskii">
+				<div 
+				<!--{if 'S'==$nowcard['rare']}-->class="card_blinkii blink_gold"<!--{elseif 'A'==$nowcard['rare']}-->class="card_blinkii blink_cyan"<!--{elseif 'B'==$nowcard['rare']}-->class="card_blinkii blink_brickred"<!--{else}-->class="card_blinkii blink_grey"<!--{/if}-->
+				> </div>
+			</div>
+		<!--{else}-->
+			<div class="card_blink_container">
+				<div 
+				<!--{if 'S'==$nowcard['rare']}-->class="card_blink blink_gold"<!--{elseif 'A'==$nowcard['rare']}-->class="card_blink blink_cyan"<!--{elseif 'B'==$nowcard['rare']}-->class="card_blink blink_brickred"<!--{else}-->class="card_blink blink_grey"<!--{/if}-->
+				> </div>
+			</div>
+		<!--{/if}-->
+	<!--{/if}-->
 	<div class="card_frame_outer 
 		<!--{if 'S'==$nowcard['rare']}-->
 			frame_S
@@ -14,11 +32,7 @@
 		<!--{eval $nowcardname = !empty($nowcard['ruby']) ? '<ruby>'.$nowcard['name'].'<rt>'.$nowcard['ruby'].'</rt></ruby>' : $nowcard['name'];}-->
 		<div class="card_frame_middler">
 			<div class="card_frame_inner" style="margin-left:50px;width:187px;height:45px;">
-				<!--{if !empty($nownew)}-->
-					<span id="cname">$nowcardname</span>&nbsp;&nbsp;<span class="L5 b">NEW!</span>
-				<!--{else}-->
-					<span id="cname">$nowcardname</span>
-				<!--{/if}-->
+				<span id="cname">$nowcardname</span>
 			</div>
 			<div class="card_frame_inner" style="height:<!--{if !empty($nowcard['bigdesc']) && empty($lockcard)}-->200px<!--{else}-->140px<!--{/if}-->;margin-top:3px">
 				<span id="cdesc" style="max-width:225px">$nowcard['desc']</span>
@@ -33,7 +47,7 @@
 					<span>
 						<!--{if empty($lockcard) && empty($showpack)}-->
 							<!--{if $card_energy[$nowcard['id']]<$nowcard['energy']}-->
-								<!--{eval $cd_desc=convert_tm(($nowcard['energy']-$card_energy[$nowcard['id']])/$energy_recover_rate[$nowcard['rare']], 1);}-->
+								<!--{eval $cd_desc=convert_tm(($nowcard['energy']-$card_energy[$nowcard['id']])/max($energy_recover_rate[$nowcard['rare']],0.00001), 1);}-->
 								<font color="red">充能中，剩余{$cd_desc}</font>
 							<!--{elseif $nowcard['energy']}-->
 								充能完成，可以使用
@@ -65,6 +79,12 @@
 			hexagon_B
 		<!--{/if}-->
 		">
-		<span id="crare" class="{$card_rarecolor[$nowcard['rare']]}">$nowcard['rare']</span>
+		<span id="crare" class="{$card_rarecolor[$nowcard['rare']]}">
+			<!--{if !empty($nowcard['print_rare_mark'])}-->
+				$nowcard['print_rare_mark']
+			<!--{else}-->
+				$nowcard['rare']
+			<!--{/if}-->
+		</span>
 	</div>
 </div>

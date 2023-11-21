@@ -14,9 +14,17 @@ namespace itemmain
 	//1:一般可合并道具  2:食物  0:不可合并
 	function check_mergable($ik){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if(preg_match('/^(WC|WD|WF|Y|B|C|EI|TN|G|M|V|ygo|fy|p)/',$ik) && !preg_match('/^W[A-Z][A-Z]/',$ik)) return 1;
+		if(preg_match('/^(WC|WD|WF|Y|B|C|EI|TN|G|M|V|ygo|fy|p|EA)/',$ik) && !preg_match('/^W[A-Z][A-Z]/',$ik)) return 1;
 		elseif(preg_match('/^(H|P)/',$ik)) return 2;
 		else return 0;
+	}
+	
+	//道具名处理
+	//会自动进行道具省略显示的转换
+	function parse_itmname_words_shell($name_value, &$pa=NULL, $elli = 0, $width=20, $end=1)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return parse_itmname_words($name_value, $elli, $width, $end);
 	}
 	
 	//省略显示
@@ -24,7 +32,6 @@ namespace itemmain
 	function parse_itmname_words($name_value, $elli = 0, $width=20, $end=1){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		if(!$elli) return $name_value;
-		
 		if($width<=6) $width = 6;
 		$ilen=mb_strlen($name_value);
 		$slen=0;
@@ -84,7 +91,8 @@ namespace itemmain
 		return '';
 	}
 	
-	function count_itmsk_num($sk_value)
+	//$ignore_invisible表示是否忽略不显示的复合属性，默认不忽略，判定在attrbase模块中
+	function count_itmsk_num($sk_value, $ignore_invisible = 1)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$sk_arr = get_itmsk_array($sk_value);
@@ -101,16 +109,18 @@ namespace itemmain
 	}
 	
 	//属性格式有3种：
-	//1. 单个字母
-	//2. ^数字
-	//3. ^字母数字，必须以数字结尾
-	function get_itmsk_array($sk_value)
+	//1、单字母或者符号，如A=>物防。目前可用字符几乎已经用完，不建议继续增加。另外下划线_和分隔符|另有他用。
+	//2、^数字。如^001=>同调。
+	//3、^字母数字。如^dd20=>降防20%。注意：就算效果和数字无关，使用时也必须以数字结尾。
+	//此外，第三项在字母后加下划线，可以通过get_comp_itmsk_info($itmsk)获取下划线后面至数字之间的内容，具体见attrbase模块
+	//如果$not_ignore传入真值，会把竖线等本应被忽略的字符也当做属性返回，用于一些需要严格判断的场合。
+	function get_itmsk_array($sk_value, $not_ignore = 0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		
 		eval(import_module('itemmain'));
-		//如果之前判定过完全相同的属性就直接用，避免多次性能开销
-		if(!empty($tmp_itmsk_arr_pool[$sk_value])) {
+		//如果之前判定过完全相同的属性就直接用，避免多次性能开销。注意如果$not_ignore开启，不能使用这个功能
+		if(!empty($tmp_itmsk_arr_pool[$sk_value]) && !$not_ignore) {
 			//echo $sk_value.' ';
 			return $tmp_itmsk_arr_pool[$sk_value];
 		}
@@ -121,7 +131,7 @@ namespace itemmain
 		{
 			$sub = substr($sk_value,$i,1); 
 			$i++;
-			if(!empty($sub) && !in_array($sub, array('|'))){
+			if(!empty($sub) && ($not_ignore || !in_array($sub, array('|')))){
 				if ($sub=='^')
 				{
 					$flag = 1;
@@ -146,7 +156,7 @@ namespace itemmain
 	//输入$mark是用来判定的单字母属性或者以^字母为形式的复合属性前缀
 	//输入$skarr是已经经过get_itmsk_array()处理的属性数组，直接输入属性字符串也会自动转换
 	//如果$count==1，则会统计属性总数。
-	//如果属性不存在，返回false；如果是复合属性或者要统计总数，会返回数值。
+	//如果属性不存在，返回false；存在则返回1；如果是复合属性或者要统计总数，会返回具体数值；如果有记录特殊变量，则返回特殊变量。
 	
 	//这里还不涉及复合属性的判定，实际处理在attrbase模块里完成，请注意	
 	function check_in_itmsk($mark, $skarr, $count = 0)
@@ -168,6 +178,14 @@ namespace itemmain
 		return $flag;
 	}
 	
+	//从属性字符串中替换单个属性。注意不会检测$replacement是否合法
+	function replace_in_itmsk($needle, $replacement, $itmsk)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		//这里只处理单个属性或者数字编号属性，直接str_replace()。对复合属性的处理在attrbase模块
+		return str_replace($needle, $replacement, $itmsk);
+	}
+	
 	function get_itmsk_words_single($str)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -184,6 +202,13 @@ namespace itemmain
 		return '';
 	}
 	
+	//在显示界面把换行符注释变成真的换行符，需要手动调用
+	function replace_crlf($str)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return str_replace('<!--CRLF-->','<BR />',$str);
+	}
+
 	function parse_itmsk_words($sk_value, $simple = 0, $elli = 0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -266,8 +291,9 @@ namespace itemmain
 			$ev=$p1.'e'.$p2;
 			$sv=$p1.'s'.$p2;
 			$skv=$p1.'sk'.$p2;
-			$r[$v.'_words'] = parse_itmname_words($edata[$v], $elli);//这里如果$elli==0则会省略到20个字符
-			$r[$v.'_words_short'] = parse_itmname_words($edata[$v], 1, 15);//常用到的一个省略
+			$r[$v.'_words'] = parse_itmname_words_shell($edata[$v], $edata, $elli);//这里如果$elli==0则会省略到20个字符
+			$r[$v.'_words_short'] = parse_itmname_words_shell($edata[$v], $edata, 1, 15);//常用到的一个省略
+			$r[$v.'_words_noelli'] = parse_itmname_words_shell($edata[$v], $edata, 0);//要求不省略但是进行其他处理时
 			$r[$kv.'_words'] = parse_itmk_words($edata[$kv]);
 			$r[$ev.'_words'] = parse_itmnum_words($edata[$ev], $elli);
 			$r[$sv.'_words'] = parse_itmnum_words($edata[$sv], $elli);
@@ -303,6 +329,7 @@ namespace itemmain
 			$plsnum = sizeof($plsinfo);
 			$iqry = '';
 			$itemlist = get_itemfilecont();
+			$itemlist = itemlist_data_process($itemlist);
 			$in = sizeof($itemlist);
 			$an = $areanum ? ceil($areanum/$areaadd) : 0;
 			for($i = 1; $i < $in; $i++) {
@@ -344,22 +371,30 @@ namespace itemmain
 		return $equipable;
 	}
 	
-	//同名道具的data处理
+	//整个mapitem文件转成数组后的数据处理
+	//本模块里是直接返回，其他模块需要对数据做整体修改的请继承这个函数
+	function itemlist_data_process($data){
+		if (eval(__MAGIC__)) return $___RET_VALUE; 
+		return $data;
+	}
+	
+	//单条mapitem记录的data处理
 	//天然带毒物品的NPC pid自动处理
 	//也用于某些模式特殊处理数据
 	function mapitem_data_process($data){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
-		if(!empty($data[7])){
-			$iskind = $data[7];
-			if(strpos($iskind,'=')===0){
-				eval(import_module('sys'));
-				$tmp_pa_name = substr($iskind,1);
-				$iskind = '';
-				$result = $db->query("SELECT pid FROM {$tablepre}players WHERE name='$tmp_pa_name' AND type>0");
-				if($db->num_rows($result)){
-					$iskind = $db->fetch_array($result)['pid'];
-				}
-				$data[7] = $iskind;
+		if(!empty($data[7]) && strpos($data[7],'=')===0){//如果属性以=开头，认为后面是NPC的名字
+			$isk = & $data[7];
+			eval(import_module('sys'));
+			$tmp_pa_name = substr($isk,1);
+			$isk = '';//无论有没有对应的NPC存在，先把data的属性写成空的
+			$result = $db->query("SELECT pid FROM {$tablepre}players WHERE name='$tmp_pa_name' AND type>0");
+			if($db->num_rows($result)){
+				$npcid = $db->fetch_array($result)['pid'];
+			}
+			if(!empty($npcid)) {//如果poison模块存在则调用对应函数，否则直接把id写入属性
+				if(defined('MOD_POISON')) \poison\poison_record_pid($isk, $npcid);
+				else $isk = $npcid;
 			}
 		}
 		return $data;
@@ -508,7 +543,7 @@ namespace itemmain
 	
 	function pre_act(){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player','input'));
+		eval(import_module('sys','player'));
 		//在手里有道具的情况下阻止意料之外的指令，防止道具被洗掉
 		//如果有模块在这之前执行并且获得道具那就没办法了……
 		if(!empty($hp) && !empty($itms0) && strpos($action,'corpse')===false && !in_array($command, Array('itm0','dropitm0','itemget','itemmerge','enter')) && false === strpos($command, 'swap')){

@@ -53,6 +53,7 @@ $log = $cmd = $main = '';
 $pagestartimez=microtime(true); 
 
 \player\load_playerdata(\player\fetch_playerdata($cuser));
+\player\post_load_profile_event();
 
 $gamedata = array(
 	'innerHTML' => array(),
@@ -81,8 +82,8 @@ if ($___MOD_SRV)
 //显示指令执行结果
 \player\prepare_response_content();
 
-\player\parse_interface_gameinfo();
 \player\parse_interface_profile();
+\player\parse_interface_gameinfo();
 
 //如果是刷新页面，自动重生成一次右侧命令界面（为了录像），其余全部不再判定
 if('enter' == $command) {

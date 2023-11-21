@@ -2,7 +2,7 @@
 
 namespace player
 {
-	global $db_player_structure, $db_player_structure_types, $gamedata, $cmd, $main, $sdata;//注意，$sdata所有键值都是引用！
+	global $db_player_structure, $db_player_structure_types, $gamedata, $cmd, $main, $sdata;//注意，$sdata所有来自数据库的键值都是引用！
 	global $fog,$upexp,$lvlupexp,$iconImg,$iconImgB,$iconImgBwidth,$ardef;//这些鬼玩意可以回头全部丢进$uip
 	global $hpcolor,$spcolor,$newhpimg,$newspimg,$splt,$hplt, $tpldata; 
 	
@@ -55,7 +55,7 @@ namespace player
 		if(isset($pdata_lock_pool[$pdid])) return 1;//如果玩家池已存在，认为已经上锁了
 		$dir = GAME_ROOT.'./gamedata/tmp/playerlock/room'.$groomid.'/';
 		$file = 'player_'.$pdid.'.nlk';
-		$lstate = check_lock($dir, $file, 2000);//最多允许2秒等待，之后穿透
+		$lstate = check_lock($dir, $file, 15000);//最多允许2秒等待，之后穿透 //2023.9.23由于可能出现长达十几秒的卡顿，把穿透等待时间增加到15秒
 		$res = 2;
 		if(!$lstate) {
 			if(create_lock($dir, $file)) {
@@ -91,6 +91,7 @@ namespace player
 	}
 	
 	//注意这个函数默认情况下只能找玩家
+	//注意这两个函数在skillbase模块里会自动初始化技能参数，如果在指令执行过程中额外使用了这两个函数找玩家本身的数据，就会导致技能部分出现不可预料的问题！
 	function fetch_playerdata($Pname, $Ptype = 0, $ignore_pool = 0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -123,6 +124,7 @@ namespace player
 		return $pdata;
 	}
 	
+	//注意这两个函数在skillbase模块里会自动初始化技能参数，如果在指令执行过程中额外使用了这两个函数找玩家本身的数据，就会导致技能部分出现不可预料的问题！
 	function fetch_playerdata_by_pid($pid)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -179,7 +181,31 @@ namespace player
 		$sdata=Array();
 		foreach ($db_player_structure as $key)
 			$sdata[$key]=&$$key;
-		$sdata['state_backup']=$pdata['state_backup'];	//见上个函数注释
+		if(!empty($pdata['state_backup']))
+			$sdata['state_backup']=$pdata['state_backup'];	//见上个函数注释
+	}
+	
+	//玩家指令，在load_playerdata()执行完后被command.php调用的函数
+	//可用于入场后执行一次的技能。注意如果因为网络原因，入场后没有显示出界面，继承这个函数的处理会不正常
+	function post_load_profile_event(){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+	}
+	
+	//玩家界面对当前幸存玩家数的显示。注意这个函数只用于显示
+	//为了某个恶搞技能单独抽离出来
+	function get_alivenum_for_display()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		return $alivenum;
+	}
+	
+	//判定单个玩家是否可以被alive页面显示。
+	//为了某个恶搞技能单独抽离出来
+	function check_alive_player_displayable($pdata)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return true;
 	}
 	
 	function get_player_killmsg(&$pdata)
@@ -209,6 +235,46 @@ namespace player
 		return $dummy;
 	}
 	
+	//头像判定，返回$iconImg, $iconImgB, $iconImgBwidth三个变量
+	//$iconImg为小头像，$iconImgB为竖版头像，$iconImgBwidth为竖版头像的宽度（用于正确显示比例）
+	//会自动识别$pdata的头像是否合法，如果不合法会返回一个代用的头像
+	//注意这里传进来的可能会是$udata
+	function icon_parser_shell(&$pdata=NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if(!$pdata) {
+			eval(import_module('player'));
+			$pdata = &$sdata;
+		}
+		if(!icon_parser_valid($pdata)) {
+			$iconImg = 'punish.png';
+			$iconImgB = '';
+			$iconImgBwidth = 0;
+		}else{
+			$itp = isset($pdata['type']) ? $pdata['type'] : 0;
+			$igd = isset($pdata['gender']) ? $pdata['gender'] : (isset($pdata['gd']) ? $pdata['gd'] : 'm');
+			list($iconImg, $iconImgB, $iconImgBwidth) = icon_parser($itp, $igd, $pdata['icon']);
+		}
+		return Array($iconImg, $iconImgB, $iconImgBwidth);
+	}
+	
+	//头像字段合法性检测。本模块只允许玩家使用数字头像，其他模块可以继承此模块做额外的判定
+	//注意这里传进来的可能会是$udata或者metman模块构造的临时数组
+	function icon_parser_valid(&$pdata=NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if(!$pdata) {
+			eval(import_module('player'));
+			$pdata = &$sdata;
+		}
+		$ret = true;
+		if(empty($pdata['type']) && (!is_numeric($pdata['icon']) || (int)$pdata['icon'] != $pdata['icon'] || $pdata['icon'] > 20 || $pdata['icon'] < 0)) {
+			$ret = false;
+		}
+		
+		return $ret;
+	}
+	
 	function icon_parser($type, $gd, $icon){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		
@@ -236,13 +302,20 @@ namespace player
 		return array($iconImg, $iconImgB, $iconImgBwidth);
 	}
 	
+	//$fog变量是在player模块定义的，很多模块的依赖顺序都受这个影响，所以check_fog函数必须放这个player模块，然后才被weather模块继承
+	function check_fog()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return false;
+	}
+	
 	function init_playerdata(){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		
 		eval(import_module('sys','player'));
 		
 		//$ardef = $arbe + $arhe + $arae + $arfe;
-		list($iconImg, $iconImgB, $iconImgBwidth) = icon_parser($type, $gd, $icon);
+		list($iconImg, $iconImgB, $iconImgBwidth) = icon_parser_shell($sdata);
 		
 		if(!$weps) {
 			$wep = $nowep;$wepk = 'WN';$wepsk = '';
@@ -252,6 +325,9 @@ namespace player
 			$arb = $noarb;$arbk = 'DN'; $arbsk = '';
 			$arbe = 0; $arbs = 0;
 		}
+		
+		//雾天变量$fog的定义从weather模块改到这里，weather模块改继承并修改check_fog函数
+		$fog = check_fog();
 	}
 	
 	//玩家界面非profile的信息渲染，目前而言只有command需要调用
@@ -260,7 +336,7 @@ namespace player
 		eval(import_module('sys','player','logger'));
 		
 		$uip['innerHTML']['log'] = $log;
-		if ($gametype!=2) $uip['innerHTML']['anum'] = $alivenum;
+		if ($gametype!=2) $uip['innerHTML']['anum'] = get_alivenum_for_display();
 		else $uip['innerHTML']['anum'] = $validnum;
 //		$uip['innerHTML']['weather'] = $wthinfo[$weather];
 //		$uip['innerHTML']['gamedate'] = "{$month}月{$day}日 星期{$week[$wday]} {$hour}:{$min}";
@@ -567,6 +643,7 @@ namespace player
 	
 	//维护一个名为'revive_sequence'的列表
 	//键名为顺序，顺序越小越优先执行；键值在revive_process()里处理
+	//目前已经注册的效果有：40除错续命 50极光 70幽灵 100氪金 150无垠 160地雷殿回归 200亡灵复活 300邪教徒一百层
 	function set_revive_sequence(&$pa, &$pd)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -578,7 +655,8 @@ namespace player
 	function revive_process(&$pa, &$pd)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if(empty($pd['revive_sequence'])) return;
+		//没有复活技能或者有一票否决的效果，就完全不判定
+		if(empty($pd['revive_sequence']) || revive_veto($pa, $pd)) return;
 		//var_dump($pd['revive_sequence']);
 		ksort($pd['revive_sequence']);
 		//writeover('a.txt',var_export($pd['revive_sequence'],1));
@@ -593,6 +671,13 @@ namespace player
 				break;
 			}
 		}
+	}
+	
+	//复活一票否决，比其他复活判定优先级更高
+	function revive_veto(&$pa, &$pd)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return false;
 	}
 	
 	//复活判定，建议采用或的逻辑关系

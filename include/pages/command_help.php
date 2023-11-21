@@ -40,7 +40,7 @@ if(!file_exists($writefile) || filemtime($mixfile) > filemtime($writefile)){
 		'h' => array('补给品','lime b'),
 		'wp_mrm'=> array('殴系武器（人形降临系列）','yellow b'),
 		'wf_pn'=> array('灵系武器（帕秋莉·诺雷姬系列）','yellow b'),
-		'wf_ks'=> array('灵系武器（古明地觉系列）','yellow b'),
+		'ut'=> array('灵系武器（地下系）','yellow b'),
 		'pokemon'=> array('小黄系武器','yellow b'),
 		'ocg'=> array('游戏王系武器','cyan b'),
 		'key'=> array('KEY系道具','lime b'),
@@ -114,7 +114,9 @@ if(!file_exists($writefile) || filemtime($syncfile) > filemtime($writefile)){
 		$sync_arr['itmsk'] = \itemmain\parse_itmsk_words($sync_arr['itmsk']);
 		if(!empty($sync_arr['special'])){
 			$sync_arr['special'] = explode('+',$sync_arr['special']);
-			if(!in_array('st',$sync_arr['special']) && !in_array('sm',$sync_arr['special']) ){
+			$special_tags = preg_replace('/\d/', '', $sync_arr['special']);
+			//似乎原本此处的sm判定不起作用
+			if(!in_array('t',$special_tags) && !in_array('st',$special_tags) && !in_array('sm',$special_tags) ){
 				$sync_x = 0;
 				foreach($sync_arr['special'] as $ssv){
 					preg_match('/★(\d+)/s', $ssv, $matches);
@@ -125,7 +127,12 @@ if(!file_exists($writefile) || filemtime($syncfile) > filemtime($writefile)){
 				else $sync_arr['special'][] = '星数合计为'.$otherstar.'的素材';
 			}else{
 				foreach($sync_arr['special'] as &$ssv){
-					if('st' == $ssv) $ssv = ' 带“同调”和“调整”属性的素材1体 ';
+					if(strpos($ssv,'t')===0){
+						$tnum = (int)substr($ssv,1);
+						if($tnum < 1) $tnum = 1;
+						$ssv = ' 带“调整”属性的素材'.$tnum.'体 ';
+					}
+					elseif('st' == $ssv) $ssv = ' 带“同调”和“调整”属性的素材1体 ';
 					elseif(strpos($ssv,'sm')===0){
 						$smnum = (int)substr($ssv,2);
 						if($smnum < 1) $smnum = 1;

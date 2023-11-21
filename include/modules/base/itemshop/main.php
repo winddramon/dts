@@ -89,7 +89,7 @@ namespace itemshop
 		}
 	}
 	
-	//某些模式特殊处理数据
+	//单条数据处理，用于某些特殊模式
 	function shopitem_data_process($data){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
 		return $data;
@@ -185,7 +185,7 @@ namespace itemshop
 			$log .= '你的钱不够，不能购买此物品！<br><br>';
 			$mode = 'command';
 			return;
-		} elseif( ($shopiteminfo['itms']==='∞' || !preg_match('/^(WC|WD|WF|Y|B|C|TN|GA|GB|H|P|V|M|X|p|ygo)/',$shopiteminfo['itmk']) )&&$bnum>1) {
+		} elseif( ($shopiteminfo['itms']==='∞' || !preg_match('/^(WC|WD|WF|Y|B|C|TN|GA|GB|H|P|V|M|X|p|ygo|EA)/',$shopiteminfo['itmk']) )&&$bnum>1) {
 			$log .= '此物品一次只能购买一个。<br><br>';
 			$mode = 'command';
 			return;

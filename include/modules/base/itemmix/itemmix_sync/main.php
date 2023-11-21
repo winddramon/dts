@@ -81,7 +81,8 @@ namespace itemmix_sync
 		}
 		
 		$chc_res = array();
-		if($star && count($tunner) == 1){
+		$tcount = count($tunner);
+		if($star && $tcount > 0){
 			if(!empty($streamstar)){//生命肌瘤龙的变星实际上提供两个星数分支 
 				$star2 = $streamstar + count($mlist) - 1;
 			}
@@ -91,6 +92,7 @@ namespace itemmix_sync
 				$pstar = $pra[5];
 				$preq = $pra[6];
 				$preqflag = true;
+				$tnum = 1;
 				if($preq){//检查是不是有特殊需求 
 					$req=explode('+',$preq);
 					$mname = array();
@@ -99,9 +101,20 @@ namespace itemmix_sync
 					}
 					//如果素材没有满足则认为无法合成 
 					foreach($req as $rv){
-						if('st'==$rv){//调整要求是同调属性的 
+						if(strpos($rv,'t')===0){//需求调整素材数量 
+							$tnum = (int)substr($rv,1);
+							if ($tcount != $tnum)
+							{
+								$preqflag = false;
+								break;
+							}
+						}elseif('st'==$rv){//调整要求是同调属性的
 							$tunnersk = ${'itmsk'.$tunner[0]};
-							if(!\itemmain\check_in_itmsk('^001', $tunnersk)) $preqflag = false;
+							if(!\itemmain\check_in_itmsk('^001', $tunnersk))
+							{
+								$preqflag = false;
+								break;
+							}
 						}elseif(strpos($rv,'sm')===0){//调整以外要求是同调属性的 
 							$smnum = (int)substr($rv,2);
 							foreach($mlist as $mi){
@@ -114,11 +127,17 @@ namespace itemmix_sync
 								}
 							}
 							if(count($mlist) <= $smnum) $preqflag = false;//素材数目不足
+							if(!$preqflag) break;
 						}else{//其他，认为是名字要求
-							if(!in_array($rv, $mname)) $preqflag = false;
+							if(!in_array($rv, $mname))
+							{
+								$preqflag = false;
+								break;
+							}
 						}
 					}
 				}
+				if ($tcount != $tnum) $preqflag = false;
 				if(($pstar == $star || $pstar == $star2) && $preqflag){
 					if($pstar == $star2) list($star, $star2) = array($star2, $star);
 					if(empty($chc_res[$star])) $chc_res[$star] = array();
@@ -143,64 +162,6 @@ namespace itemmix_sync
 		}
 		return $ret;
 	}
-	
-//	function itemmix($mlist, $itemselect=-1) 
-//	{
-//		if (eval(__MAGIC__)) return $___RET_VALUE;
-//		eval(import_module('sys','player','logger','itemmix'));
-//		$chc_res = itemmix_sync_check($mlist);
-//
-//		//无满足条件的同调结果，失败 
-//		if (!$chc_res) return $chprocess($mlist, $itemselect);	
-//		$chc = array_pop($chc_res);
-//		if ($itemselect==-1)
-//		{
-//			$mask=0;
-//			foreach($chc['list'] as $k)
-//				if (1<=$k && $k<=6)
-//					$mask|=(1<<((int)$k-1));
-//				
-//			$cmd.='<input type="hidden" id="mode" name="mode" value="itemmain">';
-//			$cmd.='<input type="hidden" id="command" name="command" value="itemmix">';
-//			$cmd.='<input type="hidden" id="mixmask" name="mixmask" value="'.$mask.'">';
-//			$cmd.='<input type="hidden" id="itemselect" name="itemselect" value="999">';
-//			$cmd.= "请选择同调结果<br><br>";
-//			$sync = count($chc['result']);
-//			for($i=0;$i<$sync;$i++){
-//				$tn=$chc['result'][$i][0];
-//				$cmd.="<input type=\"button\" class=\"cmdbutton\"  style=\"width:200\" value=\"".$tn."\" onclick=\"$('itemselect').value='".$i."';postCmd('gamecmd','command.php');this.disabled=true;\">";
-//			}
-//			$cmd.="<input type=\"button\" class=\"cmdbutton\"  style=\"width:200\" value=\"返回\" onclick=\"postCmd('gamecmd','command.php');this.disabled=true;\">";
-//			return;
-//		}
-//		else
-//		{
-//			$i=(int)$itemselect;
-//			if ($i<0 || $i > count($chc['result']) - 1)
-//			{
-//				$mode='command'; return; 
-//			}
-//			foreach($chc['list'] as $val)
-//			{
-//				\itemmix\itemreduce('itm'.$val);
-//			}
-//			list($itm0,$itmk0,$itme0,$itms0,$itmsk0) = $chc['result'][$i];
-//			addnews($now,'syncmix',$name,$itm0);
-//			\itemmain\itemget();
-//			$mode = 'command';
-//			return;
-//		}
-//		$chprocess($mlist, $itemselect);
-//	}
-//	
-//	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())
-//	{
-//		if (eval(__MAGIC__)) return $___RET_VALUE;
-//		eval(import_module('sys'));
-//		if($news == 'syncmix') 
-//			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"lime b\">{$a}同调合成了{$b}</span></li>";
-//		return $chprocess($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr);
-//	}
 }
 
 ?>
