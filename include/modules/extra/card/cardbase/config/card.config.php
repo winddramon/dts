@@ -1488,7 +1488,7 @@ $cards = array(
 				'B_odds' => 20,
 				'C_odds' => 20,
 				'allow_EB' => true,//开启后会把Event Bonus等需要特殊方式才能获得的卡也一并考虑
-				'ignore_cards' => Array(237, 300, 344)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array(237, 241, 344)//机制上必定选不到自己，这里可以放其他不想被选到的卡
 			)
 		)
 	),
@@ -3458,14 +3458,14 @@ $cards = array(
 		'rare' => 'A',
 		'pack' => 'Event Bonus',
 		'desc' => '<span class="linen b">“对一一五来说，面前这四个触手比十亿个杀人魔更恐怖…更可怕呀！”</span>',
-		'effect' => '开局装备「红杀铁剑」。此外，涉及到你的描述伤害的进行状况都改用强者语',
+		'effect' => '开局获得「红杀铁剑」与额外的合成知识。此外，涉及到你的描述伤害的进行状况都改用强者语',
 		'energy' => 100,
 		'valid' => array(
-			'wep' => '【红杀铁剑】',
-			'wepk' => 'WK',
-			'wepe' => '50',
-			'weps' => '15',
-			'wepsk' => '',
+			'itm6' => '【红杀铁剑】',
+			'itmk6' => 'WK',
+			'itme6' => '80',
+			'itms6' => '60',
+			'itmsk6' => 'u',
 			'skills' => array(
 				'531' => '0', 
 			),
@@ -3737,7 +3737,7 @@ $cards = array(
 		'valid' => array(
 		  'hp' => '-200',
 		  'mhp' => '-200',
-			'itm6' => '超天新龙 异色眼革命龙★12',
+			'itm6' => '超天新龙·异色眼革命龙 ★12',
 			'itmk6' => 'TN12',
 			'itme6' => '800',
 			'itms6' => '1',
@@ -5203,7 +5203,7 @@ $cards = array(
 				'packlimit' => '東埔寨Protoject',
 				'allow_EB' => false,
 				'forced' => Array(117, 153, 157, 158, 186),//无视概率强制加入选择的卡（星莲船，冴冴，诹访子，灵梦，超魔理沙）
-				'ignore_cards' => Array(300)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array(241)//机制上必定选不到自己，这里可以放其他不想被选到的卡
 			),
 		)
 	),
@@ -5467,20 +5467,15 @@ $cards = array(
 		)
 	),
 	363 => array(
-		'name' => '十进制',
+		'name' => '邪神·神之化身',
+		'title' => '⑩',
 		'rare' => 'M',
-		//'pack' => '東埔寨Protoject',
-		'pack' => 'hidden',
-		'desc' => '是——这样吗——',
-		'effect' => '开局装备发带。可以藏身于黑暗之中',
-		'desc_skills' => '获得技能「宵暗」：你发现其他角色和其他角色发现你时显示为？？？',
+		'pack' => '東埔寨Protoject',
+		'desc' => '光天化日之下潜藏于黑暗中的魔物',
+		'effect' => '你的身躯永远藏于黑暗之中<br>……是这样吗？',
+		'desc_skills' => '获得技能「宵暗」：你发现其他角色和其他角色发现你时都显示为？？？',
 		'energy' => 0,
 		'valid' => array(
-			'arh' => '红色的发带',
-			'arhk' => 'DH',
-			'arhe' => '10',
-			'arhs' => '10',
-			'arhsk' => '',
 			'skills' => array(
 				'702' => '0',
 			),
@@ -5489,17 +5484,11 @@ $cards = array(
 	364 => array(
 		'name' => '月光蝶',
 		'rare' => 'C',
-		//'pack' => '東埔寨Protoject',
-		'pack' => 'hidden',
-		'desc' => '_____，这是最好的',
-		'effect' => '开局装备消音属性的饰品。你战斗时不会发出任何声音',
+		'pack' => '東埔寨Protoject',
+		'desc' => '東埔寨有句老话，叫做闷声发大财',
+		'effect' => '你战斗时不会发出任何声音',
 		'energy' => 0,
 		'valid' => array(
-			'art' => '月光碎片',
-			'artk' => 'A',
-			'arte' => '1',
-			'arts' => '1',
-			'artsk' => 'S',
 			'skills' => array(
 				'703' => '0',
 			),
@@ -5531,6 +5520,67 @@ $cards = array(
 			'itme6' => '30',
 			'itms6' => '1',
 			'itmsk6' => '236',
+		)
+	),
+	367 => array(
+		'name' => '六〇年的東埔寨裁判',
+		'title' => '東埔寨裁判',
+		'rare' => 'A',
+		'pack' => '東埔寨Protoject',
+		'desc' => '“法律是■■■■所定下的约束。<br>法无法制裁的罪过就由我来制裁。”',
+		'effect' => '你有点太极端了',
+		'desc_skills' => '对使用「東埔寨Protoject」卡的角色造成超过80%当前生命值的伤害时，自动将其秒杀',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'541' => '0',
+			),
+		)
+	),
+	368 => array(
+		'name' => '重构码语者',
+		'rare' => 'A',	
+		'pack' => 'Event Bonus',
+		'desc' => '很多愣头青觉得自己是天才，<br>可以把屎山重构了。<br>他们中的大部分人引发了屎崩，<br>永远埋在了几千米高的屎山之下。<br><br>极少数人活了下来。<br>他们真的做到了，<br>他们真的重构了整座屎山！',
+		'bigdesc' => 1,
+		'effect' => '重构之后的那个东西，被后人称为——<br>屎山2.0。',
+		'desc_skills' => '踩雷率大幅提高，在受到陷阱伤害但幸存后获得<br>一个1.2倍效果值的同名陷阱',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'707' => '0',
+			),
+		),
+		'ignore_global_ach' => 1,//不参与终生成就判定
+	),
+	369 => array(
+		'name' => '池沼地的魔受王',
+		'rare' => 'S',	
+		//'pack' => 'Event Bonus',
+		'pack' => 'hidden',
+		'desc' => '我猜这里有一个BIG',
+		'effect' => '你即是错误的化身',
+		'desc_skills' => '合成时你可以将一个素材当做仅相差一个字符的素材使用<br>同一次合成中仅限一个素材，18级时解锁',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'708' => '0',
+			),
+		),
+		'ignore_global_ach' => 1,//不参与终生成就判定
+	),
+	370 => array(
+		'name' => '魔术狸猫',
+		'rare' => 'A',
+		'pack' => '東埔寨Protoject',
+		'desc' => '本地的妖怪实在是太没有狸猫了！',
+		'effect' => '获得战斗技「调换」：命中后把对方的武器打落到视野里，并混入两个假道具中。只能对玩家使用',
+		'desc_skills' => '6级时解锁',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'709' => '0',
+			),
 		)
 	),
 	
