@@ -474,8 +474,7 @@ namespace cardbase
 			
 			$arr = array_merge($arr, $forced);
 			$arr = array_unique($arr);
-			shuffle($arr);
-			$ret = $arr[0];
+			$ret = array_randompick($arr);
 		}while($ret == $card || in_array($ret, $ignore));//必定选不到自己
 		return $ret;
 	}
@@ -539,13 +538,12 @@ namespace cardbase
 				}
 				continue;
 			}
-			$checkstr = substr($key,0,3);
-			if (in_array($checkstr, Array('wep','arb','arh','ara','arf','art','itm'))){//道具类的，如果是数组则随机选一个
+			if (in_array(substr($key,0,3), Array('wep','arb','arh','ara','arf','art','itm'))){//道具类的，如果是数组则随机选一个
 				if(is_array($value)){
-					shuffle($value);
-					$value = $value[0];
+					$value = array_randompick($value);
 				}
 			}
+			$value = enter_battlefield_cardproc_valueproc($key, $value);//单项数据的处理
 			//如果是数值类的字段，先判定是增加减少还是赋值。没有前缀的当做赋值
 			$val1 = substr($value, 0, 1);
 			$val2 = substr($value, 1);
@@ -562,6 +560,13 @@ namespace cardbase
 		$ebp['cardname'] = $cardname;
 		
 		return Array($ebp, $skills, $prefix);
+	}
+	
+	//入场卡片生效时，单项数据的处理。本模块是空的
+	//传参$key为为卡片config里记录的键名，$value为键值
+	function enter_battlefield_cardproc_valueproc($key, $value){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return $value;
 	}
 	
 	//判断一张卡当前是否在持有列表中
@@ -1141,6 +1146,7 @@ namespace cardbase
 		$cgmethod[165][] = '<br><br>这张卡片要如何获得喵？';//'<br>当你看到某张小纸条有「奇怪的空白」时，你可以按下F12。<br>这张卡的获得方式，就藏在那段空白对应的页面代码的位置。<br>　　　　　　　　　　　　　　　　　　　　——林苍月';
 		$cgmethod[190][] = '帮助游戏抓到BUG后由管理员奖励获得';
 		$cgmethod[368][] = '帮助游戏抓到BUG后由管理员奖励获得';
+		$cgmethod[369][] = '帮助游戏抓到BUG后由管理员奖励获得';
 		
 		for($ci=200;$ci<=204;$ci++) {
 			$cgmethod[$ci][] = '<font color=grey>完成2017十一活动「新的战场 LV2」可能获得</font>';

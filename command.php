@@ -383,7 +383,7 @@ if ($___MOD_SRV)
 					unset($tmp_log);
 				}
 				$srvlist = array();
-				//打乱驻留进程列表，尝试解决CPU0的问题
+				//打乱驻留进程列表，避免逮着一个进程薅
 				shuffle($dirlist);
 				//内层循环体：选择有效进程
 				foreach($dirlist as $sid) {
@@ -516,6 +516,22 @@ if(isset($command)){
 		am_main(1+2+4+8+16+32);
 		return;
 	}
+}
+
+////////////////////////////////////////////////////////////////////////////
+//////////////////////////BOT系统//////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
+//简单的BOT系统，用于借个NPC壳子执行一些动作。这里短接，执行完直接结束
+if('bot' == $mode) {
+	if(get_var_in_module('sign', 'input') !== $userdb_remote_storage_sign){//加个签名判定，保险一点
+		return;
+	}
+	if('npc_action' == $command && defined('MOD_NPC_ACTION')) {
+		$responce = \npc_action\bot_action();
+		echo $responce;
+	}
+	return;
 }
 
 ////////////////////////////////////////////////////////////////////////////

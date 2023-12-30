@@ -347,6 +347,7 @@ $roomtypelist = Array(
 		'without-ready' => false,//是否不需要点击“准备”就直接进入房间。
 		'without-valid' => false,//是否跳过加入游戏画面就直接进入房间。
 		'pnum' => 1,	//最大参与人数，只有开启准备才有效
+		'ready-expire-time' => 60, //准备状态过期时间，单位秒。无此值默认30秒。
 		'globalnum' => 0,	//全场最大开启数目，不设或者0认为无限制
 		'privatenum' => 1,	//单人最大开启数目，不设或者0认为无限制；不需要准备的房间无视这个值
 		'leader-position' => Array(	//各个编号位置的所属队伍队长位置
@@ -505,6 +506,40 @@ $roomtypelist = Array(
 			0 => '试炼者',
 		),
 		'show-team-leader' => 0,	//是否显示“队长”标签（如队伍大于1人设为1）
+	),
+	11 => Array(
+		'name' => '<font class="vermilion b">试炼模式</font>',
+		'gtype' => 13, //对应的游戏模式编号
+		'available' => true,
+		'soleroom' => false,//唯一房间，只有不存在时才会新建房间。
+		'without-ready' => false,//是否不需要点击“准备”就直接进入房间。
+		'without-valid' => false,//是否跳过加入游戏画面就直接进入房间。
+		'pnum' => 1,	//最大参与人数，只有开启准备才有效
+		'ready-expire-time' => 180, //准备状态过期时间，单位秒。无此值默认30秒。
+		'globalnum' => 0,	//全场最大开启数目，不设或者0认为无限制
+		'privatenum' => 1,	//单人最大开启数目，不设或者0认为无限制；不需要准备的房间无视这个值
+		'leader-position' => Array(	//各个编号位置的所属队伍队长位置
+			0 => 0,
+		),
+		'color' => Array(		//队伍颜色，只需对队长设置即可
+			0 => 'ff0022',
+		),
+		'teamID' => Array(	//队伍名，只需对队长设置即可。
+			0 => '试炼者',
+		),
+		'show-team-leader' => 0,	//是否显示“队长”标签（如队伍大于1人设为1）
+		'game-option' => array(
+			'lvl' => array(//变量名
+				'title' => '进阶等级',//界面显示的提示
+				'type' => 'number',//input类型
+				'min' => '0',
+				'max' => '30',
+				'no-notice-when-modified' => 1,//修改变量不会发出通知
+				'tip-function' => 'get_instance3_debuff_tips',//定义一个函数来生成更复杂的提示。所定义的函数应该位于room.func.php且应传入设定变量的值
+				'tip-box-height' => '80px',//提示框的高度
+				'tip-need-ok' => 1,//需要确认才能提交数据，目前仅对number类型有效。会多出一个确认按钮，建议选项极多的number项使用
+			),
+		),
 	),
 );
 	

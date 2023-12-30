@@ -638,7 +638,6 @@ function curl_post($url, $post_data=array(), $post_cookie=array(), $timeout = 10
 			$response_cookies[$ck] = $cv;
 		}
 	}
-	
 	return $body;
 }
 
@@ -1042,6 +1041,22 @@ function check_authority()
 	if(empty($udata)) { echo "<span><font color=\"red\">Cookie无效，请登录。</font></span><br>"; die(); }
 	if(!pass_compare($udata['username'],$cpass,$udata['password'])) { echo "<span><font color=\"red\">密码错误，请重新登录并重试。</font></span><br>"; die(); }
 	elseif(($udata['groupid'] < 9)&&($cuser!==$gamefounder)) { echo "<span><font color=\"red\">要求至少9权限。</font></span><br>"; die(); }
+}
+
+//从数组中随机取若干值并返回，如果$num>1则返回一个新数组
+//注意不会还原原数组的引用关系
+function array_randompick($arr, $num=1)
+{
+	$array_rand = array_rand($arr, $num);
+	if(is_array($array_rand)) {
+		$ret = Array();
+		foreach($array_rand as $v) {
+			$ret[$v] = $arr[$v];
+		}
+	}else{
+		$ret = $arr[$array_rand];
+	}
+	return $ret;
 }
 
 //因为调用次数太多，懒得一个一个改了

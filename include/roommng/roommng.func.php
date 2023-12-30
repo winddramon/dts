@@ -60,7 +60,8 @@ function update_roomstate(&$roomdata, $runflag)
 	if (!$runflag && $flag && $roomdata['readystat']==0)
 	{
 		$roomdata['readystat']=1;
-		$roomdata['kicktime']=time()+30;
+		$ready_expired_time = !empty($roomtypelist[$roomdata['roomtype']]['ready-expire-time']) ? $roomtypelist[$roomdata['roomtype']]['ready-expire-time'] : 30;
+		$roomdata['kicktime']=time()+$ready_expired_time;
 		$roomdata['timestamp']++;
 		for ($i=0; $i<$roomtypelist[$roomdata['roomtype']]['pnum']; $i++) $roomdata['player'][$i]['ready']=0;
 		$changeflag = 1;
@@ -201,12 +202,21 @@ function room_check_game_option($roomtype, $gokey, $oval){
 	if(!isset($roomtypelist[$roomtype]['game-option'])) {return false;}
 	$go = $roomtypelist[$roomtype]['game-option'];
 	if(!isset($go[$gokey])) {return false;}
-	$ovlist = array();
-	foreach($go[$gokey]['options'] as $ov){
-		$ovlist[] = $ov['value'];
+	if($go[$gokey]['type'] == 'number')
+	{
+		if (isset($go[$gokey]['min']) && ((int)$oval < $go[$gokey]['min'])) return false;
+		if (isset($go[$gokey]['max']) && ((int)$oval > $go[$gokey]['max'])) return false;
+		return true;
 	}
-	if(!in_array($oval, $ovlist)) {return false;}
-	else {return true;}
+	else
+	{
+		$ovlist = array();
+		foreach($go[$gokey]['options'] as $ov){
+			$ovlist[] = $ov['value'];
+		}
+		if(!in_array($oval, $ovlist)) {return false;}
+		else {return true;}
+	}
 }
 
 //加载游戏特殊参数
@@ -496,11 +506,20 @@ function room_create($roomtype)
 
 //发送房内聊天
 //只保留10条记录，嗯……不愧是sc，思路清奇
+//会无视空的消息
 function room_new_chat(&$roomdata,$str)
 {
-	for ($i=1; $i<=9; $i++) $roomdata['chatdata'][$i-1]=$roomdata['chatdata'][$i];
-	$roomdata['chatdata'][9]['cid']=max($roomdata['chatdata'][8]['cid'],0)+1;
-	$roomdata['chatdata'][9]['data']=$str;
+	if(!empty($str)) {
+		for ($i=1; $i<=9; $i++) $roomdata['chatdata'][$i-1]=$roomdata['chatdata'][$i];
+		$roomdata['chatdata'][9]['cid']=max($roomdata['chatdata'][8]['cid'],0)+1;
+		$roomdata['chatdata'][9]['data']=$str;
+	}
+	room_timestamp_tick($roomdata);
+}
+
+//房间时间计数+1，用来推送消息
+function room_timestamp_tick(&$roomdata)
+{
 	$roomdata['timestamp']++;
 }
 

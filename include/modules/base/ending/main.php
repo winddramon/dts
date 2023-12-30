@@ -20,13 +20,30 @@ namespace ending
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','player'));
-		return !$groomid && in_array($winmode, array(2,3,5,7)) && ($state == 5 || $state == 6);
+		return !$groomid && in_array($winmode, array(2,3,5,7)) && $winner_flag;
 	}
 	
 	function get_gametype_setting_html()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		return MOD_ENDING_NEXT_GAMETYPE;
+	}
+	
+	//用黑块随机替换一段文字的一部分（头尾字符不替换）
+	function ending_psyche_attack_txt_parse($str, $rate = 50, $rep = '■')
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$len = mb_strlen($str, 'utf-8');
+		$ret = '';
+		for($i=1;$i<$len-1;$i++) {
+			if(rand(0,99) < $rate) {
+				$ret .= $rep;
+			}else{
+				$ret .= mb_substr($str, $i, 1, 'utf-8');
+			}
+		}
+		$ret = mb_substr($str, 0, 1, 'utf-8') . $ret . mb_substr($str, -1, 1, 'utf-8');
+		return $ret;
 	}
 	
 	//结尾时生成一些判定用的临时变量

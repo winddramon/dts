@@ -36,6 +36,18 @@ namespace skill1006
 		return $chprocess($pa);
 	}
 	
+	//测试用函数
+	function skill1006_get_beacon_pool()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('skill1006'));
+		$ret = '';
+		foreach($beacon_pool as $k => $v) {
+			$ret .= var_export(gdecode($k, 1),1).' ====> '.var_export($v, 1).' ;;;; ';
+		}
+		return $ret;
+	}
+	
 	//临时视野构思：只在显示时挂靠在视野的界面上，实际处理都是走的本模块。
 	//临时视野不参与各种视野边缘之类的判定，会因为正常探索到该内容而被消除，移动后临时视野会转化为正常的记忆
 	//不存在“临时记忆”
@@ -108,6 +120,7 @@ namespace skill1006
 		if(empty($pa)) {
 			$pa = & get_var_in_module('sdata', 'player');
 		}
+		//echo 'before add '.skill1006_get_beacon_pool();
 		add_beacon_core($marr, $pa);
 	}
 	
@@ -281,6 +294,36 @@ namespace skill1006
 		}
 		return $ret;
 	}
+	
+	//从一个道具池中添加一定数量的道具到临时视野
+	//传入的$mipool是\itemmain\discover_item()生成的数组，从mapitem表拉取的数据
+	function add_beacon_from_itempool($mipool, $num, &$pa=NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if(empty($pa)) {
+			$pa = & get_var_in_module('sdata', 'player');
+		}
+		//先把先前的临时视野都扔进视野。注意需要倒序。
+		if(!empty(\skillbase\skill_getvalue(1006,'beacons',$pa))) {
+			$beacons = decode_beacon($pa);
+			if(!empty($beacons)) {
+				$beacons = array_reverse($beacons);
+				foreach($beacons as $bv) {
+					\searchmemory\add_memory($bv, 0, $pa);
+				}
+				$beacons = Array();
+				encode_beacon($beacons, $pa);
+			}
+		}
+		$itemnum = count($mipool);
+		for ($i=0;$i<min($num,$itemnum);$i++)
+		{
+			$amarr = array('iid' => $mipool[$i]['iid'], 'itm' => $mipool[$i]['itm'], 'pls' => $pa['pls'], 'unseen' => 0);
+			add_beacon($amarr, $pa);
+		}
+		\player\player_save($pa);
+	}
+	
 }
 
 ?>

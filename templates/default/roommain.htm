@@ -85,12 +85,30 @@
 		<!--{loop $game_option $gokey $goval}-->
 		<div>
 			<span class="white b">$goval['title']</span> 
-			<!--{loop $goval['options'] $oval}-->
-				<input type="{$goval['type']}" name="{$gokey}" id="{$gokey}_{$oval['value']}" 
-					onchange="$('command').value='game-option';$('para1').value='$gokey';$('para2').value='{$oval['value']}';postCmd('roomcmd','roomcmd.php');"
-					<!--{if $oval['value']==$roomdata['current_game_option'][$gokey]}-->checked<!--{/if}-->>
-				<a onclick="$('{$gokey}_{$oval['value']}').click();" title="{$oval['title']}">$oval['name']</a>&nbsp;&nbsp;&nbsp;
-			<!--{/loop}-->
+			<!--{if $goval['type']=='number'}-->
+				<!--{eval $current_go=room_get_vars($roomdata, 'current_game_option');$nval=(int)$current_go[$gokey];}-->
+				<input type="number" name="{$gokey}" id="{$gokey}" value="{$nval}" min="{$goval['min']}" max="{$goval['max']}" style="width:50px"
+					<!--{if !$goval['tip-need-ok']}-->
+					onclick="$('command').value='game-option';$('para1').value='$gokey';$('para2').value=document.getElementById('$gokey').value;postCmd('roomcmd','roomcmd.php');"
+					<!--{/if}-->>
+				<!--{if $goval['tip-need-ok']}-->
+					&nbsp;&nbsp;&nbsp;<input type="button" value="确认" onclick="$('command').value='game-option';$('para1').value='$gokey';$('para2').value=document.getElementById('$gokey').value;postCmd('roomcmd','roomcmd.php');">
+					&nbsp;&nbsp;&nbsp;当前{$goval['title']}已设置为<span class="yellow b">$nval</span>
+				<!--{/if}-->
+			<!--{else}-->
+				<!--{loop $goval['options'] $oval}-->
+					<input type="{$goval['type']}" name="{$gokey}" id="{$gokey}_{$oval['value']}"
+						onchange="$('command').value='game-option';$('para1').value='$gokey';$('para2').value='{$oval['value']}';postCmd('roomcmd','roomcmd.php');"
+						<!--{if $oval['value']==$roomdata['current_game_option'][$gokey]}-->checked<!--{/if}-->>
+					<a onclick="$('{$gokey}_{$oval['value']}').click();" title="{$oval['title']}">$oval['name']</a>&nbsp;&nbsp;&nbsp;
+				<!--{/loop}-->
+			<!--{/if}-->
+			<!--{if !empty($goval['tip-function']) && function_exists($goval['tip-function'])}-->
+				<!--{eval $tip_box_height = !empty($goval['tip-box-height']) ? $goval['tip-box-height'] : '50px';}-->
+				<div class="gscroll" style="padding:5px 0; text-align:center;overflow-x:hidden; overflow-y:auto;height:{$tip_box_height}">
+					<!--{eval echo $goval['tip-function']((int)room_get_vars($roomdata, 'current_game_option')['lvl']);}-->
+				</div>
+			<!--{/if}-->
 		</div>
 		<!--{/loop}-->
 		<!--{/if}-->

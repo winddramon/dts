@@ -126,6 +126,22 @@ namespace searchmemory
 		$ret = $searchmemory_max_recordnum;
 		return $ret;
 	}
+	
+	//获得当前视野里可见的东西个数，也就是显示出来的按钮数
+	function get_seen_num(&$pa=NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if(empty($pa)) {
+			$pa = & get_var_in_module('sdata', 'player');
+		}
+		$sm_last = sizeof($pa['searchmemory']) - 1;
+		for($i=$sm_last; $i>=0; $i--) {
+			if(!empty($pa['searchmemory'][$i]['unseen'])) {
+				break;
+			}
+		}
+		return min($sm_last - $i, calc_memory_slotnum($pa));//视野数不会超过数值上限，也不计算临时视野
+	}
 
 	//把传入的$marr数组插入数组，也负责对数组初始化
 	//加入的一定是可见的
@@ -388,13 +404,15 @@ namespace searchmemory
 			}elseif(($mode == 'combat' && $command == 'back')
 				 || (!\gameflow_combo\is_gamestate_combo() && $mode == 'corpse' && ($command == 'menu' || (check_keep_corpse_in_searchmemory() && $command != 'destroy')))){//测试，荣耀模式只要不销毁尸体，视野都留着
 				$eid = str_replace('enemy','',str_replace('corpse','',$action));
-				$smedata = \player\fetch_playerdata_by_pid($eid);
-				$amarr = array('pid' => $smedata['pid'], 'Pname' => $smedata['name'], 'pls' => $pls, 'smtype' => 'unknown', 'unseen' => 0);
-				if($mode == 'combat' && !$fog) $amarr['smtype'] = 'enemy';
-				elseif($mode == 'corpse') {
-					$amarr['smtype'] = 'corpse';
-					$check_corpse = 1;
-				}
+				if(!empty($eid)) {
+					$smedata = \player\fetch_playerdata_by_pid($eid);
+					$amarr = array('pid' => $smedata['pid'], 'Pname' => $smedata['name'], 'pls' => $pls, 'smtype' => 'unknown', 'unseen' => 0);
+					if($mode == 'combat' && !$fog) $amarr['smtype'] = 'enemy';
+					elseif($mode == 'corpse') {
+						$amarr['smtype'] = 'corpse';
+						$check_corpse = 1;
+					}
+				}				
 			}
 		}
 		
@@ -496,7 +514,7 @@ namespace searchmemory
 		$search_flag = 0;
 		if($marr['unseen']) {
 			$schsp = \explore\allow_search_check();
-	
+			$o_pls = $pls;
 			if(false !== $schsp && $hp) {
 				$sp -= $schsp;
 				$log .= "消耗<span class=\"yellow b\">{$schsp}</span>点体力，你向记忆中的地点探索而去……<br>";
@@ -510,6 +528,8 @@ namespace searchmemory
 			}
 			//探索流程有可能造成死亡，所以需要存活才继续
 			if(!$hp) return;
+			//探索流程有可能移到别的地图（英灵殿，龙卷风），所以需要前后地点对应才能继续
+			if($pls != $o_pls) return;
 		}
 		
 		//接下来的流程无论结果，都可以把该记忆元素删掉了

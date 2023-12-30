@@ -7,23 +7,23 @@ namespace ex_cursed
 	{
 		eval(import_module('itemmain'));
 		$itemspkinfo['O'] = '诅咒';
-		$itemspkdesc['O']='装备以后无法更换、卸下或丢弃';
+		$itemspkdesc['O']='无法丢弃，装备以后无法更换、卸下';
 		$itemspkremark['O']='……';
 	}
 	
-	function itemdrop_valid_check($itm, $itmk, $itme, $itms, $itmsk)
+	function itemdrop_valid_check($itm, $itmk, $itme, $itms, $itmsk, $itmpos)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		if(\itemmain\check_in_itmsk('O', $itmsk)){
 			eval(import_module('logger'));
 			if(check_enkan()) {
-				$log .= '<span class="lime b">圆环之理的光辉暂时消解了装备的诅咒。</span><br>';
+				$log .= '<span class="lime b">圆环之理的光辉暂时消解了道具的诅咒。</span><br>';
 			}else{
-				$log .= '<span class="red b">摆脱这个装备的诅咒是不可能的。</span><br>';
+				$log .= '<span class="red b">摆脱这个道具的诅咒是不可能的。</span><br>';
 				return false;
 			}
 		}
-		return $chprocess($itm, $itmk, $itme, $itms, $itmsk);
+		return $chprocess($itm, $itmk, $itme, $itms, $itmsk, $itmpos);
 	}
 	
 	function itemoff_valid_check($itm, $itmk, $itme, $itms, $itmsk)
@@ -32,9 +32,9 @@ namespace ex_cursed
 		if(\itemmain\check_in_itmsk('O', $itmsk)){
 			eval(import_module('logger'));
 			if(check_enkan()) {
-				$log .= '<span class="lime b">圆环之理的光辉暂时消解了装备的诅咒。</span><br>';
+				$log .= '<span class="lime b">圆环之理的光辉暂时消解了道具的诅咒。</span><br>';
 			}else{
-				$log .= '<span class="red b">摆脱这个装备的诅咒是不可能的。</span><br>';
+				$log .= '<span class="red b">摆脱这个道具的诅咒是不可能的。</span><br>';
 				return false;
 			}
 		}
@@ -58,9 +58,9 @@ namespace ex_cursed
 			elseif(strpos ( $itmk, 'A' ) === 0) $obj = 'art';
 			if(\itemmain\check_in_itmsk('O', ${$obj.'sk'})){
 				if(check_enkan()) {
-					$log .= '<span class="lime b">圆环之理的光辉暂时消解了装备的诅咒。</span><br>';
+					$log .= '<span class="lime b">圆环之理的光辉暂时消解了道具的诅咒。</span><br>';
 				}else{
-					$log .= '<span class="red b">摆脱这个装备的诅咒是不可能的。</span><br>';
+					$log .= '<span class="red b">摆脱这个道具的诅咒是不可能的。</span><br>';
 					return;
 				}
 			}
@@ -78,9 +78,9 @@ namespace ex_cursed
 			if (!empty(${'itms'.$itmn})) {
 				if(\itemmain\check_in_itmsk('O', ${'itmsk'.$itmn})){
 					if(check_enkan()) {
-						$log .= '<span class="lime b">圆环之理的光辉暂时消解了装备的诅咒。</span><br>';
+						$log .= '<span class="lime b">圆环之理的光辉暂时消解了道具的诅咒。</span><br>';
 					}else{
-						$log .= '<span class="red b">摆脱这个装备的诅咒是不可能的。</span><br>';
+						$log .= '<span class="red b">摆脱这个道具的诅咒是不可能的。</span><br>';
 						$ret = false;
 					}
 				}

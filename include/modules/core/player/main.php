@@ -91,8 +91,9 @@ namespace player
 	}
 	
 	//注意这个函数默认情况下只能找玩家
-	//注意这两个函数在skillbase模块里会自动初始化技能参数，如果在指令执行过程中额外使用了这两个函数找玩家本身的数据，就会导致技能部分出现不可预料的问题！
-	function fetch_playerdata($Pname, $Ptype = 0, $ignore_pool = 0)
+	//注意这个fetch_playerdata()及后面那个fetch_playerdata_by_pid()在skillbase模块里会自动初始化技能参数，如果是当前玩家则会修改$acquired_list及$parameter_list两个变量
+	//这导致如果在同一次请求中第二次执行这两个函数获取当前玩家数据，将会把技能变量覆盖，出现不可预料的问题！
+	function fetch_playerdata($Pname, $Ptype = 0, $ignore_pool = 0, $ignore_lock = 0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
@@ -105,14 +106,16 @@ namespace player
 				}
 			}
 		}
+		if($Pname == get_var_in_module('name', 'player')) file_put_contents('log.txt', 'fetch_playerdata with selfs name at'.debug_backtrace()[0]['file'].':'.debug_backtrace()[1]['function'].':'.debug_backtrace()[0]['line']."\r\n", FILE_APPEND);
 		if(empty($pdata)){
-			//先进行玩家锁判定
+			//先判定玩家是否存在
 			$query = "SELECT pid FROM {$tablepre}players WHERE name = '$Pname' AND type = '$Ptype'";
 			$result = $db->query($query);
 			if(!$db->num_rows($result)) return NULL;
 			$pdid = $db->fetch_array($result);
 			$pdid = $pdid['pid'];
-			create_player_lock($pdid);
+			//正常情况给玩家加锁，某些特定需求情况下不加锁
+			if(!$ignore_lock) create_player_lock($pdid);
 			//阻塞结束后再真正取玩家数据，牺牲性能避免脏数据
 			$query = "SELECT * FROM {$tablepre}players WHERE pid = '$pdid'";
 			$result = $db->query($query);
@@ -124,19 +127,22 @@ namespace player
 		return $pdata;
 	}
 	
-	//注意这两个函数在skillbase模块里会自动初始化技能参数，如果在指令执行过程中额外使用了这两个函数找玩家本身的数据，就会导致技能部分出现不可预料的问题！
-	function fetch_playerdata_by_pid($pid)
+	//注意事项见上！
+	function fetch_playerdata_by_pid($pid, $ignore_pool = 0, $ignore_lock = 0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
-		if(isset($pdata_pool[$pid])){
+		if($pid == get_var_in_module('pid', 'player')) file_put_contents('log.txt', 'fetch_playerdata_by_pid with selfs pid at '.debug_backtrace()[0]['file'].':'.debug_backtrace()[1]['function'].':'.debug_backtrace()[0]['line']."\r\n", FILE_APPEND);
+		if(!$ignore_pool && isset($pdata_pool[$pid])){
 			$pdata = $pdata_pool[$pid];
 		}else{
+			//先判定角色是否存在
 			$result = $db->query("SELECT pid FROM {$tablepre}players WHERE pid = '$pid'");
 			if(!$db->num_rows($result)) return NULL;
 			$pdid = $db->fetch_array($result);
 			$pdid = $pdid['pid'];
-			create_player_lock($pdid);
+			//正常情况给玩家加锁，某些特定需求情况下不加锁
+			if(!$ignore_lock) create_player_lock($pdid);
 			$query = "SELECT * FROM {$tablepre}players WHERE pid = '$pdid'";
 			$result = $db->query($query);
 			$pdata = $db->fetch_array($result);
@@ -448,8 +454,7 @@ namespace player
 			}else{
 				$pls_available = \map\get_safe_plslist();//不能移动去的区域
 				if(!$pls_available) $pls_available = \map\get_safe_plslist(0);//如果只能移动到危险区域，就移动到危险区域
-				shuffle($pls_available);
-				$sub['pls'] = $pls_available[0];
+				$sub['pls'] = array_randompick($pls_available);
 				$db->array_update("{$tablepre}players",$sub,"pid='$pid'",$o_sub);
 				post_pc_avoid_killarea($sub, $atime);
 			}
@@ -569,7 +574,6 @@ namespace player
 			//键名合法化
 			$ndata = player_format_with_db_structure($data);
 			//任意列的数值没变就不写数据库
-			//会导致严重的脏数据问题，在player表加行锁前就先不搞这个了
 			$ndata = player_diff_from_poll($ndata);
 			unset($ndata['pid']);
 			//建国后不准成精，你们复活别想啦
@@ -592,6 +596,11 @@ namespace player
 				//对玩家增加一项name的条件，阻止房间号改变的情况下会覆盖其他房间数据的可能
 				$where = "pid='$spid'";
 				if(!$data['type']) $where .= " AND name='$sname'";
+				
+//				if(!empty($ndata['state'])) {
+//					file_put_contents('a.txt', debug_backtrace()[5]['file'].':'.debug_backtrace()[5]['line']."\r\n\r\n",FILE_APPEND);
+//				}
+				
 				$db->array_update("{$tablepre}players", $ndata, $where);
 				//全局变量$sdata里每一个键值都是对外面变量的引用，要加入玩家数据池而不污染$sdata，必须创造数组浅拷贝
 				$pdata_origin_pool[$spid] = array_clone($data);

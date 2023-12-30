@@ -6,7 +6,7 @@ namespace instance9
 		eval(import_module('map','gameflow_combo','skillbase','cardbase'));
 		$areainterval[19] = 10;
 		$deathlimit_by_gtype[19] = 100;
-		$valid_skills[19] = array(1001,1002);
+		$valid_skills[19] = array(1001,1002,713);
 		$card_force_different_gtype[] = 19;
 		$card_need_charge_gtype[] = 19;
 		$card_cooldown_discount_gtype[19] = 0.5;
@@ -49,15 +49,15 @@ namespace instance9
 		}else return $chprocess();
 	}
 	
-//	function get_shopconfig(){
-//		if (eval(__MAGIC__)) return $___RET_VALUE; 
-//		eval(import_module('sys','instance9'));
-//		if (19 == $gametype){
-//			$file = __DIR__.'/config/shopitem.config.php';
-//			$l = openfile($file);
-//			return $l;
-//		}else return $chprocess();
-//	}
+	function get_shopconfig(){
+		if (eval(__MAGIC__)) return $___RET_VALUE; 
+		eval(import_module('sys','instance9'));
+		if (19 == $gametype){
+			$file = __DIR__.'/config/shopitem.config.php';
+			$l = openfile($file);
+			return $l;
+		}else return $chprocess();
+	}
 	
 	function get_itemfilecont(){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
