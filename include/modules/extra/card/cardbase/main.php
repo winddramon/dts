@@ -24,7 +24,7 @@ namespace cardbase
 		
 		//兼容性代码：如果数据库缺乏字段，自动新建字段。
 		//在旧服数据稳定之后可以删除这一句
-		if(1){
+		if(0){
 			$column_existed = 0;
 			eval(import_module('sys'));
 			$result = $db->query("SHOW COLUMNS FROM {$gtablepre}users");
@@ -870,7 +870,7 @@ namespace cardbase
 		list($show_cardid, $uip['cardname_show'], $show_rare, $show_cardblink, $uip['cardinfo_show']) = parse_card_show_data($sdata);
 		
 		//如果卡片是挑战者或者是隐藏卡片，不予显示卡面
-		if(!$show_cardid || 'hidden' == $cards[$show_cardid]['pack']) {
+		if(!$show_cardid || !empty($cards[$show_cardid]['hidden_cardframe'])) {
 			unset($uip['cardinfo_show']);
 		}
 		//用于显示用的罕贵类型

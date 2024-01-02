@@ -141,10 +141,10 @@ namespace instance3
 			if(isset($option['lvl']))
 			{
 				$alvl = (int)$option['lvl'];
-				$card = array(90,282,129)[floor(max($alvl-1,0)/10)];
+				$card = array(303,304,305)[floor(max($alvl-1,0)/10)];
 				return $card;
 			}
-			else return 90;
+			else return 303;
 		}
 		return $chprocess($card);
 	}
@@ -382,10 +382,11 @@ namespace instance3
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		if ($alvl == 0) return 100;
-		elseif ($alvl <= 10) return 400*$alvl;
-		elseif ($alvl < 20) return 1000*$alvl-6000;
-		elseif ($alvl < 30) return 1000*$alvl-2000;
-		else return 30000;
+		elseif ($alvl <= 10) return 200*$alvl;
+		elseif ($alvl < 20) return 500*$alvl-3000;
+		elseif ($alvl == 20) return 12000;
+		elseif ($alvl < 25) return 1000*$alvl-5000;
+		else return 2000*$alvl-30000;
 	}
 	
 	function post_winnercheck_events($winner)

@@ -190,19 +190,50 @@ namespace item_misc
 					$log.='大逃杀幻境已确认你的权限狗身份，正在为你输送权限套装……<br>';
 					$wp=$wk=$wg=$wc=$wd=$wf=666;
 					$ss=$mss=600;
-					$att+=200;$def+=200;
-					$money+=19980;
-					$itm1='美味补给';$itmk1 = 'HB';$itmsk1 = '';$itme1 = 2777;$itms1 = 277;
-					$itm2='全恢复药剂';$itmk2 = 'Ca';$itmsk2 = '';$itme2 = 1;$itms2 = 44;
-					$itm3='食堂的剩饭';$itmk3 = 'HR';$itmsk3 = '';$itme3 = 100;$itms3 = 15;
-					$itm4='哔哔小马';$itmk4 = 'ER';$itmsk4 = '^rdsk58';$itme4 = 20;$itms4 = 1;
-					$itm5='聪明药';$itmk5 = 'ME';$itmsk5 = '';$itme5 = 100;$itms5 = 4;
-					//$itm5='游戏解除钥匙';$itmk5 = 'Y';$itmsk5 = '';$itme5 = 1;$itms5 = 1;
-					$arb='代码聚合体的长袍';$arbk = 'DB';$arbsk = 'Bb';$arbe = 5000;$arbs = 1000;
-					$arh='代码聚合体的面罩';$arhk = 'DH';$arhsk = 'Aa';$arhe = 5000;$arhs = 1000;
-					$ara='代码聚合体的手套';$arak = 'DA';$arask = 'Hh';$arae = 5000;$aras = 1000;
-					$arf='代码聚合体的鞋子';$arfk = 'DF';$arfsk = 'Mm';$arfe = 5000;$arfs = 1000;
-					$art='Untainted Glory';$artk = 'A';$artsk = '';$arte = 1;$arts = 1;
+					//$att+=200;$def+=200;
+					$money+=114494;
+					$itm1='会员制大餐';$itmk1 = 'HB';$itme1 = 114514;$itms1 = 1919;$itmsk1 = '';
+					$itm2='你不准增加禁区';$itmk2 = 'Z';$itme2 = 1;$itms2 = 44;$itmsk2 = '';
+					$itm3='百毒贴吧';$itmk3 = 'HR';$itme3 = 100;$itms3 = 100;$itmsk3 = '';
+					$itm4='哔哔小马';$itmk4 = 'ER';$itme4 = 20;$itms4 = 1;$itmsk4 = '^rdsk58';
+					$itm5='脑残片';$itmk5 = 'ME';$itme5 = 100;$itms5 = 100;$itmsk5 = '';				
+					if (defined('MOD_EX_STORAGE'))
+					{
+						//劲爆！
+						$itmarr = array
+						(
+							array('感觉像最终战术『光矢』的东西','WB',65500,'∞','Zrcdz'),
+							array('武器师安雅的奖赏','Y',1,20,'z'),
+							array('这个是什么按钮','Y',1,10,'z'),
+							array('你不准增加禁区','Y',1,10,'z'),
+							array('游戏解除钥匙','Y',1,1,'z'),
+							array('移动PC','EE',20,1,'z',),
+							array('《电波大逃杀源代码：从初学到跑路》','VS',1,10,'479'),
+							array('薛定谔的棒球棍','WP',3000,300,'cj'),
+							array('感觉像复合武器的杏仁豆腐','WFJ',999,999,'rd'),
+							array('NPC召唤设备','Y',1,1,'42'),
+							array('RP回复设备','Y',1,1,'z'),
+							array('氪金道具','VO',1,10,'159'),
+							array('隐身药水','MB',1,10,'^mbid246'),
+							array('权限狗的ID卡','Y',1,1,'z'),
+							array('『G.A.M.E.O.V.E.R』','Z',1,1,'z'),
+							array('权限狗的权限权杖','WF',42000000,'∞','ZrdVny'),
+							array('黄鸡之歌','HM',2000,20,'z'),
+							array('百毒贴吧','HR',100,100,''),
+							array('小薄本','VV',666,3,''),
+							array('《全频道阻塞干扰》','VS',1,1,'503'),
+							array('《孔明的陷阱》','VS',1,1,'252'),
+							array('『re-inCarnation』','MB',1,1,'^mbid710'),
+							array('感觉像弹幕符札的东西','WF',1,'∞',''),
+						);
+						$itm0='权限狗的全家桶';$itmk0 = 'DAS';$itme0 = 1919;$itms0 = 810;
+						$itmsk0 = '^st_'.\ex_storage\storage_encode_itmarr($itmarr).'1^vol50';
+					}
+					$arb='权限狗的毛绒兽装';$arbk = 'DB';$arbe = 5000;$arbs = 1000;$arbsk = 'Bb';
+					$arh='权限狗的毛绒头套';$arhk = 'DH';$arhe = 5000;$arhs = 1000;$arhsk = 'Aa';
+					$ara='权限狗的毛绒前爪';$arak = 'DA';$arae = 5000;$aras = 1000;$arask = 'Hh';
+					$arf='权限狗的毛绒后爪';$arfk = 'DF';$arfe = 5000;$arfs = 1000;$arfsk = 'Mm';
+					$art='Untainted Glory';$artk = 'A';$arte = 1;$arts = 1;$artsk = 'c^hu2000';
 					if (defined('MOD_CLUBBASE')) eval(import_module('clubbase'));
 					foreach(array(1010,1011,1012) as $skv){
 						if(defined('MOD_SKILL'.$skv)) {
