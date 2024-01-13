@@ -28,6 +28,7 @@ item_uee,base/items/item_uee/,1
 apm,base/apm/,1
 item_addarea,extra/item_extra/item_addarea/,1
 radar,base/items/radar/,1
+randnpc,extra/instance/instance10_road/randnpc/,1
 corpse,base/corpse/,1
 trap,base/items/trap/,1
 itemmix_sync,base/itemmix/itemmix_sync/,1
@@ -291,6 +292,8 @@ skill718,extra/card/skills/skill718/,1
 skill717,extra/card/skills/skill717/,1
 skill719,extra/card/skills/skill719/,1
 skill85,extra/club/skills/skill85/,1
+skill952,extra/instance/instance10_road/skill952/,1
+skill951,extra/instance/instance10_road/skill951/,1
 wep_g,base/weapon/wep_g/,1
 wep_j,base/weapon/wep_j/,1
 skill273,extra/club/skills/skill273/,1
@@ -384,6 +387,7 @@ skill435,extra/card/skills/skill435/,1
 skill329,extra/activities/nationalday2017/skill329/,1
 skill512,extra/card/skills/skill512/,1
 addnpc_event,extra/misc/addnpc_event/,1
+skill961,extra/instance/instance10_road/skill961/,1
 item_randskills,extra/item_extra/item_randskills/,1
 skill490,extra/card/skills/skill490/,1
 skill430,extra/card/skills/skill430/,1
@@ -503,6 +507,7 @@ skill271,extra/club/skills/skill271/,1
 tutorial,extra/instance/instance7_tutorial/tutorial/,1
 skill51,extra/club/skills/skill51/,1
 skill493,extra/card/skills/skill493/,1
+randrecipe,extra/instance/instance10_road/randrecipe/,1
 skill302,extra/achievement/skills/skill302/,1
 skill303,extra/achievement/skills/skill303/,1
 skill304,extra/achievement/skills/skill304/,1
@@ -555,6 +560,7 @@ skill380,extra/achievement/skills/skill380/,1
 skill351,extra/achievement/skills/skill351/,1
 skill352,extra/achievement/skills/skill352/,1
 skill375,extra/achievement/skills/skill375/,1
+skill382,extra/achievement/skills/skill382/,1
 skill504,extra/card/skills/skill504/,1
 instance3,extra/instance/instance3_ascension/,1
 skill182,extra/club/skills/skill182/,1
@@ -564,6 +570,7 @@ skill498,extra/card/skills/skill498/,1
 ex_attr_song,extra/attr/ex_attr_song/,1
 skill181,extra/club/skills/skill181/,1
 skill376,extra/achievement/skills/skill376/,1
+skill381,extra/achievement/skills/skill381/,1
 wepchange,extra/attr/wepchange/,1
 skill77,extra/club/skills/skill77/,1
 skill379,extra/achievement/skills/skill379/,1
@@ -625,6 +632,7 @@ skill597,extra/card/skills/skill597/,1
 skill713,extra/card/skills/skill713/,1
 skill712,extra/card/skills/skill712/,1
 skill587,extra/card/skills/skill587/,1
+skill960,extra/instance/instance10_road/skill960/,1
 skill566,extra/card/skills/skill566/,1
 skill604,extra/club/skills/skill604/,1
 ex_gender_attr,extra/attr/ex_gender_attr/,1
@@ -633,6 +641,7 @@ skill903,extra/instance/instance3_ascension/skill903/,1
 skill505,extra/card/skills/skill505/,1
 skill709,extra/card/skills/skill709/,1
 skill722,extra/card/skills/skill722/,1
+instance10,extra/instance/instance10_road/,1
 skill714,extra/card/skills/skill714/,1
 ex_purity,extra/attr/ex_purity/,1
 skill26,extra/club/skills/skill26/,1

@@ -7,6 +7,7 @@ namespace ex_storage
 		eval(import_module('itemmain'));
 		$itemspkinfo['^st'] = '储物';
 		$itemspkdesc['^st'] = '这一道具能储存其他道具';
+		$itemspkremark['^st'] = '储存容量根据储物属性值决定；<br>被储存的道具是跟着储物道具一起移动的，如果丢弃储物道具，玩家将失去被储存的道具，直到拾回原本的这个储物道具；如果储物道具毁坏，里面储存的道具将全部灭失！';
 		$itemspkinfo['^vol'] = '储物容量';//不显示
 	}
 	
@@ -227,13 +228,17 @@ namespace ex_storage
 	function use_storage()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','logger','player','input'));
+		eval(import_module('sys','logger','player'));
 		if (!\attrbase\check_itmsk('^st')) 
 		{
 			$log .= '你没有额外的储物空间。<br>';
 			return;
 		}
 		$flag = 0;
+		$subcmd = get_var_input('subcmd');
+		$storage_sendin = get_var_input('storage_sendin');
+		$storage_fetchout = get_var_input('storage_fetchout');
+		$pos = get_var_input('pos');
 		if (!empty($storage_sendin))
 		{
 			storage_sendin($storage_sendin);
@@ -260,7 +265,7 @@ namespace ex_storage
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		
-		eval(import_module('sys','player','logger','input'));
+		eval(import_module('sys'));
 	
 		if ($mode == 'special' && $command == 'storage') 
 		{

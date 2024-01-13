@@ -5252,6 +5252,17 @@ $cards = array(
 			),
 		)
 	),
+	307 => array(
+		'name' => '剑怔人',
+		'rare' => 'C',
+		'pack' => 'Cyber Zealots',
+		'desc' => '该用户已被封禁',
+		'effect' => '开局位于冰封墓场',
+		'energy' => 0,
+		'valid' => array(
+			'pls' => 26,
+		)
+	),
 	341 => array(
 		'name' => '麻薯',
 		'rare' => 'B',
@@ -5575,7 +5586,7 @@ $cards = array(
 		'pack' => '東埔寨Protoject',
 		'desc' => '人类村落的著名小说家，有着过目不忘的能力',
 		'effect' => '她意思之间，似乎觉得人生天地间，大约本来有时也未免要早夭的',
-		'desc_skills' => '视野与记忆上限为200格，但升级到30级后会死亡',
+		'desc_skills' => '探索记忆数目为200格，但升级到30级后会死亡',
 		'energy' => 100,
 		'valid' => array(
 			'skills' => array(
@@ -5883,7 +5894,7 @@ $cards = array(
 		'rare' => 'C',
 		'pack' => 'hidden',
 		//'pack' => 'Way of Life',
-		'desc' => '打电动是你为数不多的爱好之一',
+		'desc' => '阿伟你又在打电动哦，<br>去休息一下好不好',
 		'effect' => '可以用笔记本电脑玩最新最潮的游戏<br>——ACFUN大逃杀',
 		'energy' => 0,
 		'valid' => array(
@@ -5904,7 +5915,8 @@ $cards = array(
 		  'skills' => array(
 				'722' => '0',
 			),
-		)
+		),
+		'ignore_global_ach' => 1,//不参与终生成就判定
 	),
 	
 	1000 => array(

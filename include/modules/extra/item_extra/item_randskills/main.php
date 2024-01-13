@@ -24,6 +24,16 @@ namespace item_randskills
 		230 => array(231),
 	);
 	
+	//此处S,A,B,C,X表示技能稀有度
+	$rs_cardskills = array
+	(
+		'S' => array(405, 406, 415, 434, 500, 515, 516, 518, 539, 591, 719),
+		'A' => array(407, 409, 410, 437, 439, 440, 446, 458, 472, 486, 496, 502, 517, 527, 560, 595, 597, 710),
+		'B' => array(416, 420, 429, 443, 447, 453, 454, 464, 465, 467, 473, 534, 556, 567, 590, 598, 705),
+		'C' => array(422, 428, 442, 448, 449, 450, 452, 457, 463, 470, 471, 479, 489, 557, 570, 582),
+		'X' => array(469, 474, 478, 483, 494, 511, 571, 579, 702, 704, 707, 708, 722),
+	);
+	
 	function init()
 	{
 		eval(import_module('itemmain'));
@@ -34,13 +44,49 @@ namespace item_randskills
 	function parse_itmuse_desc($n, $k, $e, $s, $sk){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$ret = $chprocess($n, $k, $e, $s, $sk);
-		if (strpos($k,'SC1')===0)
+		if (strpos($k,'SC01')===0)
 		{
 			$ret .= '使用后可以在三个未拥有的随机称号技能中选择一个习得';
 		}
-		elseif (strpos($k,'SC2')===0)
+		elseif (strpos($k,'SC02')===0)
 		{
 			$ret .= '使用后可以随机习得一个未拥有的称号技能';
+		}
+		elseif (strpos($k,'SCC1')===0)
+		{
+			$ret .= '使用后可以在三个C级技能中选择一个习得';
+		}
+		elseif (strpos($k,'SCC2')===0)
+		{
+			$ret .= '使用后可以随机习得一个C级技能';
+		}
+		elseif (strpos($k,'SCB1')===0)
+		{
+			$ret .= '使用后可以在三个B级技能中选择一个习得';
+		}
+		elseif (strpos($k,'SCB2')===0)
+		{
+			$ret .= '使用后可以随机习得一个B级技能';
+		}
+		elseif (strpos($k,'SCA1')===0)
+		{
+			$ret .= '使用后可以在三个A级技能中选择一个习得';
+		}
+		elseif (strpos($k,'SCA2')===0)
+		{
+			$ret .= '使用后可以随机习得一个A级技能';
+		}
+		elseif (strpos($k,'SCS1')===0)
+		{
+			$ret .= '使用后可以在三个S级技能中选择一个习得';
+		}
+		elseif (strpos($k,'SCS2')===0)
+		{
+			$ret .= '使用后可以随机习得一个S级技能';
+		}
+		elseif (strpos($k,'SCX2')===0)
+		{
+			$ret .= '使用后可以随机习得一个奇怪的技能';
 		}
 		elseif(strpos($k,'Y')===0 || strpos($k,'Z')===0)
 		{
@@ -83,7 +129,7 @@ namespace item_randskills
 				//得到新的技能
 				if ($count > 0)
 				{
-					get_randskill($sdata, $count);
+					get_rand_clubskill($sdata, $count);
 					$log .= "随着骰子的转动，你感到自己的身体变得焕然一新！<br>";
 				}
 				else
@@ -94,69 +140,91 @@ namespace item_randskills
 				return;
 			}	
 		}
-		elseif (strpos( $itmk, 'SC1' ) === 0)
+		elseif (strpos($itmk, 'SC') === 0)
 		{
+			eval(import_module('item_randskills'));
 			$log .= "你使用了<span class=\"yellow b\">{$itm}</span>。<br>";
-			$sclist = get_skcore_skilllist($itmsk);
-			$skcore_choice = get_var_in_module('skcore_choice', 'input');
-			if (empty($skcore_choice))
+			if ($itmk[3] === '1')
 			{
-				ob_start();
-				include template(MOD_ITEM_RANDSKILLS_USE_SKCORE);
-				$cmd = ob_get_contents();
-				ob_end_clean();	
-				return;
-			}
-			else
-			{
-				if (!in_array((int)$skcore_choice, array(1,2,3)))
+				$sclist = get_skcore_skilllist($itmk, $itmsk);
+				$skcore_choice = get_var_input('skcore_choice');
+				if (empty($skcore_choice))
 				{
-					$log .= '参数不合法。<br>';
-					$mode = 'command';
+					ob_start();
+					include template(MOD_ITEM_RANDSKILLS_USE_SKCORE);
+					$cmd = ob_get_contents();
+					ob_end_clean();	
 					return;
 				}
 				else
 				{
-					eval(import_module('clubbase','item_randskills'));
-					$skillid = $sclist[(int)$skcore_choice-1];
-					\skillbase\skill_acquire($skillid, $sdata);
-					if (array_key_exists($skillid, $rs_feature))
+					if (!in_array((int)$skcore_choice, array(1,2,3)))
 					{
-						foreach ($rs_feature[$skillid] as $extra_skillid) \skillbase\skill_acquire($extra_skillid, $pa);
+						$log .= '参数不合法。<br>';
+						$mode = 'command';
+						return;
 					}
-					$log .= "你习得了技能<span class=\"yellow b\">「{$clubskillname[$skillid]}」</span>！<br>";
+					else
+					{
+						eval(import_module('clubbase','item_randskills'));
+						$skillid = $sclist[(int)$skcore_choice-1];
+						\skillbase\skill_acquire($skillid, $sdata);
+						if (array_key_exists($skillid, $rs_feature))
+						{
+							foreach ($rs_feature[$skillid] as $extra_skillid) \skillbase\skill_acquire($extra_skillid, $pa);
+						}
+						$log .= "你习得了技能<span class=\"yellow b\">「{$clubskillname[$skillid]}」</span>！<br>";
+						use_skcore_success($sdata);
+					}
 				}
+				\itemmain\itms_reduce($theitem);
+				return;
 			}
-			\itemmain\itms_reduce($theitem);
-			return;
-		}
-		elseif (strpos( $itmk, 'SC2' ) === 0)
-		{
-			$log .= "你使用了<span class=\"yellow b\">{$itm}</span>。<br>";
-			$rs_skills = get_randskill($sdata, 1);
-			if (!empty($rs_skills))
+			elseif ($itmk[3] === '2')
 			{
-				eval(import_module('clubbase'));
-				$log .= "你习得了技能<span class=\"yellow b\">「{$clubskillname[$rs_skills[0]]}」</span>！<br>";
+				if ($itmk[2] === '0') $rs_skills = get_rand_clubskill($sdata, 1);
+				elseif (in_array($itmk[2], array('S','A','B','C','X')))
+				{
+					$ls_skills = array_diff($rs_cardskills[$itmk[2]], \skillbase\get_acquired_skill_array($sdata));		
+					if (empty($ls_skills)) $rs_skills = array();
+					else
+					{
+						$skillid = array_randompick($ls_skills, 1);
+						\skillbase\skill_acquire($skillid, $sdata);
+						$rs_skills = [$skillid];
+					}
+				}
+				if (!empty($rs_skills))
+				{
+					eval(import_module('clubbase'));
+					$log .= "你习得了技能<span class=\"yellow b\">「{$clubskillname[$rs_skills[0]]}」</span>！<br>";
+					use_skcore_success($sdata);
+				}
+				else
+				{
+					$log .= "但是好像什么也没有发生。<br>";
+				}
+				\itemmain\itms_reduce($theitem);
+				return;
 			}
-			else
-			{
-				$log .= "但是好像什么也没有发生。<br>";
-			}
-			\itemmain\itms_reduce($theitem);
-			return;
 		}
 		
 		$chprocess($theitem);
 	}
 	
-	function get_skcore_skilllist(&$itmsk)
+	//用于在使用技能核心后添加判定的接口
+	function use_skcore_success(&$pa)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+	}	
+	
+	function get_skcore_skilllist($itmk, &$itmsk)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('player'));
 		if (!\itemmain\check_in_itmsk('^scls', $itmsk)) 
 		{
-			$sclist = add_skcore_choices($itmsk);
+			$sclist = add_skcore_choices($itmk, $itmsk);
 		}
 		else
 		{
@@ -173,29 +241,38 @@ namespace item_randskills
 					break;
 				}
 			}
-			if ($flag) $sclist = add_skcore_choices($itmsk);
+			if ($flag) $sclist = add_skcore_choices($itmk, $itmsk);
 		}
 		return $sclist;
 	}
 	
-	function add_skcore_choices(&$itmsk)
+	function add_skcore_choices($itmk, &$itmsk)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('player'));
-		$ls_skills = get_skilllist();
+		if ($itmk[2] === '0')
+		{
+			$ls_skills = get_skilllist();
+		}
+		elseif(in_array($itmk[2], array('S','A','B','C','X')))
+		{
+			eval(import_module('item_randskills'));
+			$ls_skills = $rs_cardskills[$itmk[2]];
+		}
+		else return array();
 		$ls_skills = array_diff($ls_skills, \skillbase\get_acquired_skill_array($sdata));
 		$itmsk = \itemmain\replace_in_itmsk('^scls','',$itmsk);
 		if (!empty($ls_skills))
 		{
 			$sclist = array_randompick($ls_skills, 3);
-			$sclist = implode(',',$sclist);
-			$itmsk .= '^scls_'.\attrbase\base64_encode_comp_itmsk($sclist).'1';
+			$scstr = implode(',',$sclist);
+			$itmsk .= '^scls_'.\attrbase\base64_encode_comp_itmsk($scstr).'1';
 			return $sclist;
 		}
 		else return array();
 	}
 	
-	function get_randskill(&$pa, $count, $sktype='all')
+	function get_rand_clubskill(&$pa, $count, $sktype='all')
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('item_randskills'));

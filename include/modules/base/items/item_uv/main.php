@@ -17,6 +17,25 @@ namespace item_uv
 		$iteminfo['VF'] = '灵系书籍';
 	}
 	
+	function parse_itmuse_desc($n, $k, $e, $s, $sk){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess($n, $k, $e, $s, $sk);
+		if ((strpos($k,'V')===0) && (strpos($k,'S')!==false)){
+			eval(import_module('clubbase'));
+			if(!empty($clubskillname[$sk])){
+				$ret .= '使用后获得技能「'.$clubskillname[$sk].'」';
+			}
+			if ($sk == '249'){
+				$ret .= '：埋设陷阱伤害增加';
+			}elseif ($sk == '250') {
+				$ret .= '：受到陷阱伤害减少';
+			}elseif ($sk == '723') {
+				$ret .= '：射系武器弹夹翻倍且自动装填弹药';
+			}
+		}
+		return $ret;
+	}
+	
 	function calc_skillbook_efct($itme, $skcnt, $ws_sum)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;

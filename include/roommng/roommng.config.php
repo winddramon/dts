@@ -310,6 +310,23 @@ $roomtypelist = Array(
 					)
 				)
 			),
+			'opening-gamestate' => array(//变量名
+				'title' => '入场后游戏状况',//界面显示的提示
+				'type' => 'radio',//input类型
+				'options' => array(
+					array(
+						'value' => '40',
+						'name' => '进入连斗',
+						'title' => '入场后连斗，容易遭遇角色，不容易摸道具',
+						'default' => true,
+					),
+					array(
+						'value' => '30',
+						'name' => '停止激活',
+						'title' => '入场后只停止激活，发现率正常，死亡180人或者2禁后进入连斗',
+					)
+				)
+			),
 			'card-select' => array(//变量名
 				'title' => '卡片设置',//界面显示的提示
 				'type' => 'radio',//input类型
@@ -380,7 +397,24 @@ $roomtypelist = Array(
 						'title' => '限制时间为1禁，1禁时间严格为40分钟。为熟练玩家提供最充裕的时间来挑战伐木成就。',
 					)
 				)
-			)
+			),
+			'keep_corpse_in_searchmemory' => array(
+				'title' => '尸体拾取设置',
+				'type' => 'radio',
+				'options' => array(
+					array(
+						'value' => '1',
+						'name' => '拾取后留在视野中',
+						'title' => '拾取尸体物品后，尸体依然保留在视野中，但有一定的冷却时间。',
+						'default' => true,
+					),
+					array(
+						'value' => '0',
+						'name' => '拾取后需重新探索发现',
+						'title' => '拾取尸体物品后需要再次探索才能找到尸体，与正常模式相同。',
+					)
+				)
+			),
 		)
 	),
 	6 => Array(
@@ -409,6 +443,25 @@ $roomtypelist = Array(
 			0 => '90',
 			1 => '91',
 			2 => '92',
+		),
+		'game-option' => array(
+			'keep_corpse_in_searchmemory' => array(
+				'title' => '尸体拾取设置',
+				'type' => 'radio',
+				'options' => array(
+					array(
+						'value' => '1',
+						'name' => '拾取后留在视野中',
+						'title' => '拾取尸体物品后，尸体依然保留在视野中，但有一定的冷却时间。',
+						'default' => true,
+					),
+					array(
+						'value' => '0',
+						'name' => '拾取后需重新探索发现',
+						'title' => '拾取尸体物品后需要再次探索才能找到尸体，与正常模式相同。',
+					)
+				)
+			),
 		)
 	),
 	7 => Array(//教程模式为唯一房间
@@ -540,6 +593,30 @@ $roomtypelist = Array(
 				'tip-need-ok' => 1,//需要确认才能提交数据，目前仅对number类型有效。会多出一个确认按钮，建议选项极多的number项使用
 			),
 		),
+	),
+	12 => Array(
+		'name' => '<font class="gold b">公路模式</font>',
+		'gtype' => 20, //对应的游戏模式编号
+		'available' => true,
+		'available-start' => 4200000000, //如果设置并大于零，表明时间戳迟于此时才显示和开放
+		'available-end' => 0,//如果设置并大于零，表明时间戳早于此时才显示和开放
+		'soleroom' => false,//唯一房间，只有不存在时才会新建房间。
+		'without-ready' => true,//是否不需要点击“准备”就直接进入房间。
+		'without-valid' => false,//是否跳过加入游戏画面就直接进入房间。
+		'req-mod' => 'instance10',//前置mod
+		'pnum' => 1,	//最大参与人数，只有开启准备才有效
+		'globalnum' => 5,	//全场最大开启数目，不设或者0认为无限制
+		'privatenum' => 2,	//单人最大开启数目，不设或者0认为无限制；不需要准备的房间无视这个值
+		'leader-position' => Array(	//各个编号位置的所属队伍队长位置
+			0 => 0,
+		),
+		'color' => Array(		//队伍颜色，只需对队长设置即可
+			0 => 'ff0022',
+		),
+		'teamID' => Array(	//队伍名，只需对队长设置即可。
+			0 => '龙旺德',
+		),
+		'show-team-leader' => 0,	//是否显示“队长”标签（如队伍大于1人设为1）
 	),
 );
 	

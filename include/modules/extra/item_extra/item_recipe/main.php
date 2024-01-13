@@ -325,7 +325,9 @@ namespace item_recipe
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		
-		eval(import_module('sys','player','input'));
+		eval(import_module('sys','player'));
+		$usemode = get_var_input('usemode');
+		$itmp = get_var_input('itmp');
 		if ($mode == 'item' && $usemode == 'recipe') 
 		{
 			if ($command == 'menu')
@@ -336,7 +338,7 @@ namespace item_recipe
 			$mixlist = array();
 			for($i=1; $i<=6; $i++)
 			{
-				if(!empty(${'mitm'.$i}))
+				if(!empty(get_var_input('mitm'.$i)))
 					$mixlist[] = $i;
 			}
 			eval(import_module('item_recipe'));
@@ -349,7 +351,7 @@ namespace item_recipe
 		if ($mode == 'command' && $command == 'recipe')
 		{
 			eval(import_module('sys','player'));
-			$recipe_choice = get_var_in_module('recipe_choice', 'input');
+			$recipe_choice = get_var_input('recipe_choice');
 			if (!empty($recipe_choice))
 			{
 				$rkey = (int)$recipe_choice;
@@ -374,10 +376,11 @@ namespace item_recipe
 			$mixlist = array();
 			for($i=1; $i<=6; $i++)
 			{
-				if(!empty(${'mitm'.$i}))
+				if(!empty(get_var_input('mitm'.$i)))
 					$mixlist[] = $i;
 			}
 			eval(import_module('item_recipe'));
+			$rkey = get_var_input('rkey');
 			$minfo = $recipe_mixinfo[$rkey];
 			$ls = get_learned_recipes();
 			if (empty($minfo) || !in_array($rkey, $ls))
@@ -434,8 +437,12 @@ namespace item_recipe
 		$itmk0 = $minfo['result'][1];
 		$itme0 = $minfo['result'][2];
 		$itms0 = $minfo['result'][3];
-		if (isset($minfo['result'][4]))
+		if (isset($minfo['result'][4])){
 			$itmsk0 = $minfo['result'][4];
+			if(defined('MOD_ATTRBASE')) {
+				$itmsk0 = \attrbase\config_process_encode_comp_itmsk($itmsk0);//支持复合属性自动编码
+			}
+		}
 		else{
 			$itmsk0 = '';
 		}
