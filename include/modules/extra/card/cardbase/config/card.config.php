@@ -5263,6 +5263,47 @@ $cards = array(
 			'pls' => 26,
 		)
 	),
+	308 => array(
+		'name' => '程序员老公',
+		'rare' => 'C',
+		'pack' => 'Event Bonus',
+		'desc' => '你下班后买五个苹果，<br>如果看到红薯，买一个。',
+		'effect' => '你怎么就买了一个苹果？',
+		'desc_skills' => '开局携带一个苹果，视野里能看到红薯',
+		'energy' => 0,
+		'valid' => array(
+			'itm5' => '苹果',
+			'itmk5' => 'HB',
+			'itme5' => '90',
+			'itms5' => '1',
+			'itmsk5' => '',
+			'skills' => array(
+				'543' => '0',
+			),
+		),
+		'ignore_global_ach' => 1,//不参与终生成就判定
+	),
+	309 => array(
+		'name' => '菌菌子',
+		'rare' => 'A',
+		'pack' => 'Top Players',
+		'desc' => '很早就接触大逃杀的画师，<br>画了可可爱爱的表情包。<br><br>曾经的画画爱好者<br> 如今已是画触！',
+		'effect' => '获得高速成长特性「高速」和技能<br>「神功」，并且开局装备表情包。',
+		'desc_skills' => '「高速」：每次攻击有2/3概率额外获得1点熟练度，2/3概率额外获得1点经验值<br>「神功」：战斗时获得的熟练度+1',
+		'energy' => 100,
+		'valid' => array(
+			'arh' => '表情包',
+			'arhk' => 'DH',
+			'arhe' => '233',
+			'arhs' => '233',
+			'arhsk' => Array('u', 'i', 'e', 'w', 'p', 'z'),
+			'skills' => array(
+				'225' => '0', 
+				'229' => '0',
+			),
+		),
+	),
+	
 	341 => array(
 		'name' => '麻薯',
 		'rare' => 'B',
@@ -5892,8 +5933,7 @@ $cards = array(
 	382 => array(
 		'name' => '俏佳人',
 		'rare' => 'C',
-		'pack' => 'hidden',
-		//'pack' => 'Way of Life',
+		'pack' => 'Way of Life',
 		'desc' => '阿伟你又在打电动哦，<br>去休息一下好不好',
 		'effect' => '可以用笔记本电脑玩最新最潮的游戏<br>——ACFUN大逃杀',
 		'energy' => 0,
@@ -5917,6 +5957,46 @@ $cards = array(
 			),
 		),
 		'ignore_global_ach' => 1,//不参与终生成就判定
+	),
+	384 => array(
+		'name' => '野指针',
+		'rare' => 'B',
+		'pack' => 'Event Bonus',
+		'desc' => '警告：地址不合法',
+		'effect' => '没事，不是错误',
+		'desc_skills' => '你可以进入禁区并在禁区正常行动，但增加禁区时你并不会免疫死亡',
+		'energy' => 100,
+		'valid' => array(
+		  'skills' => array(
+				'724' => '0',
+			),
+		),
+		'ignore_global_ach' => 1,
+	),
+	385 => array(
+		'name' => '吉吉国民',
+		'rare' => 'A',
+		'pack' => 'Standard Pack',
+		'desc' => '啊米浴说的道理',
+		'effect' => '欧内的手好汉',
+		'desc_skills' => '称号固定为偶像歌姬',
+		'energy' => 100,
+		'valid' => array(
+			'club' => '25',
+			'skills' => array(
+				'10' => '0',
+				'11' => '0',
+				'12' => '0',
+				'87' => '0',
+				'88' => '0',
+				'89' => '0',
+				'90' => '0',
+				'91' => '0',
+				'92' => '0',
+				'93' => '0',
+				'94' => '0',
+			),
+		),
 	),
 	
 	1000 => array(

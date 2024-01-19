@@ -2,15 +2,22 @@
 
 namespace skill181
 {
-	global $lvupss, $lvupssref;
+	$lvupss = $lvupssref = 0;//记录升级增加歌魂上限和恢复歌魂值的临时变量
 	
 	$skill181_init_ss = 50;
 	
 	function init() 
 	{
 		define('MOD_SKILL181_INFO','club;hidden;');
-		eval(import_module('clubbase'));
+		eval(import_module('clubbase','skillbase'));
 		$clubskillname[181] = '音感';
+
+		foreach(Array(0, 4, 6, 10, 13, 14, 15, 16, 18, 19) as $i) {//大部分模式开局追加音感
+			if(!isset($valid_skills[$i])) {
+				$valid_skills[$i] = array();
+			}
+			$valid_skills[$i][] = 181;
+		}
 	}
 	
 	function acquire181(&$pa)
@@ -30,7 +37,7 @@ namespace skill181
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa);
-		if (\skillbase\skill_query(181,$pa))
+		if (\skillbase\skill_query(181,$pa) && ($pa['club'] != 17))
 		{
 			eval(import_module('skill181'));
 			$lvupss += rand(1,2);
@@ -43,7 +50,7 @@ namespace skill181
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$r = $chprocess($v, $pa);
 		eval(import_module('skill181'));
-		if (\skillbase\skill_query(181,$pa) && $lvupss)
+		if (\skillbase\skill_query(181,$pa) && ($pa['club'] != 17) && $lvupss)
 		{
 			eval(import_module('sys','player','logger'));
 			$pa['mss'] += $lvupss;

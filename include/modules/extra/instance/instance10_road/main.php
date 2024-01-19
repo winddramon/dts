@@ -4,7 +4,10 @@ namespace instance10
 {
 	function init() {
 		eval(import_module('skillbase'));
-		$valid_skills[20] = array(181,951,952,960);
+		if(!isset($valid_skills[20])) {
+			$valid_skills[20] = array();
+		}
+		$valid_skills[20] += array(181,951,952,960);
 	}
 	
 	//公路模式自动选择肉鸽来客
@@ -135,9 +138,9 @@ namespace instance10
 		{
 			$weather = 1;
 			//添加禁区
-			eval(import_module('map'));
-			$plsnum = sizeof($plsinfo) - 1;
-			$areanum += $plsnum - 8;
+			
+			$plsnum = sizeof($arealist);
+			$areanum += $plsnum - 8 + 1;
 		}
 	}
 	
@@ -160,7 +163,7 @@ namespace instance10
 				\sys\gameover($atime,'end1');
 				return;
 			}
-			if ($areanum>=$areaadd){//限时1禁
+			if (\map\get_area_wavenum() >= 1){//限时1禁
 				//胜利条件待修改
 				$result = $db->query("SELECT * FROM {$tablepre}players WHERE hp>0 AND type=0 ORDER BY card LIMIT 1");
 				$wdata = $db->fetch_array($result);
