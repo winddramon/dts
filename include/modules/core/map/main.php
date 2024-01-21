@@ -21,6 +21,12 @@ namespace map
 		return array_keys(get_var_in_module('plsinfo','map'));
 	}
 
+	//判定某个地图编号是否可用。本模块单纯判定是不是$plsinfo的其中一个键名
+	function is_plsno_available($plsno) {
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return in_array($plsno, get_all_plsno());
+	}
+
 	//获取当前是第几波禁区。
 	//纯粹用(当前禁区数-开局禁区数)除以禁区每次增加数来计算。其他模式如果有修改禁区计算方式，请一并继承并修改这个函数
 	function get_area_wavenum(){
@@ -130,9 +136,7 @@ namespace map
 			return;
 		} elseif( $alivenum <= 0 && $gamestate >= 30 ) {
 			\sys\gameover($atime,'end1');
-		} else {//没有游戏结束则重置商店和道具
-			\sys\rs_game(16+32);
-		}
+		} 
 	}
 	
 	//单次禁区增加
@@ -141,16 +145,18 @@ namespace map
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		
 		eval(import_module('sys','map'));
-		if ( $gamestate > 10 && $now > $atime ) {
+		if ( $gamestate > 10 && $now > $atime ) {//增加禁区
 			$plsnum = sizeof($arealist);
 			$areaaddlist = get_arealist_nextadd();
 			$areanum += $areaadd;
 			if($areanum >= $plsnum) $areanum = $plsnum;
 			if($hack > 0) $hack--;
 
-			post_addarea_process($atime, $areaaddlist);
+			post_addarea_process($atime, $areaaddlist);//这里判定停止激活和无人参加结局
 			
-			check_addarea_gameover($atime);
+			check_addarea_gameover($atime);//判定游戏是否结束。有一大串模块继承这里
+
+			if($gamestate > 0) \sys\rs_game(16+32); //若游戏没有结束，则重置商店和道具。2024.01.20 改到这个位置
 		} else {
 			return;
 		}

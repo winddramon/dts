@@ -74,10 +74,17 @@ namespace skill92
 				eval(import_module('logger', 'song'));
 				while (rand(0,99) < $erate)
 				{
-					\skillbase\skill_setvalue(92,'encore_flag','1',$pa);
+					\skillbase\skill_setvalue(92,'encore_flag','1',$sdata);
 					$log .= "<br><span class=\"L5 b\">但是演出还没有结束！</span><br>";
 					$songid = (int)array_randompick($learnedsongs);
-					$chprocess($songlist[$songid]['songname']);
+					$sn_new = $songlist[$songid]['songname'];
+					$chprocess($sn_new);
+				}
+				//1003中改回原先要唱的歌
+				if (isset($sn_new) && ($sn_new != $sn))
+				{
+					\skillbase\skill_setvalue(1003,'songpos',0,$sdata);
+					\skillbase\skill_setvalue(1003,'songkind',$sn,$sdata);
 				}
 			}
 		}
