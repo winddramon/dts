@@ -37,6 +37,7 @@ $packlist=array(
 	'Best DOTO',
 	'Cyber Zealots',
 	'東埔寨Protoject',//中文卡集名测试
+	'Ranmen',
 	'Balefire Rekindle',
 	'Event Bonus',
 	
@@ -55,6 +56,7 @@ $packdesc = array(
 	'Event Bonus' => '其他一些零散成就和活动奖励卡。',
 	'Cyber Zealots' => '以赛博朋克和网络梗为捏他对象的卡集。',
 	'東埔寨Protoject' => '以东之国旗舰级同人企划『朹方Project』为主题的卡集，与幻想作品如有雷同纯属必然。',
+	'Ranmen' => '以随机性为特色的卡集。',
 	'Stealth' => '一些需要显示卡片介绍的隐藏卡',
 	'hidden' => '隐藏卡片，不会悬浮显示卡片介绍，如果你看到这句话请联系天然呆管理员',
 );
@@ -78,6 +80,7 @@ $packicon = array(
 	'Way of Life' => 'pack_wayoflife.png',
 	'Best DOTO' => 'pack_game.png',
 	'東埔寨Protoject' => 'pack_touhodia.png',
+	'Ranmen' => 'pack_ranmen.png',
 	'Balefire Rekindle' => 'annabelle_a.png',
 	'Event Bonus' => 'pack_eventbonus.png',
 );
@@ -553,11 +556,11 @@ $cards = array(
 	),
 	23 => array(
 		'name' => '宇宙神触',
-		'rare' => 'A',
+		'rare' => 'B',
 		'pack' => 'Standard Pack',
 		'desc' => '熟练的高速成长玩家',
 		'effect' => '称号固定为高速成长',
-		'energy' => 80,
+		'energy' => 100,
 		'valid' => array(
 			'club' => '10',
 			'skills' => array(
@@ -675,16 +678,17 @@ $cards = array(
 		'valid' => array(
 			'club' => '20',
 			'skills' => array(
-				'10' => '0', 
-				'11' => '0', 
-				'12' => '0', 
-				'23' => '0', 
-				'27' => '0', 
-				'26' => '0',
-				'24' => '0', 
-				'54' => '0', 
-				'25' => '0', 
-				'272' => '0', 
+				'10' => '0',
+				'11' => '0',
+				'12' => '0',
+				'23' => '0',
+				'104' => '0',
+				'272' => '0',
+				'105' => '0',
+				'24' => '0',
+				'54' => '0',
+				'25' => '0',
+				'106' => '0',
 			),
 		)
 	),
@@ -1335,7 +1339,7 @@ $cards = array(
 	72 => array(
 		'name' => '方块挑战者',
 		'rare' => 'A',
-		'pack' => 'Way of Life',
+		'pack' => 'Ranmen',
 		'desc' => '猜猜他能上几个属性',
 		'effect' => '每隔一段时间可以生成一个方块',
 		'energy' => 100,
@@ -1494,7 +1498,7 @@ $cards = array(
 	81 => array(
 		'name' => '篝火挑战者',
 		'rare' => 'A',
-		'pack' => 'Way of Life',
+		'pack' => 'Ranmen',
 		'desc' => '来自早已消亡的篝火服的神秘玩家',
 		'effect' => '随机发动一张身份卡的效果<br>S:20% A:40% B:20% C:20%',
 		'energy' => 100,
@@ -2350,12 +2354,12 @@ $cards = array(
 	),
 	137 => array(
 		'name' => '大小姐',
-		'rare' => 'A',
+		'rare' => 'B',
 		'pack' => 'Standard Pack',
 		'desc' => '2016年，<br>大逃杀战场被核子的火焰笼罩！<br>草木干枯，大地开裂，<br>拳法家像死绝了一样',
 		'effect' => '但是拳法家并没有死绝！',
 		'desc_skills' => '称号固定为铁拳无敌',
-		'energy' => 130,
+		'energy' => 150,
 		'valid' => array(
 			'club' => '19',
 			'skills' => array(
@@ -2738,17 +2742,17 @@ $cards = array(
 		'valid' => array(
 			'club' => '20',
 			'skills' => array(
-				'10' => '0', 
-				'11' => '0', 
-				'12' => '0', 
-				'23' => '0', 
-				'420' => '0',
-				'27' => '0', 
-				'26' => '0',
-				'24' => '0', 
-				'54' => '0', 
-				'25' => '0', 
-				'272' => '0', 
+				'10' => '0',
+				'11' => '0',
+				'12' => '0',
+				'23' => '0',
+				'104' => '0',
+				'272' => '0',
+				'105' => '0',
+				'24' => '0',
+				'54' => '0',
+				'25' => '0',
+				'106' => '0',
 			),
 			'itm1' => array('红色方块', '绿色方块', '蓝色方块', '黄色方块', '金色方块', '银色方块', '黑色方块', '白色方块'),
 			'itmk1' => 'X',
@@ -2932,7 +2936,7 @@ $cards = array(
 		'name' => '纸条挑战者 林苍月',
 		'title' => '纸条挑战者',
 		'rare' => 'B',
-		'pack' => 'Way of Life',
+		'pack' => 'Ranmen',
 		'desc' => '嗯？好像还有几张没撒完',
 		'effect' => '开局时，后四个包裹栏全塞满提示纸条',
 		'energy' => 100,
@@ -3290,7 +3294,7 @@ $cards = array(
 	189 => array(
 		'name' => '锁血挑战者',
 		'rare' => 'C',
-		'pack' => 'Way of Life',
+		'pack' => 'Ranmen',
 		'desc' => '我相信着我的卡组！',
 		'effect' => '开局HP为1点，<br>额外携带1份游戏王卡牌包',
 		'energy' => 0,
@@ -3620,8 +3624,8 @@ $cards = array(
 		'rare' => 'A',
 		'pack' => 'Event Bonus',
 		'desc' => '“只要是为了你，即使我被困在<br>永远的迷宫中，也没关系。”',
-		'effect' => '获得技能「时停」，但不能赢得幸存胜利',
-		'desc_skills' => '「时停」：消耗30点怒气，能停止整个幻境的时间3秒钟，冷却时间30秒',
+		'effect' => '获得技能「时停」，<br>但不能赢得「最后幸存」胜利',
+		'desc_skills' => '「时停」：消耗30点怒气，能停止整个幻境的时间3秒钟，冷却时间30秒。对拥有时间能力的角色无效',
 		'energy' => 100,
 		'valid' => array(
 			'skills' => array(
@@ -3830,7 +3834,7 @@ $cards = array(
 	220 => array(
 		'name' => '钓鱼吧老哥',
 		'rare' => 'C',
-		'pack' => 'Cyber Zealots',
+		'pack' => 'Ranmen',
 		'desc' => '不知道，大概40斤吧',
 		'effect' => '开局装备钓鱼杆并携带他的收获',
 		//'desc_skills' => '但是没有防御属性',
@@ -4031,10 +4035,10 @@ $cards = array(
 	231 => array(
 		'name' => '卡片男',
 		'rare' => 'B',
-		'pack' => 'Cyber Zealots',
-		'desc' => '看，这个男人捡到一张神秘的小卡片',
-		'effect' => '开局携带一份卡牌包',
-		'energy' => 0,
+		'pack' => 'Ranmen',
+		'desc' => '看，这个男人叫小帅，<br>他捡到了一张神秘的小卡片',
+		'effect' => '开局携带一份随机的卡牌包',
+		'energy' => 100,
 		'valid' => array(
 		  'itm6' => '卡牌包',
 			'itmk6' => Array('VO3', 'VO2', 'VO2', 'VO2', 'VO9', 'VO9', 'VO9', 'VO9', 'VO9', 'VO9'),
@@ -4066,7 +4070,7 @@ $cards = array(
 	233 => array(
 		'name' => '阿林百人众',
 		'rare' => 'A',
-		'pack' => 'Cyber Zealots',
+		'pack' => 'Ranmen',
 		'desc' => '据说林无月前两年已经死了，<br>现在管理幻境的都是她的亲友团<br>「阿林百人众」。<br>她临死前给每个人发了一个小本子，里面是一百多页如何扮演她的心得。',
 		'effect' => '开局能复制并获取场上存活NPC的一项技能（包括称号技能）',
 		'energy' => 100,
@@ -4181,7 +4185,7 @@ $cards = array(
 	240 => array(
 		'name' => '网络爬虫',
 		'rare' => 'B',
-		'pack' => 'Cyber Zealots',
+		'pack' => 'Ranmen',
 		'desc' => '爬吗？',
 		'effect' => '爬',
 		'desc_skills' => '开局能复制并获得场上存活的NPC身上的一件道具',
@@ -4488,7 +4492,7 @@ $cards = array(
 		'name' => '初动',
 		'ruby' => 'FirstMove',
 		'rare' => 'S',
-		'pack' => 'Standard Pack',
+		'pack' => 'Ranmen',
 		'desc' => '西之国于2017年制造的最先进的AI，下井字棋的水平远远超过人类。<br><br><span class="evergreen b">『它在完全信息博弈中是不败的。<br>可惜的是现实并不是一个<br>完全信息博弈游戏。』</span>',
 		'effect' => '称号固定为走路萌物，但每升5级可以从五个称号技能中选择一个学习（总共可学习10次，某些技能不可选）',
 		'energy' => 100,
@@ -4505,7 +4509,7 @@ $cards = array(
 	261 => array(
 		'name' => '随机数眷顾者',
 		'rare' => 'B',
-		'pack' => 'Standard Pack',
+		'pack' => 'Ranmen',
 		'desc' => '每次抽签都有好结果的幸运儿<br><br><span class="evergreen b">『随机看起来最弱，<br>有时却是最强。』</span>',
 		'effect' => '称号固定为走路萌物，但开局时会随机获得1个称号特性和6个技能',
 		'energy' => 100,
@@ -4874,7 +4878,7 @@ $cards = array(
 	283 => array(
 		'name' => '随便',
 		'rare' => 'C',
-		'pack' => 'Standard Pack',
+		'pack' => 'Ranmen',
 		'desc' => '随便',
 		'effect' => '随便',
 		'desc_skills' => '开局随便选一个称号',
@@ -4965,7 +4969,7 @@ $cards = array(
 	289 => array(
 		'name' => '拷贝猫',
 		'rare' => 'B',
-		'pack' => 'Cyber Zealots',
+		'pack' => 'Ranmen',
 		'desc' => '这张图猫鼠队铁定跑不出来',
 		'effect' => '结算！',
 		'desc_skills' => '开局能复制并获取场上存活玩家的一项技能（包括称号技能）',
@@ -5318,6 +5322,39 @@ $cards = array(
 				'229' => '0',
 			),
 		),
+	),
+	310 => array(
+		'name' => '姬械匠神',
+		'rare' => 'S',
+		'pack' => '東埔寨Protoject',
+		'desc' => '会教你唱山歌的广西烧烤摊大妈',
+		'effect' => '开局称号为偶像歌姬，但技能为偶像歌姬特性「歌姬」、技能「安魂」「夺目」「回响」和妙手天成特性「妙手」、技能「精工」「沉心」「铸血」',
+		'desc_skills' => '「歌姬」：初始和升级获得歌魂增加；初始习得歌曲《Alicemagic》和《Crow Song》
+		<br>「安魂」：战斗技，本次攻击属性伤害+30%并会根据唱歌带来的临时增益数量而继续强化
+		<br>「夺目」：在同一地点唱歌而消耗的歌魂累计达到240点时，该地点的角色对你的先制率会下降
+		<br>「回响」：根据你歌魂与歌魂上限的比例关系获得「音波」属性或者「激奏2」属性
+		<br>「妙手」：每次合成时获得2-4点经验值，升级后每次合成能获得额外的经验值和熟练度
+		<br>「精工」：合成武器或防具时可能获得额外的效果值、耐久值与属性，可升级让概率和效果增加
+		<br>「沉心」：消耗所有怒气值使下一次合成产物的效果值与耐久值增加
+		<br>「铸血」：消耗50点生命上限，使下一次合成产物获得至多3个随机额外属性，且产物类别可能发生变化',
+		'energy' => 100,
+		'valid' => array(
+		  'club' => '25',
+			'skills' => array(
+				'10' => '0', 
+				'11' => '0', 
+				'12' => '0',
+				'87' => '0',
+				'90' => '0',
+				'91' => '0',
+				'93' => '0',
+				'97' => '0',
+				'99' => '0',
+				'100' => '0',
+				'101' => '0',
+				'1003' => array('learnedsongs' => '1_2'),
+			),
+		)
 	),
 	
 	341 => array(
@@ -5873,7 +5910,7 @@ $cards = array(
 	377 => array(
 		'name' => '随机数挑战者',
 		'rare' => 'C',
-		'pack' => 'Way of Life',
+		'pack' => 'Ranmen',
 		'desc' => '如果有什么操作着这个世界的随机，<br>那么这就是我的反叛！',
 		'effect' => '你可以随时抛硬币和丢骰子',
 		'desc_skills' => '但是没有什么额外的作用',
@@ -5887,7 +5924,7 @@ $cards = array(
 	378 => array(
 		'name' => '随机数大神叛军',
 		'rare' => 'M',
-		'pack' => 'Way of Life',
+		'pack' => 'Ranmen',
 		'desc' => '闭眼选一个',
 		'effect' => '你移动时会随机选择一个目标地点；获得物品时会变为获得一个随机商店或地图道具；遭遇NPC时会变为遭遇随机地点的一个NPC',
 		'energy' => 0,
@@ -5900,7 +5937,7 @@ $cards = array(
 	379 => array(
 		'name' => '硬币（？）',
 		'rare' => 'M',
-		'pack' => 'Way of Life',
+		'pack' => 'Ranmen',
 		'desc' => '你是一枚硬币。<br>随机数大神的信徒们沐浴更衣，然后虔诚地将你高高抛起，以此祈求神迹',
 		'effect' => '你入场时有一半概率脸朝下',
 		'energy' => 0,
@@ -5949,7 +5986,7 @@ $cards = array(
 	382 => array(
 		'name' => '俏佳人',
 		'rare' => 'C',
-		'pack' => 'Way of Life',
+		'pack' => 'Ranmen',
 		'desc' => '阿伟你又在打电动哦，<br>去休息一下好不好',
 		'effect' => '可以用笔记本电脑玩最新最潮的游戏<br>——ACFUN大逃杀',
 		'energy' => 0,
@@ -6036,6 +6073,140 @@ $cards = array(
 				'101' => '0',
 				'102' => '0',
 				'103' => '0',
+			),
+		),
+	),
+	387 => array(
+		'name' => '回坑挑战者',
+		'rare' => 'B',
+		'pack' => 'Way of Life',
+		'desc' => '先氪个直升包',
+		'effect' => '开局为30级，并获得8点技能点',
+		'desc_skills' => '但是初始经验值不增加',
+		'energy' => 150,
+		'valid' => array(
+			'lvl' => '30',
+			'skillpoint' => '+8',
+		),
+	),
+	388 => array(
+		'name' => '噬魂者',
+		'rare' => 'B',
+		'pack' => 'Way of Life',
+		'desc' => '拥有吞食灵魂能力的篝火服幸存者',
+		'effect' => '做人最重要的是火候',
+		'desc_skills' => '销毁尸体时会得到命体回复类别的灵魂碎片，并可以使用<br>打火机强化灵魂碎片，但食用其他补给品效果-70%',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'725' => '0',
+			),
+		),
+	),
+	389 => array(
+		'name' => '大统领',
+		'rare' => 'S',
+		'pack' => 'Standard Pack',
+		'desc' => '『准备进入地狱吧！』',
+		'effect' => '称号固定为铁拳无敌（没有技能「尊严」），且获得妙手天成技能「魂兵」，但只能嵌入斩系武器',
+		//'desc_skills' => '',
+		'energy' => 100,
+		'valid' => array(
+			'club' => '19',
+			'skills' => array(
+				'10' => '0',
+				'11' => '0',
+				'12' => '0',
+				'256' => '0',
+				'258' => '0',
+				'257' => '0',
+				'260' => '0',
+				'259' => '0',
+				'274' => '0',
+				'262' => '0',
+				'263' => '0',
+				'261' => '0',
+				'103' => '0',
+				'726' => '0',
+			),
+		),
+	),
+	390 => array(
+		'name' => '睿智机器人',
+		'rare' => 'A',
+		'pack' => 'Ranmen',
+		'desc' => '喜提四强',
+		'effect' => '获得宝石骑士技能「晶环」和战斗技「整理」',
+		'desc_skills' => '「整理」：本次攻击最终伤害+10%，「晶环」生效概率永久+5%。消耗50怒气',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'104' => '0',
+				'727' => '0',
+			),
+		),
+	),
+	391 => array(
+		'name' => '手办控',
+		'rare' => 'A',
+		'pack' => 'Ranmen',
+		'desc' => '<span class="ltazure b">“什么，是DTS的周边？<br>给我也整一个！”</span>',
+		'effect' => '开局获得一个能开出特殊饰品的盲盒',
+		'energy' => 100,
+		'valid' => array(
+			'itm6' => '礼品盲盒',
+			'itmk6' => 'p',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => array('^res_<:comp_itmsk:>{棕色的Howling手办.A.1.1.N.}1^rtype4^reptype1', '^res_<:comp_itmsk:>{深蓝色的S.A.S手办.A.1.1.n.}1^rtype4^reptype1', '^res_<:comp_itmsk:>{天青色的Annabelle手办.A.1.1.i.}1^rtype4^reptype1', '^res_<:comp_itmsk:>{红色的星海手办.A.1.1.M.}1^rtype4^reptype1', '^res_<:comp_itmsk:>{粉色的Sophia手办.A.1.1.w.}1^rtype4^reptype1'),
+		),
+	),
+	392 => array(
+		'name' => '斯洛蒂的盒子',
+		'rare' => 'B',
+		'pack' => 'Ranmen',
+		'desc' => '某天早晨，你的床头多了一个盒子。<br><br>盒子里传来瓮声瓮气的话音：',
+		'effect' => '“喵，把钱放进来有一半概率翻倍，也有一半概率消失，很公平吧喵！”',
+		'desc_skills' => '可以不限次数使用',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'728' => '0',
+			),
+		),
+	),
+	393 => array(
+		'name' => '甜圈挑战者',
+		'rare' => 'B',
+		'pack' => 'Ranmen',
+		'desc' => '可是，你真的很想吃那个甜甜圈……',
+		'effect' => '开局大概率获得一个<br>增加生命上限的甜甜圈',
+		'desc_skills' => '但也有可能是别的奇怪的东西',
+		'energy' => 100,
+		'valid' => array(
+			'itm6' => '甜甜圈',
+			'itmk6' => 'MH',
+			'itme6' => array('10','30','50','70','90','110'),
+			'itms6' => '1',
+			'itmsk6' => array('','','','','','','','','','^res_<:comp_itmsk:>{悔恨.Y.1.1.O.}1^rtype3^reptype1'),
+		),
+	),
+	394 => array(
+		'name' => 'roll点挑战者',
+		'rare' => 'S',
+		'pack' => 'Ranmen',
+		'desc' => '梭哈！梭哈！梭哈！！！<br>赢了会所嫩模，输了下海干活！',
+		'effect' => '开局获得一个只有自己能使用的二十面骰，使用后可将自己的所有技能替换为随机技能',
+		'desc_skills' => '生命、攻防、治愈等少数技能不会被替换',
+		'energy' => 100,
+		'valid' => array(
+			'itm6' => '二十面骰',
+			'itmk6' => 'Y',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => '',
+			'skills' => array(
+				'729' => '0',
 			),
 		),
 	),

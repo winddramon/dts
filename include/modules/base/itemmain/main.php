@@ -318,6 +318,7 @@ namespace itemmain
 		$chprocess();
 	}
 	
+	//游戏开局或者过禁时，刷地图道具
 	function rs_game($xmode)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -326,16 +327,26 @@ namespace itemmain
 		
 		eval(import_module('sys','map','itemmain'));
 		if ($xmode & 16) {	//地图道具初始化
-			$plsnum = \map\get_plsnum();
-			$iqry = '';
-			$itemlist = get_itemfilecont();
-			$itemlist = itemlist_data_process($itemlist);
-			$in = sizeof($itemlist);
-			$an = \map\get_area_wavenum();
-			for($i = 1; $i < $in; $i++) {
-				if(!empty($itemlist[$i]) && strpos($itemlist[$i],',')!==false){
-					list($iarea,$imap,$inum,$iname,$ikind,$ieff,$ista,$iskind) = mapitem_data_process(explode(',',$itemlist[$i]));
-					if( $iarea == $an || $iarea == 99 || ($iarea == 98 && $an > 0)) {
+			lay_mapitem();
+		}
+	}
+
+	//在地图上刷新道具的主要函数
+	function lay_mapitem($lpls = -1)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','map','itemmain'));
+		$plsnum = \map\get_plsnum();
+		$iqry = '';
+		$itemlist = get_itemfilecont();
+		$itemlist = itemlist_data_process($itemlist);
+		$in = sizeof($itemlist);
+		$an = \map\get_area_wavenum();
+		for($i = 1; $i < $in; $i++) {
+			if(!empty($itemlist[$i]) && substr($itemlist[$i], 0, 1) != '=' && strpos($itemlist[$i],',')!==false){//跳过空行和注释行（没有逗号的行）
+				list($iarea,$imap,$inum,$iname,$ikind,$ieff,$ista,$iskind) = mapitem_data_process(explode(',',$itemlist[$i]));
+				if( $iarea == $an || $iarea == 99 || ($iarea == 98 && $an > 0)) {//禁区判定，99为每禁，98为一禁后每禁
+					if($lpls == -1 || $lpls == $imap){//地图判定，-1为不限制（刷所有固定道具和全图随机道具），99为全图随机
 						for($j = $inum; $j>0; $j--) {
 							if ($imap == 99)
 							{
@@ -350,10 +361,10 @@ namespace itemmain
 					}
 				}
 			}
-			if(!empty($iqry)){
-				$iqry = "INSERT INTO {$tablepre}mapitem (itm,itmk,itme,itms,itmsk,pls) VALUES ".substr($iqry, 0, -1);
-				$db->query($iqry);
-			}
+		}
+		if(!empty($iqry)){
+			$iqry = "INSERT INTO {$tablepre}mapitem (itm,itmk,itme,itms,itmsk,pls) VALUES ".substr($iqry, 0, -1);
+			$db->query($iqry);
 		}
 	}
 	
@@ -541,12 +552,23 @@ namespace itemmain
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		//echo 'itemmain ';
-		$find_obbs = calculate_itemfind_obbs()*calculate_itemfind_obbs_multiplier();
-		$dice = rand(0,99);
-		if($dice < $find_obbs) {
+		if(check_discover_item_found()) {
 			return discover_item();
 		}
 		return $chprocess($schmode);
+	}
+
+	//判定是否发现道具
+	//传参$debuff为发现率增益值（减益值）
+	function check_discover_item_found($buff = 0){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$find_obbs = $buff + calculate_itemfind_obbs()*calculate_itemfind_obbs_multiplier();
+		$dice = rand(0,99);
+		//echo $dice.' '.$find_obbs.'<br>';
+		if($dice < $find_obbs) {
+			return true;
+		}
+		return false;
 	}
 	
 	function pre_act(){

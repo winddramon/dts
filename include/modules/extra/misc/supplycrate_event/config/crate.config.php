@@ -1,0 +1,95 @@
+<?php
+
+namespace supplycrate_event
+{
+	$crate_npc = array
+	(
+		'mode' => 1,
+		'num' => 0,
+		'pass' => 'bra',
+		'club' => 0,
+		'bid' => 0,
+		'inf' => '',
+		'rage' => 0,
+		'pose'=> 0,
+		'tactic' => 0,
+		'killnum' => 0,
+		'teamID' => '',
+		'teampass' => '',
+		'gd' => 'm',
+		'pls' => 99,
+		'skill' => 0,
+		'money' => 0,
+		'sub' => array
+		(
+			0 => array
+			(
+				'name' => '运载机器人A型',
+				'icon' => 'n_901.png',
+				'mhp' => 8888,
+				'msp' => 400,
+				'att' => 0,
+				'def' => 8888,
+				'lvl' => 1,	
+				'skills' => array('803'=>'0', '804'=>'0'),
+				'wep' => '探照灯',
+				'wepk' => 'WP',
+				'wepe' => 1,
+				'weps' => 240,
+				'wepsk' => '',
+				'arb' => '坚硬的铁壳',
+				'arbk' => 'DB',
+				'arbe' => 240,
+				'arbs' => 360,
+				'arbsk' => 'Aa',
+				'description' => '运送稀有道具的机器人，物理防御力意外的很高。',
+			),
+			1 => array
+			(
+				'name' => '运载机器人B型',
+				'icon' => 'n_902.png',
+				'mhp' => 1777,
+				'msp' => 400,
+				'att' => 0,
+				'def' => 888,
+				'lvl' => 1,	
+				'skills' => array('803'=>'0', '804'=>'1'),
+				'wep' => '探照灯',
+				'wepk' => 'WP',
+				'wepe' => 1,
+				'weps' => 240,
+				'wepsk' => '',
+				'arb' => '坚硬的铁壳',
+				'arbk' => 'DB',
+				'arbe' => 240,
+				'arbs' => 360,
+				'arbsk' => 'Aa',
+				'description' => '运送红杀制式装备的运载机器人，有一定的物理防御力。',
+			),
+			2 => array
+			(
+				'name' => '运载机器人C型',
+				'icon' => 'n_903.png',
+				'mhp' => 666,
+				'msp' => 400,
+				'att' => 0,
+				'def' => 233,
+				'lvl' => 1,	
+				'skills' => array('803'=>'0', '804'=>'2'),
+				'wep' => '探照灯',
+				'wepk' => 'WP',
+				'wepe' => 1,
+				'weps' => 240,
+				'wepsk' => '',
+				'arb' => '坚硬的铁壳',
+				'arbk' => 'DB',
+				'arbe' => 240,
+				'arbs' => 360,
+				'arbsk' => 'Aa',
+				'description' => '运送补给道具的运载机器人，稍微有一些防御力。',
+			),
+		),
+	);
+	
+}
+?>
