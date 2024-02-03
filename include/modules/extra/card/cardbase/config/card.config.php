@@ -4072,7 +4072,7 @@ $cards = array(
 		'rare' => 'A',
 		'pack' => 'Ranmen',
 		'desc' => '据说林无月前两年已经死了，<br>现在管理幻境的都是她的亲友团<br>「阿林百人众」。<br>她临死前给每个人发了一个小本子，里面是一百多页如何扮演她的心得。',
-		'effect' => '开局能复制并获取场上存活NPC的一项技能（包括称号技能）',
+		'effect' => '开局能随机复制并获取场上存活NPC的一项技能（包括称号技能）',
 		'energy' => 100,
 		'valid' => array(
 		  'skills' => array(
@@ -4188,7 +4188,7 @@ $cards = array(
 		'pack' => 'Ranmen',
 		'desc' => '爬吗？',
 		'effect' => '爬',
-		'desc_skills' => '开局能复制并获得场上存活的NPC身上的一件道具',
+		'desc_skills' => '开局能随机复制并获得场上存活的NPC身上的一件道具',
 		'energy' => 100,
 		'valid' => array(
 		  'skills' => array(
@@ -4972,7 +4972,7 @@ $cards = array(
 		'pack' => 'Ranmen',
 		'desc' => '这张图猫鼠队铁定跑不出来',
 		'effect' => '结算！',
-		'desc_skills' => '开局能复制并获取场上存活玩家的一项技能（包括称号技能）',
+		'desc_skills' => '开局能随机复制并获取场上存活玩家的一项技能（包括称号技能）',
 		'energy' => 100,
 		'valid' => array(
 		  'skills' => array(
@@ -5325,7 +5325,7 @@ $cards = array(
 	),
 	310 => array(
 		'name' => '姬械匠神',
-		'rare' => 'S',
+		'rare' => 'A',
 		'pack' => '東埔寨Protoject',
 		'desc' => '会教你唱山歌的广西烧烤摊大妈',
 		'effect' => '开局称号为偶像歌姬，但技能为偶像歌姬特性「歌姬」、技能「安魂」「夺目」「回响」和妙手天成特性「妙手」、技能「精工」「沉心」「铸血」',
@@ -6095,9 +6095,19 @@ $cards = array(
 		'pack' => 'Way of Life',
 		'desc' => '拥有吞食灵魂能力的篝火服幸存者',
 		'effect' => '做人最重要的是火候',
-		'desc_skills' => '销毁尸体时会得到命体回复类别的灵魂碎片，并可以使用<br>打火机强化灵魂碎片，但食用其他补给品效果-70%',
+		'desc_skills' => '开局携带的面包和矿泉水变为灵魂碎片但效耐降低<br>销毁尸体时会得到命体回复类别的灵魂碎片，并可以使用<br>打火机强化灵魂碎片，但食用其他补给品效果-70%',
 		'energy' => 100,
 		'valid' => array(
+			'itm1' => '褪色的灵魂碎片',
+			'itmk1' => 'HB',
+			'itme1' => '70',
+			'itms1' => '10',
+			'itmsk1' => '',
+			'itm2' => '褪色的灵魂碎片',
+			'itmk2' => 'HB',
+			'itme2' => '70',
+			'itms2' => '10',
+			'itmsk2' => '',
 			'skills' => array(
 				'725' => '0',
 			),
@@ -6137,7 +6147,7 @@ $cards = array(
 		'pack' => 'Ranmen',
 		'desc' => '喜提四强',
 		'effect' => '获得宝石骑士技能「晶环」和战斗技「整理」',
-		'desc_skills' => '「整理」：本次攻击最终伤害+10%，「晶环」生效概率永久+5%。消耗50怒气',
+		'desc_skills' => '「晶环」：可以吸收方块道具使自己在攻击时概率视为具有方块对应的属性<br>「整理」：本次攻击最终伤害+10%，「晶环」生效概率永久+5%。消耗50怒气',
 		'energy' => 100,
 		'valid' => array(
 			'skills' => array(
@@ -6158,7 +6168,7 @@ $cards = array(
 			'itmk6' => 'p',
 			'itme6' => '1',
 			'itms6' => '1',
-			'itmsk6' => array('^res_<:comp_itmsk:>{棕色的Howling手办.A.1.1.N.}1^rtype4^reptype1', '^res_<:comp_itmsk:>{深蓝色的S.A.S手办.A.1.1.n.}1^rtype4^reptype1', '^res_<:comp_itmsk:>{天青色的Annabelle手办.A.1.1.i.}1^rtype4^reptype1', '^res_<:comp_itmsk:>{红色的星海手办.A.1.1.M.}1^rtype4^reptype1', '^res_<:comp_itmsk:>{粉色的Sophia手办.A.1.1.w.}1^rtype4^reptype1'),
+			'itmsk6' => array('^res_<:comp_itmsk:>{棕色的Howling手办.A.1.1.N.}1^rtype4^reptype1', '^res_<:comp_itmsk:>{深蓝色的SAS手办.A.1.1.n.}1^rtype4^reptype1', '^res_<:comp_itmsk:>{天青色的Annabelle手办.A.1.1.i.}1^rtype4^reptype1', '^res_<:comp_itmsk:>{红色的星海手办.A.1.1.M.}1^rtype4^reptype1', '^res_<:comp_itmsk:>{粉色的Sophia手办.A.1.1.w.}1^rtype4^reptype1'),
 		),
 	),
 	392 => array(
@@ -6195,7 +6205,7 @@ $cards = array(
 		'name' => 'roll点挑战者',
 		'rare' => 'S',
 		'pack' => 'Ranmen',
-		'desc' => '梭哈！梭哈！梭哈！！！<br>赢了会所嫩模，输了下海干活！',
+		'desc' => '梭哈！梭哈！梭哈！！！<br>赢了会所嫩模，输了会所嫩模！',
 		'effect' => '开局获得一个只有自己能使用的二十面骰，使用后可将自己的所有技能替换为随机技能',
 		'desc_skills' => '生命、攻防、治愈等少数技能不会被替换',
 		'energy' => 100,
@@ -6209,6 +6219,138 @@ $cards = array(
 				'729' => '0',
 			),
 		),
+	),
+	395 => array(
+		'name' => '麦块挑战者',
+		'rare' => 'B',
+		'pack' => 'Ranmen',
+		'desc' => '接下来我要推荐一款没有圆的游戏',
+		'effect' => '开局获得一个特殊的方块',
+		'desc_skills' => '这个方块当然是有用的',
+		'energy' => 120,
+		'valid' => array(
+			'rand_sets' => array(
+				array(
+					'itm6' => '红石方块',
+					'itmsk6' => '^res_<:comp_itmsk:>{红色方块.X.1.3..}1^reptype2^rtype4',
+				),
+				array(
+					'itm6' => '草方块',
+					'itmsk6' => '^res_<:comp_itmsk:>{绿色方块.X.1.3..}1^reptype2^rtype4',
+				),
+				array(
+					'itm6' => '蓝冰方块',
+					'itmsk6' => '^res_<:comp_itmsk:>{蓝色方块.X.1.3..}1^reptype2^rtype4',
+				),
+				array(
+					'itm6' => '泥土方块',
+					'itmsk6' => '^res_<:comp_itmsk:>{黄色方块.X.1.3..}1^reptype2^rtype4',
+				),
+				array(
+					'itm6' => '黄金方块',
+					'itmsk6' => '^res_<:comp_itmsk:>{金色方块.X.1.3..}1^reptype2^rtype4',
+				),
+				array(
+					'itm6' => '煤炭方块',
+					'itmsk6' => '^res_<:comp_itmsk:>{黑色方块.X.1.3..}1^reptype2^rtype4',
+				),
+				array(
+					'itm6' => '石英方块',
+					'itmsk6' => '^res_<:comp_itmsk:>{白色方块.X.1.3..}1^reptype2^rtype4',
+				),
+				array(
+					'itm6' => '雪方块',
+					'itmsk6' => 'O^res_<:comp_itmsk:>{白色方块.X.1.3..}1^reptype2^rtype4',
+				),
+				array(
+					'itm6' => '玻璃方块',
+					'itmsk6' => '^res_<:comp_itmsk:>{水晶方块.X.1.3..}1^reptype2^rtype4',
+				),
+			),
+			'itmk6' => 'X',
+			'itme6' => '1',
+			'itms6' => '1',
+		),
+	),
+	396 => array(
+		'name' => '梅尔菲的魔术师',
+		'rare' => 'B',
+		'pack' => 'Ranmen',
+		'desc' => '童话动物之森有好多个性丰富可爱的动物们——这是小兔子，这是小猫，这是小狗，这是兽王阿尔法，这是天霆号阿宙斯',
+		'effect' => '开局装备一个礼帽。你放入储物装备的道具会变成随机的小动物',
+		'energy' => 100,
+		'valid' => array(
+			'arh' => '魔术礼帽',
+			'arhk' => 'DH',
+			'arhe' => '33',
+			'arhs' => '15',
+			'arhsk' => '^st1^vol1',
+			'skills' => array(
+				'730' => '0',
+			),
+		),
+	),
+	397 => array(
+		'name' => '韭菜',
+		'rare' => 'B',
+		'pack' => 'Ranmen',
+		'desc' => '我相信今天是大奇迹日，<br>一定会涨的！',
+		'effect' => '今天回到家，煮了点面吃',
+		'desc_skills' => '可以在市场中买卖特定道具，这些道具的价格会随机涨跌',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'731' => '0',
+			),
+		),
+	),
+	398 => array(
+		'name' => '水管工',
+		'rare' => 'M',
+		'pack' => 'Event Bonus',
+		'desc' => '你是新来的水管工小马，总裁安排你去修好正在漏雪的水管',
+		'effect' => '上一任水管工小林跑路前，给你留下了一张纸条',
+		'desc_skills' => '开局获得一张纸条和三根漏水的水管。',
+		'energy' => 0,
+		'valid' => array(
+			'itm0' => '提示纸条SNOW',
+			'itmk0' => 'Z',
+			'itme0' => '1',
+			'itms0' => '1',
+			'itm4' => '漏水的雪管',
+			'itmk4' => 'Z',
+			'itme4' => '1',
+			'itms4' => '1',
+			'itm5' => '漏雪的水管',
+			'itmk5' => 'Z',
+			'itme5' => '1',
+			'itms5' => '1',
+			'itm6' => '漏雪的雪管',
+			'itmk6' => 'Z',
+			'itme6' => '1',
+			'itms6' => '1',
+			'rand_sets' => array(
+				array(
+					'itmsk4' => 'O^skflag732',
+					'itmsk5' => 'O',
+					'itmsk6' => 'O'
+				),
+				array(
+					'itmsk4' => 'O',
+					'itmsk5' => 'O^skflag732',
+					'itmsk6' => 'O'
+				),
+				array(
+					'itmsk4' => 'O',
+					'itmsk5' => 'O',
+					'itmsk6' => 'O^skflag732'
+				)
+			),
+			'skills' => array(
+				'732' => '0',
+			),
+		),
+		'ignore_global_ach' => 1,
 	),
 	
 	1000 => array(

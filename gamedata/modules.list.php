@@ -387,6 +387,7 @@ skill541,extra/card/skills/skill541/,1
 npc_action,extra/npc_action/,1
 skill720,extra/card/skills/skill720/,1
 get_qiegao_in_battle,extra/misc/get_qiegao_in_battle/,1
+logistics,extra/misc/logistics/,1
 skill43,extra/club/skills/skill43/,1
 itemnumlist,extra/item_extra/itemnumlist/,1
 skill56,extra/club/skills/skill56/,1
@@ -395,6 +396,8 @@ skill329,extra/activities/nationalday2017/skill329/,1
 skill512,extra/card/skills/skill512/,1
 addnpc_event,extra/misc/addnpc_event/,1
 skill961,extra/instance/instance10_road/skill961/,1
+supplycrate_event,extra/misc/supplycrate_event/,1
+skill731,extra/card/skills/skill731/,1
 item_randskills,extra/item_extra/item_randskills/,1
 skill490,extra/card/skills/skill490/,1
 skill430,extra/card/skills/skill430/,1
@@ -426,6 +429,7 @@ skill96,extra/club/skills/skill96/,1
 skill102,extra/club/skills/skill102/,1
 skill103,extra/club/skills/skill103/,1
 skill104,extra/club/skills/skill104/,1
+skill732,extra/card/skills/skill732/,1
 skill1000,extra/instance/instance7_tutorial/skill1000/,1
 skill711,extra/card/skills/skill711/,1
 skill1007,extra/npc_action/skill1007/,1
@@ -435,7 +439,6 @@ gtype1,extra/instance/gtype1/main/,1
 randmix,extra/misc/randmix/,1
 skill57,extra/club/skills/skill57/,1
 skill436,extra/card/skills/skill436/,1
-supplycrate_event,extra/misc/supplycrate_event/,1
 skill729,extra/card/skills/skill729/,1
 dualwep,base/weapon/dualwep/,1
 wep_b_extra_reloading,extra/item_extra/wep_b_extra_reloading/,1
@@ -482,7 +485,6 @@ skill448,extra/card/skills/skill448/,1
 skill463,extra/card/skills/skill463/,1
 skill465,extra/card/skills/skill465/,1
 skill478,extra/card/skills/skill478/,1
-skill272,extra/club/skills/skill272/,1
 skill521,extra/card/skills/skill521/,1
 skill522,extra/card/skills/skill522/,1
 skill523,extra/card/skills/skill523/,1
@@ -501,7 +503,6 @@ item_umb,extra/item_extra/item_umb/,1
 skill726,extra/card/skills/skill726/,1
 skill105,extra/club/skills/skill105/,1
 skill727,extra/card/skills/skill727/,1
-skill106,extra/club/skills/skill106/,1
 item_recipe,extra/item_extra/item_recipe/,1
 skill580,extra/card/skills/skill580/,1
 achievement_base,extra/achievement/achievement_base/,1
@@ -655,6 +656,7 @@ skill538,extra/card/skills/skill538/,1
 ex_phy_nullify,extra/attr/ex_phy_nullify/,1
 ex_storage,extra/attr/ex_storage/,1
 item_armor_empower,extra/item_extra/item_armor_empower/,1
+skill272,extra/club/skills/skill272/,1
 skill707,extra/card/skills/skill707/,1
 ex_residue,extra/attr/ex_residue/,1
 skill576,extra/card/skills/skill576/,1
@@ -670,7 +672,9 @@ skill604,extra/club/skills/skill604/,1
 ex_gender_attr,extra/attr/ex_gender_attr/,1
 ex_attr_pierce,extra/attr/ex_attr_pierce/,1
 skill903,extra/instance/instance3_ascension/skill903/,1
+skill730,extra/card/skills/skill730/,1
 skill505,extra/card/skills/skill505/,1
+skill106,extra/club/skills/skill106/,1
 skill709,extra/card/skills/skill709/,1
 skill722,extra/card/skills/skill722/,1
 instance10,extra/instance/instance10_road/,1
