@@ -538,7 +538,7 @@ $cards = array(
 		'pack' => 'Standard Pack',
 		'desc' => '熟练的富家子弟玩家',
 		'effect' => '称号固定为富家子弟',
-		'energy' => 250,
+		'energy' => 150,
 		'valid' => array(
 			'club' => '11',
 			'skills' => array(
@@ -1729,7 +1729,7 @@ $cards = array(
 		'pack' => 'Event Bonus',
 		'desc' => '他能找到别人找不到的东西',
 		'effect' => '每60秒可以随机获得一个地图上刷新的物品',
-		'energy' => 250,
+		'energy' => 150,
 		'valid' => array(
 			'skills' => array(
 				'430' => '0', 
@@ -3562,7 +3562,7 @@ $cards = array(
 		'desc' => '“今天的Sophia也是<br>元气满满的哟！”',
 		'effect' => '获得技能「空想」：每60秒可以获得1个类别、效果、耐久和属性皆随机的「空想道具」',
 		//：每60秒可以获得1个类别、效果、耐久和属性皆随机的「空想道具」，其效和耐合计值不超过发动时支付的体力。
-		'energy' => 250,
+		'energy' => 150,
 		'valid' => array(
 			'skills' => array(
 				'490' => '0', 
@@ -5172,7 +5172,7 @@ $cards = array(
 			'itmk6' => 'HB',
 			'itme6' => '1',
 			'itms6' => '1',
-			'itmsk6' => '^res_<:comp_itmsk:>{《分镜绘制指南》.VD.30.2..}1^reptype1',
+			'itmsk6' => '^res_<:comp_itmsk:>{《分镜绘制指南》,VD,30,2,,}1^reptype1',
 		)
 	),
 	302 => array(
@@ -5356,7 +5356,20 @@ $cards = array(
 			),
 		)
 	),
-	
+	311 => array(
+		'name' => '谷泽龙二',
+		'rare' => 'B',
+		'pack' => 'Standard Pack',
+		'desc' => '复活赛有人教他基础了',
+		'effect' => '只要你入场，所有玩家正常选择称号时只能选到一般称号',
+		'desc_skills' => '部分卡片额外增加的称号选项不受影响',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'544' => '0'
+			)
+		)
+	),
 	341 => array(
 		'name' => '麻薯',
 		'rare' => 'B',
@@ -6167,7 +6180,13 @@ $cards = array(
 			'itmk6' => 'p',
 			'itme6' => '1',
 			'itms6' => '1',
-			'itmsk6' => array('^res_<:comp_itmsk:>{棕色的Howling手办.A.1.1.N.}1^rtype4^reptype1', '^res_<:comp_itmsk:>{深蓝色的SAS手办.A.1.1.n.}1^rtype4^reptype1', '^res_<:comp_itmsk:>{天青色的Annabelle手办.A.1.1.i.}1^rtype4^reptype1', '^res_<:comp_itmsk:>{红色的星海手办.A.1.1.M.}1^rtype4^reptype1', '^res_<:comp_itmsk:>{粉色的Sophia手办.A.1.1.w.}1^rtype4^reptype1'),
+			'itmsk6' => array(
+				'^res_<:comp_itmsk:>{棕色的Howling手办,A,1,1,N,}1^rtype4^reptype1',
+				'^res_<:comp_itmsk:>{深蓝色的SAS手办,A,1,1,n,}1^rtype4^reptype1',
+				'^res_<:comp_itmsk:>{天青色的Annabelle手办,A,1,1,i,}1^rtype4^reptype1',
+				'^res_<:comp_itmsk:>{红色的星海手办,A,1,1,M,}1^rtype4^reptype1',
+				'^res_<:comp_itmsk:>{粉色的Sophia手办,A,1,1,w,}1^rtype4^reptype1'
+			),
 		),
 	),
 	392 => array(
@@ -6197,7 +6216,7 @@ $cards = array(
 			'itmk6' => 'MH',
 			'itme6' => array('10','30','50','70','90','110'),
 			'itms6' => '1',
-			'itmsk6' => array('','','','','','','','','','^res_<:comp_itmsk:>{悔恨.Y.1.1.O.}1^rtype3^reptype1'),
+			'itmsk6' => array('','','','','','','','','','^res_<:comp_itmsk:>{悔恨,Y,1,1,O,}1^rtype3^reptype1'),
 		),
 	),
 	394 => array(
@@ -6231,39 +6250,39 @@ $cards = array(
 			'rand_sets' => array(
 				array(
 					'itm6' => '红石方块',
-					'itmsk6' => '^res_<:comp_itmsk:>{红色方块.X.1.3..}1^reptype2^rtype4',
+					'itmsk6' => '^res_<:comp_itmsk:>{红色方块,X,1,3,,}1^reptype2^rtype4',
 				),
 				array(
 					'itm6' => '草方块',
-					'itmsk6' => '^res_<:comp_itmsk:>{绿色方块.X.1.3..}1^reptype2^rtype4',
+					'itmsk6' => '^res_<:comp_itmsk:>{绿色方块,X,1,3,,}1^reptype2^rtype4',
 				),
 				array(
 					'itm6' => '蓝冰方块',
-					'itmsk6' => '^res_<:comp_itmsk:>{蓝色方块.X.1.3..}1^reptype2^rtype4',
+					'itmsk6' => '^res_<:comp_itmsk:>{蓝色方块,X,1,3,,}1^reptype2^rtype4',
 				),
 				array(
 					'itm6' => '泥土方块',
-					'itmsk6' => '^res_<:comp_itmsk:>{黄色方块.X.1.3..}1^reptype2^rtype4',
+					'itmsk6' => '^res_<:comp_itmsk:>{黄色方块,X,1,3,,}1^reptype2^rtype4',
 				),
 				array(
 					'itm6' => '黄金方块',
-					'itmsk6' => '^res_<:comp_itmsk:>{金色方块.X.1.3..}1^reptype2^rtype4',
+					'itmsk6' => '^res_<:comp_itmsk:>{金色方块,X,1,3,,}1^reptype2^rtype4',
 				),
 				array(
 					'itm6' => '煤炭方块',
-					'itmsk6' => '^res_<:comp_itmsk:>{黑色方块.X.1.3..}1^reptype2^rtype4',
+					'itmsk6' => '^res_<:comp_itmsk:>{黑色方块,X,1,3,,}1^reptype2^rtype4',
 				),
 				array(
 					'itm6' => '石英方块',
-					'itmsk6' => '^res_<:comp_itmsk:>{白色方块.X.1.3..}1^reptype2^rtype4',
+					'itmsk6' => '^res_<:comp_itmsk:>{白色方块,X,1,3,,}1^reptype2^rtype4',
 				),
 				array(
 					'itm6' => '雪方块',
-					'itmsk6' => 'O^res_<:comp_itmsk:>{白色方块.X.1.3..}1^reptype2^rtype4',
+					'itmsk6' => 'O^res_<:comp_itmsk:>{白色方块,X,1,3,,}1^reptype2^rtype4',
 				),
 				array(
 					'itm6' => '玻璃方块',
-					'itmsk6' => '^res_<:comp_itmsk:>{水晶方块.X.1.3..}1^reptype2^rtype4',
+					'itmsk6' => '^res_<:comp_itmsk:>{水晶方块,X,1,3,,}1^reptype2^rtype4',
 				),
 			),
 			'itmk6' => 'X',
@@ -6350,6 +6369,185 @@ $cards = array(
 			),
 		),
 		'ignore_global_ach' => 1,
+	),
+	399 => array(
+		'name' => '随面',
+		'rare' => 'C',
+		'pack' => 'Ranmen',
+		'desc' => '生活就是一碗面',
+		'effect' => '可能没有调料包，也可能没有叉子',
+		'desc_skills' => '开局获得一些补给品，也可能有赠送的蛋白质',
+		'energy' => 0,
+		'valid' => array(
+			'skills' => array(
+				'735' => '0', 
+			),
+			'itm4' => '调料包',
+			'itmk4' => 'HH',
+			'itme4' => '30',
+			'itms4' => '1',
+			'itmsk4' => '',
+			'itm5' => '蔬菜包',
+			'itmk5' => 'HS',
+			'itme5' => '30',
+			'itms5' => '1',
+			'itmsk5' => '',
+			'itm6' => '面饼',
+			'itmk6' => 'HB',
+			'itme6' => '120',
+			'itms6' => '1',
+			'itmsk6' => '',
+			'rand_sets' => array(
+				array(
+				),
+				array(
+					'itm3' => '叉子',
+					'itmk3' => 'WK',
+					'itme3' => '10',
+					'itms3' => '10',
+					'itmsk3' => '',
+				),
+				array(
+					'itm3' => '卡牌包',
+					'itmk3' => 'VO2',
+					'itme3' => '1',
+					'itms3' => '1',
+					'itmsk3' => '',
+				),
+				array(
+					'itm3' => '「增殖的G」',
+					'itmk3' => 'PB02',
+					'itme3' => '50',
+					'itms3' => '20',
+					'itmsk3' => '',
+					'skills' => array(
+						'735' => '1', 
+					),
+				),
+				array(
+					'itm3' => '「增殖的G」',
+					'itmk3' => 'PB02',
+					'itme3' => '50',
+					'itms3' => '20',
+					'itmsk3' => '',
+					'skills' => array(
+						'735' => '1', 
+					),
+				),
+				array(
+					'itm4' => '',
+					'itmk4' => '',
+					'itme4' => '0',
+					'itms4' => '0',
+				),
+				array(
+					'itm5' => '',
+					'itmk5' => '',
+					'itme5' => '0',
+					'itms5' => '0',
+				),
+			),
+		),
+	),
+	400 => array(
+		'name' => '增殖挑战者',
+		'rare' => 'A',
+		'pack' => 'Way of Life',
+		'desc' => '我是谁？谁是我？<br>是谁杀了我，而我又杀了谁？',
+		'effect' => '是我，杀了，我！',
+		'desc_skills' => '你击杀和销毁尸体的角色名字在进行状况中显示为与你相同',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'736' => '1', 
+			),
+		),
+	),
+	401 => array(
+		'name' => '暗影卫队',
+		'rare' => 'A',
+		'pack' => 'Best DOTO',
+		'desc' => '<span style="opacity:0.005;">检测到关键词，暗影卫队出动！</span>',
+		'effect' => '<span style="opacity:0.005;">你攻击造成伤害、击杀角色和销毁尸体不会显示在进行状况中</span>',
+		'desc_skills' => '你攻击造成伤害、击杀角色和销毁尸体不会显示在进行状况中',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'736' => '0', 
+			),
+		),
+	),
+	402 => array(
+		'name' => '首席雕花官',
+		'rare' => 'B',
+		'pack' => 'Event Bonus',
+		'desc' => '去年我们的todolist字数增加了1151%，记录在案的big数增加了2333%，这是工作流程规范化上的<br>可喜进步',
+		'effect' => '今年要增加总结反思会的次数，小林你下午定个会议室',
+		'desc_skills' => '可以将补给品道具变为黄色雏菊/歌魂增加/120/1/天然，<br>但使用效果不变',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'737' => '0',
+			),
+		),
+		'ignore_global_ach' => 1,
+	),
+	403 => array(
+		'name' => '幻境调查员',
+		'rare' => 'A',
+		'pack' => 'Standard Pack',
+		'desc' => '侦查、聆听、图书馆',
+		'effect' => '称号固定为深渊学者',
+		'energy' => 100,
+		'valid' => array(
+			'club' => '27',
+			'skills' => array(
+				'10' => '0',
+				'11' => '0',
+				'12' => '0',
+				'107' => '0',
+				'108' => '0',
+				'109' => '0',
+				'110' => '0',
+				'111' => '0',
+				'112' => '0',
+				'113' => '0',
+			),
+		),
+	),
+	//404暂时留空
+	405 => array(
+		'name' => 'skip党',
+		'rare' => 'C',
+		'pack' => 'Standard Pack',
+		'desc' => '我不知道这是哪，我不知道我是谁',
+		'effect' => '我只知道我要大开杀戒',
+		'desc_skills' => '开局全系熟练度+8，但会跳过开局剧情和地点事件的显示',
+		'energy' => 0,
+		'valid' => array(
+			'wp' => '+8',
+			'wk' => '+8',
+			'wc' => '+8',
+			'wg' => '+8',
+			'wf' => '+8',
+			'wd' => '+8',
+			'skills' => array(
+				'740' => '0',
+			),
+		),
+	),
+	406 => array(
+		'name' => '老千',
+		'rare' => 'A',
+		'pack' => 'Ranmen',
+		'desc' => '他有一个灌铅的骰子',
+		'effect' => '获得技能「机变」：连击属性更容易<br>命中较多次',
+		'energy' => 120,
+		'valid' => array(
+			'skills' => array(
+				'741' => '0',
+			),
+		),
 	),
 	
 	1000 => array(

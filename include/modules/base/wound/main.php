@@ -121,7 +121,7 @@ namespace wound
 	function apply_weapon_inf(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('wound','logger'));
+		eval(import_module('wound'));
 		for ($i=0; $i<strlen($inf_place); $i++)
 		{
 			if (isset($pa['attack_wounded_'.$inf_place[$i]]) && $pa['attack_wounded_'.$inf_place[$i]]>0)
@@ -136,18 +136,26 @@ namespace wound
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		//应用受伤
+		apply_inf_main($pa, $pd, $active);
+		$chprocess($pa, $pd, $active);
+	}
+
+	//应用受伤主函数
+	function apply_inf_main(&$pa, &$pd, $active)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('wound'));
 		apply_weapon_inf($pa, $pd, $active);
 		for ($i=0; $i<strlen($inf_place); $i++)
 			unset($pa['attack_wounded_'.$inf_place[$i]]);
-		$chprocess($pa, $pd, $active);
 	}
 	
 	//记录原受伤状态，供assault_finish使用
 	function assault_prepare(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if ($active) $pd['original_inf']=$pd['inf']; else $pa['original_inf']=$pa['inf'];
+		$pa['original_inf']=$pa['inf'];
+		$pd['original_inf']=$pd['inf'];
 		$chprocess($pa, $pd, $active);
 	}
 		

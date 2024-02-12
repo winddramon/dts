@@ -107,19 +107,23 @@ namespace itemmain
 					$sameitem[] = $i;
 				}
 			}
-			if(isset($sameitem[0])){
-//				$log .= "是否将 <span class='yellow b'>$itm0</span>与以下物品合并？";
-//				$tpldata['itme0_words'] = \itemmain\parse_itmnum_words($itme,1);
-//				$tpldata['itms0_words'] = \itemmain\parse_itmnum_words($itms,1);
-				include template(MOD_ITEMMAIN_ITEMMERGE0);
-				$cmd = ob_get_contents();
-				ob_clean();
+			if(!empty($sameitem)){
+				itemget_mergable_type2_process($sameitem);
 				return;
 			}
-			
 		}
 
 		itemadd();
+		return;
+	}
+
+	//获得物品时如果是补给类型的合并处理。本模块默认是给出提示是否合并的界面。
+	function itemget_mergable_type2_process($sameitem){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','player'));
+		include template(MOD_ITEMMAIN_ITEMMERGE0);
+		$cmd = ob_get_contents();
+		ob_clean();
 		return;
 	}
 
