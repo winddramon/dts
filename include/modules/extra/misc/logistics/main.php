@@ -15,7 +15,16 @@ namespace logistics
 		list($sec,$min,$hour,$day,$month,$year,$wday) = explode(',',date("s,i,H,j,n,Y,w",$now));
 		//经历了crc32()得到负数、大数用%取模得到负数、srand()不起作用等依赖于硬件环境的BUG以后，现在的代码如下。32位和64位的差别真的头大
 		$hash = md5($uid.$uname.$day.$month.$year.$wday);
-		$fatenum = abs(hexdec(substr($hash, 0, 5).substr($hash, -5)));
+		$hash = substr($hash, 0, 10).substr($hash, -10);
+		$fatenum_str = '';
+		for($i=0;$i<strlen($hash);$i++) {
+			if(is_numeric($hash[$i])) $fatenum_str .= $hash[$i];
+		}
+		if(!$fatenum_str) {
+			$fatenum = hexdec(substr($hash, 0, 3));
+		}else{
+			$fatenum = (int)$fatenum_str;
+		}
 		if($fatenum < 1997) $fatenum += 999983;
 		$cardid_list = array();
 		//固定包括1张S、1张A、1张B
@@ -28,7 +37,12 @@ namespace logistics
 		$count_arr = count($arr);
 		$magic_arr = Array(11,101,233,571,1997);
 		for($i=4;$i<=8;$i++){
-			$cardid_list[$i] = $arr[fmod(round($fatenum / $magic_arr[$i-4]), count($arr))];
+			$j = fmod(round($fatenum / $magic_arr[$i-4]), $count_arr);
+			do {
+				$cardid_list[$i] = $arr[$j];
+				$j += 1;
+				if($j > $count_arr) $j = 1;
+			}while(empty($arr[$j-1]));
 		}
 		
 		$cardshop_list = array();
@@ -49,6 +63,23 @@ namespace logistics
 		if (isset($b20)) $cardshop_list[$b20]['blink'] = 20;
 		return $cardshop_list;
 	}
+
+	//原有卡片罕贵判定。没有这张卡片则返回-1
+	function card_check_o_blink($cardid, &$pa)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$card_data = \cardbase\get_cardlist_energy_from_udata($pa)[2];
+		if(empty($card_data[$cardid])) {
+			$ret = -1;
+		}else{
+			if(!empty($card_data[$cardid]['blink'])) {
+				$ret = $card_data[$cardid]['blink'];
+			}else{
+				$ret = 0;
+			}
+		}
+		return $ret;
+	}
 	
 	//后勤商店购买道具，暂时只完成了卡片
 	//$type为1表示卡片，2表示道具
@@ -67,10 +98,8 @@ namespace logistics
 			$cost = get_card_price($nowcard);
 			if (empty($cost)) return 0;
 			if ($pa['gold'] < $cost) return -1;
-			$card_data = \cardbase\get_cardlist_energy_from_udata($pa)[2];
-			$o_blink = !empty($card_data[$nowcard['id']]['blink']) ? $card_data[$nowcard['id']]['blink'] : 0;
+			$o_blink = card_check_o_blink($nowcard['id'], $pa);
 			if ($o_blink >= $nowcard['blink']) return -1;
-			
 			if (!empty($pa)) \cardbase\get_qiegao(-$cost,$pa);
 			
 			if (isset($nowcard['blink'])) $blink = $nowcard['blink'];
