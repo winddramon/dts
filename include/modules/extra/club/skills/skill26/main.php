@@ -68,7 +68,10 @@ namespace skill26
 	function check_ex_inf_infliction(&$pa, &$pd, $active, $key)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if ($pa['bskill']!=26) return $chprocess($pa, $pd, $active,$key);
+		if ($pa['bskill']!=26) {
+			$chprocess($pa, $pd, $active,$key);
+			return;
+		}
 		if ($pa['skill26_flag3']==1) return;
 		$chprocess($pa, $pd, $active, $key);
 	}
@@ -167,7 +170,7 @@ namespace skill26
 			$pa['dmg_dealt'] += $pa['ex_dmg_dealt'];
 			//$pa['mult_words_fdmgbs'] = \attack\add_format($pa['ex_dmg_dealt'], $pa['mult_words_fdmgbs']);
 			$pa['ex_dmg_dealt'] = 0;
-			return;
+			return 0;
 		}
 		
 		//只计算武器基础伤害
@@ -188,12 +191,16 @@ namespace skill26
 		$pa['dmg_dealt'] += $dmg;
 		$pa['mult_words_fdmgbs'] = \attack\add_format($dmg, $pa['mult_words_fdmgbs']);
 		$pa['skill26_flag2'] = 2;	//攻击属性判断开始正常返回（按次序计算）
+		return $dmg;
 	}
 	
 	function strike_prepare(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if ($pa['bskill']!=26) return $chprocess($pa, $pd, $active);
+		if ($pa['bskill']!=26) {
+			$chprocess($pa, $pd, $active);
+			return;
+		}
 		if (!\skillbase\skill_query(26,$pa) || !check_unlocked26($pa))
 		{
 			eval(import_module('logger'));
@@ -232,7 +239,10 @@ namespace skill26
 	function strike_finish(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if ($pa['bskill']!=26) return $chprocess($pa, $pd, $active);
+		if ($pa['bskill']!=26) {
+			$chprocess($pa, $pd, $active);
+			return;
+		}
 		if ($pa['is_hit'])
 		{
 			//进行一次火焰受伤判定

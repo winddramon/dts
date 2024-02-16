@@ -30,7 +30,10 @@ namespace skill455
 	
 	function apply_total_damage_modifier_invincible(&$pa,&$pd,$active){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(455,$pd)) return $chprocess($pa,$pd,$active);
+		if (!\skillbase\skill_query(455,$pd)) {
+			$chprocess($pa,$pd,$active);
+			return;
+		}
 		eval(import_module('sys','logger','skill455'));
 		$x=$now-$starttime;
 		if ($x<=$skill455_act_time && !in_array($pa['type'],$skill455_no_effect_array)){	//scp和蓝凝无效

@@ -41,6 +41,8 @@ REFLECTION_CODE;
 function module_validity_check($file)
 {
 	$log='';
+	global $notice_log;
+	$notice_log = '';//程序员是看不到notice的
 	if (!file_exists($file))
 	{
 		$log.="<span><font color=\"red\">模块列表文件不存在。</font></span><br>";
@@ -66,6 +68,7 @@ function module_validity_check($file)
 			$m++; $bmodn[$m]=$modname; $bmodp[$m]=$modpath;
 		}
 	}
+	$modn_rvs = array_flip($modn);
 	
 	global $___TEMP_DRY_RUN, $___TEMP_DRY_RUN_COUNTER;
 	$___TEMP_DRY_RUN=1; 
@@ -171,7 +174,10 @@ function module_validity_check($file)
 			$flag=0;
 			for ($j=1; $j<=$n; $j++)
 			{
-				if ($modn[$j]==$key) { $flag=1; array_push($g[$j],$i); $rd[$i]++; break; }
+				if ($modn[$j]==$key) {
+					if('base'==substr($modp[$i],0,4) && 'extra'==substr($modp[$j],0,5)) $notice_log .= "<span><font color=\"orange\">模块{$modn[$i]}是base模块，却依赖extra模块{$modn[$j]}，建议整理模块依赖关系。</font></span><br>";
+					$flag=1; array_push($g[$j],$i); $rd[$i]++; break;
+				}
 			}
 			if (!$flag)
 			{
@@ -215,20 +221,59 @@ function module_validity_check($file)
 		return $log;
 	}
 	
+	$func_conts = $func_paras = $func_chp_paras = $func_need_ret = $func_send_ret = Array();
 	for ($z=1; $z<=$n; $z++)
 	{
 		$i=$q[$z]; $modname=$modn[$i];
 		foreach ($sup_func_list[$i] as $key) if ($key!='')
 		{
 			$flag=0;
+
+			$reflect = new ReflectionFunction('\\'.$modname.'\\'.$key);
+			$pn = sizeof($reflect->getParameters());
+			$filename = $reflect->getFileName();
+			$func_paras[$i][$key] = $pn;
+
+			if(!function_exists('strip_comments')) include_once './include/modulemng/modulemng.codeadv2.func.php';
+			if(!isset($func_conts[$i][$filename])) {
+				$func_conts[$i][$filename] = explode("\n",strip_comments(file_get_contents($filename)));
+				//if('sys' == $modname && 'get_valid_disp_user_info' == $key) gwrite_var('b.txt', strip_comments(file_get_contents($filename)));
+			}
+			$cn = -1;
+			$rs = 0;
+			if(!isset($func_chp_paras[$i])) $func_chp_paras[$i] = Array();
+			for ($ii = $reflect->getStartLine(); $ii < $reflect->getEndLine(); $ii++) {
+				$tmp_str = $func_conts[$i][$filename][$ii];
+				if(false !== strpos($tmp_str, '__MAGIC__')) continue;
+				
+				if(preg_match('/\$chprocess\s*?\((.*?)\)/s', $tmp_str, $matches)) {
+					$tmp_str_2 = trim($matches[1]);
+					if(empty($tmp_str_2)) $cn = 0;
+					else $cn = sizeof(explode(',', $tmp_str_2));
+
+					$tmp_str_3 = substr($tmp_str, 0, strpos($tmp_str, '$chprocess'));
+					//if('skill71' == $modname && 'strike_prepare' == $key) file_put_contents('n.txt', $tmp_str, FILE_APPEND);
+					if(preg_match('/return\s+?\$chprocess/s', $tmp_str) || preg_match('/=\s+?\$chprocess/s', $tmp_str)) $func_need_ret[$i][$key] = 1;
+				}
+
+				if(preg_match('/return\s*?.+?\;/s', $tmp_str)) {
+					$rs = 1;
+				}
+			}
+			$func_chp_paras[$i][$key] = $cn;
+			$func_send_ret[$i][$key] = $rs;
+
+			unset($reflect);
 			
-			foreach($dependency[$i] as $r) if ($r!='')
-				if (isset($func[$r]) && isset($func[$r][strtoupper($key)]))
+			foreach($dependency[$i] as $r) if ($r!=''){
+				if (!$flag && isset($func[$r]) && isset($func[$r][strtoupper($key)]))
 					$flag=1;
-			
-			foreach($dependency_optional[$i] as $r) if ($r!='')
-				if (isset($func[$r]) && isset($func[$r][strtoupper($key)]))
+			}
+				
+			foreach($dependency_optional[$i] as $r) if ($r!=''){
+				if (!$flag && isset($func[$r]) && isset($func[$r][strtoupper($key)]))
 					$flag=1;
+			}
 			
 			if (!$flag)
 			{
@@ -241,9 +286,59 @@ function module_validity_check($file)
 					return $log;
 				}
 			}
-				
+
 			$funclist[strtoupper($key)]=$modname;
 			$func[$modname][strtoupper($key)]=1;
+		}
+	}
+
+	for ($z=1; $z<=$n; $z++)
+	{
+		$i=$q[$z]; $modname=$modn[$i];
+		foreach ($sup_func_list[$i] as $key) if ($key!='')
+		{
+			$flag2 = $flag3 = $flag4 = 0;
+			$pn = $func_paras[$i][$key];
+			$cn = $func_chp_paras[$i][$key];
+			
+			foreach($dependency[$i] as $r) if ($r!=''){
+				if (!$flag2 && isset($func_paras[$modn_rvs[$r]][$key]) && $pn != $func_paras[$modn_rvs[$r]][$key])
+					$flag2=1;
+				if (!$flag3 && isset($func_paras[$modn_rvs[$r]][$key]) && $cn >= 0 && $cn != $func_paras[$modn_rvs[$r]][$key]){
+					$flag3=1;
+				}
+				if(!$flag4 && !empty($func_need_ret[$i][$key]) && isset($func_send_ret[$modn_rvs[$r]][$key]) && empty($func_send_ret[$modn_rvs[$r]][$key])) {
+					$flag4=1;
+					$flag4_modn = $r;
+					//file_put_contents('a.txt', $flag4_modn.' '.$key.' '.var_export($func_need_ret[$i][$key],1).' '.var_export($func_send_ret[$modn_rvs[$r]][$key],1).' '.$modn_rvs[$r]."\r\n", FILE_APPEND);
+				}
+					
+			}
+				
+			foreach($dependency_optional[$i] as $r) if ($r!=''){
+				if (!$flag2 && isset($func_paras[$modn_rvs[$r]][$key]) && $pn != $func_paras[$modn_rvs[$r]][$key])
+					$flag2=1;
+				if (!$flag3 && isset($func_paras[$modn_rvs[$r]][$key]) && $cn >= 0 && $cn != $func_paras[$modn_rvs[$r]][$key])
+					$flag3=1;
+				if(!$flag4 && !empty($func_need_ret[$i][$key]) && isset($func_send_ret[$modn_rvs[$r]][$key]) && empty($func_send_ret[$modn_rvs[$r]][$key])){
+					$flag4=1;
+					$flag4_modn = $r;
+				}
+					
+			}
+			
+			if ($flag2)
+			{
+				$notice_log .= "<span><font color=\"orange\">模块{$modname}的函数{$key}的参数个数与至少一个所重载的函数不匹配，建议排查。</font></span><br>";
+			}
+			if ($flag3)
+			{
+				$notice_log .= "<span><font color=\"orange\">模块{$modname}的函数{$key}的\$chprocess传参个数与至少一个所重载的函数不匹配，建议排查。</font></span><br>";
+			}
+			if ($flag4)
+			{
+				$notice_log .= "<span><font color=\"orange\">模块{$flag4_modn}的函数{$key}没有提供返回值，这是模块{$modname}运算所需要的，建议排查。</font></span><br>";
+			}
 		}
 	}
 	

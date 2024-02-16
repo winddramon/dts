@@ -44,7 +44,10 @@ namespace skill527
 	function strike_prepare(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if ($pa['bskill']!=527) return $chprocess($pa, $pd, $active);
+		if ($pa['bskill']!=527) {
+			$chprocess($pa, $pd, $active);
+			return;
+		}
 		$rmt = get_remaintime527($pa);
 		
 		eval(import_module('logger'));

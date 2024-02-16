@@ -4,7 +4,7 @@ namespace skill83
 {
 	function init() 
 	{
-		define('MOD_SKILL83_INFO','club;locked;');
+		define('MOD_SKILL83_INFO','club;locked;debuff;');
 		eval(import_module('clubbase'));
 		$clubskillname[83] = '尊严';
 	}
@@ -41,7 +41,7 @@ namespace skill83
 			$pa['skill83_owep'] = $pa['wep'];
 			$pa['skill83_owepk'] = $pa['wepk'];
 		}
-		return $chprocess($pa, $pd, $active);
+		$chprocess($pa, $pd, $active);
 	}
 	
 	function get_final_dmg_multiplier(&$pa, &$pd, $active)

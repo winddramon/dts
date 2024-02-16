@@ -40,7 +40,10 @@ namespace skill215
 	function strike_prepare(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if ($pa['bskill']!=215) return $chprocess($pa, $pd, $active);
+		if ($pa['bskill']!=215) {
+			$chprocess($pa, $pd, $active);
+			return;
+		}
 		if (!\skillbase\skill_query(215,$pa) || !check_unlocked215($pa))
 		{
 			eval(import_module('logger'));
@@ -86,7 +89,7 @@ namespace skill215
 				else  $log.='<span class="yellow b">「高能」使敌人造成的爆炸伤害不受影响！</span><br>';
 			}
 		}
-		return $chprocess($pa, $pd, $active);
+		$chprocess($pa, $pd, $active);
 	}
 	
 	//计算完爆炸属性伤害基本值后，记录这个基本值

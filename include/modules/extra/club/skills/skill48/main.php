@@ -165,7 +165,10 @@ namespace skill48
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		if ($active && \skillbase\skill_query(48,$pa) && check_unlocked48($pa) && empty($pa['bskill']) && (2 == \skillbase\skill_getvalue(48,'choice',$pa))) $pa['bskill']=48;
-		if ($pa['bskill']!=48) return $chprocess($pa, $pd, $active);
+		if ($pa['bskill']!=48) {
+			$chprocess($pa, $pd, $active);
+			return;
+		};
 		if (!\skillbase\skill_query(48,$pa) || !check_unlocked48($pa))
 		{
 			eval(import_module('logger'));
@@ -227,7 +230,7 @@ namespace skill48
 	function ex_attack_prepare(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$r=$chprocess($pa, $pd, $active);
+		$chprocess($pa, $pd, $active);
 		if ($pa['bskill']==48) {
 			eval(import_module('itemmain','logger'));
 			$headword = '技能「附魔」';
@@ -246,8 +249,6 @@ namespace skill48
 				\skillbase\skill_setvalue(48,$pa['skill48_flag'],$ori_val,$pa);
 			}
 		}
-		
-		return $r;
 	}
 	
 	//属性伤害增加（被动）

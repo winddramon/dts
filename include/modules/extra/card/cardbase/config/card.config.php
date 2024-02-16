@@ -4826,8 +4826,8 @@ $cards = array(
 			),
 		)
 	),
-	//已经填上了
 	//老板，来个20个卡位的空白
+	//已经填上了
 	280 => array(
 		'name' => 'Acg_xilin',
 		'rare' => 'B',
@@ -5370,6 +5370,34 @@ $cards = array(
 			)
 		)
 	),
+	312 => array(
+		'name' => '赌玉挑战者',
+		'rare' => 'B',
+		'pack' => 'Ranmen',
+		'desc' => '赌玉？输了会有什么后果？',
+		'effect' => '开局有概率获得强力道具，但代价……',
+		'energy' => 100,
+		'valid' => array(
+			'itm5' => '原石',
+			'itmk5' => 'X',
+			'itme5' => '1',
+			'itms5' => '1',
+			'itmsk5' => Array(
+				'^res_<:comp_itmsk:>{我超，SSR！,fy,1,1,,}^rtype4^reptype1',//只有1/10概率是浮云
+				'^res_<:comp_itmsk:>{☆是石头，真是大快人心啊！☆,VS,1,1,561,}^rtype4^reptype1',
+				'^res_<:comp_itmsk:>{☆看，花岗岩！☆,VS,1,1,561,}^rtype4^reptype1',
+				'^res_<:comp_itmsk:>{☆你不理财，财不离你☆,VS,1,1,561,}^rtype4^reptype1',
+				'^res_<:comp_itmsk:>{☆一边吃面一边哭☆,VS,1,1,561,}^rtype4^reptype1',
+				'^res_<:comp_itmsk:>{☆一刀穷，一刀负☆,VS,1,1,561,}^rtype4^reptype1',
+				'^res_<:comp_itmsk:>{☆疯子卖，疯子买，还有疯子在等待☆,VS,1,1,561,}^rtype4^reptype1',
+				'^res_<:comp_itmsk:>{☆我相信今天是大奇迹日☆,VS,1,1,561,}^rtype4^reptype1',
+				'^res_<:comp_itmsk:>{☆梭哈！梭哈！！梭哈！！！☆,VS,1,1,561,}^rtype4^reptype1',
+				'^res_<:comp_itmsk:>{☆赢了会所嫩模，输了会所嫩模！☆,VS,1,1,561,}^rtype4^reptype1',
+			)
+		)
+	),
+
+
 	341 => array(
 		'name' => '麻薯',
 		'rare' => 'B',
@@ -6515,7 +6543,33 @@ $cards = array(
 			),
 		),
 	),
-	//404暂时留空
+	404 => array(
+		'name' => '跑路大师',
+		'rare' => 'A',
+		'pack' => 'Top Players',
+		'desc' => '吓我一跳我释放跑路',
+		'effect' => '称号固定为偶像歌姬，<br>并获得技能「隐身」',
+		'desc_skills' => '「隐身」：一次性技能，发动后敌人将无法发现你，效果持续45秒或直到你主动攻击',
+		'energy' => 133,
+		'valid' => array(
+			'club' => '25',
+			'skills' => array(
+				'10' => '0',
+				'11' => '0',
+				'12' => '0',
+				'87' => '0',
+				'88' => '0',
+				'89' => '0',
+				'90' => '0',
+				'91' => '0',
+				'92' => '0',
+				'93' => '0',
+				'94' => '0',
+				'1003' => array('learnedsongs' => '1_2'),
+				'246' => '0',
+			),
+		),
+	),
 	405 => array(
 		'name' => 'skip党',
 		'rare' => 'C',
@@ -6546,6 +6600,36 @@ $cards = array(
 		'valid' => array(
 			'skills' => array(
 				'741' => '0',
+			),
+		),
+	),
+	407 => array(
+		'name' => '手麻棍哥',
+		'rare' => 'C',
+		'pack' => 'Standard Pack',
+		'desc' => '你摸你也麻',
+		'effect' => '获得边缘行者技能「感电」，但使用你带电改造的武器攻击时有25%概率使自己麻痹',
+		'energy' => 0,
+		'valid' => array(
+			'skills' => array(
+				'230' => '0',
+				'231' => '0',
+				'742' => '1',
+			),
+		),
+	),
+	408 => array(
+		'name' => '拦路贼',
+		'rare' => 'C',
+		'pack' => 'Standard Pack',
+		'desc' => '我的这把刀可是涂满了毒药的毒刃（舔）',
+		'effect' => '获得黑衣组织技能「淬毒」，但使用你带毒改造的武器攻击时有25%概率使自己中毒',
+		'energy' => 0,
+		'valid' => array(
+			'skills' => array(
+				'219' => '0',
+				'224' => '0',
+				'742' => '2',
 			),
 		),
 	),

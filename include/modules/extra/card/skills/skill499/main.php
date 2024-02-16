@@ -42,7 +42,10 @@ namespace skill499
 	
 	function apply_total_damage_modifier_invincible(&$pa,&$pd,$active){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(499,$pd)) return $chprocess($pa,$pd,$active);
+		if (!\skillbase\skill_query(499,$pd)) {
+			$chprocess($pa,$pd,$active);
+			return;
+		}
 		eval(import_module('sys','logger','skill499'));
 		if (check_available499($pd) && !in_array($pa['type'],$skill499_no_effect_array)){	//scp和蓝凝无效
 			$pa['dmg_dealt']=0;

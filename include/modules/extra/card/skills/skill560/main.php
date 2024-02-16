@@ -41,7 +41,10 @@ namespace skill560
 	function strike_prepare(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if ($pa['bskill'] != 560) return $chprocess($pa, $pd, $active);
+		if ($pa['bskill'] != 560) {
+			$chprocess($pa, $pd, $active);
+			return;
+		}
 		if (!\skillbase\skill_query(560,$pa) || !check_unlocked560($pa))
 		{
 			eval(import_module('logger'));

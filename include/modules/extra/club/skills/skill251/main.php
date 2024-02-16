@@ -31,7 +31,10 @@ namespace skill251
 	
 	function apply_total_damage_modifier_invincible(&$pa,&$pd,$active){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(251,$pd)) return $chprocess($pa,$pd,$active);
+		if (!\skillbase\skill_query(251,$pd)) {
+			$chprocess($pa,$pd,$active);
+			return;
+		}
 		eval(import_module('sys','logger','skill251'));
 		$s=(int)\skillbase\skill_getvalue(251,'start',$pd);
 		$x=$now-$s;
@@ -105,7 +108,7 @@ namespace skill251
 			$log .= '<span class="yellow b">你的技能「天佑」被触发，暂时进入了无敌状态！</span><br>';
 			\skillbase\skill_setvalue(251,'start',$now);
 		}
-		return $chprocess($pa, $sdata, $tritm, $damage);
+		$chprocess($pa, $sdata, $tritm, $damage);
 	}
 	
 	function bufficons_list()

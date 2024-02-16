@@ -55,7 +55,10 @@ namespace skill265
 	function strike_prepare(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if ($pa['bskill']!=265) return $chprocess($pa, $pd, $active);
+		if ($pa['bskill']!=265) {
+			$chprocess($pa, $pd, $active);
+			return;
+		}
 		if (!\skillbase\skill_query(265,$pa) || !check_unlocked265($pa))
 		{
 			eval(import_module('logger'));

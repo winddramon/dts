@@ -52,7 +52,10 @@ namespace skill1002
 	
 	function apply_total_damage_modifier_invincible(&$pa,&$pd,$active){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(1002,$pd)) return $chprocess($pa,$pd,$active);
+		if (!\skillbase\skill_query(1002,$pd)) {
+			$chprocess($pa,$pd,$active);
+			return;
+		}
 		eval(import_module('sys','logger','skill1002'));
 		if ($pa['dmg_dealt'] >= 100 && check_available1002($pd) && !in_array($pa['type'],$skill1002_no_effect_array)){	//scp和蓝凝无效
 			$pa['dmg_dealt']=0;

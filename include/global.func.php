@@ -997,7 +997,7 @@ if ( !function_exists('mb_strlen') ) {
 }
 
 //mb_substr()兼容替代函数，直接照抄的网络
-if (!function_exists('mb_substr')) {
+if ( !function_exists('mb_substr') ) {
 	function mb_substr($str, $start, $len = '', $encoding='UTF-8'){
 		$limit = strlen($str);
 
@@ -1040,6 +1040,7 @@ if (!function_exists('mb_substr')) {
 //              重要游戏功能
 //----------------------------------------
 
+//初始化数据库操作类
 function init_dbstuff(){
 	include GAME_ROOT.'./include/modules/core/sys/config/server.config.php';
 	$default_database = PHP_VERSION >= 7.0 ? 'mysqli' : 'mysql';
@@ -1053,6 +1054,7 @@ function init_dbstuff(){
 	return $db;
 }
 
+//判定用户权限
 function check_authority()
 {
 	global $gtablepre;
@@ -1084,19 +1086,24 @@ function array_randompick($arr, $num=1)
 	return $ret;
 }
 
+//一些来自核心模块的重要函数
 //因为调用次数太多，懒得一个一个改了
+//保存当前游戏局数据（对应game表）
 function save_gameinfo() {	
 	\sys\save_gameinfo();
 }
 
+//新增一条进行状况
 function addnews($t = 0, $n = '',$a='',$b='',$c = '', $d = '', $e = '') {
 	\sys\addnews($t, $n,$a,$b,$c, $d, $e);
 }
 
+//接收聊天讯息
 function getchat($last,$team='',$chatpid=0,$limit=0) {
 	return \sys\getchat($last,$team,$chatpid,$limit);
 }
 
+//发送聊天讯息
 function systemputchat($time,$type,$msg = ''){
 	\sys\systemputchat($time,$type,$msg );
 }
@@ -1122,6 +1129,30 @@ function gshow_len($str){
 	}
 	return $slen;
 }
+
+//生成一个依赖于输入字符串但难以预测的随机大数（>1997）
+function fatenum_create($seed, $len = 10)
+{
+	if($len > 32) $len = 32;
+	//经历了crc32()得到负数、大数用%取模得到负数、srand()不起作用等依赖于硬件环境的BUG以后，现在的代码如下。32位和64位的差别真的头大
+	$hash = md5($seed);
+	$hash = substr($hash, 0, $len).substr($hash, -$len);
+	$fatenum_str = '';
+	$l = strlen($hash);
+	for($i=0;$i<$l;$i++) {
+		if(is_numeric($hash[$i])) $fatenum_str .= $hash[$i];
+	}
+	if(!$fatenum_str) {
+		$fatenum = hexdec(substr($hash, 0, 3));
+	}else{
+		$fatenum = (int)$fatenum_str;
+	}
+	if($fatenum < 1997) $fatenum *= 999983;
+	return $fatenum;
+}
+
+//引入bubblebox功能文件
+require_once GAME_ROOT.'./include/bubblebox.func.php';
 
 /* End of file global.func.php */
 /* Location: /include/global.func.php */

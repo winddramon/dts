@@ -40,7 +40,10 @@ namespace skill208
 	function strike_prepare(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if ($pa['bskill']!=208) return $chprocess($pa, $pd, $active);
+		if ($pa['bskill']!=208) {
+			$chprocess($pa, $pd, $active);
+			return;
+		}
 		if (!\skillbase\skill_query(208,$pa) || !check_unlocked208($pa))
 		{
 			eval(import_module('logger'));

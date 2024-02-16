@@ -29,7 +29,10 @@ namespace skill423
 
 	function apply_total_damage_modifier_invincible(&$pa,&$pd,$active){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(423,$pd) || !check_unlocked423($pd)) return $chprocess($pa,$pd,$active);
+		if (!\skillbase\skill_query(423,$pd) || !check_unlocked423($pd)) {
+			$chprocess($pa,$pd,$active);
+			return;
+		}
 		eval(import_module('logger'));
 		if ($pa['type']==88){
 			$pa['dmg_dealt']=0;

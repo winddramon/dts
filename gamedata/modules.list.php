@@ -1,5 +1,4 @@
 input,core/input/,1
-bubblebox,extra/misc/bubblebox/,1
 sys,core/sys/,1
 map,core/map/,1
 bmp_util,extra/misc/bmp_util/,1
@@ -10,6 +9,7 @@ logger,base/logger/,1
 skillbase,base/skillbase/,1
 replay,extra/misc/replay/,1
 bufficons,extra/misc/bufficons/,1
+map_display,base/map_display/,1
 explore,base/explore/,1
 noise,base/noise/,1
 lvlctl,base/lvlctl/,1
@@ -267,7 +267,6 @@ skill590,extra/card/skills/skill590/,1
 skill539,extra/card/skills/skill539/,1
 skill591,extra/card/skills/skill591/,1
 skill594,extra/card/skills/skill594/,1
-skill593,extra/card/skills/skill593/,1
 skill574,extra/card/skills/skill574/,1
 skill702,extra/card/skills/skill702/,1
 skill704,extra/card/skills/skill704/,1
@@ -401,6 +400,7 @@ skill512,extra/card/skills/skill512/,1
 addnpc_event,extra/misc/addnpc_event/,1
 skill961,extra/instance/instance10_road/skill961/,1
 supplycrate_event,extra/misc/supplycrate_event/,1
+skill593,extra/card/skills/skill593/,1
 skill731,extra/card/skills/skill731/,1
 item_randskills,extra/item_extra/item_randskills/,1
 skill490,extra/card/skills/skill490/,1
@@ -530,6 +530,7 @@ skill514,extra/card/skills/skill514/,1
 skill206,extra/club/skills/skill206/,1
 miracletrap,base/items/miracletrap/,1
 skill231,extra/club/skills/skill231/,1
+skill742,extra/card/skills/skill742/,1
 skill220,extra/club/skills/skill220/,1
 skill224,extra/club/skills/skill224/,1
 skill243,extra/club/skills/skill243/,1
@@ -709,6 +710,7 @@ skill266,extra/club/skills/skill266/,1
 skill81,extra/club/skills/skill81/,1
 skill509,extra/card/skills/skill509/,1
 skill510,extra/card/skills/skill510/,1
+bubblebox,extra/misc/bubblebox/,0
 skill86,extra/club/skills/skill86/,0
 gtype2,extra/instance/gtype2/main/,0
 gtype3,extra/instance/gtype3/main/,0

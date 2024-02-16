@@ -18,7 +18,7 @@ $language = array
 	'winner' => '历史优胜',
 	'rank' => '玩家排行',
 	'help' => '游戏帮助',
-	'logistics' => '后勤商店',
+	'logistics' => '刺激市场',
 	'homepage' => '官方网站',
 	'admin' => '游戏管理',
 	'report' => '官方讨论区',
@@ -62,6 +62,9 @@ $language = array
 	'validgames' => '游戏场数',
 	'wingames' => '获胜场数',
 	'winrate' => '胜率',
+
+	'vq_question' => '验证问题',
+	'vq_question_desc' => '请选出最适合填入空缺的选项：',
 	
 	'valid' => '入场手续',
 	'validover' => '入场表格填写完成',

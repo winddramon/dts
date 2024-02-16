@@ -93,7 +93,10 @@ namespace skill269
 	function strike_prepare(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if ($pa['bskill']!=269) return $chprocess($pa, $pd, $active);
+		if ($pa['bskill']!=269) {
+			$chprocess($pa, $pd, $active);
+			return;
+		}
 		$hpcost = get_hp_cost269($pa, $pd);
 		$rcost = get_rage_cost269();
 		$rcost0 = get_min_rage_cost269();

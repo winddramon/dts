@@ -46,7 +46,10 @@ namespace skill82
 	function strike_prepare(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if ($pa['bskill']!=82) return $chprocess($pa, $pd, $active);
+		if ($pa['bskill']!=82) {
+			$chprocess($pa, $pd, $active);
+			return;
+		}
 		if (!\skillbase\skill_query(82,$pa) || !check_unlocked82($pa))
 		{
 			eval(import_module('logger'));

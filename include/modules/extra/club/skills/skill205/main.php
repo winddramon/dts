@@ -51,7 +51,10 @@ namespace skill205
 	function strike_prepare(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if ($pa['bskill']!=205) return $chprocess($pa, $pd, $active);
+		if ($pa['bskill']!=205) {
+			$chprocess($pa, $pd, $active);
+			return;
+		}
 		if (!\skillbase\skill_query(205,$pa) || !check_unlocked205($pa))
 		{
 			eval(import_module('logger'));
@@ -136,7 +139,7 @@ namespace skill205
 				else  $log.='<span class="yellow b">「咆哮」使敌人造成的属性伤害提高了80%！</span><br>';
 			}
 		}
-		return $chprocess($pa, $pd, $active);
+		$chprocess($pa, $pd, $active);
 	}
 	
 //	function calculate_ex_single_dmg_multiple(&$pa, &$pd, $active, $key)

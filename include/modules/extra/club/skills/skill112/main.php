@@ -49,7 +49,10 @@ namespace skill112
 	function strike_prepare(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if ($pa['bskill']!=112) return $chprocess($pa, $pd, $active);
+		if ($pa['bskill']!=112) {
+			$chprocess($pa, $pd, $active);
+			return;
+		}
 		if (!\skillbase\skill_query(112,$pa) || !check_unlocked112($pa))
 		{
 			eval(import_module('logger'));
