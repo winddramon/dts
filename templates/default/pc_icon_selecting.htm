@@ -1,0 +1,34 @@
+<!--{eval if(empty($icon_list)) $icon_list = \player\get_pc_icon_selecting_list(); if(empty($now_gender)) $now_gender = !empty($gender) ? $gender : (!empty($gd) ? $gd : 'f');}-->
+<!--后端把处理过的icon_list数据传到前端供js使用-->
+<!--{eval $icon_list_contents_to_frontend = get_var_in_module('icon_list_contents_to_frontend', 'player'); $tmp_show = json_encode($icon_list_contents_to_frontend);}-->
+<div id="icon_list_contents_to_frontend" style="display:none">$tmp_show</div>
+<div style="text-align:center;">
+    <div class="subtitle" style="text-align:center">头像选择</div>
+    <p>
+        <!--{loop Array('female','male') $gn}-->
+            <!--{eval $g = $gn[0];$go = 'f' == $g ? 'm' : 'f';}-->
+            <input type="radio" id="sel_{$g}" name="dummy" class="radio_comb" value="{$g}" 
+                onclick="if(!$('{$gn}').checked) $('{$gn}').click();$('icon_list_{$g}_container').style.display='block';$('icon_list_{$go}_container').style.display='none';"
+                <!--{if $now_gender == "{$g}"}-->checked<!--{/if}-->
+            />
+            <a onclick="$('sel_{$g}').click();">
+                &nbsp;&nbsp;&nbsp;$sexinfo[$g]&nbsp;&nbsp;&nbsp;
+            </a>
+            &nbsp;&nbsp;&nbsp;
+        <!--{/loop}-->
+    </p>
+    <!--{loop Array('f','m') $g}-->
+    <div id="icon_list_{$g}_container" style="width:716px;<!--{if $now_gender != $g}-->display:none<!--{/if}-->">
+        <!--{if empty($disable_random_icon)}-->
+            <span id="icon_{$g}_0_hint" class="b" onclick="$('icon_{$g}_0').click();">随机头像</span>
+            <img id="icon_{$g}_0" src="img/{$g}_0.gif" onclick="$('icon_selected').value='0';bubblebox_hide_all();userIconMover();" />
+        <!--{/if}-->
+        <!--{loop $icon_list[$g] $i $v}-->
+            <!--{if $i}-->
+            <img src="img/$v[0]" onclick="$('icon_selected').value='$i';bubblebox_hide_all();userIconMover();" 
+            <!--{if $v[1]}-->title="<img src='img/$v[1]' />"<!--{/if}--> />
+            <!--{/if}-->
+        <!--{/loop}-->
+    </div>
+    <!--{/loop}-->
+</div>

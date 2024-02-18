@@ -1,0 +1,35 @@
+﻿.bubblebox_positioner_miner {
+	position:absolute; 
+	top:50%; 
+	left:50%; 
+	filter:alpha(opacity=40); opacity:0.4; 
+	background-color:#000000;
+	-webkit-border-radius: 12px; 
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+}
+
+.bubblebox_screen_fader{
+	background-color:#000000;
+}
+
+.bubblebox_screen_fader_miner{
+	position:absolute; 
+	top:50%; 
+	left:50%; 
+	background-color:#000000;
+	-webkit-border-radius: 8px; 
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+
+.bubblebox_positioner{
+	background-color:rgba(0,0,0,0.35);
+}
+
+.bubblebox_container_miner{
+	position:relative;
+	margin:0;
+	overflow-x:hidden;
+	overflow-y:auto; 
+}
