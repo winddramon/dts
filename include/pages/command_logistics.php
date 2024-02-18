@@ -9,6 +9,10 @@ if(!$cuser||!$cpass) {
 	gexit($_ERROR['no_login'],__file__,__line__);
 	return;
 }
+//如果存在远端数据库，登陆时强制读取一次
+if(!empty($userdb_remote_storage))
+	$cudata = fetch_udata_by_username($cuser);
+//用户名密码判断，以及当前玩家资料的获取
 $udata = udata_check();
 
 extract($udata);
