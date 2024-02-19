@@ -423,7 +423,7 @@ namespace achievement_base
 	}
 	
 	//用于生成一条成就奖励站内信
-	function ach_create_prize_message($pa, $achid, $c, $getqiegao=0, $getcard=0, $getcardblink=0, $ext='', $getkarma=0)
+	function ach_create_prize_message($pa, $achid, $c, $getqiegao=0, $getcard=0, $getcardblink=0, $getlogitem=0, $getlogitemnum=0, $ext='', $getkarma=0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		
@@ -449,6 +449,11 @@ namespace achievement_base
 			if($blink) $prizecode .= 'getcardblink_'.$blink.';';
 		}
 		if($getkarma) $prizecode .= 'getkarma_'.$getkarma.';';
+		if($getlogitem && $getlogitemnum)
+		{
+			$prizecode .= 'getlogitem_'.$getlogitem.';';
+			$prizecode .= 'getlogitemnum_'.$getlogitemnum.';';
+		}
 		include_once './include/messages.func.php';
 		message_create(
 			$n,
@@ -476,7 +481,7 @@ namespace achievement_base
 		//if(empty(${'ach'.$achid.'_threshold'})) return;//没有定义阈值则直接返回
 		$threshold = ${'ach'.$achid.'_threshold'};
 		
-		$qiegao_flag = $card_flag = 0;
+		$qiegao_flag = $card_flag = $logitem_flag = 0;
 		if(!empty(${'ach'.$achid.'_qiegao_prize'})){
 			$qiegao_flag = 1;
 			$qiegao_prize = ${'ach'.$achid.'_qiegao_prize'};
@@ -486,6 +491,11 @@ namespace achievement_base
 			$card_flag = 1;
 			$card_prize = ${'ach'.$achid.'_card_prize'};
 			if(!empty(${'ach'.$achid.'_card_prize_blink'})) $card_prize_blink = ${'ach'.$achid.'_card_prize_blink'};
+		}
+		if(!empty(${'ach'.$achid.'_logitem_prize'})){
+			$logitem_flag = 1;
+			$logitem_prize = ${'ach'.$achid.'_logitem_prize'};
+			if(!empty(${'ach'.$achid.'_logitem_prize_num'})) $logitem_prize_num = ${'ach'.$achid.'_logitem_prize_num'};
 		}
 		$qiegao_up = 0;
 		foreach($threshold as $tk => $tv){
@@ -509,7 +519,13 @@ namespace achievement_base
 						//\cardbase\get_card($card_got,$pa);
 						if(isset($card_prize_blink) && isset($card_prize_blink[$tk])) $getcardblink = $card_prize_blink[$tk];
 					}
-					ach_create_prize_message($pa, $achid, $tk, $getqiegao, $getcard, $getcardblink);
+					$getlogitem = $getlogitemnum = 0;
+					if($logitem_flag && !empty($logitem_prize[$tk])) {
+						$getlogitem = $logitem_prize[$tk];
+						if(isset($logitem_prize_num) && isset($logitem_prize_num[$tk])) $getlogitemnum = $logitem_prize_num[$tk];
+						else $getlogitemnum = 1;
+					}
+					ach_create_prize_message($pa, $achid, $tk, $getqiegao, $getcard, $getcardblink, $getlogitem, $getlogitemnum);
 				}
 			}
 		}
@@ -650,6 +666,8 @@ namespace achievement_base
 		$card_prize = !empty(${'ach'.$achid.'_card_prize'}) ? ${'ach'.$achid.'_card_prize'} : NULL;
 		$card_prize_desc = !empty(${'ach'.$achid.'_card_prize_desc'}) ? ${'ach'.$achid.'_card_prize_desc'} : NULL;
 		$card_prize_blink = !empty(${'ach'.$achid.'_card_prize_blink'}) ? ${'ach'.$achid.'_card_prize_blink'} : NULL;
+		$logitem_prize = !empty(${'ach'.$achid.'_logitem_prize'}) ? ${'ach'.$achid.'_logitem_prize'} : NULL;
+		$logitem_prize_num = !empty(${'ach'.$achid.'_logitem_prize_num'}) ? ${'ach'.$achid.'_logitem_prize_num'} : NULL;
 		$ret = '';
 		//切糕显示
 		if(!empty($qiegao_prize)) {
@@ -698,6 +716,28 @@ namespace achievement_base
 							$blink = (int)$card_prize_blink[$cn];
 							if ($blink == 10) $ret .= '<span class="L5">（闪烁）</span>';
 							if ($blink == 20) $ret .= '<span class="L5">（镜碎）</span>';
+						}
+					}
+				}
+			}
+			if(defined('MOD_LOGISTICS') && !empty($logitem_prize)) {
+				foreach($logitem_prize as $lv => $n){
+					if($lv <= $cn) {
+						$lp = $n;
+					}
+					if($lp){
+						$logitem = (int)$lp;
+						eval(import_module('logistics'));
+						if (isset($logistics_shop_items[$logitem]))
+						{
+							$ret .= ' ';
+							$lsitem = $logistics_shop_items[$logitem];
+							$logitemname = $lsitem[0];
+							$logitemtips = $logistics_itemtype[$lsitem[1]].'。'.$lsitem[3];
+							$ret .= '<span class="evergreen b" title="'.$logitemtips.'">'.$logitemname.'</span>';
+							if(isset($logitem_prize_num) && isset($logitem_prize_num[$cn])) $logitemnum = (int)$logitem_prize_num[$cn];
+							else $logitemnum = 1;
+							$ret .= '<span class="yellow b">×'.$logitemnum.'</span>';
 						}
 					}
 				}
