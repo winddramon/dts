@@ -189,7 +189,7 @@ function message_check($checklist, $messages)
 						$getlogitemnum = message_get_encl_num($messages[$cid]['enclosure'], 'getlogitemnum');
 						if ($getlogitemnum > 0)
 						{
-							$info[] = '获得了道具<span class="yellow b">'.$getlogitemnum.'</span>个<span class="gold b">'.$getlogitemname.'</span>';
+							$info[] = '获得了道具<span class="yellow b">'.$getlogitemnum.'</span>个<span class="evergreen b">'.$getlogitemname.'</span>';
 							\logistics\logistics_itemget($getlogitem, $udata, $getlogitemnum);
 							$getlogitemflag = 1;
 						}
