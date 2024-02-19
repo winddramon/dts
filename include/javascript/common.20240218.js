@@ -207,6 +207,9 @@ function floating_hint()
 
 function floating_hint_XY_positioner(e)
 {
+	if(jQuery('#hoverHintMsgInner').html().length > 1000) {
+		jQuery('#hoverHintMsg').css({'max-width': '600px',});
+	}
 	var l = Number(Math.floor(e.clientX) + 10);
 	var t = Number(Math.floor(e.clientY) + 10);
 	var w = jQuery('#hoverHintMsg').width();
