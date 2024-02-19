@@ -205,17 +205,34 @@ background-image: url("../../img/footer_line.gif");
 }
 .clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; } 
 .clearfix {display: inline-table;} /* Hides from IE-mac \*/ * html .clearfix {height: 1%;} .clearfix {display: block;} /* End hide from IE-mac */ 
-
-input.cmdbutton{
+#game_interface input[type=button]{
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	-webkit-border-radius: 6px; 
+	-moz-border-radius: 6px; 
+	border-radius: 6px; 
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+#game_interface input[type=button].cmdbutton{
 	min-width:80px;height:25px;margin:2;
 }
 
-input.dropbutton{
+#game_interface input[type=button].dropbutton{
 	min-width:75px;height:23px;margin:1;
 }
 
-input.bigbutton{
+#game_interface input[type=button].bigbutton{
 	min-width:120px;height:25px;margin:2;
+}
+#game_interface button{
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	-webkit-border-radius: 6px; 
+	-moz-border-radius: 6px; 
+	border-radius: 6px; 
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
 }
 
 .auto-style1 {
@@ -374,20 +391,21 @@ input[type=radio].radio_comb + a, #game_interface input[type=radio] + a{
 	display:inline-block;
 	border-radius: 5px;
 	margin:2px 0;
-	padding:5px 12px 5px 24px;
-	background-color:#666;
-	font:bold 10pt/16px "微软雅黑","黑体";text-decoration: none;color: #000;
+	padding:3px 12px 3px 24px;
+	background-color:#555;
+	text-decoration: none;color: #ccc;
 }
 input[type=radio].radio_comb:checked + a::after, #game_interface input[type=radio]:checked + a::after{
 	position:absolute;
-	content:"√";
-	top: 6px; left: 8px;
+	content:"✓";
+	top: 4px; left: 8px;
 }
 input[type=radio].radio_comb + a:hover, #game_interface input[type=radio] + a:hover{
-	font:bold 10pt/16px "微软雅黑","黑体";text-decoration: none;color: #000;
+	text-decoration: none;color: #fff;
 }
 input[type=radio].radio_comb:checked + a, #game_interface input[type=radio]:checked + a{
 	background-color:#cceafa;
+	color: #000;
 }
 /*==========新头像选择框==========*/
 div#icon_list_f_container, div#icon_list_m_container{

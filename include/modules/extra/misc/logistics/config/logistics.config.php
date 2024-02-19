@@ -22,7 +22,7 @@ namespace logistics
 		1 => array('切糕盒子',1,120,'使用后会随机获得一定量的切糕',0),
 		2 => array('闪光贴膜',1,233,'使用后可使一张卡片变为闪烁<span class="yellow b">（需额外消耗切糕）</span>',0),
 		3 => array('棱镜碎片',1,999,'使用后可使一张卡片变为镜碎<span class="yellow b">（需额外消耗大量切糕）</span>',0),
-		4 => array('天马能量饮料',1,777,'使用后可选择一张卡片完成充能',0),
+		4 => array('模因原液『彩虹』',1,777,'使用后可选择一张卡片完成充能。<span class="cyan b black-shadow">“彩虹的原料就是弱者的鲜血。”</span>',0),
 		5 => array('黄鸡玩偶',2,1000,'<span class="yellow b">“咕咕咕！”</span>',0),
 		6 => array('棕色的Howling手办',2,1333,'<span class="brickred b black-shadow">“银月哨兵是不死之身！”</span>',0),
 		7 => array('深蓝色的S.A.S手办',2,1333,'<span class="blue b white-shadow">“只要能为我的族人复仇，哪怕我堕入永劫地狱也在所不惜！”</span>',0),
