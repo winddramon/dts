@@ -79,6 +79,13 @@ namespace ex_residue
 							$amarr = array('iid' => $dropid, 'itm' => $resitem['itm'], 'pls' => $pls, 'unseen' => 0);
 							\skill1006\add_beacon($amarr, $sdata);
 							\player\player_save($sdata);
+						}elseif(empty($itms0)){
+							eval(import_module('player'));
+							$itm0=$resitem['itm']; $itmk0=$resitem['itmk'];
+							$itme0=$resitem['itme']; $itms0=$resitem['itms']; $itmsk0=$resitem['itmsk'];
+							\itemmain\itemget();
+						}else{
+							$log .= "<span class=\"yellow b\">“等你有空了再说吧。”</span>因为你整个包裹都没有空位，{$resitem['itm']}叹息着离开了游戏。<br>";
 						}
 					}
 					elseif (3 == $rtype)
@@ -176,6 +183,13 @@ namespace ex_residue
 						$amarr = array('iid' => $dropid, 'itm' => $resitem['itm'], 'pls' => $pls, 'unseen' => 0);
 						\skill1006\add_beacon($amarr, $sdata);
 						\player\player_save($sdata);
+					// }elseif(empty($itms0)){//这一条分支是无效的，因为合成一定会覆盖itm0
+					// 	eval(import_module('player'));
+					// 	$itm0=$resitem['itm']; $itmk0=$resitem['itmk'];
+					// 	$itme0=$resitem['itme']; $itms0=$resitem['itms']; $itmsk0=$resitem['itmsk'];
+					// 	\itemmain\itemget();
+					}else{
+						$log .= "<span class=\"yellow b\">“等你有空了再说吧。”</span>因为你整个包裹都没有空位，<span class=\"yellow b\">{$resitem['itm']}</span>叹息着离开了游戏。<br>";
 					}
 				}
 				elseif (3 == $rtype)
