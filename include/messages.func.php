@@ -119,6 +119,20 @@ function message_disp($messages)
 			if($getkarma) {
 				$mv['encl_disp'] .= '<div class="cyan b">'.$getkarma.'因果</div>';
 			}
+			//仓库物品判定
+			if(defined('MOD_LOGISTICS'))
+			{
+				$getlogitem = message_get_encl_num($mv['enclosure'], 'getlogitem');
+				if($getlogitem) {
+					eval(import_module('logistics'));
+					if (isset($logistics_shop_items[$getlogitem]))
+					{
+						$getlogitemname = $logistics_shop_items[$getlogitem][0];
+						$getlogitemnum = message_get_encl_num($mv['enclosure'], 'getlogitemnum');
+						$mv['encl_disp'] .= '<div><span class="yellow b">'.$getlogitemnum.'</span>个<span class="evergreen b">'.$getlogitemname.'</span></div>';
+					}
+				}
+			}
 		}
 	}
 	return $messages;
@@ -131,7 +145,7 @@ function message_check($checklist, $messages)
 	if(defined('MOD_CARDBASE')) eval(import_module('cardbase'));
 	if(!defined('MOD_CARDBASE')) return;
 	
-	$getqiegaosum = $getcardflag = $getkarmasum = 0;
+	$getqiegaosum = $getcardflag = $getkarmasum = $getlogitemflag = 0;
 	
 	foreach($checklist as $cid){
 		if($messages[$cid]['checked']) continue;
@@ -163,10 +177,29 @@ function message_check($checklist, $messages)
 				$info[] = '获得了<span class="cyan b">'.$getkarma.'因果</span>';
 				$getkarmasum += $getkarma;
 			}
+			//获得仓库物品
+			if(defined('MOD_LOGISTICS'))
+			{
+				$getlogitem = message_get_encl_num($messages[$cid]['enclosure'], 'getlogitem');
+				if($getlogitem) {
+					eval(import_module('logistics'));
+					if (isset($logistics_shop_items[$getlogitem]))
+					{
+						$getlogitemname = $logistics_shop_items[$getlogitem][0];
+						$getlogitemnum = message_get_encl_num($messages[$cid]['enclosure'], 'getlogitemnum');
+						if ($getlogitemnum > 0)
+						{
+							$info[] = '获得了道具<span class="yellow b">'.$getlogitemnum.'</span>个<span class="gold b">'.$getlogitemname.'</span>';
+							\logistics\logistics_itemget($getlogitem, $udata, $getlogitemnum);
+							$getlogitemflag = 1;
+						}
+					}
+				}
+			}
 		}
 	}
 	//if(!empty($cl_changed)) $udata['cardlist'] = implode('_',$udata['cardlist']);
-	if($getqiegaosum || $getcardflag || $getkarmasum) {
+	if($getqiegaosum || $getcardflag || $getkarmasum || $getlogitemflag) {
 		$n = $udata['username'];
 		//3202.10.15 这里保存一次$card_data
 		//游戏内获得卡片的时候$pa是即时读取的，站内信和抽卡则会有一段距离，这中间对$cardlist的修改会丢失。不过$cardlist本来也不是引用，应该不算问题
@@ -177,6 +210,7 @@ function message_check($checklist, $messages)
 			//'cardlist' => $udata['cardlist'],
 			'card_data' => $udata['card_data'],
 		);
+		if(defined('MOD_LOGISTICS') && $getlogitemflag) $upd['u_settings'] = $udata['u_settings'];
 		update_udata_by_username($upd, $udata['username']);
 	}
 }
