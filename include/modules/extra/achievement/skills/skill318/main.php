@@ -37,7 +37,7 @@ namespace skill318
 		
 		if (($ox<1)&&($x>=1)){
 			//\cardbase\get_qiegao(573,$pa);
-			\achievement_base\ach_create_prize_message($pa, 318, 0, 573);
+			\achievement_base\ach_create_prize_message($pa, 318, 0, 573, 0, 0, 1, 1);
 		}
 		
 		return $x;

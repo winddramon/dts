@@ -28,11 +28,11 @@ namespace logistics
 		$magic_arr = Array(11,101,233,571,1997);
 		for($i=4;$i<=8;$i++){
 			$j = (int)fmod(round($fatenum / $magic_arr[$i-4]), $count_arr);
-			do {
-				$cardid_list[$i] = $arr[$j];
+			while(empty($arr[$j]) || in_array($arr[$j], $cardid_list)) {
 				$j += 1;
 				if($j > $count_arr) $j = 1;
-			}while(empty($arr[$j-1]));
+			}
+			$cardid_list[$i] = $arr[$j];
 		}
 		
 		$cardshop_list = array();
