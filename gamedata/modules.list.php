@@ -516,6 +516,7 @@ opening,base/opening/,1
 ending,base/ending/,1
 song,base/items/song/,1
 extra_event,extra/misc/extra_event/,1
+news_observe,extra/misc/news_observe/,1
 skill429,extra/instance/gtype1/skill429/,1
 skill108,extra/club/skills/skill108/,1
 skill109,extra/club/skills/skill109/,1

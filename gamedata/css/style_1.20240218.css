@@ -196,6 +196,15 @@ border-top: #666 2px solid;
 border-left: #666 2px solid;
 border-bottom: #ddc 2px solid;
 }
+#chat_floating_banner{
+	position:absolute;
+	padding:5px 24px;
+	z-index:10;
+	background-color:rgba(0,0,0,0.7); *BACKGROUND: rgb(0,0,0); *filter:alpha(opacity=70); 
+	-webkit-border-radius: 6px; 
+	-moz-border-radius: 6px; 
+	border-radius: 6px; 
+}
 #log{
 	line-height:15px;
 }
@@ -224,6 +233,15 @@ background-image: url("../../img/footer_line.gif");
 
 #game_interface input[type=button].bigbutton{
 	min-width:120px;height:25px;margin:2;
+}
+#game_interface input[type=submit]{
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	-webkit-border-radius: 6px; 
+	-moz-border-radius: 6px; 
+	border-radius: 6px; 
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
 }
 #game_interface button{
 	text-shadow: 0 1px 1px rgba(0,0,0,.3);

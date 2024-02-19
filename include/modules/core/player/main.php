@@ -473,6 +473,7 @@ namespace player
 		if ($gametype!=2) $uip['innerHTML']['anum'] = get_alivenum_for_display();
 		else $uip['innerHTML']['anum'] = $validnum;
 		$uip['value']['cpls'] = $pls;//聊天的地点信息在这里赋值
+		$uip['value']['croomid'] = $groomid;//聊天的当前房间信息在这里赋值
 //		$uip['innerHTML']['weather'] = $wthinfo[$weather];
 //		$uip['innerHTML']['gamedate'] = "{$month}月{$day}日 星期{$week[$wday]} {$hour}:{$min}";
 //		if ($gamestate == 40 ||($gametype == 17 && \skillbase\skill_getvalue(1000,'step')>=206)) {

@@ -17,9 +17,13 @@ if((isset($cgamenum) && $gamenum != $cgamenum) || (isset($croomid) && $groomid !
 	if(room_check_gamenum($croomid, $cgamenum)) {
 		//如果房间存在且局数有效，则修改当前聊天房间号
 		$ctablepre = room_get_tablepre(room_id2prefix($croomid));
-	}else{
+	}elseif(empty($obsv_flag)){//如果提供了窥屏标记则不判定房间号是否正确
 		$ctablecorrect = 0;//否则标记房间号错误
 	}
+}
+
+if(!empty($obsv_flag)) {//来自其他房间的窥屏弹幕。这里没有严格判定房号，所以刻意构造的话是可以发送一般弹幕的，但是没什么危害吧，不管了
+	$is_obsv_danmaku = 1;
 }
 
 if($ctablecorrect && $sendmode == 'send' && $chatmsg ) {//发送聊天
@@ -39,7 +43,10 @@ if($ctablecorrect && $sendmode == 'send' && $chatmsg ) {//发送聊天
 			$showdata = array('lastcid' => $lastcid, 'msg' => Array('<span class="red b">聊天信息不能用 / 开头。<br></span>'));
 		}
 	} else { 
-		if($chattype == 0) {
+		if(!empty($is_obsv_danmaku)) {
+			\sys\addchat(7, $chatmsg, $cuser, '', 0, $cpls);
+		}
+		elseif($chattype == 0) {
 			\sys\addchat(0, $chatmsg, $cuser, '', 0, $cpls);
 		} elseif($chattype == 1) {
 			\sys\addchat(1, $chatmsg, $cuser, $teamID, 0, $cpls);
