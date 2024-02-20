@@ -135,6 +135,12 @@ namespace skill81
 				}
 			}
 			swapitem81($pa, 'wep', $ri, $logflag);
+			//然后，如果itm是拳头，消除这个道具
+			if(strpos($pa['itmk'.$ri] , 'WN') === 0 || !$pa['itms'.$ri])
+			{
+				$pa['itm'.$ri] = $pa['itmk'.$ri] = $pa['itmsk'.$ri] = '';
+				$pa['itme'.$ri] = $pa['itms'.$ri] = 0;
+			}
 		}
 		return;
 	}
@@ -194,12 +200,6 @@ namespace skill81
 				$log .= "{$pa['name']}迅速将<span class=\"red b\">$itm</span>卸下，装备了<span class=\"yellow b\">$eqp</span>！<br>";
 			}
 		}
-		//然后，如果itm是拳头，消除这个道具
-		if(strpos ( $itmk , $noeqp ) === 0 || !$itms) {
-			$itm = $itmk = $itmsk = '';
-			$itme = $itms = 0;
-		} 
-		
 		return;
 	}
 	

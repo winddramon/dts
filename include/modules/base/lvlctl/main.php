@@ -140,7 +140,7 @@ namespace lvlctl
 		} elseif ($pa['lvl'] >= $lvllimit) {
 			$upflag = 0;
 			$pa['lvl'] = $lvllimit;
-			$pa['exp'] = $up_exp_temp;
+			$pa['exp'] = min($pa['exp']+$v, $up_exp_temp);//感觉修了和没修一样
 		}
 		//echo $upflag;
 		return $upflag;

@@ -26,10 +26,11 @@ namespace skill803
 	}
 	
 	//不会反击
+	//此处$pa为反击方
 	function check_can_counter(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (\skillbase\skill_query(803, $pd)) return 0;
+		if (\skillbase\skill_query(803, $pa)) return 0;
 		return $chprocess($pa, $pd, $active);
 	}
 	
@@ -37,7 +38,7 @@ namespace skill803
 	function player_cannot_counter(&$pa,&$pd,$active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (\skillbase\skill_query(803, $pd)) return;
+		if (\skillbase\skill_query(803, $pa)) return;
 		$chprocess($pa, $pd, $active);
 	}
 	
