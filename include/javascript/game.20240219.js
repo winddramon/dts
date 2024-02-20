@@ -458,15 +458,17 @@ function showData_effect(shwData) {
 				//直接把这个banner当做标志物吧。如果banner关闭，视为第一次进入窥屏状态，刷新chat和news
 				if('none' == $('chat_floating_banner').style.display){
 					$('chat_floating_banner').style.display = 'block';
-					$('lastcid').value = $('lastnid').value = 0;
-					$('chatlist').innerHTML = $('newslist').innerHTML = '<span class="grey b">***Now loading...***</span>';
-					setTimeout("chat('ref',refintv)",2);
+					var chat_need_reset = 1;
 				}
 			} else if (ef == 'chat_observe_off') {
 				$('chat_floating_banner').style.display = 'none';
+				var chat_need_reset = 1;
+			}
+			if(chat_need_reset) {
+				clearTimeout(refchat);
 				$('lastcid').value = $('lastnid').value = 0;
 				$('chatlist').innerHTML = $('newslist').innerHTML = '<span class="grey b">***Now loading...***</span>';
-				setTimeout("chat('ref',refintv)",2);
+				chat($('sendmode').value,refintv);
 			}
 		}
 	}
