@@ -461,10 +461,12 @@ function showData_effect(shwData) {
 				if('none' == $('chat_floating_banner').style.display){
 					$('chat_floating_banner').style.display = 'block';
 					$('lastcid').value = $('lastnid').value = 0;
+					$('chatlist').innerHTML = $('newslist').innerHTML = '<span class="grey b">***Now loading...***</span>';
 				}
 			} else if (ef == 'chat_observe_off') {
 				$('chat_floating_banner').style.display = 'none';
 				$('lastcid').value = $('lastnid').value = 0;
+				$('chatlist').innerHTML = $('newslist').innerHTML = '<span class="grey b">***Now loading...***</span>';
 			}
 		}
 	}

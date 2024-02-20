@@ -132,6 +132,16 @@ namespace news_observe
 		$chprocess();
 	}
 
+	//拉取进行状况时的房间号重写
+	function getnews($start=0, $range=0, $room_prefix=''){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$croomid = get_var_input('croomid');
+		if(NULL !== $croomid) {
+			$room_prefix = room_id2prefix($croomid);
+		}
+		return $chprocess($start, $range, $room_prefix);
+	}
+
 	//测试用窥屏道具
 	function itemuse(&$theitem)
 	{
@@ -155,6 +165,23 @@ namespace news_observe
 		
 		$chprocess($theitem);
 	}
+
+	//房间用窥屏道具
+	// function use_armor(&$theitem, $pos = '')
+	// {
+	// 	if (eval(__MAGIC__)) return $___RET_VALUE;
+
+	// 	$flag = '窥屏用头戴式显示器' == $theitem['itm'] ? 1 : 0;
+
+	// 	$chprocess($theitem, $pos);
+
+	// 	if(!empty($flag)) {
+	// 		ob_start();
+	// 		include template('MOD_NEWS_OBSERVE_OBSERVE_SELECT');
+	// 		$cmd = ob_get_contents();
+	// 		ob_end_clean();
+	// 	}
+	// }
 }
 
 ?>
