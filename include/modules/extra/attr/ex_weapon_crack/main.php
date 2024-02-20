@@ -24,7 +24,7 @@ namespace ex_weapon_crack
 			{
 				if (\attrbase\check_in_itmsk('^wc', $pd[$pos.'sk'])) $wcesum += $pd[$pos.'e'];
 			}
-			if (0 == $pa['wepimp']) $pa['wepimp'] = 1;
+			if (empty($pa['wepimp'])) $pa['wepimp'] = 1;
 			//现在连击属性只有第一次连击会判一次
 			if (!isset($pa['wcflag']))
 			{
