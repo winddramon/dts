@@ -14,10 +14,11 @@ $ctablecorrect = 1;
 $userdb_forced_local = 1;
 //如果拉取的房间号同账号不对应则进行游戏局数判定
 if((isset($cgamenum) && $gamenum != $cgamenum) || (isset($croomid) && $groomid != $croomid)){
-	if(room_check_gamenum($croomid, $cgamenum)) {
+	if(!empty($obsv_flag) || room_check_gamenum($croomid, $cgamenum)) {
 		//如果房间存在且局数有效，则修改当前聊天房间号
+		//如果提供了窥屏标记则不判定房间号是否正确
 		$ctablepre = room_get_tablepre(room_id2prefix($croomid));
-	}elseif(empty($obsv_flag)){//如果提供了窥屏标记则不判定房间号是否正确
+	}else{
 		$ctablecorrect = 0;//否则标记房间号错误
 	}
 }

@@ -2,13 +2,17 @@
 <input type="hidden" id="command" name="command" value="back">
 
 <!--{eval $obsv_id = \news_observe\get_observe_groomid(); $obsv_list = \news_observe\get_observe_roomlist(); $gti = get_var_in_module('gtinfo', 'sys');}-->
-<!--{if $obsv_id > 0}-->
+<!--{if $obsv_id >= 0}-->
 	<input type="button" class="bigbutton" style="width:200px; height:30px;" value="停止窥屏" onclick="$('command').value='obsv-1';postCmd('gamecmd','command.php',this);" /><br><br>
 <!--{else}-->
 <span>请选择你要窥屏的房间：</span><br>
 <!--{loop $obsv_list $data}-->
 	<!--{eval $i = $data['groomid'];}-->
+	<!--{if !$i}-->
+	<input type="button" class="bigbutton" style="width:140px; height:30px;" value="大房间" onclick="$('command').value='obsv0';postCmd('gamecmd','command.php',this);" />
+	<!--{else}-->
 	<input type="button" class="bigbutton" style="width:140px; height:30px;" value="{$i}号房间" onclick="$('command').value='obsv{$i}';postCmd('gamecmd','command.php',this);" />
+	<!--{/if}-->
 	<span class="b">{$gti[$data['gametype']]}</span><br>
 <!--{/loop}-->
 <!--{/if}-->

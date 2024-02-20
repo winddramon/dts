@@ -290,7 +290,6 @@ function showData(sdata){
 		var sDv = shwData['value'];
 		for(var id in sDv){
 			if($(id)!=null){
-				if(id=='obsv_flag' && 0==sDv[id]) console.log(1111);
 				$(id).value = datalib_decode(sDv[id]);
 			}
 		}
@@ -438,7 +437,6 @@ function showData_effect(shwData) {
 		effect_clear_all();
 		var sDe = shwData['effect'];
 		for(var ef in sDe){
-			console.log(ef);
 			if(ef == 'pulse'){
 				for (var ei=0; ei<sDe[ef].length; ei++){
 					if(sDe[ef][ei].search('__BUTTON__') >= 0){
@@ -462,11 +460,13 @@ function showData_effect(shwData) {
 					$('chat_floating_banner').style.display = 'block';
 					$('lastcid').value = $('lastnid').value = 0;
 					$('chatlist').innerHTML = $('newslist').innerHTML = '<span class="grey b">***Now loading...***</span>';
+					setTimeout("chat('ref',refintv)",2);
 				}
 			} else if (ef == 'chat_observe_off') {
 				$('chat_floating_banner').style.display = 'none';
 				$('lastcid').value = $('lastnid').value = 0;
 				$('chatlist').innerHTML = $('newslist').innerHTML = '<span class="grey b">***Now loading...***</span>';
+				setTimeout("chat('ref',refintv)",2);
 			}
 		}
 	}
@@ -480,9 +480,8 @@ function showData_effect(shwData) {
 	}
 }
 
-
-
 var refchat = null;
+var refintv = 3000;
 
 function chat(mode,reftime) {
 	clearTimeout(refchat);
@@ -502,10 +501,10 @@ function chat(mode,reftime) {
 	};
 	oXmlHttp.send(sBody);
 	if(mode == 'send'){$('chatmsg').value = '';$('sendmode').value = 'ref';}
-	rtime = reftime;
+	refintv = reftime;
 	if(refchat_ok) {
-		if(mode == 'news') refchat = setTimeout("chat('news',rtime)",rtime);
-		else refchat = setTimeout("chat('ref',rtime)",rtime);
+		if(mode == 'news') refchat = setTimeout("chat('news',refintv)",refintv);
+		else refchat = setTimeout("chat('ref',refintv)",refintv);
 	}
 }
 

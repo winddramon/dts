@@ -133,10 +133,11 @@ namespace news_observe
 	}
 
 	//拉取进行状况时的房间号重写
-	function getnews($start=0, $range=0, $room_prefix=''){
+	function getnews($start=0, $range=0, $room_prefix='default'){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$croomid = get_var_input('croomid');
-		if(NULL !== $croomid) {
+		$obsv_flag = get_var_input('obsv_flag');
+		if(NULL !== $croomid && !empty($obsv_flag)) {
 			$room_prefix = room_id2prefix($croomid);
 		}
 		return $chprocess($start, $range, $room_prefix);
