@@ -44,6 +44,7 @@ namespace sys
 		18=>'<font class="cyan">荣耀模式</font>',
 		19=>'<font class="red">极速模式</font>',
 		20=>'<font class="gold">公路模式</font>',
+		21=>'<font class="cyan">蹲站模式</font>',
 	);
 	$gtdesc=array(
 		0=>'不能使用卡片',

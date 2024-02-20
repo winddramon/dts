@@ -25,8 +25,7 @@ namespace skill572
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','map','itemmain'));
-		
-		$plsnum = \map\get_plsnum();
+		$plsno_arr = \map\get_all_plsno();
 		$iqry = '';
 		$file = __DIR__.'/config/skill572.config.php';
 		$itemlist = openfile($file);
@@ -38,7 +37,7 @@ namespace skill572
 					if ($imap == 99)
 					{
 						do {
-							$rmap = rand(0,$plsnum-1);
+							$rmap = array_randompick($plsno_arr);
 						} while (in_array($rmap,$map_noitemdrop_arealist));
 					}
 					else  $rmap = $imap;

@@ -79,8 +79,7 @@ namespace news_observe
 	function check_observe_act_allowed()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		return true;
-		//return false;
+		return false;
 	}
 
 	//窥屏状态切换的主函数

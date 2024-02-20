@@ -3,7 +3,8 @@
 <input type="hidden" id="command" name="command" value="menu">
 <input type="button" class="cmdbutton" value="离开" onclick="$('command').value='menu';postCmd('gamecmd','command.php');this.disabled=true;">
 <br>
-<!--{loop $shop_tag_list $sid $scmt}-->
+<!--{eval $list = \itemshop\get_shop_tag_list();}-->
+<!--{loop $list $sid $scmt}-->
 <!--{if $sid % 2}--><br><!--{/if}-->
 <input type="button" class="cmdbutton" id="bshop{$sid}" value="{$scmt}" style="
 <!--{if mb_strlen($scmt)>8}-->width:160px;<!--{else}-->width:120px;<!--{/if}--> 

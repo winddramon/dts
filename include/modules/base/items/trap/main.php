@@ -18,7 +18,7 @@ namespace trap
 		
 		eval(import_module('sys','map','itemmain','trap'));
 		if ($xmode & 16) {	//地图陷阱初始化
-			$plsnum = \map\get_plsnum();
+			$plsno_arr = \map\get_all_plsno();
 			$iqry = '';
 			$itemlist = get_trapfilecont();
 			$in = sizeof($itemlist);
@@ -40,7 +40,7 @@ namespace trap
 							if ($imap == 99)
 							{
 								do {
-									$rmap = rand(0,$plsnum-1);
+									$rmap = array_randompick($plsno_arr);
 								} while (in_array($rmap,$map_noitemdrop_arealist));
 							}
 							else  $rmap = $imap;

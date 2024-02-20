@@ -5,8 +5,8 @@
 		<span class="white" style="line-height:25px;">想购买什么类别的物品？</span>
 	</div>
 </div>
-
-<!--{eval eval(import_module('itemshop'));}-->
+<!--{eval $list = \itemshop\get_shop_tag_list();}-->
+<!--{loop $list $sid $scmt}-->
 <div class="cmd_row">
 	<!--{loop $shop_tag_list $si $sn}-->
 		<div class="cmd_positioner itm_cmd">
