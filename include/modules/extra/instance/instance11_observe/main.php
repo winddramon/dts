@@ -39,7 +39,8 @@ namespace instance11
 		$ebp = $chprocess($ebp);
 		eval(import_module('sys'));
 		if (21 == $gametype){
-			$ebp['itm5'] = '窥屏用头戴式显示器'; $ebp['itmk5'] = 'DH'; $ebp['itme5'] = 76; $ebp['itms5'] = 5;$ebp['itmsk5'] = '';
+			$ebq['money'] += 980;//初始资金
+			$ebp['itm6'] = '窥屏用头戴式显示器'; $ebp['itmk6'] = 'DH'; $ebp['itme6'] = 76; $ebp['itms6'] = 5;$ebp['itmsk6'] = '';
 		}
 		return $ebp;
 	}
