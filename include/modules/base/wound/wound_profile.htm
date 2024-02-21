@@ -1,11 +1,12 @@
 <!--{eval eval(import_module('wound'));}-->
-<td class="b3" width="110" height="20" colspan="2">
+<td width="110" height="20" colspan="2" style="text-align:center;">
 	<!--{if !$hp}-->
 	<span class="red b">
 		已死亡
 	</span>
 	<!--{elseif !$inf}-->
-	<span>	</span>
+	<span>
+	</span>
 	<!--{else}-->
 	<span class="grey b">
 		受伤和异常状态
@@ -13,7 +14,7 @@
 	<!--{/if}-->
 	
 </td>
-<td class="b3" width="114" height="20" colspan="2">
+<td width="114" height="20" colspan="2" style="text-align:center;">
 	<span>
 		<!--{if $inf}-->
 			<!--{loop $infinfo $key $val}-->
