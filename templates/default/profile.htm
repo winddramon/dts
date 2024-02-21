@@ -29,7 +29,7 @@
 				<td colspan="4" valign="top" height="200">
 					<table border="0" height="200" cellspacing="0" cellpadding="0" valign="middle" >
 						<tr>
-							<td>
+							<td colspan="2">
 								<table border="0" width=156 height=160 cellspacing="0" cellpadding="0" valign="middle" >
 									<tr>
 										<td width="73"></td><td width="82"></td>
@@ -105,17 +105,18 @@
 							</td>
 						</tr>
 						<tr>
-							<!--{if defined('MOD_TUTORIAL') && 17==$gametype}-->
-							{template MOD_TUTORIAL_TUTORIAL_EXIT_BUTTON}
-							<!--{elseif !$hp && defined('MOD_INSTANCE_CLOSE_BUTTON') && \instance_close_button\check_instance_close_available()}-->
-							{template MOD_INSTANCE_CLOSE_BUTTON_INSTANCE_CLOSE_BUTTON}
-							<!--{/if}-->
-
-							<!--{if defined('MOD_BUFFICONS')}-->
-							{template MOD_BUFFICONS_PROFILE}
-							<!--{else}-->
-							<td style="height:40px;text-align:middle;vertical-align:middle"></td>
-							<!--{/if}-->
+							<td class="b3" style="width:73px;height:40px;text-align:center;vertical-align:middle">
+								<!--{if defined('MOD_TUTORIAL') && 17==$gametype}-->
+								{template MOD_TUTORIAL_TUTORIAL_EXIT_BUTTON}
+								<!--{elseif !$hp && defined('MOD_INSTANCE_CLOSE_BUTTON') && \instance_close_button\check_instance_close_available()}-->
+								{template MOD_INSTANCE_CLOSE_BUTTON_INSTANCE_CLOSE_BUTTON}
+								<!--{/if}-->
+							</td>
+							<td class="b3" colspan="2" style="height:40px;text-align:center;vertical-align:middle">
+								<!--{if defined('MOD_BUFFICONS')}-->
+								{template MOD_BUFFICONS_PROFILE}
+								<!--{/if}-->
+							</td>
 						</tr>
 					</table>
 				</td>
@@ -137,21 +138,31 @@
 							<td class="b3"><!--{if $skillpoint>0}--><span class="lime b">$skillpoint<!--{else}-->$skillpoint<!--{/if}--></span></td>
 						</tr>
 						<tr>
-							<!--{if defined('MOD_SKILL538') && defined('MOD_GTYPE1') && defined('MOD_SKILLBASE') && $gametype!=1 && \skillbase\skill_query(538)}-->
-							{template MOD_GTYPE1_SHOWHACKLEVEL}
+							<!--{if defined('MOD_APM')}-->
+							{template MOD_APM_PROFILE}
 							<!--{else}-->
-							<td class="b2" height="20"><span></span></td>
-							<td class="b3"><span></span></td>
+							<td class="b2" height="20"></td>
+							<td class="b3" height="20"></td>
 							<!--{/if}-->
-							
 						</tr>
 						<tr>
-							<td class="b2" height="20"><span></span></td>
-							<td class="b3"><span></span></td>
+							<!--摸东西模式下杀人数计数改为破解层数显示-->
+							<!--{if defined('MOD_GTYPE1') && $gametype==1}-->
+								{template MOD_GTYPE1_SHOWHACKLEVEL}
+							<!--{elseif defined('MOD_GTYPE2') && $gametype==2}-->
+								{template MOD_SKILL475_SHOWWPT}
+							<!--{else}-->
+							<td class="b2" height="20"><span>{lang killnum}</span></td>
+							<td class="b3">
+								<span title="{lang pckillnum}：{$killnum} {lang npckillnum}：{$npckillnum}">
+								<!--{eval echo $killnum+$npckillnum;}-->
+								</span>
+							</td>
+							<!--{/if}-->
 						</tr>
 					</table>
 				</td>
-				<td class="b3" style="height:192px;text-align:middle;vertical-align:middle">
+				<td class="b3" style="height:192px;text-align:center;vertical-align:middle">
 					<table border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td colspan="4">
@@ -209,32 +220,18 @@
 							{template MOD_WOUND_WOUND_PROFILE}
 							<!--{else}-->
 							<td class="b2" width="110" height="20" colspan="2"></td>
-							<td class="b3" width="114" height="20" colspan="2"></td>
+							<td width="114" height="20" colspan="2"></td>
 							<!--{/if}-->
 						</tr>
 						<tr>
-							<!--{if defined('MOD_APM')}-->
-							{template MOD_APM_PROFILE}
-							<!--{else}-->
-							<td class="b2" width="54" height="20"></td>
-							<td class="b3" height="20"></td>
-							<!--{/if}-->
-
-							<!--摸东西模式下杀人数计数改为破解层数显示-->
-							<!--{if defined('MOD_GTYPE1') && $gametype==1}-->
+							<!--{if defined('MOD_SKILL538') && defined('MOD_GTYPE1') && defined('MOD_SKILLBASE') && $gametype!=1 && \skillbase\skill_query(538)}-->
 							{template MOD_GTYPE1_SHOWHACKLEVEL}
 							<!--{else}-->
-							<!--{if defined('MOD_GTYPE2') && $gametype==2}-->
-							{template MOD_SKILL475_SHOWWPT}
-							<!--{else}-->
-							<td class="b2" width="54" height="20"><span>{lang killnum}</span></td>
-							<td class="b3">
-								<span title="{lang pckillnum}：{$killnum} {lang npckillnum}：{$npckillnum}">
-								<!--{eval echo $killnum+$npckillnum;}-->
-								</span>
-							</td>
+							<td height="20"></td>
+							<td></td>
 							<!--{/if}-->
-							<!--{/if}-->
+							<td height="20"></td>
+							<td height="20"></td>
 						</tr>
 					</table>
 				</td>
