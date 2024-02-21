@@ -37,45 +37,64 @@
 			<!--{loop $logistics_shop_items $k $lsitem}-->
 			<!--{eval $num=!empty($logitemlist[$k])?$logitemlist[$k]:0;}-->
 			<!--{if $num}-->
-			<tr>
-				<td style="text-align:center;font-weight:bold;">{$lsitem[0]}</td>
-				<td style="text-align:center;">$logistics_itemtype[$lsitem[1]]。{$lsitem[3]}</td>
-				<td style="text-align:center;">$num</td>
-				<td><input type="button" class="b_button" style="width:120" value="使用" onclick="$('itemchoice').value='$k';
-				<!--{if in_array($k, array(2,3,4)) || $lsitem[1]==2}-->bubblebox_show('logitemuse{$k}');<!--{else}-->document.inventory.submit();<!--{/if}-->"></td>
-			</tr>
-			<!--{eval bubblebox_start('id:logitemuse'.$k.';height:150;width:600;cancellable:1;margin-top:20;margin-bottom:20;margin-left:20;margin-right:10;');}-->
-						<div style="margin-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px;">
-			<center>
-			<div style="font-weight:bold;">
-			<!--{if $k == 2}-->
-				使稀有度为<span class="gold b">S</span>、<span class="cyan b">A</span>、<span class="brickred b">B</span>、<span class="white b">C</span>卡片变为闪烁分别需要花费<span class="yellow b">{$cardblink_upgrade_cost['S'][0]}/{$cardblink_upgrade_cost['A'][0]}/{$cardblink_upgrade_cost['B'][0]}/{$cardblink_upgrade_cost['C'][0]}</span>切糕。<br><br>请选择要镀层的卡片：<br><br>
-			<!--{elseif $k == 3}-->
-				使稀有度为<span class="gold b">S</span>、<span class="cyan b">A</span>、<span class="brickred b">B</span>卡片变为镜碎分别需要花费<span class="yellow b">{$cardblink_upgrade_cost['S'][1]}/{$cardblink_upgrade_cost['A'][1]}/{$cardblink_upgrade_cost['B'][1]}</span>切糕。<br><br>请选择要镀层的卡片：<br><br>
-			<!--{elseif $k == 4}-->
-				请选择要充能的卡片：<br><br>
-			<!--{else}-->
-				请选择要摆放到哪个位置：<br><br>
-				<select name="pos" id="pos" style="width:240px" >
-				<!--{loop range(1,5) $i}-->
-				<option value="$i">位置$i <!--{if !empty($showcase_logitemlist[$i-1])}-->已摆放$logistics_shop_items[$showcase_logitemlist[$i-1]][0]<!--{else}-->未摆放<!--{/if}--><br>
-				<!--{/loop}-->
-				</select>
-				<br><br><input type="button" class="b_button" style="width:120" value="摆放" onclick="$('itempara').value=$('pos').value;document.inventory.submit();">
+				<tr>
+					<td style="text-align:center;font-weight:bold;">{$lsitem[0]}</td>
+					<td style="text-align:center;">$logistics_itemtype[$lsitem[1]]。{$lsitem[3]}</td>
+					<td style="text-align:center;">$num</td>
+					<td><input type="button" class="b_button" style="width:120" value="使用" onclick="$('itemchoice').value='$k';
+					<!--{if in_array($k, array(2,3,4)) || $lsitem[1]==2}-->bubblebox_show('logitemuse{$k}');<!--{elseif in_array($k, array(201,202,203,204,205))}-->bubblebox_show('logcardflip{$k}');<!--{else}-->document.inventory.submit();<!--{/if}-->"></td>
+				</tr>
+				<!--{if in_array($k, array(2,3,4)) || $lsitem[1]==2}-->
+					<!--{eval bubblebox_start('id:logitemuse'.$k.';height:150;width:600;cancellable:1;margin-top:20;margin-bottom:20;margin-left:20;margin-right:10;');}-->
+								<div style="margin-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px;">
+					<center>
+					<div style="font-weight:bold;">
+					<!--{if $k == 2}-->
+						使稀有度为<span class="gold b">S</span>、<span class="cyan b">A</span>、<span class="brickred b">B</span>、<span class="white b">C</span>卡片变为闪烁分别需要花费<span class="yellow b">{$cardblink_upgrade_cost['S'][0]}/{$cardblink_upgrade_cost['A'][0]}/{$cardblink_upgrade_cost['B'][0]}/{$cardblink_upgrade_cost['C'][0]}</span>切糕。<br><br>请选择要镀层的卡片：<br><br>
+					<!--{elseif $k == 3}-->
+						使稀有度为<span class="gold b">S</span>、<span class="cyan b">A</span>、<span class="brickred b">B</span>卡片变为镜碎分别需要花费<span class="yellow b">{$cardblink_upgrade_cost['S'][1]}/{$cardblink_upgrade_cost['A'][1]}/{$cardblink_upgrade_cost['B'][1]}</span>切糕。<br><br>请选择要镀层的卡片：<br><br>
+					<!--{elseif $k == 4}-->
+						请选择要充能的卡片：<br><br>
+					<!--{else}-->
+						请选择要摆放到哪个位置：<br><br>
+						<select name="pos" id="pos" style="width:240px" >
+						<!--{loop range(1,5) $i}-->
+						<option value="$i">位置$i <!--{if !empty($showcase_logitemlist[$i-1])}-->已摆放$logistics_shop_items[$showcase_logitemlist[$i-1]][0]<!--{else}-->未摆放<!--{/if}--><br>
+						<!--{/loop}-->
+						</select>
+						<br><br><input type="button" class="b_button" style="width:120" value="摆放" onclick="$('itempara').value=$('pos').value;document.inventory.submit();">
+					<!--{/if}-->
+					</div>
+					<!--{if in_array($k, array(2,3,4))}-->
+					<select name="cardid" id="cardid">
+					<!--{loop $cardlist $cid}-->
+					<option value="$cid">$cards[$cid]['name']<br>
+					<!--{/loop}-->
+					</select>
+					<br><br><input type="button" class="b_button" style="width:120" value="使用" onclick="$('itempara').value=$('cardid').value;document.inventory.submit();">
+					<!--{/if}-->
+					<br><br>
+					</center>
+					</div>
+					<!--{eval bubblebox_end();}-->
+				<!--{elseif in_array($k, array(201,202,203,204,205))}-->
+					<!--{eval bubblebox_start('id:logcardflip'.$k.';height:406;width:246;cancellable:1');}-->
+					<p>
+					你撕开了礼物包装，请点击翻开卡片。<br>
+					礼物： $logistics_shop_items[$k][3]
+					</p>
+					<div style="
+					cursor:pointer; 
+					position:relative; -moz-border-radius:8px; 
+					-webkit-border-radius:8px;
+					border-radius:8px; height:340px; width:240px; overflow:hidden; 
+					"
+					title="点击翻开">
+					<img src="img/cardback2.png" class="cardback" onclick="document.inventory.submit();"></img>
+					</div>
+					<!--{eval bubblebox_end();}-->
+				<!--{/if}-->
 			<!--{/if}-->
-			</div>
-			<!--{if in_array($k, array(2,3,4))}-->
-			<select name="cardid" id="cardid">
-			<!--{loop $cardlist $cid}-->
-			<option value="$cid">$cards[$cid]['name']<br>
-			<!--{/loop}-->
-			</select>
-			<br><br><input type="button" class="b_button" style="width:120" value="使用" onclick="$('itempara').value=$('cardid').value;document.inventory.submit();">
-			<!--{/if}-->
-			<br><br>
-			</center>
-			</div>
-			<!--{eval bubblebox_end();}-->			<!--{/if}-->
 			<!--{/loop}-->
 		</table>
 		</center>
