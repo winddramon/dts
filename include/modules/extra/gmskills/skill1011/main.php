@@ -42,7 +42,7 @@ namespace skill1011
 					'itmk' => $ival[4],
 					'itme' => $ival[5],
 					'itms' => $ival[6],
-					'itmsk' => $ival[7]
+					'itmsk' => implode(',',array_slice($ival, 6))
 				);
 			}
 		}elseif('mix' == $t){

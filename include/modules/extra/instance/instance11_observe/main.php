@@ -39,7 +39,7 @@ namespace instance11
 		$ebp = $chprocess($ebp);
 		eval(import_module('sys'));
 		if (21 == $gametype){
-			$ebq['money'] += 980;//初始资金
+			$ebp['money'] += 980;//初始资金
 			$ebp['itm6'] = '窥屏用头戴式显示器'; $ebp['itmk6'] = 'DH'; $ebp['itme6'] = 76; $ebp['itms6'] = 5;$ebp['itmsk6'] = '';
 		}
 		return $ebp;
@@ -198,7 +198,7 @@ namespace instance11
 		if (21 == $gametype)
 		{
 			if (strpos ( $itmk, 'Y' ) === 0 || strpos ( $itmk, 'Z' ) === 0) {
-				if ($itm == '游戏解除钥匙' || $itm == '奇怪的按钮' || $itm == '『G.A.M.E.O.V.E.R』') 
+				if ($itm == '游戏解除钥匙' || $itm == '奇怪的按钮' || $itm == '『G.A.M.E.O.V.E.R』' || $itm == '好想按这个按钮')
 				{
 					$log .= '这好像只是一个完成度非常高的手办……<br>';
 					$mode = 'command';
@@ -210,12 +210,12 @@ namespace instance11
 			}
 		}
 		$chprocess($theitem);
-		if(21 == $gametype && !empty($obsv_flag)) {
+		if(21 == $gametype && !empty($obsv_flag) && check_item_observer($arh, $arhk)) {
 			ob_start();
 			include template('MOD_NEWS_OBSERVE_OBSERVE_SELECT');
 			$cmd = ob_get_contents();
 			ob_end_clean();
-			$log .= '你打开了'.$itm.'的开关……<br><br>';
+			$log .= '你打开了'.$arh.'的开关……<br><br>';
 			return;
 		}
 	}
