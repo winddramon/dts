@@ -1,0 +1,20 @@
+<!--{eval $___TEMP_SKILL_ID=545;}-->
+<!--{eval $skill545_interval=\skill545\get_skill545_revive_interval($who);}-->
+{template MOD_CLUBBASE_SKILLDESC_START}
+<span>
+凤凰
+</span>
+{template MOD_CLUBBASE_SKILLDESC_MID1}
+<td class="skilldesc_left b3"><span class="skilldesc">
+你死亡后能在<span class="yellow b">{$skill545_interval}</span>秒后复活，不过重生点藏身于马桶中。<br>
+注意：你必须在倒计时结束后刷新游戏界面才能复活。在你死亡期间，其他玩家可以正常拾取你尸体上的道具
+</span></td>
+<td class="skilldesc_right b3">
+</td>
+{template MOD_CLUBBASE_SKILLDESC_MID2}
+<!--{if empty($___TEMP_THIS_SKILL_ACQUIRED)}-->
+<span class="red b">
+    不死的英雄需要藏身于马桶之中，可是当前游戏里并没有马桶
+</span>
+<!--{/if}-->
+{template MOD_CLUBBASE_SKILLDESC_END}

@@ -4,11 +4,11 @@ namespace instance11
 {
 	function init() {
 		eval(import_module('skillbase','map_display'));
-		//开局获得技能：扭蛋、打牌、占卜、欺货
+		//开局获得技能：凤凰、扭蛋、打牌、占卜、欺货
 		if(!isset($valid_skills[21])) {
 			$valid_skills[21] = array();
 		}
-		$valid_skills[21] += array(716,733,734,731);
+		$valid_skills[21] += array(545,716,733,734,731);
 		//地图显示的配置组
 		$map_display_group[1] = Array(
 			'x' => 3,
