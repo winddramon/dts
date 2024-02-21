@@ -39,7 +39,8 @@ namespace instance11
 		$ebp = $chprocess($ebp);
 		eval(import_module('sys'));
 		if (21 == $gametype){
-			$ebp['itm5'] = '窥屏用头戴式显示器'; $ebp['itmk5'] = 'DH'; $ebp['itme5'] = 76; $ebp['itms5'] = 5;$ebp['itmsk5'] = '';
+			$ebq['money'] += 980;//初始资金
+			$ebp['itm6'] = '窥屏用头戴式显示器'; $ebp['itmk6'] = 'DH'; $ebp['itme6'] = 76; $ebp['itms6'] = 5;$ebp['itmsk6'] = '';
 		}
 		return $ebp;
 	}
@@ -139,17 +140,18 @@ namespace instance11
 		$chprocess($time);
 	}
 	
-	//开局天气极光、禁区时间追加、地图显示配置组修改
+	//开局天气极光、禁区时间追加、地图显示配置组修改、$plsinfo重载数据修改
 	function rs_game($xmode = 0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($xmode);
-		eval(import_module('sys'));
+		eval(import_module('sys','instance11'));
 		if ((21 == $gametype)&&($xmode & 2)) 
 		{
 			$weather = 17;
 			$areatime = $starttime + 1919810;//相当于22天
 			$gamevars['map_display_group'] = 1;
+			$gamevars['plsinfo'] = $plsinfo11;
 		}
 	}
 

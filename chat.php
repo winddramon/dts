@@ -9,6 +9,9 @@ if($sendmode != 'newspage' && (!$cuser || !defined('IN_GAME'))) {
 	exit('Not in game.');
 }
 
+//为了实现$plsinfo重载，这里需要执行load_gameinfo()
+\sys\load_gameinfo();
+
 $ctablecorrect = 1;
 //强制读本地用户数据（如果有的话）
 $userdb_forced_local = 1;
