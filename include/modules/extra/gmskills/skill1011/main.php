@@ -42,7 +42,7 @@ namespace skill1011
 					'itmk' => $ival[4],
 					'itme' => $ival[5],
 					'itms' => $ival[6],
-					'itmsk' => $ival[7]
+					'itmsk' => implode(',',array_slice($ival, 7))
 				);
 			}
 		}elseif('mix' == $t){
@@ -131,6 +131,7 @@ namespace skill1011
 					if(defined('MOD_ATTRBASE')) {
 						$itmsk0=\attrbase\config_process_encode_comp_itmsk($itmsk0);
 					}
+					$itmsk0 = str_replace(',', '', $itmsk0);
 					addnews (0, 'admin_cons', $name, $itm0 );
 					\itemmain\itemget();
 				}else{
