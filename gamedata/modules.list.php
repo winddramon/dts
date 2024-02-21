@@ -641,6 +641,7 @@ searchmemory,extra/searchmemory/,1
 skill738,extra/card/skills/skill738/,1
 skill87,extra/club/skills/skill87/,1
 skill94,extra/club/skills/skill94/,1
+instance_quit_button,extra/instance/instance_quit_button/,1
 skill497,extra/card/skills/skill497/,1
 skill503,extra/card/skills/skill503/,1
 skill559,extra/card/skills/skill559/,1

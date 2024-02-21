@@ -30,8 +30,8 @@ namespace instance_close_button
 	function instance_close(){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		
-		eval(import_module('logger'));
 		if(!check_instance_close_available()) {
+			eval(import_module('logger'));
 			$log .= '<span class="red b">当前不满足关闭房间的条件！</span>';
 			return;
 		}
