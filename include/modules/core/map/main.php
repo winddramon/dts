@@ -2,11 +2,11 @@
 
 namespace map
 {
-	$all_plsno_cache = Array();//所有可用地图下标的暂存（因为现在是根据game表的arealist字段即时生成，生成后缓存一下会快一点）
+	$all_plsno_cache = Array();//所有可用地图下标的缓存（因为现在是根据game表的arealist字段即时生成，生成后缓存一下会快一点）
 
 	function init() 
 	{
-		
+
 	}
 
 	//获取可用地图总数。一般用于游戏结束判定
@@ -30,6 +30,14 @@ namespace map
 		$ret = get_var_in_module('arealist', 'sys');
 		sort($ret);
 		return $ret;
+	}
+
+	//在加载游戏信息后，大部分操作执行之前，预处理$plsinfo这个变量，根据$gamevars的值来决定是否需要重载$plsinfo
+	function load_gameinfo_post_work(){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$chprocess();
+		eval(import_module('sys','map'));
+		if(!empty($gamevars['plsinfo']) && is_array($gamevars['plsinfo'])) $plsinfo = $gamevars['plsinfo'];
 	}
 
 	//判定某个地图编号是否可用。本模块单纯判定是不是$plsinfo的其中一个键名。需要随机地图之类的模块可以重载这个函数。
