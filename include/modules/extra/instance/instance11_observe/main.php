@@ -11,9 +11,9 @@ namespace instance11
 		$valid_skills[21] += array(545,716,733,734,731);
 		//地图显示的配置组
 		$map_display_group[1] = Array(
-			'x' => 3,
-			'y' => 3,//用字母表示
-			'background-image' => 'map/neomap.jpg',
+			'x' => 6,
+			'y' => 6,//用字母表示
+			'background-image' => 'map/ob_room.png',
 			'background-width' => 500,
 			'background-height' => 500,
 		);
