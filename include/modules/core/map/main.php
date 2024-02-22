@@ -40,6 +40,16 @@ namespace map
 		if(!empty($gamevars['plsinfo']) && is_array($gamevars['plsinfo'])) $plsinfo = $gamevars['plsinfo'];
 	}
 
+	//游戏重置时，需要把$plsinfo也一并重置
+	function reset_game()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE; 
+		$chprocess();
+		eval(import_module('map'));
+		$file = __DIR__.'/config/map.config.php';
+		include $file;
+	}
+
 	//判定某个地图编号是否可用。本模块单纯判定是不是$plsinfo的其中一个键名。需要随机地图之类的模块可以重载这个函数。
 	function is_plsno_available($plsno) {
 		if (eval(__MAGIC__)) return $___RET_VALUE;
