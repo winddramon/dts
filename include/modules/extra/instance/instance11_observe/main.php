@@ -204,6 +204,12 @@ namespace instance11
 					$mode = 'command';
 					return;
 				}
+				elseif ($itm == '棱镜八面体')
+				{
+					$log .= "你使用了<span class=\"yellow b\">{$itm}</span>。<br>";
+					octitem_rotate($theitem, $theitem['itmn'], 1);
+					return;
+				}
 			}
 			elseif(check_item_observer($itm, $itmk)){
 				$obsv_flag = 1;
@@ -239,6 +245,105 @@ namespace instance11
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		return ('窥屏用头戴式显示器' == $itm && 'DH' == $itmk);
 	}
+	
+	function itemdrop($item)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','player'));
+		if($item == 'wep'){
+			$itm = & $wep;
+			$itmk = & $wepk;
+			$itme = & $wepe;
+			$itms = & $weps;
+			$itmsk = & $wepsk;
+		} elseif(strpos($item,'ar') === 0) {
+			$itmn = substr($item,2,1);
+			$itm = & ${'ar'.$itmn};
+			$itmk = & ${'ar'.$itmn.'k'};
+			$itme = & ${'ar'.$itmn.'e'};
+			$itms = & ${'ar'.$itmn.'s'};
+			$itmsk = & ${'ar'.$itmn.'sk'};
+
+		} elseif(strpos($item,'itm') === 0) {
+			$itmn = substr($item,3,1);
+			$itm = & ${'itm'.$itmn};
+			$itmk = & ${'itmk'.$itmn};
+			$itme = & ${'itme'.$itmn};
+			$itms = & ${'itms'.$itmn};
+			$itmsk = & ${'itmsk'.$itmn};
+		}
+		if (21 == $gametype)
+		{
+			if (strpos ( $itmk, 'Y' ) === 0 || strpos ( $itmk, 'Z' ) === 0) {
+				if ($itm == '棱镜八面体')
+				{
+					eval(import_module('logger'));
+					$theitem = array('itm' => &$itm, 'itmk' => &$itmk, 'itme' => &$itme,'itms' => &$itms,'itmsk' => &$itmsk);
+					$log .= "<span class=\"yellow b\">{$itm}</span>似乎发生了变化……<br>";
+					octitem_rotate($theitem, 7);
+				}
+			}
+		}
+		return $chprocess($item);
+	}
+	
+	function octitem_rotate(&$theitem, $rotpos, $showlog = 0)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$itm=&$theitem['itm']; $itmk=&$theitem['itmk'];
+		$itme=&$theitem['itme']; $itms=&$theitem['itms']; $itmsk=&$theitem['itmsk'];
+		$oct_colors_words = array('<span class="red b">红</span>','<span class="lime b">绿</span>','<span class="cyan b">蓝</span>','<span class="yellow b">黄</span>','<span class="gold b">金</span>','<span class="linen b">银</span>','<span class="black b white-shadow">黑</span>','<span class="white b">白</span>');
+		
+		$oct_seq = \itemmain\check_in_itmsk('^os', $itmsk);
+		if (false === $oct_seq || strlen($oct_seq) != 8)
+		{
+			$oct_seq = range(0, 7);
+			shuffle($oct_seq);
+			$itmsk .= '^os'.implode('', $oct_seq);
+		}
+		else $oct_seq = str_split($oct_seq);
+		
+		$oct_colors = \itemmain\check_in_itmsk('^oc', $itmsk);
+		if (false === $oct_colors || strlen($oct_colors) != 8)
+		{
+			$oct_colors = range(0, 7);
+			shuffle($oct_colors);
+		}
+		else $oct_colors = str_split($oct_colors);
+		
+		//改变选中面和另两个面的颜色
+		$oct_colors[$rotpos] = ($oct_colors[$rotpos] + 1) % 8;
+		$rotpos2 = ($rotpos + 1) % 8;
+		$oct_colors[$rotpos2] = ($oct_colors[$rotpos2] + 1) % 8;
+		$rotpos3 = ($rotpos + 2) % 8;
+		$oct_colors[$rotpos3] = ($oct_colors[$rotpos3] + 1) % 8;
+		$itmsk = \itemmain\replace_in_itmsk('^oc','',$itmsk);
+		$itmsk .= '^oc'.implode('', $oct_colors);
+		
+		if ($showlog)
+		{
+			eval(import_module('logger'));
+			$log .= "<br><span class=\"yellow b\">{$itm}</span>八个面的颜色为：<br>";
+			foreach ($oct_seq as $v)
+			{
+				$log .=	$oct_colors_words[$oct_colors[$v]].' ';
+			}
+			$log .= "<br>";
+		}
+		
+		//结果检查
+		$oc_count = count(array_unique($oct_colors));
+		if ($oc_count == 1)
+		{
+			if ($showlog)
+			{
+				$log .= "<span class=\"yellow b\">{$itm}</span>的形状发生了变化……<br>";
+			}
+			$itm = '★棱镜二面体模样的卡牌包★'; $itmk = 'VO3';
+			$itme = $itms = 1; $itmsk = '';
+		}
+	}
+	
 }
 
 ?>
