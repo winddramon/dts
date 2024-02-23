@@ -108,7 +108,7 @@
 		<!--{eval $lsitem=$logistics_shop_items[$lid];$show_i = $i + 1;}-->
 		<tr style="text-align:center;">
 			<td class="showcase" style="font-weight:bold;">{$lsitem[0]}</td>
-			<td class="showcase">$logistics_itemtype[$lsitem[1]]。{$lsitem[3]}</td>
+			<td class="showcase">{$lsitem[3]}</td>
 			<td class="showcase" style="width:120px">
 				<input type="button" class="b_button" style="width:80px" value="取下" onclick="$('itempos').value='$show_i';document.showcase3.submit();">
 			</td>
