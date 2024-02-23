@@ -21,27 +21,26 @@
 		<!--{/loop}-->
 		<div style="clear:both;"></div>
 	</ul>
-</center>
 
-<div class="subtitle" align="center">道具陈列</div>
-<center>
+	<br>
+	<div class="subtitle" align="center">道具陈列</div>
 	<!--{if $showcase_gameitemlist}-->
-	<table style="width:600px;">
-		<tr>
-			<td class=b1 width="60"><span>道具类别</span></td>
-			<td class=b1><span>名称</span></td>
-			<td class=b1 width="150"><span>属性</span></td>
-			<td class=b1 width="40"><span>效</span></td>
-			<td class=b1 width="40"><span>耐</span></td>
-		</td>
+	<table style="width:750px;">
+		<tr style="text-align:center;font-size:14px;">
+			<th width="60"><span>道具类别</span></td>
+			<th <span>名称</span></td>
+			<th width="150"><span>属性</span></td>
+			<th width="40"><span>效</span></td>
+			<th width="40"><span>耐</span></td>
+		</tr>
 		<!--{loop $showcase_gameitemlist $gitm}-->
 		<!--{if $gitm}-->
-		<tr>
-			<td class=b2 height="26"><span><!--{eval echo \itemmain\parse_itmk_words($gitm[1],1);}--></span></td>
-			<td class=b3><span>$gitm[0]</span></td>
-			<td class=b3><span><!--{eval echo \itemmain\parse_itmsk_words($gitm[4],1);}--></span></td>
-			<td class=b3><span>$gitm[2]</td>
-			<td class=b3><span>$gitm[3]</span></td>
+		<tr style="text-align:center;">
+			<td class="showcase"><span><!--{eval echo \itemmain\parse_itmk_words($gitm[1],1);}--></span></td>
+			<td class="showcase"><span>$gitm[0]</span></td>
+			<td class="showcase"><span><!--{eval echo \itemmain\parse_itmsk_words($gitm[4],1);}--></span></td>
+			<td class="showcase"><span>$gitm[2]</td>
+			<td class="showcase"><span>$gitm[3]</span></td>
 		</tr>
 		<!--{/if}-->
 		<!--{/loop}-->
@@ -49,31 +48,33 @@
 	<!--{else}-->
 	<div style="width:600px;text-align:center;font-size:14px;">这里什么也没有呢……</div>
 	<!--{/if}-->
-</center>
-
-<div class="subtitle" align="center">装饰陈列</div>
-<center>
+	<br>
+	<br>
+	<div class="subtitle" align="center">装饰陈列</div>
 	<!--{if $showcase_logitemlist}-->
-	<table style="width:600px;">
-		<tr style="text-align:center;font-size:18px;">
+	<form method="post" name="showcase3">
+	<input type="hidden" name="showcase_cmd" value="set_item">
+	<input type="hidden" id="itempos" name="itempos" value="">
+	<table style="width:750px;">
+		<tr style="text-align:center;font-size:14px;">
 			<th>名称</th>
 			<th>描述</th>
 		</tr>
-		<!--{loop $showcase_logitemlist $lid}-->
+		<!--{loop $showcase_logitemlist $i $lid}-->
 		<!--{if isset($logistics_shop_items[$lid])}-->
-		<!--{eval $lsitem=$logistics_shop_items[$lid];}-->
-		<tr>
-			<td style="text-align:center;font-weight:bold;">{$lsitem[0]}</td>
-			<td style="text-align:center;">$logistics_itemtype[$lsitem[1]]。{$lsitem[3]}</td>
+		<!--{eval $lsitem=$logistics_shop_items[$lid];$show_i = $i + 1;}-->
+		<tr style="text-align:center;">
+			<td class="showcase" style="font-weight:bold;">{$lsitem[0]}</td>
+			<td class="showcase">$logistics_itemtype[$lsitem[1]]。{$lsitem[3]}</td>
 		</tr>
 		<!--{/if}-->
 		<!--{/loop}-->
 	</table>
+	</form>
 	<!--{else}-->
 	<div style="width:600px;text-align:center;font-size:14px;">这里什么也没有呢……</div>
 	<!--{/if}-->
-</center>
-
+	<br>
 <br>
 </center>
 

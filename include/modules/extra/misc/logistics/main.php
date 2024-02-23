@@ -321,7 +321,11 @@ namespace logistics
 				
 				$upd['card_data'] = $pa['card_data'];
 				break;
-			case 201||202||203|204|205:
+			case 201:
+			case 202:
+			case 203:
+			case 204:
+			case 205:
 				eval(import_module('cardbase'));
 				$get_card_id = 0;
 				if ($itemid == 205 && rand(1,100) <= 15)

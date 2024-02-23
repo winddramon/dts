@@ -41,7 +41,7 @@
 			<input type="button" class="b_button" style="width:120" value="更换" onclick="$('cardpos').value='$k';bubblebox_show('cardchange{$k}');">
 		</li>
 		<!--{eval bubblebox_start('id:cardchange'.$k.';height:150;width:600;cancellable:1;margin-top:20;margin-bottom:20;margin-left:20;margin-right:10;z-index-base:30;');}-->
-						<div style="margin-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px;">
+		<div style="margin-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px;">
 			<center>
 			<div style="font-weight:bold;">
 			请选择要设置的卡片：<br><br>
@@ -62,28 +62,26 @@
 	<!--{else}-->
 	<div style="width:600px;text-align:center;font-size:14px;">这里什么也没有呢……</div>
 	<!--{/if}-->
-</center>
 
-<br>
-<div class="subtitle" align="center">道具陈列</div>
-<center>
+	<br>
+	<div class="subtitle" align="center">道具陈列</div>
 	<!--{if $showcase_gameitemlist}-->
-	<table style="width:600px;">
-		<tr>
-			<td class=b1 width="60"><span>道具类别</span></td>
-			<td class=b1><span>名称</span></td>
-			<td class=b1 width="150"><span>属性</span></td>
-			<td class=b1 width="40"><span>效</span></td>
-			<td class=b1 width="40"><span>耐</span></td>
-		</td>
+	<table style="width:750px;">
+		<tr style="text-align:center;font-size:14px;">
+			<th width="60"><span>道具类别</span></td>
+			<th <span>名称</span></td>
+			<th width="150"><span>属性</span></td>
+			<th width="40"><span>效</span></td>
+			<th width="40"><span>耐</span></td>
+		</tr>
 		<!--{loop $showcase_gameitemlist $gitm}-->
 		<!--{if $gitm}-->
-		<tr>
-			<td class=b2 height="26"><span><!--{eval echo \itemmain\parse_itmk_words($gitm[1],1);}--></span></td>
-			<td class=b3><span>$gitm[0]</span></td>
-			<td class=b3><span><!--{eval echo \itemmain\parse_itmsk_words($gitm[4],1);}--></span></td>
-			<td class=b3><span>$gitm[2]</td>
-			<td class=b3><span>$gitm[3]</span></td>
+		<tr style="text-align:center;">
+			<td class="showcase"><span><!--{eval echo \itemmain\parse_itmk_words($gitm[1],1);}--></span></td>
+			<td class="showcase"><span>$gitm[0]</span></td>
+			<td class="showcase"><span><!--{eval echo \itemmain\parse_itmsk_words($gitm[4],1);}--></span></td>
+			<td class="showcase"><span>$gitm[2]</td>
+			<td class="showcase"><span>$gitm[3]</span></td>
 		</tr>
 		<!--{/if}-->
 		<!--{/loop}-->
@@ -92,17 +90,15 @@
 	<div style="width:600px;text-align:center;font-size:14px;">这里什么也没有呢……</div>
 	<!--{/if}-->
 	<br><div style="width:600px;text-align:center;font-size:14px;">在游戏中可使用商店中购买的<span class="yellow b">“记录用投影底座”</span>将道具投影保存到展柜中。</div>
-</center>
 
-<br>
-<div class="subtitle" align="center">装饰陈列</div>
-<center>
+	<br>
+	<div class="subtitle" align="center">装饰陈列</div>
 	<!--{if $showcase_logitemlist}-->
 	<form method="post" name="showcase3">
 	<input type="hidden" name="showcase_cmd" value="set_item">
 	<input type="hidden" id="itempos" name="itempos" value="">
 	<table style="width:750px;">
-		<tr style="text-align:center;font-size:18px;">
+		<tr style="text-align:center;font-size:14px;">
 			<th>名称</th>
 			<th>描述</th>
 			<th>操作</th>
@@ -110,10 +106,12 @@
 		<!--{loop $showcase_logitemlist $i $lid}-->
 		<!--{if isset($logistics_shop_items[$lid])}-->
 		<!--{eval $lsitem=$logistics_shop_items[$lid];$show_i = $i + 1;}-->
-		<tr>
-			<td style="text-align:center;font-weight:bold;">{$lsitem[0]}</td>
-			<td style="text-align:center;">$logistics_itemtype[$lsitem[1]]。{$lsitem[3]}</td>
-			<td style="text-align:center;"><input type="button" class="b_button" style="width:120" value="取下" onclick="$('itempos').value='$show_i';document.showcase3.submit();"></td>
+		<tr style="text-align:center;">
+			<td class="showcase" style="font-weight:bold;">{$lsitem[0]}</td>
+			<td class="showcase">$logistics_itemtype[$lsitem[1]]。{$lsitem[3]}</td>
+			<td class="showcase" style="width:120px">
+				<input type="button" class="b_button" style="width:80px" value="取下" onclick="$('itempos').value='$show_i';document.showcase3.submit();">
+			</td>
 		</tr>
 		<!--{/if}-->
 		<!--{/loop}-->

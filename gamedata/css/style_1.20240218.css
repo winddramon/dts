@@ -505,6 +505,15 @@ div.battlecmd_desc{
 	color: #ffffff;
 	top: -16px; 
 }
+/*==========刺激市场展柜==========*/
+.showcase
+{
+	background-color: rgba(0,0,0,0.6);
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+	padding:10px;
+}
 /*==========滚动条==========*/
 .gscroll::-webkit-scrollbar-track
 {
