@@ -621,7 +621,7 @@ $roomtypelist = Array(
 		'show-team-leader' => 0,	//是否显示“队长”标签（如队伍大于1人设为1）
 	),
 	13 => Array(//蹲站模式为唯一房间
-		'name' => '<font class="lightblue b">蹲站模式</font>',
+		'name' => '<font class="ltazure b">蹲站模式</font>',
 		'gtype' => 21, //对应的游戏模式编号
 		'available' => true,
 		'soleroom' => true,//唯一房间，只有不存在时才会新建房间，而且房间空置过长会自动刷新整个房间。

@@ -41,6 +41,7 @@ namespace instance11
 		if (21 == $gametype){
 			$ebp['money'] += 980;//初始资金
 			$ebp['itm6'] = '窥屏用头戴式显示器'; $ebp['itmk6'] = 'DH'; $ebp['itme6'] = 76; $ebp['itms6'] = 5;$ebp['itmsk6'] = '';
+			$ebp['itm0'] = '蓝凝的便签'; $ebp['itmk0'] = 'Z'; $ebp['itme0'] = 1; $ebp['itms0'] = 1;$ebp['itmsk0'] = '';
 		}
 		return $ebp;
 	}
@@ -209,6 +210,11 @@ namespace instance11
 					$log .= "你使用了<span class=\"yellow b\">{$itm}</span>。<br>";
 					octitem_rotate($theitem, $theitem['itmn'], 1);
 					return;
+				}elseif ($itm == '蓝凝的便签')
+				{
+					 $log .= '你再次看向那张已经有点揉皱了的纸条。<br><br><span class="ltazure b">“<span style="background-color:rgb(110,210,255);">林苍月</span>要我通知你们到我的房间集合，所以我就通知了。不准不来哦！<br><br>PS：这家伙还不让我写他名字”</span><br><br>她甚至没说她自己什么时候会来……<br><br>总之，比起干等，不如做点事吧。<br><br>';
+					if(!empty($itms0)) \itemmain\itemget();
+					 return;
 				}
 			}
 			elseif(check_item_observer($itm, $itmk)){
