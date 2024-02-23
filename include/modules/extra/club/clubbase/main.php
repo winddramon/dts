@@ -356,12 +356,14 @@ namespace clubbase
 		if (empty(trim($default))) include template(constant('MOD_SKILL'.$key.'_BATTLECMD'));
 		else echo $default;
 	}
-					
+	
+	//生成技能按钮。会自动输出一个额外的空格来平衡掉不规范的html输出的额外空格……
 	function get_profile_skill_buttons()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('player','clubbase'));
 		$___TEMP_inclist = Array();
+		//顺序是先所有称号技能，再其他的技能
 		if ($club!=0)
 			foreach ($clublist[$club]['skills'] as $key) 
 				if (defined('MOD_SKILL'.$key.'_INFO') && \skillbase\check_skill_info($key, 'club') && \skillbase\check_skill_info($key, 'active') && \skillbase\skill_query($key)) 
@@ -391,8 +393,10 @@ namespace clubbase
 						array_push($___TEMP_inclist,template(constant('MOD_SKILL'.$key.'_PROFILECMD'))); 
 				}
 		
-		foreach ($___TEMP_inclist as $___TEMP_template_name) include $___TEMP_template_name;
-		
+		foreach ($___TEMP_inclist as $___TEMP_template_name) {
+			include $___TEMP_template_name;
+			echo ' ';
+		}
 	}
 	
 	//生成技能表页面

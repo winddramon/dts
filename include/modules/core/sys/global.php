@@ -209,7 +209,7 @@ namespace sys
 		
 		//先对不同类型进行数据预处理，或者生成特殊格式的讯息
 		//0=公聊； 1=队聊； 2=私聊； 3=遗言； 4=公告； 5=系统； 6=剧情； 7=窥屏弹幕
-		if(0 == $chat['type'] || 1 == $chat['type']) {
+		if(0 == $chat['type'] || 1 == $chat['type'] || 7 == $chat['type']) {
 			//表情替换
 			foreach($emoticon_list as $ei => $ev){
 				$chat['msg'] = str_replace('['.$ei.']', '<img class="emoticon" src="img/emoticons/'.$ev.'" style="width:40px;height:40px;" title="<img class=emoticon src=img/emoticons/'.$ev.' />" />', $chat['msg']);
