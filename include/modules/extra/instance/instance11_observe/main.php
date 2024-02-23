@@ -232,26 +232,79 @@ namespace instance11
 		}
 	}
 
-	//每次行动后如果没有戴着窥屏显示器那么结束窥屏状态
+	//每次行动后如果处于窥屏状态那么进行判定
+	//没有戴着窥屏显示器那么结束窥屏状态，否则增加一个前往房间的按钮
 	function post_act(){//每次行动记录得到的金钱
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','player'));
 		if (21 == $gametype)
 		{
 			$obsv_id = \news_observe\get_observe_groomid();
-			if($obsv_id >= 0 && !check_item_observer($arh, $arhk)) {
-				\news_observe\observe_main(-1);
+			if($obsv_id >= 0) {
+				if(!check_item_observer($arh, $arhk)) {
+					\news_observe\observe_main(-1);
+				}else{
+					$uip['cmd_buttons'][] = Array(
+						'id' => 'observe_jump'.$obsv_id,
+						'value' => $obsv_id ? '前往'.$obsv_id.'号房间' : '前往大房间',
+						'onclick' => "$('command').value='observe_jump{$obsv_id}';"
+					);
+				}
 			}
 		}
 		$chprocess();
 	}
 
+	//接收跳转指令
+	function act()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		
+		eval(import_module('sys'));
+
+		if('observe_jump' == substr($command, 0, 12)) {
+			observe_jump_to_room((int)substr($command, 12));
+			return;
+		}
+
+		$chprocess();
+	}
+
+	//从窥屏状态直接跳转进入进入要看的房间
+	function observe_jump_to_room($rid)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','logger'));
+		if(!check_observe_act_allowed()) {
+			$log .= '<span class="red b">本模式不允许跳跃到其他房间！</span><br><br>';
+			$mode = 'command';
+			return;
+		}
+		$rid = (int)$rid;
+		$olist = \news_observe\get_observe_roomlist();
+		if(empty($olist[$rid])) {
+			$log .= '<span class="red b">该房间不可用！</span><br><br>';
+			$mode = 'command';
+			return;
+		}
+		if($olist[$rid]['gamestate']<20 || $olist[$rid]['gamestate']>=30) {
+			$log .= '<span class="red b">该房间不可进入！</span><br><br>';
+			$mode = 'command';
+			return;
+		}
+		set_current_roomid($rid);
+		eval(import_module('player'));
+		$gamedata['url']='game.php';
+	}
+
+	//判定是否戴着窥屏显示器
 	function check_item_observer($itm, $itmk)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		return ('窥屏用头戴式显示器' == $itm && 'DH' == $itmk);
 	}
 	
+	//棱镜八面体相关
 	function itemdrop($item)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -293,6 +346,7 @@ namespace instance11
 		return $chprocess($item);
 	}
 	
+	//棱镜八面体相关
 	function octitem_rotate(&$theitem, $rotpos, $showlog = 0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;

@@ -6,7 +6,7 @@ namespace player
 	global $fog,$upexp,$lvlupexp,$iconImg,$iconImgB,$iconImgBwidth,$ardef;//这些鬼玩意可以回头全部丢进$uip
 	global $hpcolor,$spcolor,$newhpimg,$newspimg,$splt,$hplt, $tpldata; 
 
-	$icon_list = $icon_list_contents_to_frontend = Array();
+	$icon_list = $icon_list_contents_to_frontend = Array();//头像列表，实际是载入位于./gamedata/cache文件夹的pc_icon_selecting_list.php
 	
 	function init()
 	{
@@ -405,7 +405,7 @@ namespace player
 			}
 		}
 
-		if($iconImgB)  {
+		if($iconImg && $iconImgB)  {
 			list($w,$h) = getimagesize('img/'.$iconImgB);
 			if($h <= 80) $iconImgB = '';
 			elseif($h <= 340) $iconImgBwidth = $w;
@@ -474,13 +474,11 @@ namespace player
 		else $uip['innerHTML']['anum'] = $validnum;
 		$uip['value']['cpls'] = $pls;//聊天的地点信息在这里赋值
 		$uip['value']['croomid'] = $groomid;//聊天的当前房间信息在这里赋值
-//		$uip['innerHTML']['weather'] = $wthinfo[$weather];
-//		$uip['innerHTML']['gamedate'] = "{$month}月{$day}日 星期{$week[$wday]} {$hour}:{$min}";
-//		if ($gamestate == 40 ||($gametype == 17 && \skillbase\skill_getvalue(1000,'step')>=206)) {
-//			$uip['innerHTML']['gamestateinfo'] = '<span class="yellow b">连斗</span>';
-//		} elseif ($gamestate == 50) {
-//			$uip['innerHTML']['gamestateinfo'] = '<span class="red b">死斗</span>';
-//		}
+
+		//界面常规按钮赋值，有序。
+		//分两种写法，其一是键值为html文件名字符串（模块一般定义了常量）
+		//其二键值为数组，需要包含id、value、onclick等字符串（style、title可选），其中onclick已经写好了postCmd命令
+		if(empty($uip['cmd_buttons'])) $uip['cmd_buttons'] = Array();
 	}
 	
 	//玩家界面profile数据渲染

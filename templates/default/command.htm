@@ -59,6 +59,17 @@
 {template MOD_EX_STORAGE_STORAGE_PROFILE}
 <!--{/if}--> 
 <br>
+<!--{if !empty($uip['cmd_buttons'])}-->
+	<!--{loop $uip['cmd_buttons'] $b}-->
+		<!--{if '<br>' == $b}--><br>
+		<!--{elseif is_string($b)}-->
+			{template $b}
+		<!--{elseif is_array($b)}-->
+			<input type="button" id="{$b['id']}" class="cmdbutton" value="{$b['value']}" onclick="{$b['onclick']};postCmd('gamecmd','command.php',this);"
+			<!--{if !empty($b['style'])}-->style="$b['style']"<!--{/if}--> <!--{if !empty($b['title'])}-->title="$b['title']"<!--{/if}--> />
+		<!--{/if}-->
+	<!--{/loop}-->
+<!--{/if}--> 
 <!--{if defined('MOD_CLUBBASE')}-->
 {template MOD_CLUBBASE_PROFILESKILLPAGE}
 <!--{/if}--> 
