@@ -65,7 +65,7 @@ namespace news_observe
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
 		$chprocess();
-		if(\skillbase\skill_query(1003) && !empty(\skillbase\skill_getvalue(1003,'obsv_on'))){
+		if(\skillbase\skill_query(1003) && !empty(\skillbase\skill_getvalue(1003,'obsv_on')) && check_observe_act_allowed()){
 			$obsv_id = \skillbase\skill_getvalue(1003,'obsv_id');
 			$uip['value']['croomid'] = (int)$obsv_id;
 			$uip['value']['obsv_flag'] = '1';
