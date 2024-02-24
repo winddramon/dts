@@ -431,7 +431,7 @@ function showData_effect(shwData) {
 		effect_npcchat_display_offset = 0;
 		effect_npcchat_display_timer(2000, tmp_display);
 	}
-	//图标闪烁效果
+	//图标闪烁等效果
 	if (shwData['effect'])
 	{
 		effect_clear_all();
@@ -452,8 +452,23 @@ function showData_effect(shwData) {
 			  		efel.css({'z-index':'5','position':'relative'});
 					}
 			  }
-			}	else if (ef == 'chatref'){
+			} else if (ef == 'chatref'){
 				chat('ref',15000);
+			} else if (ef == 'chat_observe_on') {
+				//直接把这个banner当做标志物吧。如果banner关闭，视为第一次进入窥屏状态，刷新chat和news
+				if('none' == $('chat_floating_banner').style.display){
+					$('chat_floating_banner').style.display = 'block';
+					var chat_need_reset = 1;
+				}
+			} else if (ef == 'chat_observe_off') {
+				$('chat_floating_banner').style.display = 'none';
+				var chat_need_reset = 1;
+			}
+			if(chat_need_reset) {
+				clearTimeout(refchat);
+				$('lastcid').value = $('lastnid').value = 0;
+				$('chatlist').innerHTML = $('newslist').innerHTML = '<span class="grey b">***Now loading...***</span>';
+				chat($('sendmode').value,refintv);
 			}
 		}
 	}
@@ -467,9 +482,8 @@ function showData_effect(shwData) {
 	}
 }
 
-
-
 var refchat = null;
+var refintv = 3000;
 
 function chat(mode,reftime) {
 	clearTimeout(refchat);
@@ -489,10 +503,10 @@ function chat(mode,reftime) {
 	};
 	oXmlHttp.send(sBody);
 	if(mode == 'send'){$('chatmsg').value = '';$('sendmode').value = 'ref';}
-	rtime = reftime;
+	refintv = reftime;
 	if(refchat_ok) {
-		if(mode == 'news') refchat = setTimeout("chat('news',rtime)",rtime);
-		else refchat = setTimeout("chat('ref',rtime)",rtime);
+		if(mode == 'news') refchat = setTimeout("chat('news',refintv)",refintv);
+		else refchat = setTimeout("chat('ref',refintv)",refintv);
 	}
 }
 

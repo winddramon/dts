@@ -2,6 +2,10 @@
 <div style="position:relative; height:100%; width:100%;">
 <div class="skill_unacquired">
 <!--{/if}-->
+<div style="position:relative;">
+<div id="chat_floating_banner" style="left:500px;top:-4px;display:none;">
+	<span id="chat_floating_banner_inner" class="red b">测试</span>
+</div>
 <table id="chat" width="720" cellspacing="0" cellpadding="0" style="border:0;valign:top;table-layout:fixed;">
 	<tr>
 		<td height="20px" width="100%" class="b1"><span id="chattitle">聊天讯息</span></td>
@@ -39,6 +43,7 @@
 					<input type="hidden" id="cpls" name="cpls" value="$pls">
 					<input type="hidden" id="chatpid" name="chatpid" value="$pid">
 					<input type="hidden" id="sendmode" name="sendmode" value="ref">
+					<input type="hidden" id="obsv_flag" name="obsv_flag" value="0">
 					<input type="button" id="showchatfloatbox" style="height:24px;" value="表情/定型文" onmouseenter="
 						$('chatfloatbox').style.display='block';" />
 					<span id="chattype">
@@ -97,6 +102,7 @@
 		</td>
 	</tr>
 </table> 
+</div>
 <!--{if defined('IN_REPLAY')}-->
 </div>
 <div class="skill_unacquired_hint">

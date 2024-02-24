@@ -88,9 +88,6 @@
 				<input type="hidden" name="mode" value="quit">
 				<input type="submit" name="quit" value="{lang quit}">
 				</form>
-				<span class="evergreen2">第一次玩的，请先体验
-					<a href="roomcmd.php?command=newroom&para1=7" class="red2">教程模式</a> ！
-				</span>
 			<!--{else}-->
 				<form method="post" name="login" action="login.php">
 				<input type="hidden" name="mode" value="main">
@@ -103,6 +100,11 @@
 		<td></td>
 		<td rowspan="2" style="width:400px; vertical-align:top;text-align:left;">
 			{template roomlist}
+			<div>
+				<span class="evergreen" style="font-size:16px;line-height:32px;">如果你是新玩家，请先体验<a href="roomcmd.php?command=newroom&para1=7" class="red b" style="font-size:16px;"> 教程模式 </a>！
+				也可在<a href="roomcmd.php?command=newroom&para1=13" class="lightblue b" style="font-size:16px;"> 蹲站模式 </a>获得别样乐趣！
+				</span>
+			</div>
 		</td>
 	</tr>
 </table>

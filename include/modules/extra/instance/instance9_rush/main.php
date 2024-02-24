@@ -147,9 +147,9 @@ namespace instance9
 	}
 	
 	//急速模式地图防具的效果值翻倍，钉和磨刀石效果值x5
-	function mapitem_row_data_process($data){
+	function mapitem_row_data_process($data, $no = -1){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
-		$ret = $chprocess($data);
+		$ret = $chprocess($data, $no);
 		eval(import_module('sys'));
 		if(19==$gametype){
 			if(strpos($ret[4],'D')===0){

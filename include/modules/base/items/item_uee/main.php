@@ -2,7 +2,9 @@
 
 namespace item_uee
 {
-	global $hack_obbs; $hack_obbs = 40;
+	$hack_obbs = 40;//单次破解成功率
+	$break_obbs = 5;//单次破解设备被炸的概率
+	$death_obbs = 3;//单次破解死亡的概率
 	
 	function init() 
 	{
@@ -30,7 +32,8 @@ namespace item_uee
 	function calculate_post_hack_proc_rate()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		return array(5,3);
+		eval(import_module('item_uee'));
+		return array($break_obbs, $death_obbs);
 	}
 	
 	function get_uee_deathlog () {
@@ -46,7 +49,7 @@ namespace item_uee
 		$hack_dice2 = rand(0,99);
 		list($ph_rate1, $ph_rate2) = calculate_post_hack_proc_rate();
 		if($hack_dice2 < $ph_rate1) {
-			$log .= '由于你操作不当，幻境反击代码定位了你的设备，并将它直接抹消了。幸好你本人安然无恙。<br>';
+			$log .= '<br>由于你操作不当，幻境反击代码定位了你的设备，并将它直接抹消了。幸好你本人安然无恙。<br>';
 			$itm = & ${'itm'.$itmn};
 			$itmk = & ${'itmk'.$itmn};
 			$itme = & ${'itme'.$itmn};
@@ -56,7 +59,7 @@ namespace item_uee
 			$itme = $itms = 0;
 		} elseif($hack_dice2 < $ph_rate1 + $ph_rate2) {
 			
-			$log .= '<br>'.get_uee_deathlog();
+			$log .= '<br><br>'.get_uee_deathlog();
 			$log .= '你擅自攻击虚拟幻境系统，被反击代码远程消灭！<br>';
 			$state = 14;
 			\player\update_sdata(); $sdata['sourceless'] = 1; $sdata['attackwith'] = '';
@@ -96,9 +99,9 @@ namespace item_uee
 			if($itme <= 0) {
 				$log .= "<span class=\"red b\">$itm</span>的电池耗尽了。";
 			}
+			post_hack_events($itmn);
 		}
 		
-		post_hack_events($itmn);
 		return;
 	}
 	

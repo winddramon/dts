@@ -592,28 +592,30 @@ function room_enter($id, $force_reset = 0)
 			\sys\save_gameinfo(0);
 			\sys\routine();
 		}
-		//如果不显示选卡界面就直接进入房间，在这里处理（目前只有教程）
-		if($roomtypelist[$rd['groomtype']]['without-valid']){
-			$pname = (string)$cuser;
-			global $cudata;
-			$udata = $cudata;
-			$result = $db->query("SELECT * FROM {$tablepre}players WHERE name = '$pname' AND type = 0");
-			if(!$db->num_rows($result)){//从未进入过则直接进入战场
-				include_once GAME_ROOT.'./include/valid.func.php';
-				enter_battlefield($udata['username'],$udata['password'],$udata['gender'],$udata['icon'],$pcard,$udata['ip']);
-			}elseif($roomtypelist[$rd['groomtype']]['soleroom']){//教程房特判，离开超过一定时间则清空数据从头开始
-				$pdata = $db->fetch_array($result);
-				$ppid = $pdata['pid'];
-				$pendtime = $pdata['endtime'];
-				if($now - $pendtime > $soleroom_private_resettime){
-					$db->query("DELETE FROM {$tablepre}players WHERE name = '$pname' AND type = 0");
-					$db->query("DELETE FROM {$tablepre}players WHERE type>0 AND teamID = '$ppid'");
-					$alivenum --;
-					include_once GAME_ROOT.'./include/valid.func.php';
-					enter_battlefield($udata['username'],$udata['password'],$udata['gender'],$udata['icon'],$pcard,$udata['ip']);
-				}
+		//提前判定玩家是否已经在房间中
+		$pname = (string)$cuser;
+		global $cudata;
+		$udata = $cudata;
+		$result = $db->query("SELECT * FROM {$tablepre}players WHERE name = '$pname' AND type = 0");
+		$pnum = $db->num_rows($result);
+		//如果设定了离开一段时间后自动清除玩家数据，在这里判定
+		if(!empty($roomtypelist[$rd['groomtype']]['reset_player_after_leave']) && $pnum){
+			$pdata = $db->fetch_array($result);
+			$ppid = $pdata['pid'];
+			$pendtime = $pdata['endtime'];
+			if($now - $pendtime > $soleroom_private_resettime){
+				$db->query("DELETE FROM {$tablepre}players WHERE name = '$pname' AND type = 0");
+				$db->query("DELETE FROM {$tablepre}players WHERE type>0 AND teamID = '$ppid'");
+				$pnum --;
+				//$alivenum --;
 			}
 		}
+		//如果不显示选卡界面就直接进入房间，在这里处理（目前只有教程）
+		if($roomtypelist[$rd['groomtype']]['without-valid'] && !$pnum){
+			include_once GAME_ROOT.'./include/valid.func.php';
+			enter_battlefield($udata['username'],$udata['password'],$udata['gender'],$udata['icon'],$pcard,$udata['ip']);
+		}
+		
 		//最后设定跳转到的页面
 		//新开始游戏或者永续房，则直接转入游戏页面
 		if($gamestate < 30 && ($need_reset || $roomtypelist[$rd['groomtype']]['soleroom'])) $header = 'game.php';

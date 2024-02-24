@@ -1,6 +1,20 @@
 <!--{eval eval(import_module('wound'));}-->
-<td class="b2" height="20"><span>{lang inf}</span></td>
-<td class="b3" height="20">
+<td width="110" height="20" colspan="2" style="text-align:center;">
+	<!--{if !$hp}-->
+	<span class="red b">
+		已死亡
+	</span>
+	<!--{elseif !$inf}-->
+	<span>
+	</span>
+	<!--{else}-->
+	<span class="grey b">
+		受伤和异常状态
+	</span>
+	<!--{/if}-->
+	
+</td>
+<td width="114" height="20" colspan="2" style="text-align:center;">
 	<span>
 		<!--{if $inf}-->
 			<!--{loop $infinfo $key $val}-->
@@ -9,7 +23,7 @@
 				<!--{/if}-->
 			<!--{/loop}-->
 		<!--{else}-->
-			无
+			
 		<!--{/if}-->
 	</span>
 </td>

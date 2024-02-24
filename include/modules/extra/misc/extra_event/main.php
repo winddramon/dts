@@ -228,8 +228,7 @@ namespace extra_event
 						}else{
 							$get_skill_id = array_randompick(Array(13, 14, 15, 16, 17, 18));
 						}
-						
-					}while(\skillbase\skill_query($get_skill_id, $sdata) && empty($clubskillname[$get_skill_id]));
+					}while(\skillbase\skill_query($get_skill_id, $sdata) || empty($clubskillname[$get_skill_id]));
 					$extra_event_para['para3'] = $get_skill_id;
 					
 					$extra_event_para['para3_skillname'] = $clubskillname[$get_skill_id];

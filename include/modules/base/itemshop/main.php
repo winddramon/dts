@@ -158,6 +158,13 @@ namespace itemshop
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		return $price*$bnum;
 	}
+
+	function get_shop_tag_list()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('itemshop'));
+		return $shop_tag_list;
+	}
 	
 	function itembuy($item,$shop,$bnum=1) {
 		if (eval(__MAGIC__)) return $___RET_VALUE;

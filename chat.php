@@ -9,17 +9,25 @@ if($sendmode != 'newspage' && (!$cuser || !defined('IN_GAME'))) {
 	exit('Not in game.');
 }
 
+//为了实现$plsinfo重载，这里需要执行load_gameinfo()
+\sys\load_gameinfo();
+
 $ctablecorrect = 1;
 //强制读本地用户数据（如果有的话）
 $userdb_forced_local = 1;
 //如果拉取的房间号同账号不对应则进行游戏局数判定
 if((isset($cgamenum) && $gamenum != $cgamenum) || (isset($croomid) && $groomid != $croomid)){
-	if(room_check_gamenum($croomid, $cgamenum)) {
+	if(!empty($obsv_flag) || room_check_gamenum($croomid, $cgamenum)) {
 		//如果房间存在且局数有效，则修改当前聊天房间号
+		//如果提供了窥屏标记则不判定房间号是否正确
 		$ctablepre = room_get_tablepre(room_id2prefix($croomid));
 	}else{
 		$ctablecorrect = 0;//否则标记房间号错误
 	}
+}
+
+if(!empty($obsv_flag)) {//来自其他房间的窥屏弹幕。这里没有严格判定房号，所以刻意构造的话是可以发送一般弹幕的，但是没什么危害吧，不管了
+	$is_obsv_danmaku = 1;
 }
 
 if($ctablecorrect && $sendmode == 'send' && $chatmsg ) {//发送聊天
@@ -39,7 +47,10 @@ if($ctablecorrect && $sendmode == 'send' && $chatmsg ) {//发送聊天
 			$showdata = array('lastcid' => $lastcid, 'msg' => Array('<span class="red b">聊天信息不能用 / 开头。<br></span>'));
 		}
 	} else { 
-		if($chattype == 0) {
+		if(!empty($is_obsv_danmaku)) {
+			\sys\addchat(7, $chatmsg, $cuser, '', 0, $cpls);
+		}
+		elseif($chattype == 0) {
 			\sys\addchat(0, $chatmsg, $cuser, '', 0, $cpls);
 		} elseif($chattype == 1) {
 			\sys\addchat(1, $chatmsg, $cuser, $teamID, 0, $cpls);

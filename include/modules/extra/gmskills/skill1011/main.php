@@ -33,7 +33,7 @@ namespace skill1011
 		if(99==$t || \map\is_plsno_available($t)){
 			$itemfc = \itemmain\get_itemfilecont();
 			foreach($itemfc as $ival){
-				$ival = explode(',',$ival);
+				$ival = explode(',',\attrbase\config_process_encode_comp_itmsk_sepr_transfer($ival));
 				if(isset($ival[1]) && $ival[1] == $t) $r[] = array
 				(
 					'iarea' => $ival[0],
@@ -42,7 +42,7 @@ namespace skill1011
 					'itmk' => $ival[4],
 					'itme' => $ival[5],
 					'itms' => $ival[6],
-					'itmsk' => $ival[7]
+					'itmsk' => $ival[7],
 				);
 			}
 		}elseif('mix' == $t){

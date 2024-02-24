@@ -18,4 +18,6 @@
 		
 	</div>
 <!--{eval bubblebox_end();}-->
-<img style="display:none;" type="hidden" src="img/blank.png" onload="bubblebox_show('cardresult');$('nowcardbox').classList.toggle('card_flipped');">
+<img style="display:none;" type="hidden" src="img/blank.png" 
+	onload="bubblebox_show('cardresult');setTimeout(function(){$('nowcardbox').classList.toggle('card_flipped');}, 2);">
+<!--太草了，appendChild()后因为浏览器重新渲染的关系，直接toggle()是不能触发动画的，需要设一个延时。真是震撼我妈一整年！-->

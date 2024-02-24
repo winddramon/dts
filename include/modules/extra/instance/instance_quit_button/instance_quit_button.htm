@@ -1,0 +1,23 @@
+<div>
+	<input type="button" class="cmdbutton" id="instance_quit_button" value="退出房间" onclick="bubblebox_show('instance_quit_box');">
+	<form method="post" id="instance_quit" name="instance_quit" style="margin: 0px" >
+		<input type="hidden" id="dummycommand" name="dummycommand" value="instance_quit">
+	</form>
+	<!--{eval bubblebox_start('id:instance_quit_box;height:120;width:240;cancellable:1');}-->
+	<div style="margin:20px;text-align: center;">
+		<span class="yellow b" style="font-size:14px">真的要退出当前房间吗？</span>
+	</div>
+	<div style="margin:20px;text-align: center;">
+		<a class="b_button bc_black" onclick=
+		"if(null!=$('command')) {
+			$('command').value='instance_quit';
+			postCmd('gamecmd','command.php');
+		}else{
+			$('dummycommand').name='command';
+			postCmd('instance_quit','command.php');
+		}
+		"
+		>是</a>&nbsp;&nbsp;&nbsp;<a class="b_button bc_black" onclick="bubblebox_hide_all();">否</a>
+	</div>
+	<!--{eval bubblebox_end();}-->
+</div>

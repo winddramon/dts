@@ -7,7 +7,7 @@ namespace tutorial
 	$___MODULE_dependency_optional = 'weather instance7 gameflow_duel';
 	$___MODULE_conflict = '';
 	$___MODULE_codelist = 'main.php config/tutorial_1.config.php';
-	$___MODULE_templatelist = 'tutorial tutorial_cmd tutorial_corpse tutorial_exit_button';
+	$___MODULE_templatelist = 'tutorial tutorial_cmd tutorial_corpse';
 	////////// MODULE HEADER END /////////////////
 	require __INIT_MODULE__(__NAMESPACE__,__DIR__);
 }

@@ -17,6 +17,8 @@
 		<tr>		
 			<th>属性名</th>
 			<th>属性值</th>
+			<th>属性名</th>
+			<th>属性值</th>
 			<th>装备属性</th>
 			<th>装备数值</th>
 			<th>包裹属性</th>
@@ -24,7 +26,8 @@
 		</tr>
 		<tr>		
 			<td>姓名</td>
-			<td>{$npc['name']}</td>
+			<td colspan="3" style="font-weight:bold;text-align: center;">{$npc['name']}</td>
+			
 			<td>武器</td>
 			<td><input size="20" type="text" name="wep" value="{$npc['wep']}" maxlength="30"></td>
 			<td>包裹1</td>
@@ -32,247 +35,239 @@
 		</tr>
 		<tr>		
 			<td>性别</td>
-			<td><input size="20" type="text" name="gd" value="{$npc['gd']}" maxlength="20"></td>
-			<td>类型</td>
-			<td><input size="20" type="text" name="wepk" value="{$npc['wepk']}" maxlength="20"></td>
-			<td>类型</td>
-			<td><input size="20" type="text" name="itmk1" value="{$npc['itmk1']}" maxlength="20"></td>
+			<td><input size="1" type="text" name="gd" value="{$npc['gd']}" maxlength="1"></td>
+			<td>队伍名称</td>
+			<td><input size="10" type="text" name="teamID" value="{$npc['teamID']}" maxlength="20"></td>
+			<td>类/效/耐</td>
+			<td>
+				<input size="2" type="text" name="wepk" value="{$npc['wepk']}" maxlength="10">/<input size="3" type="text" name="wepe" value="{$npc['wepe']}" maxlength="10">/<input size="2" type="text" name="weps" value="{$npc['weps']}" maxlength="10">
+			</td>
+			<td>类/效/耐</td>
+			<td>
+				<input size="2" type="text" name="itmk1" value="{$npc['itmk1']}" maxlength="10">/<input size="3" type="text" name="itme1" value="{$npc['itme1']}" maxlength="10">/<input size="2" type="text" name="itms1" value="{$npc['itms1']}" maxlength="10">
+			</td>
 		</tr>
 		<tr>
 			<td>学号</td>
-			<td><input size="20" type="text" name="sNo" value="{$npc['sNo']}" maxlength="20"></td>
-			<td>效果</td>
-			<td><input size="20" type="text" name="wepe" value="{$npc['wepe']}" maxlength="20"></td>
-			<td>效果</td>
-			<td><input size="20" type="text" name="itme1" value="{$npc['itme1']}" maxlength="20"></td>
+			<td><input size="1" type="text" name="sNo" value="{$npc['sNo']}" maxlength="3"></td>
+			<td>队伍密码</td>
+			<td><input size="10" type="text" name="teamPass" value="{$npc['teamPass']}" maxlength="20"></td>
+			<td>属性</td>
+			<td><input size="20" type="text" name="wepsk" value="{$npc['wepsk']}" maxlength="65535"></td>
+			<td>属性</td>
+			<td><input size="20" type="text" name="itmsk1" value="{$npc['itmsk1']}" maxlength="65535"></td>
 		</tr>
 		<tr>
-			<td>头像</td>
-			<td><input size="20" type="text" name="icon" value="{$npc['icon']}" maxlength="20"></td>
-			<td>耐久</td>
-			<td><input size="20" type="text" name="weps" value="{$npc['weps']}" maxlength="20"></td>
-			<td>耐久</td>
-			<td><input size="20" type="text" name="itms1" value="{$npc['itms1']}" maxlength="20"></td>
-		</tr>
-		<tr>
-			<td>社团</td>
-			<td><input size="20" type="text" name="club" value="{$npc['club']}" maxlength="20"></td>
-			<td>子类型</td>
-			<td><input size="20" type="text" name="wepsk" value="{$npc['wepsk']}" maxlength="255"></td>
-			<td>子类型</td>
-			<td><input size="20" type="text" name="itmsk1" value="{$npc['itmsk1']}" maxlength="255"></td>
-		</tr>
-		<tr>
-			<td>生命</td>
-			<td><input size="20" type="text" name="hp" value="{$npc['hp']}" maxlength="20"></td>
-			<td>防具(体)</td>
+			<td>头像id</td>
+			<td><input size="1" type="text" name="icon" value="{$npc['icon']}" maxlength="3"></td>
+			<td>基础攻击</td>
+			<td><input size="10" type="text" name="att" value="{$npc['att']}" maxlength="20"></td>
+			<td>身体防具</td>
 			<td><input size="20" type="text" name="arb" value="{$npc['arb']}" maxlength="30"></td>
 			<td>包裹2</td>
 			<td><input size="20" type="text" name="itm2" value="{$npc['itm2']}" maxlength="30"></td>
 		</tr>
 		<tr>
-			<td>最大生命</td>
-			<td><input size="20" type="text" name="mhp" value="{$npc['mhp']}" maxlength="20"></td>
-			<td>类型</td>
-			<td><input size="20" type="text" name="arbk" value="{$npc['arbk']}" maxlength="20"></td>
-			<td>类型</td>
-			<td><input size="20" type="text" name="itmk2" value="{$npc['itmk2']}" maxlength="20"></td>
-		</tr>
-		<tr>
-			<td>体力</td>
-			<td><input size="20" type="text" name="sp" value="{$npc['sp']}" maxlength="20"></td>
-			<td>效果</td>
-			<td><input size="20" type="text" name="arbe" value="{$npc['arbe']}" maxlength="20"></td>
-			<td>效果</td>
-			<td><input size="20" type="text" name="itme2" value="{$npc['itme2']}" maxlength="20"></td>
-		</tr>
-		<tr>
-			<td>最大体力</td>
-			<td><input size="20" type="text" name="msp" value="{$npc['msp']}" maxlength="20"></td>
-			<td>耐久</td>
-			<td><input size="20" type="text" name="arbs" value="{$npc['arbs']}" maxlength="20"></td>
-			<td>耐久</td>
-			<td><input size="20" type="text" name="itms2" value="{$npc['itms2']}" maxlength="20"></td>
-		</tr>
-		<tr>
-			<td>基础攻击</td>
-			<td><input size="20" type="text" name="att" value="{$npc['att']}" maxlength="20"></td>
-			<td>子类型</td>
-			<td><input size="20" type="text" name="arbsk" value="{$npc['arbsk']}" maxlength="255"></td>
-			<td>子类型</td>
-			<td><input size="20" type="text" name="itmsk2" value="{$npc['itmsk2']}" maxlength="255"></td>
-		</tr>
-		<tr>
+			<td>称号id</td>
+			<td><input size="1" type="text" name="club" value="{$npc['club']}" maxlength="3"></td>
 			<td>基础防御</td>
-			<td><input size="20" type="text" name="def" value="{$npc['def']}" maxlength="20"></td>
-			<td>防具(头)</td>
+			<td><input size="10" type="text" name="def" value="{$npc['def']}" maxlength="20"></td>
+			<td>类/效/耐</td>
+			<td>
+				<input size="2" type="text" name="arbk" value="{$npc['arbk']}" maxlength="10">/<input size="3" type="text" name="arbe" value="{$npc['arbe']}" maxlength="10">/<input size="2" type="text" name="arbs" value="{$npc['arbs']}" maxlength="10">
+			</td>
+			<td>类/效/耐</td>
+			<td>
+				<input size="2" type="text" name="itmk2" value="{$npc['itmk2']}" maxlength="10">/<input size="3" type="text" name="itme2" value="{$npc['itme2']}" maxlength="10">/<input size="2" type="text" name="itms2" value="{$npc['itms2']}" maxlength="10">
+			</td>
+		</tr>
+		<tr>
+			<td>等级</td>
+			<td><input size="1" type="text" name="lvl" value="{$npc['lvl']}" maxlength="3"></td>
+			<td>经验</td>
+			<td><input size="10" type="text" name="exp" value="{$npc['exp']}" maxlength="20"></td>
+			<td>属性</td>
+			<td><input size="20" type="text" name="arbsk" value="{$npc['arbsk']}" maxlength="65535"></td>
+			<td>属性</td>
+			<td><input size="20" type="text" name="itmsk2" value="{$npc['itmsk2']}" maxlength="65535"></td>
+		</tr>
+		<tr>
+			<td>位置id</td>
+			<td><input size="1" type="text" name="pls" value="{$npc['pls']}" maxlength="3"></td>
+			<td>当前生命</td>
+			<td><input size="10" type="text" name="hp" value="{$npc['hp']}" maxlength="20"></td>
+			<td>头部防具</td>
 			<td><input size="20" type="text" name="arh" value="{$npc['arh']}" maxlength="30"></td>
 			<td>包裹3</td>
 			<td><input size="20" type="text" name="itm3" value="{$npc['itm3']}" maxlength="30"></td>
 		</tr>
 		<tr>
-			<td>位置</td>
-			<td><input size="20" type="text" name="pls" value="{$npc['pls']}" maxlength="20"></td>
-			<td>类型</td>
-			<td><input size="20" type="text" name="arhk" value="{$npc['arhk']}" maxlength="20"></td>
-			<td>类型</td>
-			<td><input size="20" type="text" name="itmk3" value="{$npc['itmk3']}" maxlength="20"></td>
+			<td>怒气</td>
+			<td><input size="1" type="text" name="rage" value="{$npc['rage']}" maxlength="5"></td>
+			<td>最大生命</td>
+			<td><input size="10" type="text" name="mhp" value="{$npc['mhp']}" maxlength="20"></td>
+			<td>类/效/耐</td>
+			<td>
+				<input size="2" type="text" name="arhk" value="{$npc['arhk']}" maxlength="10">/<input size="3" type="text" name="arhe" value="{$npc['arhe']}" maxlength="10">/<input size="2" type="text" name="arhs" value="{$npc['arhs']}" maxlength="10">
+			</td>
+			<td>类/效/耐</td>
+			<td>
+				<input size="2" type="text" name="itmk3" value="{$npc['itmk3']}" maxlength="10">/<input size="3" type="text" name="itme3" value="{$npc['itme3']}" maxlength="10">/<input size="2" type="text" name="itms3" value="{$npc['itms3']}" maxlength="10">
+			</td>
 		</tr>
 		<tr>
-			<td>等级</td>
-			<td><input size="20" type="text" name="lvl" value="{$npc['lvl']}" maxlength="20"></td>
-			<td>效果</td>
-			<td><input size="20" type="text" name="arhe" value="{$npc['arhe']}" maxlength="20"></td>
-			<td>效果</td>
-			<td><input size="20" type="text" name="itme3" value="{$npc['itme3']}" maxlength="20"></td>
-		</tr>
-		<tr>
-			<td>经验</td>
-			<td><input size="20" type="text" name="exp" value="{$npc['exp']}" maxlength="20"></td>
-			<td>耐久</td>
-			<td><input size="20" type="text" name="arhs" value="{$npc['arhs']}" maxlength="20"></td>
-			<td>耐久</td>
-			<td><input size="20" type="text" name="itms3" value="{$npc['itms3']}" maxlength="20"></td>
-		</tr>
-		<tr>
-			<td>钱</td>
-			<td><input size="20" type="text" name="money" value="{$npc['money']}" maxlength="20"></td>
-			<td>子类型</td>
+			<td>基础姿态</td>
+			<td><input size="1" type="text" name="pose" value="{$npc['pose']}" maxlength="1"></td>
+			<td>当前体力</td>
+			<td><input size="10" type="text" name="sp" value="{$npc['sp']}" maxlength="20"></td>
+			<td>属性</td>
 			<td><input size="20" type="text" name="arhsk" value="{$npc['arhsk']}" maxlength="255"></td>
-			<td>子类型</td>
+			<td>属性</td>
 			<td><input size="20" type="text" name="itmsk3" value="{$npc['itmsk3']}" maxlength="255"></td>
 		</tr>
 		<tr>
-			<td>对手</td>
-			<td><input size="20" type="text" name="bid" value="{$npc['bid']}" maxlength="20"></td>
-			<td>防具(腕)</td>
+			<td>应战策略</td>
+			<td><input size="1" type="text" name="tactic" value="{$npc['tactic']}" maxlength="1"></td>
+			<td>最大体力</td>
+			<td><input size="10" type="text" name="msp" value="{$npc['msp']}" maxlength="20"></td>
+			<td>手部防具</td>
 			<td><input size="20" type="text" name="ara" value="{$npc['ara']}" maxlength="30"></td>
 			<td>包裹4</td>
 			<td><input size="20" type="text" name="itm4" value="{$npc['itm4']}" maxlength="30"></td>
 		</tr>
 		<tr>
-			<td>受伤</td>
-			<td><input size="20" type="text" name="inf" value="{$npc['inf']}" maxlength="20"></td>
-			<td>类型</td>
-			<td><input size="20" type="text" name="arak" value="{$npc['arak']}" maxlength="20"></td>
-			<td>类型</td>
-			<td><input size="20" type="text" name="itmk4" value="{$npc['itmk4']}" maxlength="20"></td>
+			<td>状态id</td>
+			<td><input size="1" type="text" name="state" value="{$npc['state']}" maxlength="5"></td>
+			<td>当前歌魂</td>
+			<td><input size="10" type="text" name="ss" value="{$npc['ss']}" maxlength="20"></td>
+			<td>类/效/耐</td>
+			<td>
+				<input size="2" type="text" name="arak" value="{$npc['arak']}" maxlength="10">/<input size="3" type="text" name="arae" value="{$npc['arae']}" maxlength="10">/<input size="2" type="text" name="aras" value="{$npc['aras']}" maxlength="10">
+			</td>
+			<td>类/效/耐</td>
+			<td>
+				<input size="2" type="text" name="itmk4" value="{$npc['itmk4']}" maxlength="10">/<input size="3" type="text" name="itme4" value="{$npc['itme4']}" maxlength="10">/<input size="2" type="text" name="itms4" value="{$npc['itms4']}" maxlength="10">
+			</td>
 		</tr>
 		<tr>
-			<td>怒气</td>
-			<td><input size="20" type="text" name="rage" value="{$npc['rage']}" maxlength="20"></td>
-			<td>效果</td>
-			<td><input size="20" type="text" name="arae" value="{$npc['arae']}" maxlength="20"></td>
-			<td>效果</td>
-			<td><input size="20" type="text" name="itme4" value="{$npc['itme4']}" maxlength="20"></td>
+			<td>上次对手</td>
+			<td><input size="1" type="text" name="bid" value="{$npc['bid']}" maxlength="5"></td>
+			<td>最大歌魂</td>
+			<td><input size="10" type="text" name="mss" value="{$npc['mss']}" maxlength="20"></td>
+			<td>属性</td>
+			<td><input size="20" type="text" name="arask" value="{$npc['arask']}" maxlength="65535"></td>
+			<td>属性</td>
+			<td><input size="20" type="text" name="itmsk4" value="{$npc['itmsk4']}" maxlength="65535"></td>
 		</tr>
 		<tr>
-			<td>基础姿态</td>
-			<td><input size="20" type="text" name="pose" value="{$npc['pose']}" maxlength="20"></td>
-			<td>耐久</td>
-			<td><input size="20" type="text" name="aras" value="{$npc['aras']}" maxlength="20"></td>
-			<td>耐久</td>
-			<td><input size="20" type="text" name="itms4" value="{$npc['itms4']}" maxlength="20"></td>
-		</tr>
-		<tr>
-			<td>应战策略</td>
-			<td><input size="20" type="text" name="tactic" value="{$npc['tactic']}" maxlength="20"></td>
-			<td>子类型</td>
-			<td><input size="20" type="text" name="arask" value="{$npc['arask']}" maxlength="255"></td>
-			<td>子类型</td>
-			<td><input size="20" type="text" name="itmsk4" value="{$npc['itmsk4']}" maxlength="255"></td>
-		</tr>
-		<tr>
-			<td>杀人数</td>
-			<td><input size="20" type="text" name="killnum" value="{$npc['killnum']}" maxlength="20"></td>
-			<td>防具(足)</td>
+			<td>技能点</td>
+			<td><input size="1" type="text" name="skillpoint" value="{$npc['skillpoint']}" maxlength="5"></td>
+			<td>受伤状态</td>
+			<td><input size="10" type="text" name="inf" value="{$npc['inf']}" maxlength="20"></td>
+			<td>足部防具</td>
 			<td><input size="20" type="text" name="arf" value="{$npc['arf']}" maxlength="30"></td>
 			<td>包裹5</td>
 			<td><input size="20" type="text" name="itm5" value="{$npc['itm5']}" maxlength="30"></td>
 		</tr>
 		<tr>
+			<td>卡片id</td>
+			<td><input size="1" type="text" name="card" value="{$npc['card']}" maxlength="5"></td>
+			<td>卡片名称</td>
+			<td><input size="10" type="text" name="cardname" value="{$npc['cardname']}" maxlength="30"></td>
+			<td>类/效/耐</td>
+			<td>
+				<input size="2" type="text" name="arfk" value="{$npc['arfk']}" maxlength="10">/<input size="3" type="text" name="arfe" value="{$npc['arfe']}" maxlength="10">/<input size="2" type="text" name="arfs" value="{$npc['arfs']}" maxlength="10">
+			</td>
+			<td>类/效/耐</td>
+			<td>
+				<input size="2" type="text" name="itmk5" value="{$npc['itmk5']}" maxlength="10">/<input size="3" type="text" name="itme5" value="{$npc['itme5']}" maxlength="10">/<input size="2" type="text" name="itms5" value="{$npc['itms5']}" maxlength="10">
+			</td>
+		</tr>
+		<tr>
 			<td>殴熟</td>
-			<td><input size="20" type="text" name="wp" value="{$npc['wp']}" maxlength="20"></td>
-			<td>类型</td>
-			<td><input size="20" type="text" name="arfk" value="{$npc['arfk']}" maxlength="20"></td>
-			<td>类型</td>
-			<td><input size="20" type="text" name="itmk5" value="{$npc['itmk5']}" maxlength="20"></td>
+			<td><input size="1" type="text" name="wp" value="{$npc['wp']}" maxlength="10"></td>
+			<td></td>
+			<td></td>
+			<td>子类型</td>
+			<td><input size="20" type="text" name="arfsk" value="{$npc['arfsk']}" maxlength="65535"></td>
+			<td>子类型</td>
+			<td><input size="20" type="text" name="itmsk5" value="{$npc['itmsk5']}" maxlength="65535"></td>
 		</tr>
 		<tr>
 			<td>斩熟</td>
-			<td><input size="20" type="text" name="wk" value="{$npc['wk']}" maxlength="20"></td>
-			<td>效果</td>
-			<td><input size="20" type="text" name="arfe" value="{$npc['arfe']}" maxlength="20"></td>
-			<td>效果</td>
-			<td><input size="20" type="text" name="itme5" value="{$npc['itme5']}" maxlength="20"></td>
-		</tr>
-		<tr>
-			<td>枪熟</td>
-			<td><input size="20" type="text" name="wg" value="{$npc['wg']}" maxlength="20"></td>
-			<td>耐久</td>
-			<td><input size="20" type="text" name="arfs" value="{$npc['arfs']}" maxlength="20"></td>
-			<td>耐久</td>
-			<td><input size="20" type="text" name="itms5" value="{$npc['itms5']}" maxlength="20"></td>
-		</tr>
-		<tr>
-			<td>投熟</td>
-			<td><input size="20" type="text" name="wc" value="{$npc['wc']}" maxlength="20"></td>
-			<td>子类型</td>
-			<td><input size="20" type="text" name="arfsk" value="{$npc['arfsk']}" maxlength="255"></td>
-			<td>子类型</td>
-			<td><input size="20" type="text" name="itmsk5" value="{$npc['itmsk5']}" maxlength="255"></td>
-		</tr>
-		<tr>
-			<td>爆熟</td>
-			<td><input size="20" type="text" name="wd" value="{$npc['wd']}" maxlength="20"></td>
+			<td><input size="1" type="text" name="wk" value="{$npc['wk']}" maxlength="10"></td>
+			<td></td>
+			<td></td>
 			<td>饰品</td>
 			<td><input size="20" type="text" name="art" value="{$npc['art']}" maxlength="30"></td>
 			<td>包裹6</td>
 			<td><input size="20" type="text" name="itm6" value="{$npc['itm6']}" maxlength="30"></td>
 		</tr>
 		<tr>
+			<td>射熟</td>
+			<td><input size="1" type="text" name="wg" value="{$npc['wg']}" maxlength="10"></td>
+			<td>金钱</td>
+			<td><input size="10" type="text" name="money" value="{$npc['money']}" maxlength="20"></td>
+			<td>类/效/耐</td>
+			<td>
+				<input size="2" type="text" name="artk" value="{$npc['artk']}" maxlength="10">/<input size="3" type="text" name="arte" value="{$npc['arte']}" maxlength="10">/<input size="2" type="text" name="arts" value="{$npc['arts']}" maxlength="10">
+			</td>
+			<td>类/效/耐</td>
+			<td>
+				<input size="2" type="text" name="itmk6" value="{$npc['itmk6']}" maxlength="10">/<input size="3" type="text" name="itme6" value="{$npc['itme6']}" maxlength="10">/<input size="2" type="text" name="itms6" value="{$npc['itms6']}" maxlength="10">
+			</td>
+		</tr>
+		<tr>
+			<td>投熟</td>
+			<td><input size="1" type="text" name="wc" value="{$npc['wc']}" maxlength="10"></td>
+			<td>暂存操作</td>
+			<td><input size="10" type="text" name="action" value="{$npc['action']}" maxlength="30"></td>
+			<td>属性</td>
+			<td><input size="20" type="text" name="artsk" value="{$npc['artsk']}" maxlength="65535"></td>
+			<td>属性</td>
+			<td><input size="20" type="text" name="itmsk6" value="{$npc['itmsk6']}" maxlength="65535"></td>
+		</tr>
+		<tr>
+			<td>爆熟</td>
+			<td><input size="1" type="text" name="wd" value="{$npc['wd']}" maxlength="10"></td>
+			<td>杀玩家数</td>
+			<td><input size="10" type="text" name="killnum" value="{$npc['killnum']}" maxlength="10"></td>
+			<td></td>
+			<td></td>
+			<td>拾取道具</td>
+			<td><input size="20" type="text" name="itm0" value="{$npc['itm0']}" maxlength="30"></td>
+		</tr>
+		<tr>
 			<td>灵熟</td>
-			<td><input size="20" type="text" name="wf" value="{$npc['wf']}" maxlength="20"></td>
-			<td>类型</td>
-			<td><input size="20" type="text" name="artk" value="{$npc['artk']}" maxlength="20"></td>
-			<td>类型</td>
-			<td><input size="20" type="text" name="itmk6" value="{$npc['itmk6']}" maxlength="20"></td>
-		</tr>
-		<tr>
-			<td>队伍名称</td>
-			<td><input size="20" type="text" name="teamID" value="{$npc['teamID']}" maxlength="20"></td>
-			<td>效果</td>
-			<td><input size="20" type="text" name="arte" value="{$npc['arte']}" maxlength="20"></td>
-			<td>效果</td>
-			<td><input size="20" type="text" name="itme6" value="{$npc['itme6']}" maxlength="20"></td>
-		</tr>
-		<tr>
-			<td>队伍密码</td>
-			<td><input size="20" type="text" name="teamPass" value="{$npc['teamPass']}" maxlength="20"></td>
-			<td>耐久</td>
-			<td><input size="20" type="text" name="arts" value="{$npc['arts']}" maxlength="20"></td>
-			<td>耐久</td>
-			<td><input size="20" type="text" name="itms6" value="{$npc['itms6']}" maxlength="20"></td>
-		</tr>
-		<tr>
+			<td><input size="1" type="text" name="wf" value="{$npc['wf']}" maxlength="10"></td>
+			<td>杀NPC数</td>
+			<td><input size="10" type="text" name="npckillnum" value="{$npc['npckillnum']}" maxlength="10"></td>
 			<td></td>
 			<td></td>
-			<td>子类型</td>
-			<td><input size="20" type="text" name="artsk" value="{$npc['artsk']}" maxlength="255"></td>
-			<td>子类型</td>
-			<td><input size="20" type="text" name="itmsk6" value="{$npc['itmsk6']}" maxlength="255"></td>
+			<td>类/效/耐</td>
+			<td>
+				<input size="2" type="text" name="itmk0" value="{$npc['itmk0']}" maxlength="10">/<input size="3" type="text" name="itme0" value="{$npc['itme0']}" maxlength="10">/<input size="2" type="text" name="itms0" value="{$npc['itms0']}" maxlength="10">
+			</td>
+		</tr>
+		<tr>
+			<td>罪业</td>
+			<td><input size="1" type="text" name="rp" value="{$npc['rp']}" maxlength="10"></td>
+			<td>上次行动</td>
+			<td><input size="10" type="text" name="endtime" value="{$npc['endtime']}" maxlength="10"></td>
+			<td></td>
+			<td></td>
+			<td>属性</td>
+			<td><input size="20" type="text" name="itmsk0" value="{$npc['itmsk0']}" maxlength="65535"></td>
 		</tr>
 		<tr>
 			<td>技能</td>
-			<td>
-				<textarea cols="20" rows="4" style="overflow:auto" name="skillv">{$npc['skillv']}</textarea>
+			<td colspan="3">
+				<textarea cols="26" rows="4" style="overflow:auto" name="skillv">{$npc['skillv']}</textarea>
 			</td>
 			<td>技能参数</td>
-			<td>
-				<textarea cols="20" rows="4" style="overflow:auto" name="skillparav">{$npc['skillparav']}</textarea>
+			<td colspan="3">
+				<textarea cols="52" rows="4" style="overflow:auto" name="skillparav">{$npc['skillparav']}</textarea>
 			</td>
-			<td></td>
-			<td></td>
 		</tr>
 	</table>
 	<input type="submit" value="修改NPC数值" onclick="$('command').value = 'submitedit'">

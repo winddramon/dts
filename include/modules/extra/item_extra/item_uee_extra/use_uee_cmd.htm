@@ -1,0 +1,10 @@
+<input type="hidden" id="mode" name="mode" value="command">
+<input type="hidden" id="command" name="command" value="itm{$ueen}">
+<input type="hidden" id="uee_extra_cmd" name="uee_extra_cmd" value="0">
+<div>请选择你想要进行的操作：<br></div>
+<input type="button" class="cmdbutton" style="width:120px" value="自动解除禁区" onclick="$('uee_extra_cmd').value='1';postCmd('gamecmd','command.php');this.disabled=true;"><br>
+运行自动程序来解除禁区，不需操作但有一定风险。<br><br>
+<input type="button" class="cmdbutton" style="width:120px" value="手动破解禁区" onclick="$('uee_extra_cmd').value='2';postCmd('gamecmd','command.php');this.disabled=true;"><br>
+进行<span class="evergreen b">「手动破解」</span>，通过更精密的操作来解除禁区，更安全但也更考验技术。<br><br>
+<br>
+<input type="button" class="cmdbutton" value="返回" onclick="$('command').value='back';postCmd('gamecmd','command.php');this.disabled=true;">

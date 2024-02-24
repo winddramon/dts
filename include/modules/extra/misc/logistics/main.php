@@ -28,11 +28,11 @@ namespace logistics
 		$magic_arr = Array(11,101,233,571,1997);
 		for($i=4;$i<=8;$i++){
 			$j = (int)fmod(round($fatenum / $magic_arr[$i-4]), $count_arr);
-			do {
-				$cardid_list[$i] = $arr[$j];
+			while(empty($arr[$j]) || in_array($arr[$j], $cardid_list)) {
 				$j += 1;
 				if($j > $count_arr) $j = 1;
-			}while(empty($arr[$j-1]));
+			}
+			$cardid_list[$i] = $arr[$j];
 		}
 		
 		$cardshop_list = array();
@@ -317,6 +317,66 @@ namespace logistics
 				$log .= "卡片<span class=\"{$rarecolor} b\">【{$cards[$para]['name']}】</span>完成充能了。<br>";
 				
 				\cardbase\put_cardlist_energy_to_udata($cardlist, $cardenergy, $card_data, $pa);
+				logistics_itemget($itemid, $pa, -1);
+				
+				$upd['card_data'] = $pa['card_data'];
+				break;
+			case 201:
+			case 202:
+			case 203:
+			case 204:
+			case 205:
+				eval(import_module('cardbase'));
+				$get_card_id = 0;
+				if ($itemid == 205 && rand(1,100) <= 15)
+				{
+					$get_card_id = 159;
+				}
+				else 
+				{
+					if ($itemid == 201) $cardraw_pr = Array('S'=>0, 'A'=>0, 'B'=>0, 'C'=>100);
+					elseif ($itemid == 202) $cardraw_pr = Array('S'=>0, 'A'=>0, 'B'=>30, 'C'=>70);
+					elseif ($itemid == 203) $cardraw_pr = Array('S'=>0, 'A'=>10, 'B'=>35, 'C'=>55);
+					elseif ($itemid == 204) $cardraw_pr = Array('S'=>10, 'A'=>25, 'B'=>65, 'C'=>0);
+					else $cardraw_pr = Array('S'=>24, 'A'=>76, 'B'=>0, 'C'=>0);
+					$dice=rand(1,100); $kind='';
+					foreach ($cardraw_pr as $key => $value)
+					{
+						if ($dice<=$value)
+						{
+							$kind=$key;
+							break;
+						}
+						else
+						{
+							$dice-=$value;
+						}
+					}
+					if ($kind=='')
+					{
+						$log .= '物品代码配置错误，请联系管理员。<br>';
+						return;
+					}
+					$get_card_id = $cardindex[$kind][rand(0,count($cardindex[$kind])-1)];
+				}
+				
+				if ($get_card_id==0)
+				{
+					$log .= '物品代码配置错误，请联系管理员。<br>';
+					return;
+				}
+				$blink = \cardbase\get_card_calc_blink($get_card_id, $pa);
+				$is_new = 0;
+				$clist = \cardbase\get_cardlist_energy_from_udata($pa)[0];
+				if (!in_array($get_card_id, $clist)) $is_new = 1;
+				\cardbase\get_card_alternative($get_card_id, $pa, 0, $blink);
+				$log .= '<span class="yellow b">你获得了卡片「'.$cards[$get_card_id]['name'].'」！</span><br>';
+				
+				ob_clean();
+				include template('MOD_CARDBASE_CARDFLIP_RESULT');
+				$log .= ob_get_contents();
+				ob_clean();
+				
 				logistics_itemget($itemid, $pa, -1);
 				
 				$upd['card_data'] = $pa['card_data'];

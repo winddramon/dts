@@ -20,22 +20,6 @@ namespace tutorial
 		return $chprocess();
 	}
 	
-	//退出教程命令
-	function exit_tutorial(){
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		
-		if($hp > 0 && $state <= 3) {
-			$alivenum--;
-			save_gameinfo();
-		}
-		$sdata['endtime'] = -1;//负数会在command_act.php最后被变为0，下次进房会触发教程重置角色功能
-		set_current_roomid(0);
-		//update_udata_by_username(array('roomid' => 0), $cuser);
-		$gamedata['url']='index.php';
-		return;
-	}
-	
 	//提示部分的初始化函数，只在template页面中调用
 	function init_current_tutorial(){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -338,18 +322,6 @@ namespace tutorial
 		if($chp < 0){$chp = 1;}
 		$db->query("UPDATE {$tablepre}players SET hp='$chp' WHERE pid='$cpid'");
 		return $cpid;
-	}
-	
-	//教程退出命令，接管pre_act()
-	function pre_act()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys'));
-		if($gametype == 17 && strpos($command,'exittutorial')===0){
-			exit_tutorial();
-			return;
-		}
-		$chprocess();
 	}
 	
 	//接管act()，判定continue或者任意命令下的玩家教程阶段推进

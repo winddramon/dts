@@ -1,10 +1,10 @@
 <!--{eval bubblebox_start('id:persistent-rmeditbox;height:280;width:200;scroll-bar:0;');}-->
 <div id="loading3"></div>
-<div style="text-align:middle; margin-top:20px; margin-bottom:20px; margin-left:20px;">
-	设置游戏模式：
+<div style="text-align:center;">
+	<span style="line-height:32px;">设置游戏模式：</span>
 	<!--{eval global $roomtypelist;}-->
 	<!--{loop $roomtypelist $i $value}-->
-		<!--{if check_room_available($value) && !$roomtypelist[$i]['without-ready']}-->
+		<!--{if check_room_available($value) && empty($value['soleroom']) && empty($value['without-ready'])}-->
 			<div>
 			<!--{eval $bname=str_replace('"',"'",$value['name']);}-->
 			<a class="b_button bc_black" onclick="

@@ -388,6 +388,10 @@ namespace npc_action
 			//当前是否为玩家指令，如果不是，或者当前玩家指令不合适，则返回
 			if(empty($mode) || empty($command) || in_array($command, Array('move', 'search', 'npc_action', 'back', 'menu', 'enter')))
 				return;
+			//如果NPC已经在战斗中登场过，则返回
+			$o_edata = get_var_in_module('o_edata', 'battle');
+			if(!empty($o_edata) && $o_edata['name'] == $npc['name'])
+				return;
 			//如果sdata不存在或者一些不可能是玩家指令的情况，则返回
 			eval(import_module('player'));
 			if(empty($sdata) || empty($hp)) 

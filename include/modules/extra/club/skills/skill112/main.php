@@ -132,6 +132,8 @@ namespace skill112
 			if (!isset($pa['skill112_sanflag'])) \skill107\skill107_lose_sanity(1, $pa);
 			$pd_skills = \skillbase\get_acquired_skill_array($pd);
 			$pd_skills = array_diff($pd_skills, array(1,2,3,4,5,6,7,8,9,10,11,12,55,56,72,81,106,242,460,512));
+			//排除已有的技能
+			$pd_skills = array_diff($pd_skills, \skillbase\get_acquired_skill_array($pa));
 			if ($pd['type'] == 0) $filter_info_arr = array('hidden', 'achievement', 'debuff', 'feature', 'card');
 			else $filter_info_arr = array('hidden', 'achievement', 'debuff', 'feature');
 			foreach($pd_skills as $k => $skid)

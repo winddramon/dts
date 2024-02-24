@@ -29,9 +29,11 @@ apm,base/apm/,1
 item_addarea,extra/item_extra/item_addarea/,1
 radar,base/items/radar/,1
 randnpc,extra/instance/instance10_road/randnpc/,1
+npc_pick_item,extra/misc/npc_pick_item/,1
 corpse,base/corpse/,1
 trap,base/items/trap/,1
 itemmix_sync,base/itemmix/itemmix_sync/,1
+item_uee_extra,extra/item_extra/item_uee_extra/,1
 enemy,base/enemy/,1
 gameflow_duel,core/gameflow/gameflow_duel/,1
 itemmix_overlay,base/itemmix/itemmix_overlay/,1
@@ -57,7 +59,6 @@ wound,base/wound/,1
 skill2,base/skills/skill2/,1
 skill3,base/skills/skill3/,1
 item_uv,base/items/item_uv/,1
-npcchat_bubble,extra/misc/npcchat_bubble/,1
 skill21,extra/club/skills/skill21/,1
 skill533,extra/card/skills/skill533/,1
 skill11,extra/club/skills/skill11/,1
@@ -320,6 +321,7 @@ skill12,extra/club/skills/skill12/,1
 skill223,extra/club/skills/skill223/,1
 event,base/event/,1
 skill710,extra/card/skills/skill710/,1
+npcchat_bubble,extra/misc/npcchat_bubble/,1
 item_slip,extra/item_extra/item_slip/,1
 skill331,extra/activities/halloween2017/skill331/,1
 skill19,extra/club/skills/skill19/,1
@@ -340,6 +342,7 @@ skill260,extra/club/skills/skill260/,1
 skill261,extra/club/skills/skill261/,1
 skill274,extra/club/skills/skill274/,1
 skill511,extra/card/skills/skill511/,1
+skill545,extra/card/skills/skill545/,1
 skill403,extra/card/skills/skill403/,1
 skill203,extra/club/skills/skill203/,1
 ammunition,base/items/ammunition/,1
@@ -516,6 +519,7 @@ opening,base/opening/,1
 ending,base/ending/,1
 song,base/items/song/,1
 extra_event,extra/misc/extra_event/,1
+news_observe,extra/misc/news_observe/,1
 skill429,extra/instance/gtype1/skill429/,1
 skill108,extra/club/skills/skill108/,1
 skill109,extra/club/skills/skill109/,1
@@ -616,6 +620,7 @@ skill88,extra/club/skills/skill88/,1
 skill91,extra/club/skills/skill91/,1
 skill92,extra/club/skills/skill92/,1
 skill739,extra/card/skills/skill739/,1
+instance11,extra/instance/instance11_observe/,1
 wepchange,extra/attr/wepchange/,1
 skill77,extra/club/skills/skill77/,1
 skill379,extra/achievement/skills/skill379/,1
@@ -639,6 +644,7 @@ searchmemory,extra/searchmemory/,1
 skill738,extra/card/skills/skill738/,1
 skill87,extra/club/skills/skill87/,1
 skill94,extra/club/skills/skill94/,1
+instance_quit_button,extra/instance/instance_quit_button/,1
 skill497,extra/card/skills/skill497/,1
 skill503,extra/card/skills/skill503/,1
 skill559,extra/card/skills/skill559/,1

@@ -144,10 +144,10 @@ namespace sys
 		return "<li>$time,$news,$a,$b,$c,$d<br>\n";
 	}
 	
-	function load_news($start = 0, $range = 0, $noday = 0, $rprefix=''){
+	function load_news($start = 0, $range = 0, $noday = 0, $rprefix='default'){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
-		if(!$rprefix) $rprefix=$room_prefix;
+		if('default' == $rprefix) $rprefix = $room_prefix;
 		$ntablepre = room_get_tablepre($rprefix);
 
 		$query = "SELECT * FROM {$ntablepre}newsinfo ";
@@ -189,7 +189,7 @@ namespace sys
 		return $exarr;
 	}
 	
-	function getnews($start=0, $range=0, $room_prefix=''){
+	function getnews($start=0, $range=0, $room_prefix='default'){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$newslist = load_news($start, $range, 1, $room_prefix);
 		$lastnid=$start;

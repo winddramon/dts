@@ -116,13 +116,22 @@
 		<tr>
 			<td colspan=2></td>
 			<td colspan=15 style="text-align:center;">
+				<br>
 				标题：
 				<input type="text" name="stitle" size="6" maxlength="20" value="发放奖励">&nbsp;&nbsp;&nbsp;
 				正文：
 				<input type="text" name="scontent" size="20" maxlength="30" value="您获得了奖励，请查收！">&nbsp;&nbsp;&nbsp;
 				附件：
-				<input type="text" name="senclosure" size="30" maxlength="200" value="getqiegao_0;getcard_0;getcardblink_0;">&nbsp;&nbsp;&nbsp;
+				<input type="text" id="senclosure" name="senclosure" size="30" maxlength="200" value="getqiegao_0;getcard_0;getcardblink_0;getlogitem_0;getlogitemnum_0;">&nbsp;&nbsp;&nbsp;
 				<input type="submit" name="submit" value="发送站内邮件" onclick="$('urcmd').value='sendmessage'">
+				<br>
+				给附件添加卡片：
+				<!--{eval $cards = get_var_in_module('cards','cardbase'); $arr = Array(); foreach($cards as $i => $v) if(!empty($v['ignore_global_ach'])) $arr[$i] = $v['name'];}-->
+				<!--{loop $arr $i $n}-->
+				<a style="color: #000;" onclick="$('senclosure').value=$('senclosure').value.replace(/getcard_\d+?;/s, 'getcard_{$i};')">$n</a>&nbsp;&nbsp;
+				<!--{/loop}-->
+				<br>
+				<br>
 			</td>
 		</tr>
 		<!--{/if}-->

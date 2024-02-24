@@ -13,7 +13,7 @@
 	<div class="shoprow">
 		<div class="leftbox">
 			<!--{eval $tmp_shop_button_id=substr(md5($idata['item']),0,8);}-->
-			<input type="button" class="cmdbutton" value="购买" id="buy_{$tmp_shop_button_id}" onclick="$('command').value='$idsid';<!--{if $buynumflag}-->$('buynum').value=$('buynum{$idsid}').value;<!--{/if}-->postCmd('gamecmd','command.php');this.disabled=true;">
+			<input type="button" class="cmdbutton" style="min-width:50px;height:32px;" value="购买" id="buy_{$tmp_shop_button_id}" onclick="$('command').value='$idsid';<!--{if $buynumflag}-->$('buynum').value=$('buynum{$idsid}').value;<!--{/if}-->postCmd('gamecmd','command.php');this.disabled=true;">
 		</div>
 		<!--{if $idata['itmk'] == 'R'}-->
 			<!--{eval $desc=\item_recipe\show_recipe($idata['itmsk']);}-->

@@ -22,7 +22,7 @@ namespace logistics
 		1 => array('切糕盒子',1,120,'使用后会随机获得一定量的切糕',0),
 		2 => array('闪光贴膜',1,233,'使用后可使一张卡片变为闪烁<span class="yellow b">（需额外消耗切糕）</span>',0),
 		3 => array('棱镜碎片',1,999,'使用后可使一张卡片变为镜碎<span class="yellow b">（需额外消耗大量切糕）</span>',0),
-		4 => array('天马能量饮料',1,777,'使用后可选择一张卡片完成充能',0),
+		4 => array('模因原液『彩虹』',1,777,'使用后可选择一张卡片完成充能。<span class="cyan b black-shadow">“彩虹的原料就是弱者的鲜血。”</span>',0),
 		5 => array('黄鸡玩偶',2,1000,'<span class="yellow b">“咕咕咕！”</span>',0),
 		6 => array('棕色的Howling手办',2,1333,'<span class="brickred b black-shadow">“银月哨兵是不死之身！”</span>',0),
 		7 => array('深蓝色的S.A.S手办',2,1333,'<span class="blue b white-shadow">“只要能为我的族人复仇，哪怕我堕入永劫地狱也在所不惜！”</span>',0),
@@ -33,6 +33,11 @@ namespace logistics
 		//12 13给红暮和蓝凝留个位置
 		99 => array('冰精手办',2,999,'<span class="cyan b">“本小姐最强！”</span>',0),
 		114 => array('黄金青眼白龙手办',2,87000000,'<span class="lightblue b black-shadow">以高价格著称的传说之龙。任何竞拍者都将为之倾倒，其吸引力不可估量。</span>',0),
+		201 => array('沾满灰尘的大逃杀卡牌包',1,0,'从中可以获得一张<span class="white b">C</span>级卡片',1),
+		202 => array('陈旧的大逃杀卡牌包',1,0,'从中有机会获得<span class="brickred b">B</span>级或<span class="white b">C</span>级卡片',1),
+		203 => array('普通的大逃杀卡牌包',1,0,'从中有机会获得<span class="cyan b">A</span>/<span class="brickred b">B</span>/<span class="white b">C</span>级卡片',1),
+		204 => array('精致的大逃杀卡牌包',1,0,'从中有机会获得<span class="gold b">S</span>/<span class="cyan b">A</span>/<span class="brickred b">B</span>级卡片',1),
+		205 => array('★闪熠着光辉的大逃杀卡牌包★',1,0,'从中有机会获得特殊卡片“<span class="gold b">氪金战士</span>”，或一张<span class="gold b">S</span>级或<span class="cyan b">A</span>级的卡片',1),
 	);
 	
 	//类别1表示可使用道具（消耗品），2表示装饰品
