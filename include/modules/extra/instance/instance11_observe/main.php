@@ -19,6 +19,21 @@ namespace instance11
 		);
 	}
 
+	//蹲站模式禁用林无月和卡片男
+	function card_validate_get_forbidden_cards($card_disabledlist, $card_ownlist){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		
+		$card_disabledlist = $chprocess($card_disabledlist, $card_ownlist);
+		if (21==$gametype)//极速模式禁用林无月和卡片男
+		{
+			foreach(Array(209,231) as $c){
+				if (in_array($c,$card_ownlist)) $card_disabledlist[$c][]='e3';
+			}
+		}
+		return $card_disabledlist;
+	}
+
 	//蹲站房特殊地图数目。仅在$use_config == 1时触发
 	function get_plsnum($use_config = 0) {
 		if (eval(__MAGIC__)) return $___RET_VALUE;

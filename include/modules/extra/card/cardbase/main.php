@@ -419,7 +419,7 @@ namespace cardbase
 	function get_enter_battlefield_card($card){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
-		//标准模式禁用卡片
+		//标准模式禁用所有卡片
 		if(0==$gametype){
 			$card = 0;
 		}
