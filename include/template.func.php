@@ -123,6 +123,12 @@ function parse_template($tplfile, $objfile, $templateid, $tpldir, $nospace=1) {
 	$template = preg_replace_callback("/\"(http)?[\w\.\/:]+\?[^\"]+?&[^\"]+?\"/", function($r) {
 		return transamp($r[0]);
 	}, $template);
+
+	//template_fixed XXX，直接导入对应文件（静态化），
+	$template = preg_replace_callback("/[\n\r\t]*\{template_fixed\s+([a-z0-9_]+)\}[\n\r\t]*/is", function($r) {
+		return str_replace("<?php ?>", '', str_replace("if(!defined('IN_GAME')) exit('Access Denied'); ", '', file_get_contents(template($r[1]))));
+	}, $template);
+
 	flock($fp, 2);
 	fwrite($fp, $template);
 	fclose($fp);
