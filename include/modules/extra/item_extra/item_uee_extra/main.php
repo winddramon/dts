@@ -6,10 +6,19 @@ namespace item_uee_extra
 	$allow_uee_extra_gametype_num = array(18 => 5);
 	
 	//解禁小游戏中的显示用字符串
-	$uee_extra_words = array('<span class="red b">000</span>','<span class="lime b">001</span>','<span class="cyan b">010</span>','<span class="yellow b">011</span>','<span class="gold b">100</span>','<span class="linen b">101</span>','<span class="purple b">110</span>','<span class="white b">111</span>');
+	$uee_extra_words = array(
+		'<span class="red b">कल्पना</span>',
+		'<span class="white b">Fantaisie</span>',
+		'<span class="yellow b">Phantasie</span>',
+		'<span class="cyan b">Фантазия</span>',
+		'<span class="lime b">خيال</span>',
+		'<span class="purple b">פנטזיה</span>',
+		'<span class="linen b">Φαντασία</span>',
+		'<span class="gold b">幻想</span>',
+	);
 	
 	//解禁小游戏中的显示用操作名
-	$uee_extra_buttons = array('暴力破解','寻找漏洞','注入代码','殴打键盘','烧香拜佛','伪造身份','木马程序','入侵网络');
+	$uee_extra_buttons = array('猜测密码','伪造输入','寻找漏洞','洪水攻击','殴打键盘','社会工程','木马程序','烧香拜佛');
 	
 	function init()
 	{

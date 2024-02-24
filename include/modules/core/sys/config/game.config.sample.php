@@ -52,7 +52,7 @@ namespace sys
 	// 初始生命最大值 
 	$hplimit = 400;
 
-	//hack基础成功率
+	//hack基础成功率（已废弃，现在在模块中定义）
 	$hack_obbs = 40;
 
 }
