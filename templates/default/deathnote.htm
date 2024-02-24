@@ -48,7 +48,7 @@
 <input type="button" value="提交" onclick="postCmd('gamecmd','command.php');this.disabled=true;">
 <input type="button" value="返回" onclick="$('mode').value='command';postCmd('gamecmd','command.php');this.disabled=true;">
 <!--{/if}-->
-<!--{eval $disable_random_icon = 1;}-->
+<!--{eval $disable_random_icon = $disable_iconImgB = 1;}-->
 <!--{eval bubblebox_start('id:pc_icon_selecting;height:440;width:716;cancellable:1;z-index-base:35;');}-->
 {template pc_icon_selecting}
 <!--{eval bubblebox_end();}-->

@@ -26,7 +26,7 @@
         <!--{loop $icon_list[$g] $i $v}-->
             <!--{if $i}-->
             <img src="img/$v[0]" onclick="$('icon_selected').value='$i';bubblebox_hide_all();userIconMover();" 
-            <!--{if $v[1]}-->title="<img src='img/$v[1]' />"<!--{/if}--> />
+            <!--{if $v[1] && empty($disable_iconImgB)}-->title="<img src='img/$v[1]' />"<!--{/if}--> />
             <!--{/if}-->
         <!--{/loop}-->
     </div>
