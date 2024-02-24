@@ -189,6 +189,18 @@ namespace weather
 		{
 			//也许就不需要有效果
 		}
+		elseif($weather == 18) //冷气
+		{
+			$dice = rand(0,99);
+			if($dice == 0)
+			{
+				$log .= "你感觉到一股苍凉的杀气！开得过低的空调导致你<span class=\"cyan b\">冻结</span>了！<br>";
+				\wound\get_inf('i');
+			}elseif($dice <= 10)
+			{
+				$log .= "你感觉到一股苍凉的杀气！可能是空调开得太冷了。<br>";
+			}
+		}
 		return $chprocess($moveto);
 	}
 	
@@ -248,6 +260,18 @@ namespace weather
 		elseif($weather == 17)	//极光
 		{
 			//也许就不需要有效果
+		}
+		elseif($weather == 18) //冷气
+		{
+			$dice = rand(0,99);
+			if($dice == 0)
+			{
+				$log .= "你感觉到一股苍凉的杀气！开得过低的空调导致你<span class=\"cyan b\">冻结</span>了！<br>";
+				\wound\get_inf('i');
+			}elseif($dice <= 10)
+			{
+				$log .= "你感觉到一股苍凉的杀气！可能是空调开得太冷了。<br>";
+			}
 		}
 		return $chprocess();
 	}
