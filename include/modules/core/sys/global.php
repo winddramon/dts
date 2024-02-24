@@ -65,11 +65,12 @@ namespace sys
 		$result = $db->query("SELECT * FROM {$gtablepre}game WHERE groomid='$room_id'");
 		$gameinfo = $db->fetch_array($result);
 		foreach ($gameinfo as $key => $value) ${$key}=$value;
-		load_gameinfo_post_work();
+		load_gameinfo_post_work_core();
+		if(!defined('LOAD_CORE_ONLY')) load_gameinfo_post_work_extra();
 		return;
 	} 
 	
-	function load_gameinfo_post_work(){
+	function load_gameinfo_post_work_core(){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
 		//对$arealist进行格式化
@@ -78,6 +79,11 @@ namespace sys
 		foreach(array('noisevars','roomvars','gamevars') as $val){
 			${$val}=gdecode(${$val},1);
 		}
+		return;
+	}
+
+	function load_gameinfo_post_work_extra(){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
 		return;
 	}
 	
