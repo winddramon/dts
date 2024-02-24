@@ -195,7 +195,13 @@ namespace instance11
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','player','logger'));
 		$itm=&$theitem['itm']; $itmk=&$theitem['itmk'];
-		$itme=&$theitem['itme']; $itms=&$theitem['itms']; $itmsk=&$theitem['itmsk'];	
+		$itme=&$theitem['itme']; $itms=&$theitem['itms']; $itmsk=&$theitem['itmsk'];
+		if ((strpos ( $itmk, 'Y' ) === 0 || strpos ( $itmk, 'Z' ) === 0) && $itm == '棱镜八面体')
+		{
+			$log .= "你使用了<span class=\"yellow b\">{$itm}</span>。<br>";
+			octitem_rotate($theitem, $theitem['itmn']);
+			return;
+		}
 		if (21 == $gametype)
 		{
 			if (strpos ( $itmk, 'Y' ) === 0 || strpos ( $itmk, 'Z' ) === 0) {
@@ -205,16 +211,11 @@ namespace instance11
 					$mode = 'command';
 					return;
 				}
-				elseif ($itm == '棱镜八面体')
-				{
-					$log .= "你使用了<span class=\"yellow b\">{$itm}</span>。<br>";
-					octitem_rotate($theitem, $theitem['itmn'], 1);
-					return;
-				}elseif ($itm == '蓝凝的便签')
+				elseif ($itm == '蓝凝的便签')
 				{
 					 $log .= '你再次看向那张已经有点揉皱了的纸条。<br><br><span class="ltazure b">“<span style="background-color:rgb(110,210,255);">林苍月</span>要我通知你们到我的房间集合，所以我就通知了。不准不来哦！<br><br>PS：这家伙还不让我写他名字”</span><br><br>她甚至没说她自己什么时候会来……<br><br>总之，比起干等，不如做点事吧。<br><br>';
 					if(!empty($itms0)) \itemmain\itemget();
-					 return;
+					return;
 				}
 			}
 			elseif(check_item_observer($itm, $itmk)){
@@ -338,7 +339,7 @@ namespace instance11
 				{
 					eval(import_module('logger'));
 					$theitem = array('itm' => &$itm, 'itmk' => &$itmk, 'itme' => &$itme,'itms' => &$itms,'itmsk' => &$itmsk);
-					$log .= "<span class=\"yellow b\">{$itm}</span>似乎发生了变化……<br>";
+					$log .= "<span class=\"yellow b\">{$itm}</span>落到地上，然后立了起来。这是怎么做到的？<br>你仔细地端详着它。<br>";
 					octitem_rotate($theitem, 7);
 				}
 			}
@@ -347,7 +348,20 @@ namespace instance11
 	}
 	
 	//棱镜八面体相关
-	function octitem_rotate(&$theitem, $rotpos, $showlog = 0)
+	function itemmove($from,$to)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess($from,$to);
+		eval(import_module('player','logger'));
+		if ($ret && (${'itm'.$from} == '棱镜八面体' || ${'itm'.$to} == '棱镜八面体'))
+		{
+			$log .= "<br><span class=\"yellow b\">棱镜八面体</span>发出了轻微的“咔哒”声，但是看起来并没有什么变化……真的是这样吗？<br>";
+		}
+		return $ret;
+	}
+	
+	//棱镜八面体相关
+	function octitem_rotate(&$theitem, $rotpos, $showlog = 1)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$itm=&$theitem['itm']; $itmk=&$theitem['itmk'];
@@ -399,8 +413,17 @@ namespace instance11
 			{
 				$log .= "<span class=\"yellow b\">{$itm}</span>的形状发生了变化……<br>";
 			}
-			$itm = '★棱镜二面体模样的卡牌包★'; $itmk = 'VO3';
-			$itme = $itms = 1; $itmsk = '';
+			eval(import_module('sys'));
+			if (21 == $gametype)
+			{
+				$itm = '★棱镜二面体模样的卡牌包★'; $itmk = 'VO';
+				$itme = $itms = 1; $itmsk = '409';
+			}
+			else
+			{
+				$itm = '★棱镜五面体模样的技能核心★'; $itmk = array_randompick(array('SCA1','SCA2','SCS1','SCS2'));
+				$itme = 1; $itms = 2; $itmsk = 'x';
+			}
 		}
 	}
 	

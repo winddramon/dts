@@ -6633,6 +6633,23 @@ $cards = array(
 			),
 		),
 	),
+	409 => array(
+		'name' => '八体挑战者',
+		'rare' => 'A',
+		'pack' => 'Event Bonus',
+		'desc' => '棱镜八面体虽与高塔中的个体相似，却呈现出完全不同的颜色。据说是由于进食了虚拟幻境中的各色方块，才变成了现在的样子',
+		'effect' => '以上说明文字完全是瞎编的',
+		'desc_skills' => '开局携带棱镜八面体',
+		'energy' => 100,
+		'valid' => array(
+			'itm6' => '棱镜八面体',
+			'itmk6' => 'Z',
+			'itme6' => '1',
+			'itms6' => '1',
+			'itmsk6' => 'x',
+		),
+		'ignore_global_ach' => 1,
+	),
 	
 	1000 => array(
 		'name'=>'萌新',
