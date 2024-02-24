@@ -1,0 +1,17 @@
+<input type="hidden" id="mode" name="mode" value="command">
+<input type="hidden" id="command" name="command" value="itm{$ueen}">
+<input type="hidden" id="uee_extra_cmd" name="uee_extra_cmd" value="2">
+<input type="hidden" id="uee_extra_pos" name="uee_extra_pos" value="0">
+<!--{eval eval(import_module('sys','item_uee_extra'));}-->
+<!--{eval $hack_num=$allow_uee_extra_gametype_num[$gametype];$hack_state=$gamevars['hack_state'];$hack_seq=$gamevars['hack_seq'];}-->
+屏幕上显示着数个模块的运行情况……<br><br>
+<!--{loop range(1,$hack_num) $i}-->
+<span class="yellow b">模块$i</span> 输出：$uee_extra_words[$hack_state[$hack_seq[$i-1]]]<br>
+<!--{/loop}-->
+<br>
+<div>要如何破解？<br></div>
+<!--{loop range(1,$hack_num) $i}-->
+<input type="button" class="cmdbutton" style="width:120px" value="$uee_extra_buttons[$i-1]" onclick="$('uee_extra_pos').value='$i';postCmd('gamecmd','command.php');this.disabled=true;"><br>
+<!--{/loop}-->
+<br>
+<input type="button" class="cmdbutton" value="返回" onclick="$('command').value='back';postCmd('gamecmd','command.php');this.disabled=true;">
