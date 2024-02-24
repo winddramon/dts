@@ -1,0 +1,10 @@
+<input type="hidden" id="mode" name="mode" value="command">
+<input type="hidden" id="command" name="command" value="itm{$ueen}">
+<input type="hidden" id="uee_extra_cmd" name="uee_extra_cmd" value="0">
+<div>请选择你想要进行的操作：<br></div>
+<input type="button" class="cmdbutton" style="width:120px" value="直接解除禁区" onclick="$('uee_extra_cmd').value='1';postCmd('gamecmd','command.php');this.disabled=true;"><br>
+同正常使用移动PC一样，尝试解除当前禁区。<br><br>
+<input type="button" class="cmdbutton" style="width:120px" value="接入破解程序" onclick="$('uee_extra_cmd').value='2';postCmd('gamecmd','command.php');this.disabled=true;"><br>
+通过操作<span class="evergreen b">「破解程序」</span>，尝试解除当前禁区。<br><br>
+<br>
+<input type="button" class="cmdbutton" value="返回" onclick="$('command').value='back';postCmd('gamecmd','command.php');this.disabled=true;">

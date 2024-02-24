@@ -33,6 +33,7 @@ npc_pick_item,extra/misc/npc_pick_item/,1
 corpse,base/corpse/,1
 trap,base/items/trap/,1
 itemmix_sync,base/itemmix/itemmix_sync/,1
+item_uee_extra,extra/item_extra/item_uee_extra/,1
 enemy,base/enemy/,1
 gameflow_duel,core/gameflow/gameflow_duel/,1
 itemmix_overlay,base/itemmix/itemmix_overlay/,1
