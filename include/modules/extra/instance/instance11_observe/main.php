@@ -149,7 +149,7 @@ namespace instance11
 		eval(import_module('sys','instance11'));
 		if ((21 == $gametype)&&($xmode & 2)) 
 		{
-			$weather = 17;
+			$weather = 18;//开局天气为冷气
 			$areatime = $starttime + 1919810;//相当于22天
 			$gamevars['map_display_group'] = 1;
 			$gamevars['plsinfo'] = $plsinfo11;
