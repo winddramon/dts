@@ -445,7 +445,7 @@ namespace cardbase
 		$arr=array(0);
 		do{
 			if(!empty($cs['real_random'])) {//真随机，把所有卡集合并
-				$arr = array_merge($arr,$cardindex['S'],$cardindex['A'],$cardindex['B'],$cardindex['C'],$cardindex['EB']);
+				$arr = array_merge($arr,$cardindex['S'] ?? array(),$cardindex['A'] ?? array(),$cardindex['B'] ?? array(),$cardindex['C'] ?? array(),$cardindex['EB'] ?? array());
 			}else{
 				//判定随机到的卡的罕贵
 				$r=rand(1,100);
