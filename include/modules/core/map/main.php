@@ -33,7 +33,7 @@ namespace map
 	}
 
 	//在加载游戏信息后，大部分操作执行之前，预处理$plsinfo这个变量，根据$gamevars的值来决定是否需要重载$plsinfo
-	function load_gameinfo_post_work(){
+	function load_gameinfo_post_work_core(){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess();
 		eval(import_module('sys','map'));
