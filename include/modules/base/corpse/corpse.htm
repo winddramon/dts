@@ -13,6 +13,12 @@
         <input type="radio" name="command" id="takeaway" value="takeaway"><a onclick=sl('takeaway'); href="javascript:void(0);" >打包带走！</a><br>
     <!--{/if}-->
     <br>
+    <!--{if $w_money && $w_can_pick_money}-->
+        <input type="radio" name="command" id="money" value="money" <!--{if $default_selection == 'money'}-->checked<!--{/if}-->><a id="amoney" onclick=sl('money'); href="javascript:void(0);" >$w_money {lang moneyunit} </a><br>
+    <!--{elseif $w_money}-->
+        <!--{eval eval(import_module('corpse'));}-->
+        <input type="radio" name="command" id="money" value="money" disabled><span class="grey b">$w_money {lang moneyunit} $cannot_pick_notice</span><br>
+    <!--{/if}-->
     <!--{if $w_weps && $w_wepk!='WN'}-->
         <input type="radio" name="command" id="wep" value="wep"><a onclick=sl('wep'); href="javascript:void(0);" >$w_wep_words/$w_wepk_words/$w_wepe/$w_weps<!--{if $w_wepsk_words}-->/$w_wepsk_words<!--{/if}--></a><br>
     <!--{/if}-->
@@ -51,12 +57,6 @@
     <!--{/if}-->
     <!--{if $w_itms6}-->
         <input type="radio" name="command" id="itm6" value="itm6"><a onclick=sl('itm6'); href="javascript:void(0);" >$w_itm6/$w_itmk6_words/$w_itme6/$w_itms6<!--{if $w_itmsk6_words}-->/$w_itmsk6_words<!--{/if}--></a><br>
-    <!--{/if}-->
-    <!--{if $w_money && $w_can_pick_money}-->
-        <input type="radio" name="command" id="money" value="money" <!--{if $default_selection == 'money'}-->checked<!--{/if}-->><a id="amoney" onclick=sl('money'); href="javascript:void(0);" >$w_money {lang moneyunit} </a><br>
-    <!--{elseif $w_money}-->
-        <!--{eval eval(import_module('corpse'));}-->
-        <input type="radio" name="command" id="money" value="money" disabled><span class="grey b">$w_money {lang moneyunit} $cannot_pick_notice</span><br>
     <!--{/if}-->
 <!--{else}-->
     {template MOD_SKILL475_CORPSEOPTION}

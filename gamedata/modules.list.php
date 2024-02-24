@@ -29,6 +29,7 @@ apm,base/apm/,1
 item_addarea,extra/item_extra/item_addarea/,1
 radar,base/items/radar/,1
 randnpc,extra/instance/instance10_road/randnpc/,1
+npc_pick_item,extra/misc/npc_pick_item/,1
 corpse,base/corpse/,1
 trap,base/items/trap/,1
 itemmix_sync,base/itemmix/itemmix_sync/,1

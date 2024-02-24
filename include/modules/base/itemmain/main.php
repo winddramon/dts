@@ -342,10 +342,11 @@ namespace itemmain
 		$itemlist = itemlist_data_process($itemlist);
 		$in = sizeof($itemlist);
 		$an = \map\get_area_wavenum();
+		$count = 0;
 		for($i = 1; $i < $in; $i++) {
 			if(!empty($itemlist[$i]) && substr($itemlist[$i], 0, 1) != '=' && strpos($itemlist[$i],',')!==false){//跳过空行和注释行（没有逗号的行）
-				list($iarea,$imap,$inum,$iname,$ikind,$ieff,$ista,$iskind) = mapitem_row_data_seperate($itemlist[$i]);
-				if( $iarea == $an || $iarea == 99 || ($iarea == 98 && $an > 0)) {//禁区判定，99为每禁，98为一禁后每禁
+				list($iarea,$imap,$inum,$iname,$ikind,$ieff,$ista,$iskind) = mapitem_row_data_seperate($itemlist[$i], $i);
+				if(!empty($ista) && ($iarea == $an || $iarea == 99 || ($iarea == 98 && $an > 0))) {//禁区判定，99为每禁，98为一禁后每禁
 					if($lpls == -1 || $lpls == $imap){//地图判定，-1为不限制（刷所有固定道具和全图随机道具），99为全图随机
 						for($j = $inum; $j>0; $j--) {
 							if ($imap == 99)
@@ -355,8 +356,11 @@ namespace itemmain
 								} while (in_array($rmap,$map_noitemdrop_arealist));
 							}
 							else  $rmap = $imap;
-							list($iname, $ikind, $ieff, $ista, $iskind, $rmap) = mapitem_single_data_attr_process($iname, $ikind, $ieff, $ista, $iskind, $rmap);
-							$iqry .= "('$iname', '$ikind','$ieff','$ista','$iskind','$rmap'),";
+							list($iname_j, $ikind_j, $ieff_j, $ista_j, $iskind_j, $rmap) = mapitem_single_data_attr_process($iname, $ikind, $ieff, $ista, $iskind, $rmap, $count);
+							$count ++ ;
+							if(!empty($ista)) {
+								$iqry .= "('$iname_j', '$ikind_j','$ieff_j','$ista_j','$iskind_j','$rmap'),";
+							}
 						}
 					}
 				}
@@ -391,15 +395,15 @@ namespace itemmain
 
 	//单行mapitem记录的分割处理
 	//本模块是explode后调用mapitem_row_data_process()处理
-	function mapitem_row_data_seperate($data){
+	function mapitem_row_data_seperate($data, $no = -1){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
-		return mapitem_row_data_process(explode(',',$data));
+		return mapitem_row_data_process(explode(',',$data), $no);
 	}
 	
 	//单条mapitem记录的data处理
 	//天然带毒物品的NPC pid自动处理
 	//也用于某些模式特殊处理数据
-	function mapitem_row_data_process($data){
+	function mapitem_row_data_process($data, $no = -1){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
 		if(!empty($data[7]) && strpos($data[7],'=')===0){//如果属性以=开头，认为后面是NPC的名字
 			$isk = & $data[7];
@@ -419,8 +423,8 @@ namespace itemmain
 	}
 	
 	//道具具体数值的处理，本模块为直接返回
-	//和上面那个函数mapitem_row_data_process()的定位有些重复，根据情况选择吧
-	function mapitem_single_data_attr_process($iname, $ikind, $ieff, $ista, $iskind, $imap){
+	//和上面那个函数mapitem_row_data_process()的区别是，上面那个函数是针对文件的每一行，本函数是针对实际生成的道具，而一行可能对应刷出好几个道具哦！
+	function mapitem_single_data_attr_process($iname, $ikind, $ieff, $ista, $iskind, $imap, $count = -1){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
 		return array($iname, $ikind, $ieff, $ista, $iskind, $imap);
 	}

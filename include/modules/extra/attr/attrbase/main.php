@@ -335,18 +335,18 @@ namespace attrbase
 	}
 	
 	//地图道具单条数据的复合属性的处理
-	function mapitem_row_data_process($data){
+	function mapitem_row_data_process($data, $no = -1){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
-		$data = $chprocess($data);
+		$data = $chprocess($data, $no);
 		$data[7] = config_process_encode_comp_itmsk($data[7]);
 		return $data;
 	}
 
 	//单行mapitem记录的分割处理，在分割前先把半角逗号变成<:sepr:>
-	function mapitem_row_data_seperate($data){
+	function mapitem_row_data_seperate($data, $no = -1){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
 		$data = config_process_encode_comp_itmsk_sepr_transfer($data);
-		return $chprocess($data);
+		return $chprocess($data, $no);
 	}
 
 	//商店单条数据的复合属性处理

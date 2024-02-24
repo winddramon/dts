@@ -112,9 +112,9 @@ namespace item_slip
 	}
 	
 	//纸条的属性处理
-	function mapitem_single_data_attr_process($iname, $ikind, $ieff, $ista, $iskind, $imap){
+	function mapitem_single_data_attr_process($iname, $ikind, $ieff, $ista, $iskind, $imap, $count = -1){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
-		list($iname, $ikind, $ieff, $ista, $iskind, $imap) = $chprocess($iname, $ikind, $ieff, $ista, $iskind, $imap);
+		list($iname, $ikind, $ieff, $ista, $iskind, $imap) = $chprocess($iname, $ikind, $ieff, $ista, $iskind, $imap, $count);
 		if(strpos($iname,'提示纸条')===0){
 			eval(import_module('sys','item_slip'));
 			$dice = rand(0,99);
