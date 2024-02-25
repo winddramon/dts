@@ -162,7 +162,8 @@ namespace sys
 		//部分死亡方式在addnews的时候同时发送聊天记录（遗言）
 		//这尼玛写的太坑了吧…… 不管了直接import map模块进来了……
 		//嗯，就是太坑了
-		$plsinfo = get_var_in_module('plsinfo', 'map');
+		//现在不坑了
+		//$plsinfo = get_var_in_module('plsinfo', 'map');
 		if(strpos($n,'death11') === 0  || strpos($n,'death32') === 0) {//禁区死、挂机死，$c是死亡地点
 			$result = $db->query("SELECT lastword FROM {$tablepre}players WHERE name = '$a'");
 			$r = $db->fetch_array($result);
@@ -224,12 +225,12 @@ namespace sys
 			foreach($on_premise_chat as $ci => $cv){
 				if(strpos($chat['msg'], '['.$ci.']') !== false) {
 					//如果是需要显示地点的聊天信息则把[当前地点]替换成地点名。注意，其他类型尚不支持（记录的地点是执行页面的玩家的地点，不一定准确）
-					if(strpos($cv, '[当前地点]') !== false) $cv = str_replace('[当前地点]','【'.$plsinfo[(int)$chat['pls']].'】',$cv);
+					if(strpos($cv, '[当前地点]') !== false) $cv = str_replace('[当前地点]','【'.$plsinfo_disp[(int)$chat['pls']].'】',$cv);
 					$chat['msg'] = str_replace('['.$ci.']', $cv, $chat['msg']);
 				}
 			}
 		} elseif(3 == $chat['type']) {
-			$chat['send'] = '【'.$plsinfo[(int)$chat['pls']].'】'.$chat['send'];
+			$chat['send'] = '【'.$plsinfo_disp[(int)$chat['pls']].'】'.$chat['send'];
 			if ($chat['msg']){
 			} else {
 				$msg = '【'.$chatinfo[$chat['type']].'】'.$chat['send'].'什么都没说就死去了 ('.date("H:i:s",$chat['time']).')';
@@ -275,14 +276,13 @@ namespace sys
 
 	function systemputchat($time,$type,$msg = ''){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys'));
+		eval(import_module('sys','map'));
 		if(!$time){$time = $now;}
 		if($type == 'areaadd' || $type == 'areawarn'){
 			$alist = $msg;
 			$msg = '';
-			global $plsinfo;
 			foreach($alist as $ar) {
-				$msg .= "$plsinfo[$ar] ";
+				$msg .= "$plsinfo_disp[$ar] ";
 			}
 			if($type == 'areaadd'){
 				$msg = '增加禁区：'.$msg;

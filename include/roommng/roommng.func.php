@@ -411,7 +411,9 @@ function room_create($roomtype)
 			}
 		}
 		if(!empty($rids) && $rchoice < 0){//否则新建房间
-			$rchoice = $rids[0];
+			do{
+				$rchoice = array_slice($rids, 0, 1)[0];
+			}while(empty($rchoice) && !empty($rids));
 			$db->query("INSERT INTO {$gtablepre}game (groomid,groomstatus,groomtype) VALUES ('$rchoice',10,'$roomtype')");
 			//$db->query("UPDATE {$gtablepre}rooms SET status = 1, roomtype = '$roomtype' WHERE roomid = '$rid'");
 		}
