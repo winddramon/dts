@@ -374,6 +374,9 @@ button.beacon_slot{
 	border-width: 3px;
 	border-radius: 6px;
 }
+button.memory_record:disabled span.memory_name{
+	color:#fff;
+}
 /*==========雷达屏幕==========*/
 table.radar{
 	border:0;margin:0;border-collapse:collapse;border-spacing:0;text-align:center;
@@ -406,8 +409,8 @@ input[type=radio].radio_comb + a, #game_interface input[type=radio] + a{
 	border-radius: 5px;
 	margin:2px 0;
 	padding:3px 12px 3px 24px;
-	background-color:#555;
-	text-decoration: none;color: #ccc;
+	background-color:#444;
+	text-decoration: none;color: #fff;
 }
 input[type=radio].radio_comb:checked + a::after, #game_interface input[type=radio]:checked + a::after{
 	position:absolute;
@@ -415,6 +418,7 @@ input[type=radio].radio_comb:checked + a::after, #game_interface input[type=radi
 	top: 4px; left: 8px;
 }
 input[type=radio].radio_comb + a:hover, #game_interface input[type=radio] + a:hover{
+	background-color:#567;
 	text-decoration: none;color: #fff;
 }
 input[type=radio].radio_comb:checked + a, #game_interface input[type=radio]:checked + a{

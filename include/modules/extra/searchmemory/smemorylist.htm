@@ -40,19 +40,19 @@
 				<button type="button" class="memory_record" onclick="$('mode').value='command';$('command').value='memory{$sm['smn']}';postCmd('gamecmd','command.php');this.disabled=true;" <!--{if $sm['pls']!=$pls}-->disabled<!--{/if}-->>
 				<!--{if isset($sm['itm'])}-->
 				<!--{eval $sm['itm']=\itemmain\parse_itmname_words($sm['itm'],1); }-->
-					<span class="b">$sm['itm']</span>
+					<span class="memory_name b">$sm['itm']</span>
 				<!--{elseif isset($sm['Pname'])}-->
 					<!--{if $sm['smtype'] == 'enemy' || $sm['smtype'] == 'unknown'}-->
-						<!--{if $sm['smtype'] == 'unknown'}--><span class="darkred b">？？？</span>
-						<!--{else}--><span class="darkred b">$sm['Pname']</span>
+						<!--{if $sm['smtype'] == 'unknown'}--><span class="memory_name darkred b">？？？</span>
+						<!--{else}--><span class="memory_name darkred b">$sm['Pname']</span>
 						<!--{/if}-->
-					<!--{elseif $sm['smtype'] == 'corpse'}--><span class="darkred b">$sm['Pname']</span>的尸体
+					<!--{elseif $sm['smtype'] == 'corpse'}--><span class="memory_name darkred b">$sm['Pname']</span>的尸体
 					<!--{elseif $sm['smtype'] == 'team'}-->
-						<span class="darkred b">$sm['Pname']</span>
+						<span class="memory_name darkred b">$sm['Pname']</span>
 					<!--{/if}-->
 				<!--{/if}--> 
 				<!--{if $sm['pls']!=$pls}-->
-					<br>（<span class="red">$plsinfo[$sm['pls']]</span>）
+					<br>（<span class="yellow">$plsinfo[$sm['pls']]</span>）
 				<!--{/if}--> 
 				</button>
 			<!--{/loop}-->
