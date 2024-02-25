@@ -2,7 +2,7 @@
 
 $lang = array
 (
-	'gamename' => '生存游戏 BRA',
+	'gamename' => 'ACFUN大逃杀 - 电波版',
 	'succeed' => '成功',
 	'fail' => '失败',
 	'exit' => '退出安装向导',
@@ -14,8 +14,8 @@ $lang = array
 	'unlimited' => '不限',
 
 	'env_os' => '操作系统',
-	'env_php' => 'PHP 版本',
-	'env_mysql' => 'MySQL 版本',
+	'env_php' => 'php版本',
+	'env_mysql' => 'MySQL版本',
 	'env_attach' => '附件上传',
 	'env_diskspace' => '磁盘空间',
 	'env_dir_writeable' => '目录写入',
@@ -27,13 +27,13 @@ $lang = array
 	'init_game' => '初始化游戏系统',
 	'new_game' => '新游戏准备',
 
-	'install_wizard' => '生存游戏 - BRA Installation Wizard',
-	'welcome' => '欢迎来到 生存游戏 - BRA 安装向导，安装前请仔细阅读 license 档的每个细节，在您确定可以完全满足 生存游戏BRA 的授权协议之后才能开始安装。readme 档提供了有关软件安装的说明，请您同样仔细阅读，以保证安装进程的顺利进行。',
+	'install_wizard' => 'ACFUN大逃杀 - 电波版 - 安装向导',
+	'welcome' => '欢迎来到 ACFUN大逃杀 - 电波版 - 安装向导，安装前请确定您接受本授权协议，并确保您已经阅读 readme.md 文件的相关说明，以保证安装进程的顺利进行。',
 	'current_process' => '当前状态:',
-	'show_license' => '生存游戏BRA 用户许可协议',
-	'agreement' => '请您务必仔细阅读下面的许可协议',
-	'agreement_yes' => '我完全同意',
-	'agreement_no' => '我不能同意',
+	'show_license' => '用户许可协议',
+	'agreement' => '请您仔细阅读下面的许可协议，并确定您同意协议的全部内容',
+	'agreement_yes' => '同意',
+	'agreement_no' => '不同意',
 	'configure' => '配置 config.inc.php',
 	'check_config' => '检查配置文件状态',
 	'check_existence' => '存在检查',
@@ -42,10 +42,10 @@ $lang = array
 	'variable' => '设置选项',
 	'value' => '当前值',
 	'comment' => '注释',
-	'gamefounder' => '站长账号:',
-	'gamefounder_comment' => '必须为论坛已存在账号',
+	'gamefounder' => '创建者账号:',
+	'gamefounder_comment' => '与创建者账号同名的用户默认为权限10（游戏最高权限）',
 	'dbhost' => '数据库服务器:',
-	'dbhost_comment' => '数据库服务器地址, 一般为 localhost',
+	'dbhost_comment' => '数据库服务器地址，本地一般为 localhost、127.0.0.1 等',
 	'dbuser' => '数据库用户名:',
 	'dbuser_comment' => '数据库账号用户名',
 	'dbpw' => '数据库密码:',
@@ -55,14 +55,16 @@ $lang = array
 	'authkey' => '游戏加密密钥:',
 	'authkey_comment' => '必须与插件密钥相同',
 	'tablepre' => '表名前缀:',
-	'tablepre_comment' => '同一数据库安装多个游戏时可改变默认',
-	'tablepre_prompt' => '除非您需要在同一数据库安装多个 生存游戏\n 否则,强烈建议您不要修改表名前缀.',
+	'tablepre_comment' => '同一数据库安装多个游戏时可改变默认值',
+	'tablepre_prompt' => '除非您需要在同一数据库安装多个游戏，否则建议不要修改表名前缀。',
 	'moveut' => '服务器时差:',
 	'moveut_comment' => '如果服务器跟你当地的时间有时差，在此处设置。一般用于国外服务器。当前服务器时间:',
 	'bbsurl' => '论坛地址:',
-	'bbsurl_comment' => '安装游戏插件的论坛地址',
+	'bbsurl_comment' => '可填写你自己的论坛地址',
+	'server_address' => '本地程序地址:',
+	'server_address_comment' => '本地访问游戏index.php所在文件夹的地址，为游戏内部http转发等功能必需，建议提供不需通过DNS解析的本地地址',
 	'gameurl' => '游戏程序地址:',
-	'gameurl_comment' => '用于全屏模式，一般情况下替换域名loongyou.com为您的域名即可',
+	'gameurl_comment' => '外部访问游戏index.php所在文件夹的地址',
 	'save_config' => '保存配置信息',
 
 	'db_set' => '请设置安装游戏的数据库',
@@ -73,28 +75,28 @@ $lang = array
 	'refresh_config' => '刷新修改结果',
 	'recheck_config' => '重新检查设置',
 	'check_env' => '检查当前服务器环境',
-	'compare_env' => '生存游戏BRA 所需环境和当前服务器配置对比',
-	'env_required' => '生存游戏BRA 所需配置',
-	'env_best' => '生存游戏BRA 最佳配置',
+	'compare_env' => '游戏所需环境和当前服务器配置对比',
+	'env_required' => '最低配置',
+	'env_best' => '推荐配置',
 	'env_current' => '当前服务器',
 	'confirm_preparation' => '请确认已完成如下步骤',
 	'install_note' => '安装向导提示',
 	'add_admin' => '设置管理员账号',
-	'start_install' => '开始安装 生存游戏',
-	'installing' => '检查管理员账号信息并开始安装 生存游戏。',
+	'start_install' => '开始安装 ACFUN大逃杀 - 电波版',
+	'installing' => '检查管理员账号信息并开始安装游戏。',
 	'check_admin' => '检查管理员账号',
 	'check_admin_validity' => '检查信息合法性',
-	'admin_username_invalid' => '用户名空, 长度超过限制或包含非法字符.',
-	'admin_password_invalid' => '密码为空, 长度超过限制或包含非法字符.',
-	'admin_invalid' => '您的信息没有填写完整.',
-	'fail_reason' => '失败. 原因:',
+	'admin_username_invalid' => '用户名空, 长度超过限制或包含非法字符。',
+	'admin_password_invalid' => '密码为空, 长度超过限制或包含非法字符。',
+	'admin_invalid' => '您的信息没有填写完整。',
+	'fail_reason' => '失败。原因:',
 	'go_back' => '返回上一页修改',
 	'init_file' => '初始化运行目录与文件',
-	'lock_exists' => '您已经安装过游戏，为了保证游戏数据安全，请手动删除 install.php 文件 和 ./install 文件夹下的所有文件，如果您想重新安装游戏，请删除 gamedata/install.lock 文件，在次运行安装文件。',
+	'lock_exists' => '您已经安装过游戏，为了保证游戏数据安全，请手动删除 install.php 文件 和 ./install 文件夹下的所有文件，如果您想重新安装游戏，请删除 gamedata/install.lock 文件，并再次运行安装文件。',
 
-	'config_nonexistence' => '您的 config.inc.php 不存在, 无法继续安装, 请用 FTP 将该文件上传后再试.',
-	'config_comment' => '请在下面填写您的数据库账号信息, 通常情况下不需要修改红色选项内容.',
-	'config_unwriteable' => '安装向导无法写入配置文件, 请核对现有信息, 如需修改, 请通过 FTP 将改好的 config.inc.php 上传.',
+	'config_nonexistence' => '您的 config.inc.php 不存在, 无法继续安装, 请检查游戏文件完整性。',
+	'config_comment' => '请在下面填写您的数据库账号信息, 通常情况下不需要修改红色选项内容。',
+	'config_unwriteable' => '安装向导无法写入配置文件, 请核对现有信息, 如需修改, 请手动修改对应文件。',
 
 	'php_version_low' => '您的 PHP 版本过低, 无法使用 生存游戏BRA。',
 	'attach_enabled' => '允许/最大尺寸 ',
@@ -105,19 +107,19 @@ $lang = array
 	'unwriteable_template' => '模板目录(./templates)属性非 777 或无法写入，在线编辑模板功能将无法使用。',
 	'unwriteable_gamedata' => '数据目录(./gamedata)属性非 777 或无法写入，游戏运行记录和备份到数据库功能将无法使用。',
 	'tablepre_invalid' => '您指定的数据表前缀包含点字符(".")，请返回修改。',
-	'db_invalid' => '指定的数据库不存在, 系统也无法自动建立, 无法安装 生存游戏BRA.',
-	'db_auto_created' => '指定的数据库不存在, 但系统已成功建立, 可以继续安装.',
-	'db_not_null' => '数据库中已经安装过 生存游戏BRA, 继续安装会清空原有数据.',
-	'db_drop_table_confirm' => '继续安装会清空全部原有数据，您确定要继续吗?',
+	'db_invalid' => '指定的数据库不存在, 也无法自动建立, 无法安装游戏。',
+	'db_auto_created' => '指定的数据库不存在, 但已成功建立, 可以继续安装。',
+	'db_not_null' => '数据库已存在, 继续安装会清空原有数据。',
+	'db_drop_table_confirm' => '继续安装会清空全部原有数据，您确定要继续吗？',
 
-	'install_abort' => '由于您目录属性或服务器配置原因, 无法继续安装 生存游戏BRA, 请仔细阅读安装说明.',
-	'install_process' => '您的服务器可以安装和使用 生存游戏BRA, 请进入下一步安装.',
-	'install_succeed' => '恭喜您，生存游戏BRA 安装成功！',
+	'install_abort' => '由于您目录属性或服务器配置原因, 无法继续安装游戏, 请仔细阅读安装说明。',
+	'install_process' => '您的服务器可以安装本游戏，请进入下一步安装。',
+	'install_succeed' => '恭喜您，ACFUN大逃杀 - 电波版 安装成功！',
 	'goto_bbs' => '点击这里返回论坛，增加游戏插件',
 	'goto_game' => '点击这里进入游戏首页',
 
 
-	'choice_or_new_db' => '请选择已存在的数据库或者新建一个数据库存放游戏数据',
+	'choice_or_new_db' => '请选择已存在的数据库，或者新建一个数据库存放游戏数据',
 	'game_db_conf' => '游戏数据库设置',
 	'show_and_edit_db_conf' => '浏览/编辑当前数据库配置',
 	'choice_one_db' => '请指定一个数据库',
@@ -127,7 +129,7 @@ $lang = array
 	'status' => '状态',
 	
 	'username' => '管理员账号:',
-	'username_comment' => '必须为论坛已存在账号',
+	'username_comment' => '初始管理员账号，默认为权限9。如果与创建者账号不同，请在安装完成后尽快注册与创建者同名的账号，以避免安全问题。',
 	'brpswd' => '管理员密码:',
 	'brpswd_comment' => '',
 	'adminmsg' => '站长留言:',
@@ -150,9 +152,19 @@ $lang = array
 	'hour' => '时',
 	'min' => '分',
 
-	'license' => '<p class="subtitle">生存游戏 BRA中文版授权协议 适用于中文用户。<br>本游戏版权属 龙游网 www.loongyou.com 所有，未经允许不得用于任何商业用途。</p>',
+	'license' => '<p class="subtitle">
+	ACFUN大逃杀 - 电波版 授权协议：<br>
+	本游戏版权属<a style="font-weight: bold;" href="https://bbs.brdts.online/?thread-2.htm"> 无名机关 </a>所有。<br>
+	ACFUN大逃杀、电波大逃杀或常磐大逃杀之源代码遵循 知识共享 署名-相同方式共享 3.0协议（CC-BY-SA 3.0）；<br>
+	本游戏背景、剧情及原创角色设定遵循 知识共享 署名-非商业性使用-相同方式共享 3.0协议（CC-BY-NC-SA 3.0）。<br>
+	在满足上述要求的前提下，任何人均可搭建或开发属于自己的分支。
+	</p>',
 
-	'preparation' => '<li>将压缩包中 生存游戏BRA 目录下全部文件和目录上传到服务器.</li><li>修改服务器上的 config.inc.php 文件以适合您的配置, 有关数据库账号信息请咨询您的空间服务提供商.</li><li>如果您使用非 WINNT 系统请修改以下属性:<br>&nbsp; &nbsp; <b>./templates</b> 目录 777;&nbsp; &nbsp; <b>./gamedata</b> 目录 777;<br><b>&nbsp; &nbsp;<br></li>',
+	'preparation' => '<li>开启curl和socket两项扩展；</li>
+	<li>将php.ini中output_buffering一项打开（一般设为output_buffering = 4096）。</li>
+	<li>确定服务器支持本地对本地php文件的http访问。</li>
+	<li>建议将php所需内存修改为256M或更高，建议将php最大执行时间修改为180秒或更高。</li>
+	<li>把游戏根目录下的gamedata、include和templates三个文件夹全部chmod 0777，win7以上系统需要为IUSR用户和USER用户添加完全访问权限，可自行查找相关教程进行设置。</li>',
 
 );
 

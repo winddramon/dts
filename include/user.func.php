@@ -145,7 +145,7 @@ function fetch_udata($fields='', $where='', $sort='', $keytype=0, $nolock=0){
 	global $db, $gtablepre, $userdb_remote_storage, $userdb_forced_local, $userdb_forced_key;
 
 	//新建usettings字段
-	if(1){
+	if(0){
 		$column_existed = 0;
 		$result = $db->query("SHOW COLUMNS FROM {$gtablepre}users");
 		while($r = $db->fetch_array($result)){

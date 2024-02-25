@@ -6,8 +6,10 @@ error_reporting(E_ERROR | E_PARSE);
 define('IN_GAME', TRUE);
 define('GAME_ROOT', '');
 
-if(PHP_VERSION < '7.0.0') {
-	exit('PHP version must >= 7.0.0!');
+$php_version_lowest = '7.0.0';
+$mysql_version_lowest = '5.7';
+if(PHP_VERSION < $php_version_lowest) {
+	exit('PHP version must >= '.$php_version_lowest.'!');
 }
 
 $action = $_POST['action'] ? $_POST['action'] : $_GET['action'];
@@ -61,6 +63,8 @@ $mdcontents = preg_replace("/[$]___MOD_SRV\s*\=\s*-?[0-9]+;/is", "\$___MOD_SRV =
 file_put_contents($modulemng_config,$mdcontents);
 
 @include $server_config;
+
+$language = 'simplified_chinese_utf8';//skip language selecting
 
 switch($language) {
 	case 'simplified_chinese_gbk':
@@ -340,7 +344,7 @@ if(!$action) {
                   <td bgcolor="#E3E3EA">&nbsp;<?php echo $lang['dbpw_comment']; ?></td>
                 </tr>
                 <tr>
-                  <td bgcolor="#E3E3EA">&nbsp;<?php echo $lang['moveut']; ?></td>
+                  <td bgcolor="#E3E3EA" style="color: #FF0000">&nbsp;<?php echo $lang['moveut']; ?></td>
                   <td bgcolor="#EEEEF6" align="center"><input type="text" name="moveut" value="<?php echo $moveut; ?>" size="30"></td>
                   <td bgcolor="#E3E3EA">&nbsp;<?php echo $lang['moveut_comment']; ?><br><?php echo $nowyear; ?><?php echo $lang['year']; ?><?php echo $nowmonth; ?><?php echo $lang['month']; ?><?php echo $nowday; ?><?php echo $lang['day']; ?><?php echo $nowhour; ?><?php echo $lang['hour']; ?><?php echo $nowmin; ?><?php echo $lang['min']; ?></td>
                 </tr>
@@ -361,6 +365,11 @@ if(!$action) {
                   <td bgcolor="#E3E3EA">&nbsp;<?php echo $lang['bbsurl']; ?></td>
                   <td bgcolor="#EEEEF6" align="center"><input type="text" name="bbsurl" value="<?php echo $bbsurl; ?>" size="30"></td>
                   <td bgcolor="#E3E3EA">&nbsp;<?php echo $lang['bbsurl_comment']; ?></td>
+                </tr>
+                <tr>
+                  <td bgcolor="#E3E3EA">&nbsp;<?php echo $lang['server_address']; ?></td>
+                  <td bgcolor="#EEEEF6" align="center"><input type="text" name="server_address" value="<?php echo $server_address; ?>" size="30"></td>
+                  <td bgcolor="#E3E3EA">&nbsp;<?php echo $lang['server_address_comment']; ?></td>
                 </tr>
                 <tr>
                   <td bgcolor="#E3E3EA">&nbsp;<?php echo $lang['gameurl']; ?></td>
@@ -443,6 +452,11 @@ if(!$action) {
                 <td bgcolor="#E3E3EA" align="center">$bbsurl</td>
                 <td bgcolor="#EEEEF6" align="center"><?php echo $bbsurl; ?></td>
                 <td bgcolor="#E3E3EA" align="center"><?php echo $lang['bbsurl_comment']; ?></td>
+              </tr>
+              <tr>
+                <td bgcolor="#E3E3EA" align="center">$server_address</td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $server_address; ?></td>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['server_address_comment']; ?></td>
               </tr>
               <tr>
                 <td bgcolor="#E3E3EA" align="center">$gameurl</td>
@@ -556,6 +570,7 @@ if(!$action) {
 				$tablepre = setconfig($_POST['tablepre']);
 				$authkey = setconfig($_POST['authkey']);
 				$bbsurl = setconfig($_POST['bbsurl']);
+        $server_address = setconfig($_POST['server_address']);
 				$gameurl = setconfig($_POST['gameurl']);
 				$moveut = (int)$_POST['moveut'];
 
@@ -569,6 +584,7 @@ if(!$action) {
 				$svcontents = preg_replace("/[$]authkey\s*\=\s*[\"'].*?[\"'];/is", "\$authkey = '$authkey';", $svcontents);
 				$svcontents = preg_replace("/[$]database\s*\=\s*[\"'].*?[\"'];/is", "\$database = '$database';", $svcontents);
 				$svcontents = preg_replace("/[$]bbsurl\s*\=\s*[\"'].*?[\"'];/is", "\$bbsurl = '$bbsurl';", $svcontents);
+        $svcontents = preg_replace("/[$]server_address\s*\=\s*[\"'].*?[\"'];/is", "\$server_address = '$server_address';", $svcontents);
 				$svcontents = preg_replace("/[$]gameurl\s*\=\s*[\"'].*?[\"'];/is", "\$gameurl = '$gameurl';", $svcontents);
 				$svcontents = preg_replace("/[$]moveut\s*\=\s*-?[0-9]+;/is", "\$moveut = $moveut;", $svcontents);
 
@@ -717,7 +733,7 @@ if(!$action) {
 	$curr_os = PHP_OS;
 
 	$curr_php_version = PHP_VERSION;
-	if($curr_php_version < '5.5.0') {
+	if($curr_php_version < $php_version_lowest) {
 		$msg .= "<font color=\"#FF0000\">$lang[php_version_low]</font>\t";
 		$quit = TRUE;
 	}
@@ -733,8 +749,8 @@ if(!$action) {
 
 	$query = $db->query("SELECT VERSION()");
 	$curr_mysql_version = $db->result($query, 0);
-	$version_unit = (int)explode('.',$curr_mysql_version)[0];
-	if($version_unit < 5) {
+	$version_unit = (int)explode('.',$curr_mysql_version)[0].'.'.(int)explode('.',$curr_mysql_version)[1];
+	if($version_unit < $mysql_version_lowest) {
 		$msg .= "<font color=\"#FF0000\">$lang[mysql_version_low]</font>\t";
 		$quit = TRUE;
 	}
@@ -906,14 +922,14 @@ if(!$action) {
               </tr>
               <tr>
                 <td bgcolor="#E3E3EA" align="center"><?php echo $lang['env_php']; ?></td>
-                <td bgcolor="#EEEEF6" align="center">5.5.0+</td>
-                <td bgcolor="#E3E3EA" align="center">7.0.0+</td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $php_version_lowest; ?>+</td>
+                <td bgcolor="#E3E3EA" align="center">8.0.0+</td>
                 <td bgcolor="#EEEEF6" align="center"><?php echo $curr_php_version; ?></td>
               </tr>
               <tr>
                 <td bgcolor="#E3E3EA" align="center"><?php echo $lang['env_mysql']; ?></td>
-                <td bgcolor="#EEEEF6" align="center">MySQL 5.0+</td>
-                <td bgcolor="#E3E3EA" align="center">MySQL 5.7+</td>
+                <td bgcolor="#EEEEF6" align="center">MySQL <?php echo $mysql_version_lowest; ?>+</td>
+                <td bgcolor="#E3E3EA" align="center">MySQL 8.0+</td>
                 <td bgcolor="#EEEEF6" align="center"><?php echo ($version_unit >= 10 && $default_database == 'mysql') ? 'mariaDB '.$curr_mysql_version : $database.' '.$curr_mysql_version; ?></td>
               </tr>
               <tr>
@@ -1157,7 +1173,7 @@ if(!$action) {
 	echo"        <tr>\n";
 	echo"          <td>\n";
 	
-	$extrasql = "INSERT INTO bra_users (username,`password`,groupid) VALUES ('$username','$brpswd','9');";
+	$extrasql = "INSERT INTO bra_users (username,`password`,groupid,gender,icon) VALUES ('$username','$brpswd','9','f','0');";
 	$starttime = (int)$_POST['starttime'];
 	$startmin = (int)$_POST['startmin'];
 	if(!$starttime) {
