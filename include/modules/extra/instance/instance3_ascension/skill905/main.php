@@ -42,7 +42,7 @@ namespace skill905
 			$pa = & $sdata;
 		}
 		$ret = $chprocess($pa);
-		if (\skillbase\skill_query(905, $pa) && ((int)\skillbase\skill_getvalue(905, 'lvl', $pa) >= 2)) return max($ret-4,1);
+		if (\skillbase\skill_query(905, $pa) && ((int)\skillbase\skill_getvalue(905, 'lvl', $pa) >= 2)) $ret = max($ret-4,1);
 		return $ret;
 	}
 	

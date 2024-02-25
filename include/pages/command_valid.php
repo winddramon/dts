@@ -102,7 +102,7 @@ if($mode == 'enter') {
 			elseif($cardinfo['energy'] && in_array($gametype, $card_need_charge_gtype)) //当卡片需要能量，且游戏模式为卡片模式、无限复活模式、荣耀模式、极速模式时，更新卡片CD时间
 			{
 				if(!empty($card_cooldown_discount_gtype[$gametype])) {
-					$userCardData['cardenergy'][$cc] = round($cards[$cc]['energy'] * $card_cooldown_discount_gtype[$gametype]);//荣誉模式CD减半
+					$userCardData['cardenergy'][$cc] = round($cards[$cc]['energy'] * $card_cooldown_discount_gtype[$gametype]);//荣誉模式、极速模式CD减半
 				}else {
 					$userCardData['cardenergy'][$cc] = 0;
 				}
