@@ -738,7 +738,7 @@ $cards = array(
 			'arfs' => '10',
 			'arfsk' => '',
 			'gd' => 'm',
-			'icon' => '9',
+			'icon' => '16',
 		)
 	),
 	32 => array(
