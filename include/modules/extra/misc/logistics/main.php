@@ -314,12 +314,15 @@ namespace logistics
 				eval(import_module('cardbase'));
 				$cardenergy[$para] = $cards[$para]['energy'];
 				$rarecolor = $card_rarecolor[$cards[$para]['rare']];
-				$log .= "卡片<span class=\"{$rarecolor} b\">【{$cards[$para]['name']}】</span>完成充能了。<br>";
+				$log .= "卡片<span class=\"{$rarecolor} b\">【{$cards[$para]['name']}】</span>完成充能了，并清空了各稀有度卡片的冷却时间。<br>";
 				
 				\cardbase\put_cardlist_energy_to_udata($cardlist, $cardenergy, $card_data, $pa);
 				logistics_itemget($itemid, $pa, -1);
 				
 				$upd['card_data'] = $pa['card_data'];
+				$upd['cd_s'] = 0;
+				$upd['cd_a'] = 0;
+				$upd['cd_b'] = 0;
 				break;
 			case 201:
 			case 202:
