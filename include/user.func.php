@@ -553,7 +553,15 @@ function register_random_create($min, $max, $token = 0)
 	if($max > 2147483647) $max = 2147483647;
 	if($min >= $max) $min = $max - 1;
 	$fatenum = register_fatenum_create($token);
-	return ((int)bcmod($fatenum, ($max - $min + 1)) + (int)$min);
+	if(function_exists('bcmod'))
+	{
+		$ret = ((int)bcmod($fatenum, ($max - $min + 1)) + (int)$min);
+	}
+	else{
+		$token = (int)$token;
+		$ret = ((int)fmod($fatenum, ($max - $min + 1)) + (int)$min);
+	}
+	return $ret;
 }
 
 //验证码问题和回答生成，需要语料库的支持

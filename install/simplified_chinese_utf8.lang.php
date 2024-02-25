@@ -12,6 +12,8 @@ $lang = array
 	'yes' => '可',
 	'no' => '不可',
 	'unlimited' => '不限',
+	'on' => '开启',
+	'off' => '关闭',
 
 	'env_os' => '操作系统',
 	'env_php' => 'php版本',
@@ -19,6 +21,12 @@ $lang = array
 	'env_attach' => '附件上传',
 	'env_diskspace' => '磁盘空间',
 	'env_dir_writeable' => '目录写入',
+	'server_address_available' => '本地程序地址可本地访问',
+	'env_php_memory' => 'php进程内存限制',
+	'env_php_timelimit' => 'php最大执行时间',
+	'env_ext' => '扩展',
+	'env_ob' => '输出缓冲',
+	'env_bcmath' => 'bcmath高精度数学库',
 
 	'init_log' => '初始化记录',
 	'clear_dir' => '清空目录',
@@ -98,14 +106,18 @@ $lang = array
 	'config_comment' => '请在下面填写您的数据库账号信息, 通常情况下不需要修改红色选项内容。',
 	'config_unwriteable' => '安装向导无法写入配置文件, 请核对现有信息, 如需修改, 请手动修改对应文件。',
 
-	'php_version_low' => '您的 PHP 版本过低, 无法使用 生存游戏BRA。',
+	'php_version_low' => '您的 PHP 版本过低, 无法安装 ACFUN大逃杀 - 电波版。',
 	'attach_enabled' => '允许/最大尺寸 ',
 	'attach_enabled_info' => '您可以上传附件的最大尺寸: ',
 	'attach_disabled' => '不允许上传附件',
 	'attach_disabled_info' => '附件上传或相关操作被服务器禁止。',
 	'mysql_version_low' => '您的 MySQL 版本过低，安装无法继续进行。',
-	'unwriteable_template' => '模板目录(./templates)属性非 777 或无法写入，在线编辑模板功能将无法使用。',
-	'unwriteable_gamedata' => '数据目录(./gamedata)属性非 777 或无法写入，游戏运行记录和备份到数据库功能将无法使用。',
+	'diskspace_low' => '您的可用磁盘空间不足，安装无法继续进行。',
+	'unwriteable_template' => '模板目录(./templates)属性非 777 或无法写入，安装无法继续进行。',
+	'unwriteable_gamedata' => '数据目录(./gamedata)属性非 777 或无法写入，安装无法继续进行。',
+	'extension_off' => '扩展没有开启，安装无法继续进行。',
+	'server_address_unavailable' => '本地程序地址无法从本地访问，请检查服务器配置，安装无法继续进行。',
+
 	'tablepre_invalid' => '您指定的数据表前缀包含点字符(".")，请返回修改。',
 	'db_invalid' => '指定的数据库不存在, 也无法自动建立, 无法安装游戏。',
 	'db_auto_created' => '指定的数据库不存在, 但已成功建立, 可以继续安装。',
@@ -160,7 +172,7 @@ $lang = array
 	在满足上述要求的前提下，任何人均可搭建或开发属于自己的分支。
 	</p>',
 
-	'preparation' => '<li>开启curl和socket两项扩展；</li>
+	'preparation' => '<li>开启curl和sockets两项扩展；</li>
 	<li>将php.ini中output_buffering一项打开（一般设为output_buffering = 4096）。</li>
 	<li>确定服务器支持本地对本地php文件的http访问。</li>
 	<li>建议将php所需内存修改为256M或更高，建议将php最大执行时间修改为180秒或更高。</li>

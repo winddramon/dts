@@ -8,6 +8,7 @@ define('GAME_ROOT', '');
 
 $php_version_lowest = '7.0.0';
 $mysql_version_lowest = '5.7';
+$diskspace_lowest = '200';//unit: MB
 if(PHP_VERSION < $php_version_lowest) {
 	exit('PHP version must >= '.$php_version_lowest.'!');
 }
@@ -755,13 +756,20 @@ if(!$action) {
 		$quit = TRUE;
 	}
 
-	$curr_disk_space = intval(diskfreespace('.') / (1024 * 1024)).'M';
+  $curr_disk_space_m = intval(diskfreespace('.') / (1024 * 1024));
+	$curr_disk_space = $curr_disk_space_m.'M';
+
+  if($curr_disk_space < $diskspace_lowest) {
+    $msg .= "<font color=\"#FF0000\">$lang[diskspace_low]</font>\t";
+    $quit = TRUE;
+	}
 
 	if(dir_writeable('./templates')) {
 		$curr_tpl_writeable = $lang['writeable'];
 	} else {
 		$curr_tpl_writeable = $lang['unwriteable'];
 		$msg .= "<font color=\"#FF0000\">$lang[unwriteable_template]</font>\t";
+    $quit = TRUE;
 	}
 
 	if(dir_writeable('./gamedata')) {
@@ -769,6 +777,7 @@ if(!$action) {
 	} else {
 		$curr_data_writeable = $lang['unwriteable'];
 		$msg .= "<font color=\"#FF0000\">$lang[unwriteable_gamedata]</font>\t";
+    $quit = TRUE;
 	}
 
 	if(strstr($tablepre, '.')) {
@@ -842,6 +851,32 @@ if(!$action) {
 	} else {
 		$alert = '';
 	}
+
+  $curl_ext_on = function_exists('curl_init');
+  if(!$curl_ext_on) {
+		$msg .= "<font color=\"#FF0000\">curl $lang[extension_off]</font>\t";
+		$quit = TRUE;
+	}
+
+  $sockets_ext_on = function_exists('socket_create');
+  if(!$sockets_ext_on) {
+    $msg .= "<font color=\"#FF0000\">sockets $lang[extension_off]</font>\t";
+    $quit = TRUE;
+  }
+
+  $server_address_available = 0;
+  if($curl_ext_on) {
+    $server_address = substr($server_address, strlen($server_address)-1) == '/' ? $server_address : $server_address.'/';
+    $con = curl_init((string)$server_address.'install_NEW.php');
+    curl_setopt($con, CURLOPT_TIMEOUT,10);
+    $ret = curl_exec($con);
+    $header_size = curl_getinfo($con, CURLINFO_HEADER_SIZE);
+    $server_address_available = $header_size ? 1 : 0;
+  }
+  if(!$server_address_available) {
+    $msg .= "<font color=\"#FF0000\">$lang[server_address_unavailable]</font>\t";
+    $quit = TRUE;
+  }
 
 	if($quit) {
 		$msg .= "<font color=\"#FF0000\">$lang[install_abort]</font>";
@@ -934,21 +969,63 @@ if(!$action) {
               </tr>
               <tr>
                 <td bgcolor="#E3E3EA" align="center"><?php echo $lang['env_diskspace']; ?></td>
-                <td bgcolor="#EEEEF6" align="center">10M+</td>
-                <td bgcolor="#E3E3EA" align="center">50M+</td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $diskspace_lowest; ?>M+</td>
+                <td bgcolor="#E3E3EA" align="center">1000M+</td>
                 <td bgcolor="#EEEEF6" align="center"><?php echo $curr_disk_space; ?></td>
               </tr>
               <tr>
+                <td bgcolor="#E3E3EA" align="center">curl <?php echo $lang['env_ext']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['on']; ?></td>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['on']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $curl_ext_on ? $lang['on'] : $lang['off']; ?></td>
+              </tr>
+              <tr>
+                <td bgcolor="#E3E3EA" align="center">sockets <?php echo $lang['env_ext']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['on']; ?></td>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['on']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $sockets_ext_on ? $lang['on'] : $lang['off']; ?></td>
+              </tr>
+              <tr>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['server_address_available']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['yes']; ?></td>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['yes']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $server_address_available ? $lang['yes'] : $lang['no']; ?></td>
+              </tr>
+              <tr>
                 <td bgcolor="#E3E3EA" align="center">./templates <?php echo $lang['env_dir_writeable']; ?></td>
-                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['unlimited']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['writeable']; ?></td>
                 <td bgcolor="#E3E3EA" align="center"><?php echo $lang['writeable']; ?></td>
                 <td bgcolor="#EEEEF6" align="center"><?php echo $curr_tpl_writeable; ?></td>
               </tr>
               <tr>
                 <td bgcolor="#E3E3EA" align="center">./gamedata <?php echo $lang['env_dir_writeable']; ?></td>
-                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['unlimited']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['writeable']; ?></td>
                 <td bgcolor="#E3E3EA" align="center"><?php echo $lang['writeable']; ?></td>
                 <td bgcolor="#EEEEF6" align="center"><?php echo $curr_data_writeable; ?></td>
+              </tr>
+              <tr>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['env_php_memory']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['unlimited']; ?></td>
+                <td bgcolor="#E3E3EA" align="center">256M+</td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo ini_get('memory_limit'); ?></td>
+              </tr>
+              <tr>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['env_php_timelimit']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['unlimited']; ?></td>
+                <td bgcolor="#E3E3EA" align="center">180s+</td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo ini_get('max_execution_time').'s'; ?></td>
+              </tr>
+              <tr>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['env_ob']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['unlimited']; ?></td>
+                <td bgcolor="#E3E3EA" align="center">4096</td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo ini_get('output_buffering'); ?></td>
+              </tr>
+              <tr>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['env_bcmath']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['unlimited']; ?></td>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['on']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo function_exists('bcmod') ? $lang['on'] : $lang['off']; ?></td>
               </tr>
             </table>
             <br>
