@@ -46,11 +46,11 @@ namespace skill717
 		eval(import_module('player'));
 		if (\skillbase\skill_query(717) && ($itms0 >= 0))
 		{
-			eval(import_module('sys'));
+			eval(import_module('sys','map'));
 			$itm_temp = $itm0;
 			if (rand(0,99) < 90) //抽一个地图道具
 			{
-				$rand_pls = rand(0,33);
+				$rand_pls = array_randompick(array_keys($plsinfo));
 				$result = $db->query("SELECT * FROM {$tablepre}mapitem WHERE pls = '$rand_pls'");
 				$itemnum = $db->num_rows($result);
 				if($itemnum > 0)
@@ -73,9 +73,8 @@ namespace skill717
 			}
 			else //抽一个商店道具
 			{
-				eval(import_module('map'));
 				$an = \map\get_area_wavenum();
-				if (rand(0,33) < 33) $result = $db->query("SELECT * FROM {$tablepre}shopitem WHERE num>0 AND area<='$an' AND price<=1500");
+				if (rand(0,30) < 30) $result = $db->query("SELECT * FROM {$tablepre}shopitem WHERE num>0 AND area<='$an' AND price<=1500");
 				else $result = $db->query("SELECT * FROM {$tablepre}shopitem WHERE num>0 AND area<='$an' AND price>1500");				
 				$itemnum = $db->num_rows($result);
 				//不会真有人把商店买空吧！
@@ -112,9 +111,10 @@ namespace skill717
 		eval(import_module('player'));
 		if (\skillbase\skill_query(717,$sdata))
 		{
+			eval(import_module('map'));
 			$pls_available = \map\get_safe_plslist();
 			//英灵殿，特殊待遇
-			if (!in_array('34',$pls_available)) $pls_available[] = '34';
+			if (isset($plsinfo[34]) && !in_array('34',$pls_available)) $pls_available[] = '34';
 			$pls_temp = $pls;
 			$pls = array_randompick($pls_available);
 			\skillbase\skill_setvalue(717,'pls',$pls,$sdata);

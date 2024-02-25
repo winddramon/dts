@@ -463,6 +463,21 @@ namespace instance11
 		}
 	}
 	
+	//在厕所不能打架
+	function meetman_alternative($edata)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','player'));
+		if ($gametype == 21 && $pls == 104 && !$edata['type'])
+		{
+			eval(import_module('logger'));
+			$log .= '在洗手间要有洗手间的礼帽！你向对方友好地打了个招呼。<br>';
+			\team\findteam($edata);
+			return;
+		}
+		$chprocess($edata);
+	}
+	
 }
 
 ?>
