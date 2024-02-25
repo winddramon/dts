@@ -3,7 +3,12 @@
 namespace instance11
 {
 	function init() {
-		eval(import_module('skillbase','map_display'));
+		eval(import_module('skillbase','cardbase','map','map_display'));
+		//卡片入场需要冷却时间和禁止同名卡
+		$card_force_different_gtype[] = 21;
+		$card_need_charge_gtype[] = 21;
+		//卡片冷却时间降低80%
+		$card_cooldown_discount_gtype[21] = 0.8;
 		//开局获得技能：凤凰、扭蛋、打牌、占卜、欺货
 		if(!isset($valid_skills[21])) {
 			$valid_skills[21] = array();
@@ -17,6 +22,34 @@ namespace instance11
 			'background-width' => 500,
 			'background-height' => 500,
 		);
+		//不能在config里面直接import
+		$xyinfo += Array(
+			101 => 'D-2',
+			102 => 'D-5',
+			103 => 'E-4',
+			104 => 'C-2',
+		);
+		$areainfo += Array(
+			101 => "这是一个用旧车间改造而成的小型会议室。<br>简洁现代的桌椅似乎在竭力装作一副严肃的模样，但四周墙上贴满了的各种二次元海报让它们的努力都化为了泡影。<br>见到此情此景你不仅再一次小声嘀咕：<span class=\"b\">我是来开会的，这些人要干什么？</span><br>另外，<span class=\"yellow b\">墙角还有一台商品琳琅满目的自动售货机，可以用来购买道具。</span><br>",
+			102 => "鲜红色、粉红色、朱红色、棕红色……<br>和其人的印象色截然不同，蓝凝的这间卧室完全是一片红颜色的海洋。<br>很难把这些粉红色的蓬松被褥和可可爱爱的抱枕同「红杀精英」、「时空特使」这样的字眼联系到一起。<br>",
+			103 => "这里摆满了蓝凝的个人收藏。<br><span class='cyan b'>“这些都是我的宝贝，可不准乱碰！”</span><br>甚至还有一个其本人的高仿幻影在守卫着这里……<br>",
+			104 => "一个狭小但是干净的卫生间。<br>值得注意的是那个大得足以容纳得下一个人的马桶。<br>美少女显然是不需要如厕的，这个东西是用来干什么的呢？<br>",
+		);
+	}
+
+	//蹲站模式禁用林无月和卡片男
+	function card_validate_get_forbidden_cards($card_disabledlist, $card_ownlist){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		
+		$card_disabledlist = $chprocess($card_disabledlist, $card_ownlist);
+		if (21==$gametype)//蹲站模式禁用低维生物、林无月和卡片男
+		{
+			foreach(Array(196,209,231) as $c){
+				if (in_array($c,$card_ownlist)) $card_disabledlist[$c][]='e3';
+			}
+		}
+		return $card_disabledlist;
 	}
 
 	//蹲站房特殊地图数目。仅在$use_config == 1时触发
@@ -145,8 +178,11 @@ namespace instance11
 	function rs_game($xmode = 0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','map','instance11'));
+		if((21 == $gametype)&&($xmode & 2)) {//取消初始无月禁区
+			$area_on_start = Array();
+		}
 		$chprocess($xmode);
-		eval(import_module('sys','instance11'));
 		if ((21 == $gametype)&&($xmode & 2)) 
 		{
 			$weather = 18;//开局天气为冷气

@@ -10,26 +10,17 @@ namespace instance11
 		104 => '洗手间',
 	);
 
-	$xyinfo11 = Array(
-		101 => 'D-2',
-		102 => 'D-5',
-		103 => 'E-4',
-		104 => 'C-2',
-	);
+	//我真傻，真的，我单知道import_module会自动识别namespace里定义的局部变量，却不知道import_module进来的也算是局部变量……
+	//言归正传，不允许在函数外部进行import_module！
+	//因为在函数外面的变量都会被import_module识别成namespace的局部变量，包括import_module自己导入进来的也是如此！
+	//轻则导致变量引用关系错乱，重则循环引用等不可预料的问题
 
-	$areainfo11 = Array(
-		101 => "这是一个用旧车间改造而成的小型会议室。<br>简洁现代的桌椅似乎在竭力装作一副严肃的模样，但四周墙上贴满了的各种二次元海报让它们的努力都化为了泡影。<br>见到此情此景你不仅再一次小声嘀咕：<span class=\"b\">我是来开会的，这些人要干什么？</span><br>另外，<span class=\"yellow b\">墙角还有一台商品琳琅满目的自动售货机，可以用来购买道具。</span><br>",
-		102 => "鲜红色、粉红色、朱红色、棕红色……<br>和其人的印象色截然不同，蓝凝的这间卧室完全是一片红颜色的海洋。<br>很难把这些粉红色的蓬松被褥和可可爱爱的抱枕同「红杀精英」、「时空特使」这样的字眼联系到一起。<br>",
-		103 => "这里摆满了蓝凝的个人收藏。<br><span class='cyan b'>“这些都是我的宝贝，可不准乱碰！”</span><br>甚至还有一个其本人的高仿幻影在守卫着这里……<br>",
-		104 => "一个狭小但是干净的卫生间。<br>值得注意的是那个大得足以容纳得下一个人的马桶。<br>美少女显然是不需要如厕的，这个东西是用来干什么的呢？<br>",
-	);
+	// eval(import_module('map'));
 
-	eval(import_module('map'));
-
-	if(!empty($xyinfo)) {
-		$xyinfo += $xyinfo11;
-		$areainfo += $areainfo11;
-	}
+	// if(!empty($xyinfo)) {
+	// 	$xyinfo += $xyinfo11;
+	// 	$areainfo += $areainfo11;
+	// }
 }
 
 ?>

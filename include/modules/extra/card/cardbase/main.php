@@ -419,7 +419,7 @@ namespace cardbase
 	function get_enter_battlefield_card($card){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
-		//标准模式禁用卡片
+		//标准模式禁用所有卡片
 		if(0==$gametype){
 			$card = 0;
 		}
@@ -572,10 +572,13 @@ namespace cardbase
 		return array($ebp, $skills);
 	}
 
-	//入场卡片生效时，单项数据的处理。本模块是空的
+	//入场卡片生效时，单项数据的处理。本模块判定地点是否合理
 	//传参$key为为卡片config里记录的键名，$value为键值
 	function enter_battlefield_cardproc_valueproc($key, $value){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if('pls' == $key) {
+			$all_plsno = \map\check_pls($value);
+		}
 		return $value;
 	}
 	

@@ -15,7 +15,7 @@ namespace instance9
 		$card_cooldown_discount_gtype[19] = 0.5;
 	}
 	
-	//极速模式禁用卡片
+	//极速模式禁用6D和CTY卡片
 	function card_validate_get_forbidden_cards($card_disabledlist, $card_ownlist){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
@@ -23,8 +23,9 @@ namespace instance9
 		$card_disabledlist = $chprocess($card_disabledlist, $card_ownlist);
 		if (19==$gametype)//极速模式禁用6D和CTY
 		{
-			if (in_array(123,$card_ownlist)) $card_disabledlist[123][]='e3';
-			if (in_array(124,$card_ownlist)) $card_disabledlist[124][]='e3';
+			foreach(Array(123,124) as $c){
+				if (in_array($c,$card_ownlist)) $card_disabledlist[$c][]='e3';
+			}
 		}
 		return $card_disabledlist;
 	}
