@@ -144,7 +144,6 @@ club11,extra/club/clubs/club11/,1
 club19,extra/club/clubs/club19/,1
 skill58,extra/club/skills/skill58/,1
 club24,extra/club/clubs/club24/,1
-skill68,extra/club/skills/skill68/,1
 club18,extra/club/clubs/club18/,1
 skill211,extra/club/skills/skill211/,1
 skill212,extra/club/skills/skill212/,1
@@ -644,6 +643,7 @@ searchmemory,extra/searchmemory/,1
 skill738,extra/card/skills/skill738/,1
 skill87,extra/club/skills/skill87/,1
 skill94,extra/club/skills/skill94/,1
+skill68,extra/club/skills/skill68/,1
 instance_quit_button,extra/instance/instance_quit_button/,1
 skill497,extra/card/skills/skill497/,1
 skill503,extra/card/skills/skill503/,1

@@ -6,8 +6,11 @@ error_reporting(E_ERROR | E_PARSE);
 define('IN_GAME', TRUE);
 define('GAME_ROOT', '');
 
-if(PHP_VERSION < '7.0.0') {
-	exit('PHP version must >= 7.0.0!');
+$php_version_lowest = '7.0.0';
+$mysql_version_lowest = '5.7';
+$diskspace_lowest = '200';//unit: MB
+if(PHP_VERSION < $php_version_lowest) {
+	exit('PHP version must >= '.$php_version_lowest.'!');
 }
 
 $action = $_POST['action'] ? $_POST['action'] : $_GET['action'];
@@ -61,6 +64,8 @@ $mdcontents = preg_replace("/[$]___MOD_SRV\s*\=\s*-?[0-9]+;/is", "\$___MOD_SRV =
 file_put_contents($modulemng_config,$mdcontents);
 
 @include $server_config;
+
+$language = 'simplified_chinese_utf8';//skip language selecting
 
 switch($language) {
 	case 'simplified_chinese_gbk':
@@ -340,7 +345,7 @@ if(!$action) {
                   <td bgcolor="#E3E3EA">&nbsp;<?php echo $lang['dbpw_comment']; ?></td>
                 </tr>
                 <tr>
-                  <td bgcolor="#E3E3EA">&nbsp;<?php echo $lang['moveut']; ?></td>
+                  <td bgcolor="#E3E3EA" style="color: #FF0000">&nbsp;<?php echo $lang['moveut']; ?></td>
                   <td bgcolor="#EEEEF6" align="center"><input type="text" name="moveut" value="<?php echo $moveut; ?>" size="30"></td>
                   <td bgcolor="#E3E3EA">&nbsp;<?php echo $lang['moveut_comment']; ?><br><?php echo $nowyear; ?><?php echo $lang['year']; ?><?php echo $nowmonth; ?><?php echo $lang['month']; ?><?php echo $nowday; ?><?php echo $lang['day']; ?><?php echo $nowhour; ?><?php echo $lang['hour']; ?><?php echo $nowmin; ?><?php echo $lang['min']; ?></td>
                 </tr>
@@ -361,6 +366,11 @@ if(!$action) {
                   <td bgcolor="#E3E3EA">&nbsp;<?php echo $lang['bbsurl']; ?></td>
                   <td bgcolor="#EEEEF6" align="center"><input type="text" name="bbsurl" value="<?php echo $bbsurl; ?>" size="30"></td>
                   <td bgcolor="#E3E3EA">&nbsp;<?php echo $lang['bbsurl_comment']; ?></td>
+                </tr>
+                <tr>
+                  <td bgcolor="#E3E3EA">&nbsp;<?php echo $lang['server_address']; ?></td>
+                  <td bgcolor="#EEEEF6" align="center"><input type="text" name="server_address" value="<?php echo $server_address; ?>" size="30"></td>
+                  <td bgcolor="#E3E3EA">&nbsp;<?php echo $lang['server_address_comment']; ?></td>
                 </tr>
                 <tr>
                   <td bgcolor="#E3E3EA">&nbsp;<?php echo $lang['gameurl']; ?></td>
@@ -443,6 +453,11 @@ if(!$action) {
                 <td bgcolor="#E3E3EA" align="center">$bbsurl</td>
                 <td bgcolor="#EEEEF6" align="center"><?php echo $bbsurl; ?></td>
                 <td bgcolor="#E3E3EA" align="center"><?php echo $lang['bbsurl_comment']; ?></td>
+              </tr>
+              <tr>
+                <td bgcolor="#E3E3EA" align="center">$server_address</td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $server_address; ?></td>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['server_address_comment']; ?></td>
               </tr>
               <tr>
                 <td bgcolor="#E3E3EA" align="center">$gameurl</td>
@@ -556,6 +571,7 @@ if(!$action) {
 				$tablepre = setconfig($_POST['tablepre']);
 				$authkey = setconfig($_POST['authkey']);
 				$bbsurl = setconfig($_POST['bbsurl']);
+        $server_address = setconfig($_POST['server_address']);
 				$gameurl = setconfig($_POST['gameurl']);
 				$moveut = (int)$_POST['moveut'];
 
@@ -569,6 +585,7 @@ if(!$action) {
 				$svcontents = preg_replace("/[$]authkey\s*\=\s*[\"'].*?[\"'];/is", "\$authkey = '$authkey';", $svcontents);
 				$svcontents = preg_replace("/[$]database\s*\=\s*[\"'].*?[\"'];/is", "\$database = '$database';", $svcontents);
 				$svcontents = preg_replace("/[$]bbsurl\s*\=\s*[\"'].*?[\"'];/is", "\$bbsurl = '$bbsurl';", $svcontents);
+        $svcontents = preg_replace("/[$]server_address\s*\=\s*[\"'].*?[\"'];/is", "\$server_address = '$server_address';", $svcontents);
 				$svcontents = preg_replace("/[$]gameurl\s*\=\s*[\"'].*?[\"'];/is", "\$gameurl = '$gameurl';", $svcontents);
 				$svcontents = preg_replace("/[$]moveut\s*\=\s*-?[0-9]+;/is", "\$moveut = $moveut;", $svcontents);
 
@@ -717,7 +734,7 @@ if(!$action) {
 	$curr_os = PHP_OS;
 
 	$curr_php_version = PHP_VERSION;
-	if($curr_php_version < '5.5.0') {
+	if($curr_php_version < $php_version_lowest) {
 		$msg .= "<font color=\"#FF0000\">$lang[php_version_low]</font>\t";
 		$quit = TRUE;
 	}
@@ -733,19 +750,26 @@ if(!$action) {
 
 	$query = $db->query("SELECT VERSION()");
 	$curr_mysql_version = $db->result($query, 0);
-	$version_unit = (int)explode('.',$curr_mysql_version)[0];
-	if($version_unit < 5) {
+	$version_unit = (int)explode('.',$curr_mysql_version)[0].'.'.(int)explode('.',$curr_mysql_version)[1];
+	if($version_unit < $mysql_version_lowest) {
 		$msg .= "<font color=\"#FF0000\">$lang[mysql_version_low]</font>\t";
 		$quit = TRUE;
 	}
 
-	$curr_disk_space = intval(diskfreespace('.') / (1024 * 1024)).'M';
+  $curr_disk_space_m = intval(diskfreespace('.') / (1024 * 1024));
+	$curr_disk_space = $curr_disk_space_m.'M';
+
+  if($curr_disk_space < $diskspace_lowest) {
+    $msg .= "<font color=\"#FF0000\">$lang[diskspace_low]</font>\t";
+    $quit = TRUE;
+	}
 
 	if(dir_writeable('./templates')) {
 		$curr_tpl_writeable = $lang['writeable'];
 	} else {
 		$curr_tpl_writeable = $lang['unwriteable'];
 		$msg .= "<font color=\"#FF0000\">$lang[unwriteable_template]</font>\t";
+    $quit = TRUE;
 	}
 
 	if(dir_writeable('./gamedata')) {
@@ -753,6 +777,7 @@ if(!$action) {
 	} else {
 		$curr_data_writeable = $lang['unwriteable'];
 		$msg .= "<font color=\"#FF0000\">$lang[unwriteable_gamedata]</font>\t";
+    $quit = TRUE;
 	}
 
 	if(strstr($tablepre, '.')) {
@@ -826,6 +851,32 @@ if(!$action) {
 	} else {
 		$alert = '';
 	}
+
+  $curl_ext_on = function_exists('curl_init');
+  if(!$curl_ext_on) {
+		$msg .= "<font color=\"#FF0000\">curl $lang[extension_off]</font>\t";
+		$quit = TRUE;
+	}
+
+  $sockets_ext_on = function_exists('socket_create');
+  if(!$sockets_ext_on) {
+    $msg .= "<font color=\"#FF0000\">sockets $lang[extension_off]</font>\t";
+    $quit = TRUE;
+  }
+
+  $server_address_available = 0;
+  if($curl_ext_on) {
+    $server_address = substr($server_address, strlen($server_address)-1) == '/' ? $server_address : $server_address.'/';
+    $con = curl_init((string)$server_address.'install_NEW.php');
+    curl_setopt($con, CURLOPT_TIMEOUT,10);
+    $ret = curl_exec($con);
+    $header_size = curl_getinfo($con, CURLINFO_HEADER_SIZE);
+    $server_address_available = $header_size ? 1 : 0;
+  }
+  if(!$server_address_available) {
+    $msg .= "<font color=\"#FF0000\">$lang[server_address_unavailable]</font>\t";
+    $quit = TRUE;
+  }
 
 	if($quit) {
 		$msg .= "<font color=\"#FF0000\">$lang[install_abort]</font>";
@@ -906,33 +957,75 @@ if(!$action) {
               </tr>
               <tr>
                 <td bgcolor="#E3E3EA" align="center"><?php echo $lang['env_php']; ?></td>
-                <td bgcolor="#EEEEF6" align="center">5.5.0+</td>
-                <td bgcolor="#E3E3EA" align="center">7.0.0+</td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $php_version_lowest; ?>+</td>
+                <td bgcolor="#E3E3EA" align="center">8.0.0+</td>
                 <td bgcolor="#EEEEF6" align="center"><?php echo $curr_php_version; ?></td>
               </tr>
               <tr>
                 <td bgcolor="#E3E3EA" align="center"><?php echo $lang['env_mysql']; ?></td>
-                <td bgcolor="#EEEEF6" align="center">MySQL 5.0+</td>
-                <td bgcolor="#E3E3EA" align="center">MySQL 5.7+</td>
+                <td bgcolor="#EEEEF6" align="center">MySQL <?php echo $mysql_version_lowest; ?>+</td>
+                <td bgcolor="#E3E3EA" align="center">MySQL 8.0+</td>
                 <td bgcolor="#EEEEF6" align="center"><?php echo ($version_unit >= 10 && $default_database == 'mysql') ? 'mariaDB '.$curr_mysql_version : $database.' '.$curr_mysql_version; ?></td>
               </tr>
               <tr>
                 <td bgcolor="#E3E3EA" align="center"><?php echo $lang['env_diskspace']; ?></td>
-                <td bgcolor="#EEEEF6" align="center">10M+</td>
-                <td bgcolor="#E3E3EA" align="center">50M+</td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $diskspace_lowest; ?>M+</td>
+                <td bgcolor="#E3E3EA" align="center">1000M+</td>
                 <td bgcolor="#EEEEF6" align="center"><?php echo $curr_disk_space; ?></td>
               </tr>
               <tr>
+                <td bgcolor="#E3E3EA" align="center">curl <?php echo $lang['env_ext']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['on']; ?></td>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['on']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $curl_ext_on ? $lang['on'] : $lang['off']; ?></td>
+              </tr>
+              <tr>
+                <td bgcolor="#E3E3EA" align="center">sockets <?php echo $lang['env_ext']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['on']; ?></td>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['on']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $sockets_ext_on ? $lang['on'] : $lang['off']; ?></td>
+              </tr>
+              <tr>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['server_address_available']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['yes']; ?></td>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['yes']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $server_address_available ? $lang['yes'] : $lang['no']; ?></td>
+              </tr>
+              <tr>
                 <td bgcolor="#E3E3EA" align="center">./templates <?php echo $lang['env_dir_writeable']; ?></td>
-                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['unlimited']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['writeable']; ?></td>
                 <td bgcolor="#E3E3EA" align="center"><?php echo $lang['writeable']; ?></td>
                 <td bgcolor="#EEEEF6" align="center"><?php echo $curr_tpl_writeable; ?></td>
               </tr>
               <tr>
                 <td bgcolor="#E3E3EA" align="center">./gamedata <?php echo $lang['env_dir_writeable']; ?></td>
-                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['unlimited']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['writeable']; ?></td>
                 <td bgcolor="#E3E3EA" align="center"><?php echo $lang['writeable']; ?></td>
                 <td bgcolor="#EEEEF6" align="center"><?php echo $curr_data_writeable; ?></td>
+              </tr>
+              <tr>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['env_php_memory']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['unlimited']; ?></td>
+                <td bgcolor="#E3E3EA" align="center">256M+</td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo ini_get('memory_limit'); ?></td>
+              </tr>
+              <tr>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['env_php_timelimit']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['unlimited']; ?></td>
+                <td bgcolor="#E3E3EA" align="center">180s+</td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo ini_get('max_execution_time').'s'; ?></td>
+              </tr>
+              <tr>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['env_ob']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['unlimited']; ?></td>
+                <td bgcolor="#E3E3EA" align="center">4096</td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo ini_get('output_buffering'); ?></td>
+              </tr>
+              <tr>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['env_bcmath']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['unlimited']; ?></td>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['on']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo function_exists('bcmod') ? $lang['on'] : $lang['off']; ?></td>
               </tr>
             </table>
             <br>
@@ -1157,7 +1250,7 @@ if(!$action) {
 	echo"        <tr>\n";
 	echo"          <td>\n";
 	
-	$extrasql = "INSERT INTO bra_users (username,`password`,groupid) VALUES ('$username','$brpswd','9');";
+	$extrasql = "INSERT INTO bra_users (username,`password`,groupid,gender,icon) VALUES ('$username','$brpswd','9','f','0');";
 	$starttime = (int)$_POST['starttime'];
 	$startmin = (int)$_POST['startmin'];
 	if(!$starttime) {

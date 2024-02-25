@@ -53,6 +53,11 @@ namespace skill588
 			$log .= '你已经发动过「天变」了！<br>';
 			return;
 		}
+		if ($weather == 18) 
+		{
+			$log .= '在这里似乎无法使用这个技能。<br>';
+			return;
+		}
 		
 		$sk588_wthkey_list = array_diff($sk588_wthkey_list, array($weather));
 		$weather = $sk588_wthkey_list[array_rand($sk588_wthkey_list)];

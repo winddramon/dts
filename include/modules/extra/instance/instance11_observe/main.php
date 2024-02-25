@@ -43,9 +43,9 @@ namespace instance11
 		eval(import_module('sys'));
 		
 		$card_disabledlist = $chprocess($card_disabledlist, $card_ownlist);
-		if (21==$gametype)//蹲站模式禁用低维生物、林无月和卡片男
+		if (21==$gametype)//蹲站模式禁用星莲船、低维生物、林无月和卡片男
 		{
-			foreach(Array(196,209,231) as $c){
+			foreach(Array(117,196,209,231) as $c){
 				if (in_array($c,$card_ownlist)) $card_disabledlist[$c][]='e3';
 			}
 		}
@@ -461,6 +461,21 @@ namespace instance11
 				$itme = 1; $itms = 2; $itmsk = 'x';
 			}
 		}
+	}
+	
+	//在厕所不能打架
+	function meetman_alternative($edata)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','player'));
+		if ($gametype == 21 && $pls == 104 && !$edata['type'])
+		{
+			eval(import_module('logger'));
+			$log .= '在洗手间要有洗手间的礼帽！你向对方友好地打了个招呼。<br>';
+			\team\findteam($edata);
+			return;
+		}
+		$chprocess($edata);
 	}
 	
 }

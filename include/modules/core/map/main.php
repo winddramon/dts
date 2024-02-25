@@ -67,11 +67,11 @@ namespace map
 		return in_array($plsno, get_all_plsno());
 	}
 
-	//获取当前是第几波禁区。
+	//获取当前是第几波禁区。最小为0，不会到负数
 	//纯粹用(当前禁区数-开局禁区数)除以禁区每次增加数来计算。其他模式如果有修改禁区计算方式，请一并继承并修改这个函数
 	function get_area_wavenum(){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		return floor((get_var_in_module('areanum', 'sys') - sizeof(get_var_in_module('area_on_start', 'map'))) / get_var_in_module('areaadd', 'map'));
+		return max(0, floor((get_var_in_module('areanum', 'sys') - sizeof(get_var_in_module('area_on_start', 'map'))) / get_var_in_module('areaadd', 'map')));
 	}
 
 	//获得当前禁区地图编号组成的数组。

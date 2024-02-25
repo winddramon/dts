@@ -145,7 +145,7 @@ function fetch_udata($fields='', $where='', $sort='', $keytype=0, $nolock=0){
 	global $db, $gtablepre, $userdb_remote_storage, $userdb_forced_local, $userdb_forced_key;
 
 	//新建usettings字段
-	if(1){
+	if(0){
 		$column_existed = 0;
 		$result = $db->query("SHOW COLUMNS FROM {$gtablepre}users");
 		while($r = $db->fetch_array($result)){
@@ -553,7 +553,15 @@ function register_random_create($min, $max, $token = 0)
 	if($max > 2147483647) $max = 2147483647;
 	if($min >= $max) $min = $max - 1;
 	$fatenum = register_fatenum_create($token);
-	return ((int)bcmod($fatenum, ($max - $min + 1)) + (int)$min);
+	if(function_exists('bcmod'))
+	{
+		$ret = ((int)bcmod($fatenum, ($max - $min + 1)) + (int)$min);
+	}
+	else{
+		$token = (int)$token;
+		$ret = ((int)fmod($fatenum, ($max - $min + 1)) + (int)$min);
+	}
+	return $ret;
 }
 
 //验证码问题和回答生成，需要语料库的支持
