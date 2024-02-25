@@ -53,7 +53,7 @@ namespace skill589
 		
 		if(empty($gamevars['sk589_flag']))
 		{
-			$gamevars['sk589_flag'] = 1;
+			$gamevars['sk589_flag'] = rand(1, \map\get_plsnum() - 1);
 			save_gameinfo();
 		}
 		$log .= "你发动技能「地异」，改变了虚拟战场的地形！！<br>";
@@ -69,7 +69,14 @@ namespace skill589
 		if(!empty($gamevars['sk589_flag']))
 		{
 			$o_moveto = $moveto;
-			if ($moveto > 0) $moveto = count($plsinfo) - $moveto;//无月例外
+			$all_plsno = \map\get_all_plsno();
+			$pcount = count($all_plsno);
+
+			if ($moveto > 0) {//无月例外
+				$n = (int)array_search($moveto, $all_plsno) + $gamevars['sk589_flag'];
+				if($n > $pcount - 1) $n -= $pcount;
+				$moveto = $all_plsno[$n];
+			}
 			if ($moveto != $pls)
 			{
 				$log .= "你循着记忆前往{$plsinfo[$o_moveto]}，但发现战场地形已经被大幅改变了。<br>究竟是谁干的好事？<br>";

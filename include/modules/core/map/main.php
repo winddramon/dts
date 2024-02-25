@@ -50,6 +50,17 @@ namespace map
 		include $file;
 	}
 
+	//兼容不同地图组的地点判定。会自动判断是否存在该地图，如果不存在则会转到该模式的第一张地图
+	function check_pls($plsno, $para = '')
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE; 
+		$all_plsno = get_all_plsno();
+		if(!in_array($plsno, $all_plsno)) {
+			$plsno = $all_plsno[0];
+		}
+		return $plsno;
+	}
+
 	//判定某个地图编号是否可用。本模块单纯判定是不是$plsinfo的其中一个键名。需要随机地图之类的模块可以重载这个函数。
 	function is_plsno_available($plsno) {
 		if (eval(__MAGIC__)) return $___RET_VALUE;

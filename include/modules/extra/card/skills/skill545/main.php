@@ -48,8 +48,12 @@ namespace skill545
 			}elseif(!empty(\skillbase\skill_getvalue(545,'need_log'))) {//其他情况下才判断是否显示复活信息
 				\skillbase\skill_setvalue(545, 'need_log', 0);
 				eval(import_module('map'));
+				$o_pls = $pls;
 				if(!empty($plsinfo[104])) $pls = 104;
 				$log .= '<span class="yellow b">你感觉全身涌出凤凰涅槃般的力量，从地狱重返现世的大门就在前方！</span><br><span class="b">“不~死~之~身~！”</span>你哼着小曲儿一跃而出，却发现自己钻出来的地方似乎是一个马桶……<br><br>';
+				if(defined('MOD_SEARCHMEMORY') && $o_pls != $pls){
+					\searchmemory\change_memory_unseen('ALL');
+				}
 			}
 		}
 		$chprocess();
