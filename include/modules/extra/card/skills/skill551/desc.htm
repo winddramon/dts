@@ -9,8 +9,14 @@ $clubskillname[$___TEMP_SKILL_ID]
 当你在以下地点丢弃特定道具时，可以获得经验值<br>
 <span class="yellow b">
 <!--{loop $skill551_plslist $i}-->
-{$plsinfo[$i]} 
+<!--{if isset($plsinfo[$i])}-->
+<!--{eval $skill551_plsflag=1;}-->
+{$plsinfo[$i]}
+<!--{/if}-->
 <!--{/loop}-->
+<!--{if empty($skill551_plsflag)}-->
+无
+<!--{/if}-->
 </span>
 </span></td>
 <td class="skilldesc_right b3">
