@@ -3,7 +3,12 @@
 namespace instance11
 {
 	function init() {
-		eval(import_module('skillbase','map','map_display'));
+		eval(import_module('skillbase','cardbase','map','map_display'));
+		//卡片入场需要冷却时间和禁止同名卡
+		$card_force_different_gtype[] = 21;
+		$card_need_charge_gtype[] = 21;
+		//卡片冷却时间降低80%
+		$card_cooldown_discount_gtype[21] = 0.8;
 		//开局获得技能：凤凰、扭蛋、打牌、占卜、欺货
 		if(!isset($valid_skills[21])) {
 			$valid_skills[21] = array();
@@ -38,9 +43,9 @@ namespace instance11
 		eval(import_module('sys'));
 		
 		$card_disabledlist = $chprocess($card_disabledlist, $card_ownlist);
-		if (21==$gametype)//极速模式禁用林无月和卡片男
+		if (21==$gametype)//蹲站模式禁用低维生物、林无月和卡片男
 		{
-			foreach(Array(209,231) as $c){
+			foreach(Array(196,209,231) as $c){
 				if (in_array($c,$card_ownlist)) $card_disabledlist[$c][]='e3';
 			}
 		}

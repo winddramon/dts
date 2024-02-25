@@ -5,13 +5,13 @@ namespace cardbase{
 $card_index_file = GAME_ROOT.'./gamedata/cache/card_index.config.php';
 
 //禁止同名S、A、B卡入场的游戏模式
-$card_force_different_gtype = Array(2,4);//18,19
+$card_force_different_gtype = Array(4);//模块中还定义了18,19,21
 
 //对卡片CD、类别CD有限制的游戏模式，基本上也是允许自选卡片的模式
-$card_need_charge_gtype = Array(2,4);//18,19
+$card_need_charge_gtype = Array(4);//模块中还定义了18,19,21
 
 //CD时间打折的模式，键名为gtype，键值为折数
-$card_cooldown_discount_gtype = Array();//18=>0.5,19=>0.5
+$card_cooldown_discount_gtype = Array();//18=>0.5,19=>0.5,21=>0.8
 
 $cardtypecd=array(//卡片类别CD，单位秒
 	'S' => 7200,//S卡类别CD：2小时
