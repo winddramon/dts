@@ -188,9 +188,8 @@ namespace item_misc
 				$upassword = $cudata['password'];
 				if(pass_compare($cuser, $cpass, $upassword) && ($ugroupid >= 5 || $cuser == $gamefounder)){
 					$log.='大逃杀幻境已确认你的权限狗身份，正在为你输送权限套装……<br>';
-					$wp=$wk=$wg=$wc=$wd=$wf=666;
-					$ss=$mss=600;
-					//$att+=200;$def+=200;
+					foreach(Array('wp','wk','wg','wc','wd','wf','ss','mss') as $v) ${$v} += 666;
+
 					$money+=114494;
 					$itm1='会员制大餐';$itmk1 = 'HB';$itme1 = 114514;$itms1 = 1919;$itmsk1 = '';
 					$itm2='你不准增加禁区';$itmk2 = 'Z';$itme2 = 1;$itms2 = 44;$itmsk2 = '';
@@ -250,8 +249,11 @@ namespace item_misc
 				}else{
 					$log.='你没有足够的权限。可能因为是你的缓存密码有误，也可能你压根就不是一条权限狗。<br>';
 				}
-				$itm = $itmk = $itmsk = '';
-				$itme = $itms = 0;
+				if('权限狗的ID卡' == $itm) {
+					$itm = $itmk = $itmsk = '';
+					$itme = $itms = 0;
+				}
+				
 				$mode='command';$command='';
 				return;
 			} elseif ($itm == '奇怪的按钮') {

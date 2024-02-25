@@ -106,6 +106,7 @@ namespace smartmix
 		else{
 			return MOD_SMARTMIX_ITEMMIX;
 		}
+		return $chprocess();
 	}
 	
 	//显示之前的处理

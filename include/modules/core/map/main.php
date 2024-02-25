@@ -37,7 +37,10 @@ namespace map
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess();
 		eval(import_module('sys','map'));
-		if(!empty($gamevars['plsinfo']) && is_array($gamevars['plsinfo'])) $plsinfo = $gamevars['plsinfo'];
+		if(!empty($gamevars['plsinfo']) && is_array($gamevars['plsinfo'])) {
+			$plsinfo = $gamevars['plsinfo'];
+			//$plsinfo_disp += $gamevars['plsinfo'];
+		}
 	}
 
 	//游戏重置时，需要把$plsinfo也一并重置
