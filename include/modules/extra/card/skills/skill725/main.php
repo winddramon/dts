@@ -120,14 +120,14 @@ namespace skill725
 	function get_edible_hpup(&$theitem)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (\skillbase\skill_query(725) && (strpos($theitem['itm'],'灵魂碎片')!==false)) return round($chprocess($theitem)*0.3);
+		if (\skillbase\skill_query(725) && (strpos($theitem['itm'],'灵魂碎片')===false)) return round($chprocess($theitem)*0.3);
 		return $chprocess($theitem);
 	}
 	
 	function get_edible_spup(&$theitem)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (\skillbase\skill_query(725) && (strpos($theitem['itm'],'灵魂碎片')!==false)) return round($chprocess($theitem)*0.3);
+		if (\skillbase\skill_query(725) && (strpos($theitem['itm'],'灵魂碎片')===false)) return round($chprocess($theitem)*0.3);
 		return $chprocess($theitem);
 	}
 
