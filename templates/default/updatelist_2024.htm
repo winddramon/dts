@@ -14,7 +14,7 @@ LARGE PROJECTS TO ADD:
 6、本地机curl_post()多一条走文件而不是走http协议的方式，目前部署上似乎经常遇到http协议出问题的情况……真的有用吗？
 7、对php文件里的字符串也进行js编码
 8、自定义快捷键功能。
-9、加入碎片合卡、重开一次等骗氪功能，可以结合道具商店
+9、
 10、热更新功能：可以弄两套run文件夹，一个更新另一个切换。另外codeadv操作需要改成可以在本地操作完打成包，在服务器直接解压即可，可以结合一下
 
 LARGE PROJECTS TO ADD BUT NOT THAT IMPORTANT:
@@ -26,7 +26,7 @@ LARGE PROJECTS TO ADD BUT NOT THAT IMPORTANT:
 
 FEATURES TO ADD：
 1、buff、debuff类的技能全部归到一组入口函数来实现
-2、多态属性的显示
+2、
 3、
 4、
 5、荣耀模式测试：坚盾属性可抵扣穿透属性，物穿和属穿改成可以叠加穿透层数（类似连击的算法）。抹消和减半各算1层
@@ -66,15 +66,70 @@ FEATURES TO ADD BUT NOT THAT IMPORTANT：
 -不太急：蹲站房发送空投箱，视蹲站房反馈再做。
 -不太急：技能、学习界面性能优化（把技能页面的分隔字符串在template时固化下来）。已经实现函数了，但是大规模调整代码之前还是要谨慎一点，而且性能影响可能很微小
 -->
-<h3>2月25日(v2.3.3)</h3>
+<h3>2月26日(v2.3.3)</h3>
+<p>版本号到2.3.3了……</p>
 <p>功能更新：</p>
 <ul>
 	<li>（△）现在【多态】属性能悬浮显示该道具能当做哪些东西使用了。</li>
 </ul>
 <p>资源更新：</p>
 <ul>
-	<li>（+）新增（或者说复刻）了夜雀歌谱、雏人形、被遗忘的伞三个符卡合成，并且增加了可以用作防具或者饰物的后继路线。</li>
-	<li>（+）现在在非主动触发的战斗中由于对方的【碎刃】属性导致武器损耗增加时，会显示在战斗结果的文字提示中了。</li>
+	<li>（+）新增（或者说复刻）了夜雀歌谱、雏人形、被遗忘的伞三个符卡合成，并且增加了可以用作防具或者饰物的后继路线：<br><br>
+		<table style="width:100%">
+			<tr>
+				<td class="b1" height=20px><span>素材1</span></td>
+				<td class="b1"><span>素材2</span></td>
+				<td class="b1"></td>
+				<td class="b1"><span>合成结果</span></td>
+				<td class="b1"><span>用途</span></td>
+			</tr>
+			<tr>
+				<td class="b3" height='19px' title='0禁于刷新5个<br>0禁于刷新10个<br>0禁于刷新5个<br>0禁起在商店中出售(5元)<br>打开礼品盒时有概率获得'><span>空白符卡</span></td>
+				<td class="b3"title='0禁全图随机刷新2个<br>0禁起在商店中出售(300元)'><span>夜雀歌谱</span></td>
+				<td class="b3"><span>→</span></td>
+				<td class="b3"><span>声符『枭的夜鸣声』</span></td>
+				<td class="b3"><span>灵力兵器/30/∞/音波</span></td>
+			</tr>
+			<tr>
+				<td class="b3" height='19px' title='通过合成获取：空白符卡+夜雀歌谱'><span>声符『枭的夜鸣声』</span></td>
+				<td class="b3"title='0禁全图随机刷新10个<br>1禁全图随机刷新17个<br>0禁起在商店中出售(300元)'><span>《灵系指南》</span></td>
+				<td class="b3"><span>→</span></td>
+				<td class="b3"><span>夜盲『夜雀之歌』</span></td>
+				<td class="b3"><span>灵力兵器/30/∞/音波+多态</span></td>
+			</tr>
+			<tr>
+				<td class="b3" height='19px' title='0禁于刷新5个<br>0禁于刷新10个<br>0禁于刷新5个<br>0禁起在商店中出售(5元)<br>打开礼品盒时有概率获得'><span>空白符卡</span></td>
+				<td class="b3"title='0禁全图随机刷新2个<br>0禁起在商店中出售(300元)'><span>雏人形</span></td>
+				<td class="b3"><span>→</span></td>
+				<td class="b3"><span>疵符『破裂的护身符』</span></td>
+				<td class="b3"><span>灵力兵器/30/∞/带毒</span></td>
+			</tr>
+			<tr>
+				<td class="b3" height='19px' title='通过合成获取：空白符卡+雏人形'><span>疵符『破裂的护身符』</span></td>
+				<td class="b3"title='0禁全图随机刷新10个<br>1禁全图随机刷新17个<br>0禁起在商店中出售(300元)'><span>《灵系指南》</span></td>
+				<td class="b3"><span>→</span></td>
+				<td class="b3"><span>创符『流刑人形』</span></td>
+				<td class="b3"><span>灵力兵器/30/∞/带毒+多态</span></td>
+			</tr>
+			<tr>
+				<td class="b3" height='19px' title='0禁于刷新5个<br>0禁于刷新10个<br>0禁于刷新5个<br>0禁起在商店中出售(5元)<br>打开礼品盒时有概率获得'><span>空白符卡</span></td>
+				<td class="b3"title='0禁全图随机刷新2个<br>0禁起在商店中出售(300元)'><span>被遗忘的伞</span></td>
+				<td class="b3"><span>→</span></td>
+				<td class="b3"><span>伞符『雨伞的星之交响』</span></td>
+				<td class="b3"><span>灵力兵器/40/∞/冻气</span></td>
+			</tr>
+			<tr>
+				<td class="b3" height='19px' title='通过合成获取：空白符卡+被遗忘的伞'><span>伞符『雨伞的星之交响』</span></td>
+				<td class="b3"title='0禁全图随机刷新10个<br>1禁全图随机刷新17个<br>0禁起在商店中出售(300元)'><span>《灵系指南》</span></td>
+				<td class="b3"><span>→</span></td>
+				<td class="b3"><span>雨伞『超防水干爽伞妖』</span></td>
+				<td class="b3"><span>灵力兵器/40/∞/冻气+防冻+多态</span></td>
+			</tr>
+		</table>
+		<br>其中，夜盲『夜雀之歌』可以作为歌词卡片装备，并允许玩家歌唱【夜雀之歌】（让同地点其他玩家获得60秒的【夜盲】状态）；创符『流刑人形』可以作为饰物装备；雨伞『超防水干爽伞妖』可以作为手臂外甲装备。
+	</li>
+	<li>（△）作为新增合成路线的对应调整，现在商店的【夜雀歌谱】和【雏人形】价格上升到300元，出售数量调整至每禁100个。</li>
+	<li>（△）现在在非主动触发的战斗中由于对方的【碎刃】属性导致武器损耗增加时，会显示在战斗结果的文字提示中了。</li>
 </ul>
 <p>已知BUG修复：</p>
 <ul>
