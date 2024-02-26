@@ -934,7 +934,11 @@ NPC不会被禁区杀死。此外，多数NPC也会自动回避禁区。<br>
 			<span>$itemspkinfo[$tmp_attr]</span>
 		</td>
 		<td class="b3" style="padding:6 0">
-			<span>$itemspkdesc[$tmp_attr]</span>
+			<!--{if !empty($itemspkdesc_help[$tmp_attr])}-->
+			$itemspkdesc_help[$tmp_attr]
+			<!--{else}-->
+			$itemspkdesc[$tmp_attr]
+			<!--{/if}-->
 		</td>
 		<td class="b3" style="padding:6 0">
 			<span>$itemspkremark[$tmp_attr]</span>
@@ -966,7 +970,11 @@ NPC不会被禁区杀死。此外，多数NPC也会自动回避禁区。<br>
 			<span>$itemspkinfo[$tmp_attr]</span>
 		</td>
 		<td class="b3" style="padding:6 0">
-			<span>$itemspkdesc[$tmp_attr]</span>
+			<!--{if !empty($itemspkdesc_help[$tmp_attr])}-->
+			$itemspkdesc_help[$tmp_attr]
+			<!--{else}-->
+			$itemspkdesc[$tmp_attr]
+			<!--{/if}-->
 		</td>
 		<td class="b3" style="padding:6 0">
 			<span>$itemspkremark[$tmp_attr]</span>
@@ -997,7 +1005,13 @@ NPC不会被禁区杀死。此外，多数NPC也会自动回避禁区。<br>
 			<span>$itemspkinfo[$tmp_attr]</span>
 		</td>
 		<td class="b3" style="padding:6 0">
-			<span>$itemspkdesc[$tmp_attr]</span>
+			<span>
+				<!--{if !empty($itemspkdesc_help[$tmp_attr])}-->
+				$itemspkdesc_help[$tmp_attr]
+				<!--{else}-->
+				$itemspkdesc[$tmp_attr]
+				<!--{/if}-->
+			</span>
 		</td>
 		<td class="b3" style="padding:6 0">
 			<span>$itemspkremark[$tmp_attr]</span>

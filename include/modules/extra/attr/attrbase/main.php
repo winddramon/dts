@@ -72,8 +72,10 @@ namespace attrbase
 	}
 	
 	//从单属性字段，获得复合属性的代号和数值。非复合属性返回NULL
-	//返回两个变量：^+字母部分和数字部分
-	//如果^+字母部分有下划线，那么把下划线后的部分作为第三个变量返回
+	//返回3个变量：
+	//$skk复合属性标记，即^+字母部分；
+	//$skn复合属性数值，即末尾的数字部分
+	//如果^+字母部分有下划线，那么把下划线后的部分作为第三个变量$sks返回
 	function get_comp_itmsk_info($str){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		if(!is_string($str) || '^' != $str[0]) return NULL;
@@ -269,6 +271,8 @@ namespace attrbase
 	}
 	
 	//对复合属性数值的处理接口，某些需要调整显示的功能可以继承这个
+	//传参含义见get_comp_itmsk_info()的注释
+	//$itmsk为整段的数值
 	function get_itmsk_desc_single_comp_process($skk, $skn, $sks) {
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		return $skn;

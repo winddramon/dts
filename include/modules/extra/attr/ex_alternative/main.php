@@ -2,13 +2,16 @@
 
 namespace ex_alternative
 {
+	$tmp_ex_alternative_atype = 0;//暂时储存多态类型用于判定
+
 	function init() 
 	{
 		eval(import_module('itemmain'));
 		$itemspkinfo['^alt'] = '多态';//现在不显示了
-		$itemspkdesc['^alt'] = '这一道具能当做其他类别、名称或属性使用';
+		$itemspkdesc['^alt'] = '这一道具也能当做<:skn:>使用';
 		$itemspkremark['^alt'] = '游戏中不会显示。<br>在使用时会额外显示一个列表，让玩家决定当做哪个类别、名称或属性使用。';
 		$itemspkinfo['^atype'] = '可改变哪一项';//不显示，0:类别；1:名称；2:属性
+		$itemspkdesc_help['^alt'] = '这一道具能当做其他类别、名称或属性使用';
 	}
 	
 	function get_altlist($itmsk)
@@ -116,31 +119,63 @@ namespace ex_alternative
 		return $altwords;
 	}	
 	
-	// function get_itmsk_desc_single_comp_process($skk, $skn, $sks)
-	// {
-		// if (eval(__MAGIC__)) return $___RET_VALUE;
-		// $skn = $chprocess($skk, $skn, $sks);
-		// if(strpos($skk, '^alt')===0) {
-			// $dict = ')!@#$%-~*(';
-			// for($i=0;$i<=9;$i++){
-				// $sks = str_replace($dict[$i], $i, $sks);
-			// }
-			// $skn = \itemmain\parse_itmk_words($sks);
-		// }
-		// return $skn;
-	// }
+	//显示多态信息
+	function get_itmsk_desc_single_comp_process($skk, $skn, $sks)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$skn = $chprocess($skk, $skn, $sks);
+		if(strpos($skk, '^alt')===0) {
+			eval(import_module('ex_alternative'));
+			$skarr = explode(',',\attrbase\base64_decode_comp_itmsk($sks));
+			$sknarr = Array();
+			foreach($skarr as $v){
+				switch($tmp_ex_alternative_atype){
+					case 1:
+						$sknarr[] = $v;
+						break;
+					case 2:
+						$sknarr[] = \itemmain\get_itmsk_words_single($v);
+						break;
+					default:
+						$sknarr[] = \itemmain\parse_itmk_words($v);
+					break;
+				}
+			}
+			$skn = "<span class='yellow b' style='font-size:12px;'>".implode(' ', $sknarr)."</span>";
+			//$skn = \itemmain\parse_itmk_words($sks);
+		}
+		return $skn;
+	}
 	
 	//判定复合属性是否显示
 	function check_comp_itmsk_visible($cinfo){
 		if (eval(__MAGIC__)) return $___RET_VALUE;	
 		$ret = $chprocess($cinfo);
 		if ($ret) {
-			if (strpos($cinfo[0], '^alt') === 0) return false;
+			//if (strpos($cinfo[0], '^alt') === 0) return false;
 			if ('^atype' == $cinfo[0]) return false;
 		}
 		return $ret;
 	}
 	
+	//在处理单个道具的itmsk显示时，预先记录atype。
+	//出于性能考虑和避免潜在的无限嵌套问题，单纯用字符串判定而非check_in_itmsk()
+	function parse_itmsk_desc($sk_value){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$i = strpos($sk_value, '^atype');
+		if(false !== $i) {
+			eval(import_module('ex_alternative'));
+			$tmp_ex_alternative_atype = (int)substr($sk_value, $i+6, 1);
+		}
+
+		$ret = $chprocess($sk_value);
+
+		if (!empty($tmp_ex_alternative_atype)) {
+			$tmp_ex_alternative_atype = 0;
+		}
+		
+		return $ret;
+	}
 }
 
 ?>
