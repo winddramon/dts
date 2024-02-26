@@ -120,7 +120,7 @@ namespace skill721
 			$log .= "你在一所高校找到了一些投掷物的材料。<br>";
 			if ($wis > 30)
 			{
-				$swep = array_randompick(array('装弹枪管柠檬龙 ★8','暗黑俯冲轰炸鸡 ★7','No1919.绝望皇 雷普 ☆4','「开放世界的〇神」LINK-5'));
+				$swep = array_randompick(array('装弹枪管柠檬龙 ★8','暗黑俯冲轰炸鸡 ★7','No.1919 绝望皇 雷普 ☆4','「开放世界的〇神」LINK-5'));
 				$pow += 15;
 				$log .= "你将它们组装成了<span class=\"yellow b\">{$swep}</span>。<br>";
 			}
