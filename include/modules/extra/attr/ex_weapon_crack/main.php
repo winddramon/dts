@@ -24,7 +24,7 @@ namespace ex_weapon_crack
 			{
 				if (\attrbase\check_in_itmsk('^wc', $pd[$pos.'sk'])) $wcesum += $pd[$pos.'e'];
 			}
-			if (empty($pa['wepimp'])) $pa['wepimp'] = 1;
+			if (0 == $pa['wepimp']) $pa['wepimp'] = 1;
 			//现在连击属性只有第一次连击会判一次
 			if (!isset($pa['wcflag']))
 			{
@@ -53,13 +53,21 @@ namespace ex_weapon_crack
 				eval(import_module('logger'));
 				if ($pa['wep_kind'] == 'N')
 				{
-					if ($active) $log .= "<span class=\"yellow b\">{$pd['name']}的装备使你的<span class=\"red b\">腕</span>部受伤了！</span><br>";
+					if ($active)
+					{
+						$log .= "<span class=\"yellow b\">{$pd['name']}的装备使你的<span class=\"red b\">腕</span>部受伤了！</span><br>";
+						$pa['battlelog'] .= '<span class="lime b">对方的装备使你的<span class=\"red b\">腕</span>部受伤了！</span>';
+					}
 					else $log .= "<span class=\"yellow b\">你的装备使{$pa['name']}的<span class=\"red b\">腕</span>部受伤了！</span><br>";
 					\wound\get_inf('a', $pa);
 				}
 				else
 				{
-					if ($active) $log .= "<span class=\"yellow b\">{$pd['name']}的装备使你的武器损耗增加了！</span><br>";
+					if ($active)
+					{
+						$log .= "<span class=\"yellow b\">{$pd['name']}的装备使你的武器损耗增加了！</span><br>";
+						$pa['battlelog'] .= '<span class="lime b">对方的装备使你的武器损耗增加了！</span>';
+					}
 					else $log .= "<span class=\"yellow b\">你的装备使{$pa['name']}的武器损耗增加了！</span><br>";
 					
 					//无限耐的情况灵、投等武器也会损耗效果值
