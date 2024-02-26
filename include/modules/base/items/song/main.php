@@ -490,10 +490,12 @@ namespace song
 		$log .= '<br>';
 		\sys\addchat(0, $songchat, $name);
 		
-		if($songloop && empty($songcfg['lyric_rand'])) {
-			if($songpos + $songprog >= sizeof($songcfg['lyrics']) ) $songpos = 0;
-			else $songpos += $songprog;
-			\skillbase\skill_setvalue(1003,'songpos',$songpos);
+		if($songloop) {
+			if(empty($songcfg['lyric_rand'])){
+				if($songpos + $songprog >= sizeof($songcfg['lyrics']) ) $songpos = 0;
+				else $songpos += $songprog;
+				\skillbase\skill_setvalue(1003,'songpos',$songpos);
+			}
 			\skillbase\skill_setvalue(1003,'songkind',$sn);
 		}
 		if (defined('MOD_NOISE') && !empty($nkey)) \noise\addnoise($pls,$nkey,$pid);
