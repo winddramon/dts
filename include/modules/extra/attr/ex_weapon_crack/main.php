@@ -2,7 +2,7 @@
 
 namespace ex_weapon_crack
 {
-	function init() 
+	function init()
 	{
 		eval(import_module('itemmain'));
 		$itemspkinfo['^wc'] = '碎刃';
@@ -54,21 +54,28 @@ namespace ex_weapon_crack
 				if ($pa['wep_kind'] == 'N')
 				{
 					if ($active) $log .= "<span class=\"yellow b\">{$pd['name']}的装备使你的<span class=\"red b\">腕</span>部受伤了！</span><br>";
-					else $log .= "<span class=\"yellow b\">你的装备使{$pa['name']}的<span class=\"red b\">腕</span>部受伤了！</span><br>";
+					else
+					{
+						$log .= "<span class=\"yellow b\">你的装备使{$pa['name']}的<span class=\"red b\">腕</span>部受伤了！</span><br>";
+						$pa['battlelog'] .= '<span class="yellow b">对方的装备使你的<span class=\"red b\">腕</span>部受伤了！</span>';
+					}
 					\wound\get_inf('a', $pa);
 				}
 				else
 				{
 					if ($active) $log .= "<span class=\"yellow b\">{$pd['name']}的装备使你的武器损耗增加了！</span><br>";
-					else $log .= "<span class=\"yellow b\">你的装备使{$pa['name']}的武器损耗增加了！</span><br>";
-					
+					else
+					{
+						$log .= "<span class=\"yellow b\">你的装备使{$pa['name']}的武器损耗增加了！</span><br>";
+						$pa['battlelog'] .= '<span class="yellow b">对方的装备使你的武器损耗增加了！</span>';
+					}
 					//无限耐的情况灵、投等武器也会损耗效果值
 					if (!in_array($pa['wep_kind'], array('P','K','G','J','B')) && $pa['weps']==$nosta)
 					{
 						$pa['wepe'] -= $pa['wepimp'];
 						if ($active)
 							$log .= "你的{$pa['wep']}的攻击力下降了{$pa['wepimp']}！<br>";
-						else  $log .= "{$pa['name']}的{$pa['wep']}的攻击力下降了{$pa['wepimp']}！<br>";						
+						else  $log .= "{$pa['name']}的{$pa['wep']}的攻击力下降了{$pa['wepimp']}！<br>";
 						if ($pa['wepe']<=0) \weapon\weapon_break($pa, $pd, $active);
 					}
 				}

@@ -478,6 +478,18 @@ namespace instance11
 		$chprocess($edata);
 	}
 	
+	//递送道具时无视teamID
+	function senditem_check_teammate($edata)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		if ($gametype == 21)
+		{
+			return true;
+		}
+		return $chprocess($edata);
+	}
+	
 }
 
 ?>
