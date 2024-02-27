@@ -10,11 +10,11 @@ namespace bufficons
 	
 	//一个完整的技能描述（$bufficons_list的元素数组，也是bufficon_show()接收到的$para变量）应包含以下字段：
 	//disappear: 生效结束后是消失还是进入冷却状态（1为消失）
-	//clickable: 如不考虑冷却时间，本技能目前是否已满足主动激活条件。如果提供一个函数名，则会调用这个函数来判定
-	//hint： 技能的描述文字。如果提供一个函数名，则会调用这个函数来生成描述文字。
-	//activate_hint： 激活技能的提示文字（或不能激活技能时的说明文字），如果本技能不是主动技能，与hint一样即可。如果提供一个函数名，则会调用这个函数来生成描述文字。
+	//clickable: 如不考虑冷却时间，本技能目前是否已满足主动激活条件。
+	//hint： 技能的描述文字。
+	//activate_hint： 激活技能的提示文字（或不能激活技能时的说明文字），如果本技能不是主动技能，与hint一样即可。
 	//onclick： 点击时的js操作（clickable时有效）
-	//corner-text: （可选）在右下角显示的内容。如果提供一个函数名，则会调用这个函数来生成内容
+	//corner-text: （可选）在右下角显示的内容。
 
 	//以下数据必需，但技能类有数字id的可以由bufficons_display_single()自动生成
 	//src为图片链接
@@ -70,15 +70,15 @@ namespace bufficons
 		$src = '';
 		if(is_numeric($token) && defined('MOD_SKILL'.$token) && \skillbase\skill_query($token, $pa)){
 			eval(import_module('bufficons'));
-			$src = !empty($config['src']) ? $config['src'] : 'img/skill'.$token.'.gif';
 			$buff_state = bufficons_check_buff_state($token, $pa);
 			//一些参数的自动识别，依赖于技能标签
 			if(!empty($buff_state)) {
-				if(empty($config['disappear'])) {
+				$src = !empty($config['src']) ? $config['src'] : 'img/skill'.$token.'.gif';
+				if(!isset($config['disappear'])) {
 					$config['disappear'] = 1;
 					if(\skillbase\check_skill_info($token, 'upgrade')) $config['disappear'] = 0;
 				}
-				if(empty($config['clickable'])) {//这里先判定设定上是否需要激活
+				if(!isset($config['clickable'])) {//这里先判定设定上是否需要激活
 					$config['clickable'] = 0;
 					if(\skillbase\check_skill_info($token, 'upgrade')) $config['clickable'] = 1;
 				}

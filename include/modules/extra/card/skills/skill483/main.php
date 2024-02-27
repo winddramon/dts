@@ -2,21 +2,26 @@
 
 namespace skill483
 {
+	$skill483_effect_duration = 120;
+
 	$skill483_cd = 0;
 	
 	function init() 
 	{
 		define('MOD_SKILL483_INFO','card;upgrade;');
-		eval(import_module('clubbase'));
+		eval(import_module('clubbase','bufficons'));
 		$clubskillname[483] = '氪金';
+		$bufficons_list[483] = Array(
+			'dummy' => 1,
+		);
 	}
 	
 	function acquire483(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','skill483'));
-		\skillbase\skill_setvalue(483,'lastuse',-3000,$pa);
-		\skillbase\skill_setvalue(483,'dur',0,$pa);
+		\skillbase\skill_setvalue(483,'end_ts',1,$pa);	
+		\skillbase\skill_setvalue(483,'cd_ts',0,$pa);
 		\skillbase\skill_setvalue(483,'cost',500,$pa);
 	}
 	
@@ -36,21 +41,16 @@ namespace skill483
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skill483','player','logger','sys'));
 		\player\update_sdata();
-		if (!\skillbase\skill_query(483) || !check_unlocked483($sdata))
-		{
-			$log.='你没有这个技能！<br>';
-			return;
-		}
-		$st = check_skill483_state($sdata);
-		if ($st==0){
+		$st = \bufficons\bufficons_check_buff_state(483);
+		if (!$st){
 			$log.='你不能使用这个技能！<br>';
 			return;
 		}
-		if ($st==1){
+		if (1 == $st){
 			$log.='你已经发动过这个技能了！<br>';
 			return;
 		}
-		if ($st==2){
+		if (2 == $st){
 			$log.='技能冷却中！<br>';
 			return;
 		}
@@ -61,32 +61,22 @@ namespace skill483
 			return;
 		}
 		$money-=$c;
-		\skillbase\skill_setvalue(483,'dur',120);
-		\skillbase\skill_setvalue(483,'lastuse',$now);
+		$flag = \bufficons\bufficons_set_timestamp(483, 120, 0);
+		if(!$flag) {
+			$log.='发动失败！<br>';
+			return;
+		}
 		\skillbase\skill_setvalue(483,'cost',$c*2);
 		addnews ( 0, 'bskill483', $name );
 		$log.='<span class="lime b">技能「氪金」发动成功。</span><br>';
 	}
-	
-	//return 1:技能生效中 2:技能冷却中 3:技能冷却完毕 其他:不能使用这个技能
-	function check_skill483_state(&$pa){
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(483, $pa) || !check_unlocked483($pa)) return 0;
-		eval(import_module('sys','player','skill483'));
-		$l=\skillbase\skill_getvalue(483,'lastuse',$pa);
-		$d=\skillbase\skill_getvalue(483,'dur',$pa);
-		if (($now-$l)<=$d) return 1;
-		if (($now-$l)<=$d+$skill483_cd) return 2;
-		return 3;
-	}
-	
 	
 	//复活判定注册
 	function set_revive_sequence(&$pa, &$pd)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa, $pd);
-		if(check_skill483_state($pd)==1){
+		if(1 == \bufficons\bufficons_check_buff_state(483, $pd)){
 			$pd['revive_sequence'][100] = 'skill483';
 		}
 		return;
@@ -138,45 +128,15 @@ namespace skill483
 			}
 		}
 	}
-	
-	function bufficons_list()
-	{
+
+	//提示文字的重载
+	function bufficons_display_single($token, $config, &$pa=NULL) {
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if ((\skillbase\skill_query(483,$sdata))&&check_unlocked483($sdata))
-		{
-			eval(import_module('skill483'));
-			$skill483_lst = (int)\skillbase\skill_getvalue(483,'lastuse'); 
-			$skill483_dur = (int)\skillbase\skill_getvalue(483,'dur'); 
-			$skill483_cost = \skillbase\skill_getvalue(483,'cost'); 
-			$skill483_time = $now-$skill483_lst; 
-			$z=Array(
-				'disappear' => 0,
-				'clickable' => 1,
-				'hint' => '技能「氪金」',
-				'activate_hint' => '点击发动技能「氪金」，消耗'.$skill483_cost.'元',
-				'onclick' => "$('mode').value='special';$('command').value='skill483_special';$('subcmd').value='activate';postCmd('gamecmd','command.php');this.disabled=true;",
-			);
-			if ($skill483_time<$skill483_dur)
-			{
-				$z['style']=1;
-				$z['totsec']=$skill483_dur;
-				$z['nowsec']=$skill483_time;
-			}
-			else  if ($skill483_time<$skill483_dur+$skill483_cd)
-			{
-				$z['style']=2;
-				$z['totsec']=$skill483_cd;
-				$z['nowsec']=$skill483_time-$skill483_dur;
-			}
-			else 
-			{
-				$z['style']=3;
-			}
-			\bufficons\bufficon_show('img/skill483.gif',$z);
+		list($src, $config_ret) = $chprocess($token, $config, $pa);
+		if(483 == $token) {
+			$config_ret['activate_hint'] = '点击发动技能「氪金」，消耗'.\skillbase\skill_getvalue(483,'cost',$pa).'元';
 		}
-		$chprocess();
+		return Array($src, $config_ret);
 	}
 	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())
