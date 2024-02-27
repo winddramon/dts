@@ -368,16 +368,13 @@ namespace instance11
 			$itms = & ${'itms'.$itmn};
 			$itmsk = & ${'itmsk'.$itmn};
 		}
-		if (21 == $gametype)
-		{
-			if (strpos ( $itmk, 'Y' ) === 0 || strpos ( $itmk, 'Z' ) === 0) {
-				if ($itm == '棱镜八面体')
-				{
-					eval(import_module('logger'));
-					$theitem = array('itm' => &$itm, 'itmk' => &$itmk, 'itme' => &$itme,'itms' => &$itms,'itmsk' => &$itmsk);
-					$log .= "<span class=\"yellow b\">{$itm}</span>落到地上，然后立了起来。这是怎么做到的？<br>你仔细地端详着它。<br>";
-					octitem_rotate($theitem, 7);
-				}
+		if (strpos ( $itmk, 'Y' ) === 0 || strpos ( $itmk, 'Z' ) === 0) {
+			if ($itm == '棱镜八面体')
+			{
+				eval(import_module('logger'));
+				$theitem = array('itm' => &$itm, 'itmk' => &$itmk, 'itme' => &$itme,'itms' => &$itms,'itmsk' => &$itmsk);
+				$log .= "<span class=\"yellow b\">{$itm}</span>落到地上，然后立了起来。这是怎么做到的？<br>你仔细地端详着它。<br>";
+				octitem_rotate($theitem, 7);
 			}
 		}
 		return $chprocess($item);

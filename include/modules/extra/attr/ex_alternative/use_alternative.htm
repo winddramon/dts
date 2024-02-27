@@ -3,11 +3,11 @@
 <input type="hidden" id="alternative_choice" name="alternative_choice" value="0">
 <!--{eval $atype = (int)\itemmain\check_in_itmsk('^atype', $itmsk); $altname = array('类别','名称','属性')[$atype];}-->
 你要将<span class="yellow b">{$theitem['itm']}</span>作为哪种{$altname}使用？<br><br>
-<!--{eval $key = array('itmk','itm','itmsk')[$atype]; $altwords = \ex_alternative\get_altwords($theitem[$key], $atype);}-->
+<!--{eval $ahid = (int)\itemmain\check_in_itmsk('^ahid', $theitem['itmsk']); $rand = $ahid==2 ? 1 : 0; $altlist = \ex_alternative\get_altlist($theitem['itmsk'],$rand);}-->
+<!--{eval $key = array('itmk','itm','itmsk')[$atype]; $altwords = \ex_alternative\get_altwords($theitem[$key], $atype, 0, $ahid);}-->
 <input type="button" class="cmdbutton" value="{$altwords}" onclick="$('alternative_choice').value='1';postCmd('gamecmd','command.php');this.disabled=true;">
-<!--{eval $altlist = \ex_alternative\get_altlist($theitem['itmsk']);}-->
 <!--{loop $altlist $k $i}-->
-<!--{eval $altwords = \ex_alternative\get_altwords($i, $atype);$id = $k+2;}-->
+<!--{eval $altwords = \ex_alternative\get_altwords($i, $atype, 0, $ahid); $id = $k+2;}-->
 <input type="button" class="cmdbutton" value="{$altwords}" onclick="$('alternative_choice').value='{$id}';postCmd('gamecmd','command.php');this.disabled=true;">
 <!--{/loop}-->
 <input type="button" class="cmdbutton"  id="x" value="[X]返回" onclick="$('command').value='menu'; postCmd('gamecmd','command.php');this.disabled=true;">
