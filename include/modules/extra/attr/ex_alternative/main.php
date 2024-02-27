@@ -7,7 +7,7 @@ namespace ex_alternative
 	function init() 
 	{
 		eval(import_module('itemmain'));
-		$itemspkinfo['^alt'] = '多态';//现在不显示了
+		$itemspkinfo['^alt'] = '多态';
 		$itemspkdesc['^alt'] = '这一道具也能当做<:skn:>使用';
 		$itemspkremark['^alt'] = '游戏中不会显示。<br>在使用时会额外显示一个列表，让玩家决定当做哪个类别、名称或属性使用。';
 		$itemspkinfo['^atype'] = '可改变哪一项';//不显示，0:类别；1:名称；2:属性
