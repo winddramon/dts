@@ -71,25 +71,8 @@ namespace bufficons
 		if(is_numeric($token) && defined('MOD_SKILL'.$token) && \skillbase\skill_query($token, $pa)){
 			eval(import_module('bufficons'));
 			$src = !empty($config['src']) ? $config['src'] : 'img/skill'.$token.'.gif';
-			//stype、totsec和nowsec的自动识别
 			$buff_state = bufficons_check_buff_state($token, $pa);
-			if(3 == $buff_state) {//冷却时间已结束
-				if(!empty($config['disappear'])) {
-					$config['style'] = 4;
-					\skillbase\skill_lost($token, $pa);//在这里判定失去技能
-				}else{
-					$config['style'] = 3;
-				}
-			}elseif(2 == $buff_state) {//冷却中
-				$config['style'] = 2;
-				$config['totsec'] = $tmp_totsec;
-				$config['nowsec'] = $tmp_nowsec;
-			}elseif(1 == $buff_state) {//生效中
-				$config['style'] = 1;
-				$config['totsec'] = $tmp_totsec;
-				$config['nowsec'] = $tmp_nowsec;
-			}
-			//其他一些参数的自动识别，依赖于技能标签
+			//一些参数的自动识别，依赖于技能标签
 			if(!empty($buff_state)) {
 				if(empty($config['disappear'])) {
 					$config['disappear'] = 1;
@@ -111,6 +94,23 @@ namespace bufficons
 						}
 					}
 				}
+			}
+			//stype、totsec和nowsec的自动识别
+			if(3 == $buff_state) {//冷却时间已结束
+				if(!empty($config['disappear']) && !empty(\skillbase\skill_getvalue($token,'cd_ts',$pa))) {
+					$config['style'] = 4;
+					\skillbase\skill_lost($token, $pa);//在这里判定失去技能
+				}else{
+					$config['style'] = 3;
+				}
+			}elseif(2 == $buff_state) {//冷却中
+				$config['style'] = 2;
+				$config['totsec'] = $tmp_totsec;
+				$config['nowsec'] = $tmp_nowsec;
+			}elseif(1 == $buff_state) {//生效中
+				$config['style'] = 1;
+				$config['totsec'] = $tmp_totsec;
+				$config['nowsec'] = $tmp_nowsec;
 			}
 		}
 		return Array($src, $config);
@@ -140,6 +140,7 @@ namespace bufficons
 	//传参$token为技能或者效果的标记，可以是数字也可以是字符串
 	//返回值为0时表示不适用，返回值为1时表示生效，返回值为2时表示冷却中，返回值为3时表示冷却完毕
 	//本模块把$token当做技能id处理
+	//几个特殊用法：end_ts非空，cd_ts是0的时候是开局就能使用（end_ts是0的话不会进判断）
 	function bufficons_check_buff_state($token, &$pa=NULL)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;

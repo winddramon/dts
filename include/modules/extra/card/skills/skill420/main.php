@@ -18,7 +18,7 @@ namespace skill420
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','skill420'));
-		\skillbase\skill_setvalue(420,'end_ts',$now,$pa);	
+		\skillbase\skill_setvalue(420,'end_ts',$now-1,$pa);	
 		\skillbase\skill_setvalue(420,'cd_ts',$now+$skill420_cd,$pa);	
 	}
 	
@@ -39,11 +39,6 @@ namespace skill420
 		eval(import_module('skill420','player','logger','sys','itemmain'));
 		\player\update_sdata();
 		//在bufficons_check_buff_state()里已经做了技能存在性判定
-		// if (!\skillbase\skill_query(420) || !check_unlocked420($sdata))
-		// {
-		// 	$log.='你没有这个技能！<br>';
-		// 	return;
-		// }
 		$st = \bufficons\bufficons_check_buff_state(420);
 		if (!$st){
 			$log.='你不能使用这个技能！<br>';
@@ -65,8 +60,6 @@ namespace skill420
 		
 		$skillpoint--;
 		
-		// \skillbase\skill_setvalue(420,'end_ts',$now);
-		// \skillbase\skill_setvalue(420,'cd_ts',$now+$skill420_cd);
 		addnews ( 0, 'bskill420', $name );
 		$r=rand(0,9);
 		if ($r==9)
@@ -79,48 +72,6 @@ namespace skill420
 		$itme0=1;$itms0=1;$itmsk0='';$itmk0='X';
 		\itemmain\itemget();	
 	}
-	
-	//return 1:技能生效中 2:技能冷却中 3:技能冷却完毕 其他:不能使用这个技能
-	// function check_skill420_state(&$pa){
-	// 	if (eval(__MAGIC__)) return $___RET_VALUE;
-	// 	if (!\skillbase\skill_query(420, $pa) || !check_unlocked420($pa)) return 0;
-	// 	eval(import_module('sys','player','skill420'));
-	// 	$l=\skillbase\skill_getvalue(420,'lastuse',$pa);
-	// 	if (($now-$l)<=$skill420_cd) return 2;
-	// 	return 3;
-	// }
-	
-	// function bufficons_list()
-	// {
-	// 	if (eval(__MAGIC__)) return $___RET_VALUE;
-	// 	eval(import_module('sys','player'));
-	// 	\player\update_sdata();
-	// 	if ((\skillbase\skill_query(420,$sdata))&&check_unlocked420($sdata))
-	// 	{
-	// 		eval(import_module('skill420'));
-	// 		$skill420_lst = (int)\skillbase\skill_getvalue(420,'lastuse'); 
-	// 		$skill420_time = $now-$skill420_lst; 
-	// 		$z=Array(
-	// 			'disappear' => 0,
-	// 			'clickable' => 1,
-	// 			'hint' => '技能「结晶」',
-	// 			'activate_hint' => '点击发动技能「结晶」',
-	// 			'onclick' => "$('mode').value='special';$('command').value='skill420_special';$('subcmd').value='activate';postCmd('gamecmd','command.php');this.disabled=true;",
-	// 		);
-	// 		if ($skill420_time<$skill420_cd)
-	// 		{
-	// 			$z['style']=2;
-	// 			$z['totsec']=$skill420_cd;
-	// 			$z['nowsec']=$skill420_time;
-	// 		}
-	// 		else 
-	// 		{
-	// 			$z['style']=3;
-	// 		}
-	// 		\bufficons\bufficon_show('img/skill420.gif',$z);
-	// 	}
-	// 	$chprocess();
-	// }
 	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())
 	{
