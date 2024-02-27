@@ -414,6 +414,22 @@ namespace skillbase
 			unset($pa['parameter_list'][$skillkey]);
 		}
 	}
+
+	//2024.02.27增加一个通用的判定技能是否解锁的函数，并且如果技能没有定义专用的判定解锁函数，则认为解锁（不需要判定）
+	function skill_check_unlocked($skillid, &$pa = NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = false;
+		$funcname = '\\skill'.$skillid.'\\check_unlocked'.$skillid;
+		if(!function_exists($funcname)){
+			return true;
+		}
+		if ($pa == NULL) {
+			eval(import_module('player'));
+			return $funcname($sdata);
+		}
+		return $funcname($pa);
+	}
 	
 	//玩家加入战场时处理所有的技能，要求传入的$pa里有skills元素
 	function post_enterbattlefield_events(&$pa)
