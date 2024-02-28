@@ -175,6 +175,49 @@ namespace bufficons
 		}
 		return $ret;
 	}
+
+	//常见的一组bufficons_check_buff_state()状态判定逻辑，用于判定是否允许激活技能
+	//会自动调用bufficons_check_buff_state()，生成判定失败时的反馈，并根据是否允许来返回true/false
+	function bufficons_check_buff_state_shell($token, &$pa=NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('bufficons'));
+		$st = \bufficons\bufficons_check_buff_state($token, $pa);
+		
+		$can_activate = true;
+		$fail_hint = '';
+		if (!$st){
+			$fail_hint = '你不能使用这个技能！<br>';
+		}
+		elseif (1 == $st){
+			$fail_hint = '你已经发动过这个技能了！<br>';
+		}
+		elseif (2 == $st){
+			$fail_hint = '技能冷却中！<br>';
+		}
+		
+		if($st <= 2) $can_activate = false;
+		return Array($can_activate, $fail_hint);
+	}
+
+	//常见的一组激活buff技能的执行逻辑
+	function bufficons_activate_buff($token, $end, $cd, &$pa=NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		
+		$is_successful = true;
+		$fail_hint = '';
+
+		list($is_successful, $fail_hint) = \bufficons\bufficons_check_buff_state_shell($token, $pa);
+		if($is_successful){
+			$is_successful = \bufficons\bufficons_set_timestamp($token, $end, $cd, $pa);
+			if(!$is_successful) {
+				$fail_hint = '因技能编号错误等原因，发动失败！<br>';
+			}
+		}
+		
+		return Array($is_successful, $fail_hint);
+	}
 }
 
 ?>

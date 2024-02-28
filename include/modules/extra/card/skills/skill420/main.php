@@ -39,19 +39,17 @@ namespace skill420
 		eval(import_module('skill420','player','logger','sys','itemmain'));
 		\player\update_sdata();
 		//在bufficons_check_buff_state()里已经做了技能存在性判定
-		$st = \bufficons\bufficons_check_buff_state(420);
-		if (!$st){
-			$log.='你不能使用这个技能！<br>';
+		list($can_activate, $fail_hint) = \bufficons\bufficons_check_buff_state_shell(420);
+		if(!$can_activate) {
+			$log .= $fail_hint;
 			return;
 		}
-		if ($st<=2){
-			$log.='技能冷却中！<br>';
-			return;
-		}
+
 		if ($skillpoint<1){
 			$log.='你需要消耗1个技能点来发动这个技能！<br>';
 			return;
 		}
+		
 		$flag = \bufficons\bufficons_set_timestamp(420, 0, $skill420_cd);
 		if(!$flag) {
 			$log.='发动失败！<br>';

@@ -38,22 +38,9 @@ namespace skill414
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skill414','player','logger','sys'));
 		\player\update_sdata();
-		$st = \bufficons\bufficons_check_buff_state(414);
-		if (!$st){
-			$log.='你不能使用这个技能！<br>';
-			return;
-		}
-		if (1 == $st){
-			$log.='你已经发动过这个技能了！<br>';
-			return;
-		}
-		if (2 == $st){
-			$log.='技能冷却中！<br>';
-			return;
-		}
-		$flag = \bufficons\bufficons_set_timestamp(414, 600+$wc*4, $skill414_cd);
-		if(!$flag) {
-			$log.='发动失败！<br>';
+		list($is_successful, $fail_hint) = \bufficons\bufficons_activate_buff(414, 600+$wc*4, $skill414_cd);
+		if(!$is_successful) {
+			$log .= $fail_hint;
 			return;
 		}
 		addnews ( 0, 'bskill414', $name );

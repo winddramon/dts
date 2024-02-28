@@ -7,15 +7,19 @@ namespace skill430
 	function init() 
 	{
 		define('MOD_SKILL430_INFO','card;upgrade;');
-		eval(import_module('clubbase'));
+		eval(import_module('clubbase','bufficons'));
 		$clubskillname[430] = '搬运';
+		$bufficons_list[430] = Array(
+			'dummy' => 1,
+		);
 	}
 	
 	function acquire430(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','skill430'));
-		\skillbase\skill_setvalue(430,'lastuse',-3000,$pa);
+		\skillbase\skill_setvalue(430,'end_ts',$now-1,$pa);	
+		\skillbase\skill_setvalue(430,'cd_ts',$now+$skill430_cd,$pa);	
 	}
 	
 	function lost430(&$pa)
@@ -34,22 +38,14 @@ namespace skill430
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skill430','player','logger','sys','itemmain'));
 		\player\update_sdata();
-		if (!\skillbase\skill_query(430) || !check_unlocked430($sdata))
-		{
-			$log.='你没有这个技能！<br>';
-			return;
-		}
-		$st = check_skill430_state($sdata);
-		if ($st==0){
-			$log.='你不能使用这个技能！<br>';
-			return;
-		}
-		if ($st==2){
-			$log.='技能冷却中！<br>';
-			return;
-		}
-		\skillbase\skill_setvalue(430,'lastuse',$now);
 		
+		list($is_successful, $fail_hint) = \bufficons\bufficons_activate_buff(430, 0, $skill430_cd);
+		if(!$is_successful) {
+			$log .= $fail_hint;
+			return;
+		}
+		$log.='<span class="lime b">技能「搬运」发动成功。</span><br>';
+
 		$file=GAME_ROOT."./include/modules/base/itemmain/config/mapitem.config.php";//真是丑陋！
 		$itemlist = openfile($file);
 		$in = sizeof($itemlist);
@@ -74,38 +70,6 @@ namespace skill430
 		$l=\skillbase\skill_getvalue(430,'lastuse',$pa);
 		if (($now-$l)<=$skill430_cd) return 2;
 		return 3;
-	}
-	
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if ((\skillbase\skill_query(430,$sdata))&&check_unlocked430($sdata))
-		{
-			eval(import_module('skill430'));
-			$skill430_lst = (int)\skillbase\skill_getvalue(430,'lastuse'); 
-			$skill430_time = $now-$skill430_lst; 
-			$z=Array(
-				'disappear' => 0,
-				'clickable' => 1,
-				'hint' => '技能「搬运」',
-				'activate_hint' => '点击发动技能「搬运」',
-				'onclick' => "$('mode').value='special';$('command').value='skill430_special';$('subcmd').value='activate';postCmd('gamecmd','command.php');this.disabled=true;",
-			);
-			if ($skill430_time<$skill430_cd)
-			{
-				$z['style']=2;
-				$z['totsec']=$skill430_cd;
-				$z['nowsec']=$skill430_time;
-			}
-			else 
-			{
-				$z['style']=3;
-			}
-			\bufficons\bufficon_show('img/skill430.gif',$z);
-		}
-		$chprocess();
 	}
 	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())

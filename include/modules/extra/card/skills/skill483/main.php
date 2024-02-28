@@ -41,17 +41,9 @@ namespace skill483
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skill483','player','logger','sys'));
 		\player\update_sdata();
-		$st = \bufficons\bufficons_check_buff_state(483);
-		if (!$st){
-			$log.='你不能使用这个技能！<br>';
-			return;
-		}
-		if (1 == $st){
-			$log.='你已经发动过这个技能了！<br>';
-			return;
-		}
-		if (2 == $st){
-			$log.='技能冷却中！<br>';
+		list($can_activate, $fail_hint) = \bufficons\bufficons_check_buff_state_shell(483);
+		if(!$can_activate) {
+			$log .= $fail_hint;
 			return;
 		}
 		$c=(int)\skillbase\skill_getvalue(483,'cost',$pa);
