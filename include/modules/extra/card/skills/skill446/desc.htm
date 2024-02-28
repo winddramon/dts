@@ -1,4 +1,4 @@
-<!--{eval eval(import_module('skill446','sys'));}-->
+<!--{eval eval(import_module('skill446','sys','bufficons'));}-->
 <!--{eval $___TEMP_SKILL_ID=446;}-->
 {template MOD_CLUBBASE_SKILLDESC_START}
 <span>
@@ -6,20 +6,15 @@
 </span>
 {template MOD_CLUBBASE_SKILLDESC_MID1}
 <td class="skilldesc_left b3"><span class="skilldesc">
-<!--{eval $skill446_lst = (int)\skillbase\skill_getvalue(446,'lastuse'); $skill446_time = ($now-$skill446_lst);$skill446_cd_left=($skill446_cd+$skill446_act_time-$skill446_time);$skill446_rem=($skill446_act_time-$skill446_time);}-->
+<!--{eval $st = \bufficons\bufficons_check_buff_state(446,$who);$rm=$tmp_totsec-$tmp_nowsec;}-->
 发动后免疫一切战斗伤害，效果持续<span class="yellow b">$skill446_act_time</span>秒，仅限一次。<br>
-<!--{if $skill446_time>$skill446_act_time && $skill446_time<$skill446_cd+$skill446_act_time}-->
-<!--{else}-->
-<!--{if $skill446_time<=$skill446_act_time}-->
-<span class="yellow b">技能发动中！持续时间还剩<span>$skill446_rem</span>秒。</span><br>
-<!--{/if}-->
+<!--{if 1 == $st}-->
+<span class="yellow b">技能发动中！持续时间还剩<span>$rm</span>秒。</span><br>
 <!--{/if}-->
 </span></td>
 <td class="skilldesc_right b3">
-<!--{if $skill446_time>$skill446_cd+$skill446_act_time}-->
-<input type="button" style="width:46px" onclick="$('mode').value='special';$('command').value='skill446_special';$('subcmd').value='activate';postCmd('gamecmd','command.php');this.disabled=true;" value="发动">
-<!--{else}-->
-<input type="button" style="width:46px" disabled="true" value="发动">
+<!--{if 3 == $st}-->
+<input type="button" style="width:46px" onclick="$('mode').value='special';$('command').value='skill446_special';$('subcmd').value='activate';postCmd('gamecmd','command.php',this);" value="发动">
 <!--{/if}-->
 </td>
 {template MOD_CLUBBASE_SKILLDESC_MID2}
