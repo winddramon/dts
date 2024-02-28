@@ -6,6 +6,11 @@ error_reporting(E_ERROR | E_PARSE);
 define('IN_GAME', TRUE);
 define('GAME_ROOT', '');
 
+$lockfile = './gamedata/install.lock';
+if(file_exists($lockfile)) {
+	exit($lang['lock_exists']);
+}
+
 $php_version_lowest = '7.0.0';
 $mysql_version_lowest = '5.7';
 $diskspace_lowest = '200';//unit: MB
@@ -107,11 +112,6 @@ if($language) {
 	}
 
 	require_once $languagefile;
-
-	$lockfile = './gamedata/install.lock';
-	if(file_exists($lockfile)) {
-		exit($lang['lock_exists']);
-	}
 
 	//$fp = fopen($sql_install_file, 'rb');
 	//$sql = fread($fp, 2048000);

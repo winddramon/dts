@@ -390,7 +390,7 @@ namespace npc_action
 				return;
 			//如果NPC已经在战斗中登场过，则返回
 			$o_edata = get_var_in_module('o_edata', 'battle');
-			if(!empty($o_edata) && $o_edata['name'] == $npc['name'])
+			if(!empty($o_edata) && ($o_edata['name'] == $npc['name'] || $o_edata['pid'] == $npc['pid']))
 				return;
 			//如果sdata不存在或者一些不可能是玩家指令的情况，则返回
 			eval(import_module('player'));

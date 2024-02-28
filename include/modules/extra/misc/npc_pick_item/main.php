@@ -8,7 +8,7 @@ namespace npc_pick_item
 
 	$npctype_npc_pick_item = Array(//开局自动拾取一部分道具的NPC类型及方针
 		90 => Array(
-			'num' => Array(1,3),
+			'num' => Array(0,2),
 		)
 	);
 
@@ -50,15 +50,19 @@ namespace npc_pick_item
 						'pnum' => $pnum,
 						'ppos' => Array(),
 					);
-					$i = 0;
-					foreach(Array(1,2,3,4,5,6,0) as $j){
-						if(empty($d['itms'.$j])) {
-							$pool_npc_npc_pick_item[$d['pid']]['ppos'][] = $j;
-							$i ++ ;
-							if($i >= $pnum) break;
+					
+					if($pnum){
+						$i = 0;
+						foreach(Array(1,2,3,4,5,6,0) as $j){
+							if(empty($d['itms'.$j])) {
+								$pool_npc_npc_pick_item[$d['pid']]['ppos'][] = $j;
+								$i ++ ;
+								if($i >= $pnum) break;
+							}
 						}
+						$pnum_total += $pnum;
 					}
-					$pnum_total += $pnum;
+					
 				}
 				//暂时按总数2800来计算，后面处理时会再次缩放
 				$tmp_randno_pool = Array();
@@ -77,17 +81,15 @@ namespace npc_pick_item
 			$upd = Array();
 			$i = 0;
 			foreach($pool_npc_npc_pick_item as $nid => $nd){
+				$tmp_upd = Array();
 				foreach($nd['ppos'] as $pos) {
 					$itmarr = $pool_item_npc_pick_item[$pool_itemno_npc_pick_item[$i]];
 					//file_put_contents('itmarr.txt', var_export($pool_itemno_npc_pick_item[$i],1).' '.var_export($pool_item_npc_pick_item[$pool_itemno_npc_pick_item[$i]],1)."\r\n", FILE_APPEND);
-					if(!empty($itmarr)) {
-						if(empty($tmp_upd)) $tmp_upd = Array();
-						$tmp_upd['itm'.$pos] = $itmarr[0];
-						$tmp_upd['itmk'.$pos] = $itmarr[1];
-						$tmp_upd['itme'.$pos] = $itmarr[2];
-						$tmp_upd['itms'.$pos] = $itmarr[3];
-						$tmp_upd['itmsk'.$pos] = $itmarr[4];
-					}
+					$tmp_upd['itm'.$pos] = $itmarr[0];
+					$tmp_upd['itmk'.$pos] = $itmarr[1];
+					$tmp_upd['itme'.$pos] = $itmarr[2];
+					$tmp_upd['itms'.$pos] = $itmarr[3];
+					$tmp_upd['itmsk'.$pos] = $itmarr[4];
 					$i++;
 				}
 				if(!empty($tmp_upd)) {
@@ -95,7 +97,7 @@ namespace npc_pick_item
 					$upd[] = $tmp_upd;
 				}
 			}
-			if(!empty($tmp_upd)) {
+			if(!empty($upd)) {
 				$db->multi_update("{$tablepre}players", $upd, 'pid');//一次性更新player表
 			}
 			$npc_pick_item_on = false;

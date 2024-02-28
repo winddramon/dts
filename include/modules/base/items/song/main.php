@@ -94,6 +94,9 @@ namespace song
 				case '『勇者』':
 					$ret .= '歌唱：使你和同地区玩家的灵熟上升30，其他系熟练度上升5';
 					break;
+				case '夜雀之歌':
+					$ret .= '歌唱：使除你之外的同地区玩家获得暂时的「夜盲」负面状态';
+					break;
 				default :
 					$ret .= '好像不存在这样一首歌呢……';
 					break;
@@ -129,6 +132,7 @@ namespace song
 			$noiseinfo['ss_CM']='《Clear Morning》';
 			$noiseinfo['ss_NG']='《Never Gonna Give You Up》';
 			$noiseinfo['ss_ys']='『勇者』';
+			$noiseinfo['ss_nightbird']='一段难以被称之为音乐的、嘈杂的鸟叫声';
 		}
 	}
 	
@@ -160,7 +164,7 @@ namespace song
 		if(empty($effect)) return $ss_log;
 		eval(import_module('sys','song'));
 		$pdata['mrage'] = \player\get_max_rage($pdata);
-		$timeflag = isset($effect['time']);
+		
 		//一些特殊歌的处理
 		if(!empty($effect['special'])){
 			if(1==$effect['special']){//空想神话，消耗所有歌魂，随机增加耐久
@@ -202,21 +206,34 @@ namespace song
 					}
 				}
 			}
+			elseif(4==$effect['special']){//夜雀之歌，同地图其他玩家夜盲
+				if($pdata['pid'] != get_var_in_module('pid', 'player')){//对自己无效
+					$effect['addskill'] = 605;
+					$effect['time'] = 60;
+				}
+			}
 			unset($effect['special']);
 		}
+		$timeflag = isset($effect['time']);
 		foreach($effect as $ek => $ev){
 			if('addskill' == $ek){
 				if(defined('MOD_SKILLBASE')){
 					eval(import_module('clubbase'));
 					if(!is_array($ev) && is_numeric($ev)) $ev = array($ev);
 					foreach($ev as $skv){
+						//如果是debuff就先失去（效果为刷新过期时间）
+						$debuffflag = \skillbase\check_skill_info($skv, 'debuff') ? 1 : 0;
+						if($debuffflag && \skillbase\skill_query($skv, $pdata))
+						{
+							\skillbase\skill_lost($skv, $pdata);
+						}
 						if(!\skillbase\skill_query($skv, $pdata)){
 							\skillbase\skill_acquire($skv, $pdata);
-							$ss_log[] = '获得了技能<span class="cyan b">「'.$clubskillname[$skv].'」</span>';
+							$ss_log[] = '获得了' . ($debuffflag ? '负面状态' : '技能') . '<span class="cyan b">「'.$clubskillname[$skv].'」</span>';
 							if ($timeflag)
 							{
 								$tsk_time = round($effect['time'] * ss_factor($pdata));
-								$ss_log[] = "持续时间<span class=\"yellow b\">".$tsk_time."</span>秒<br>";
+								$ss_log[] = "持续时间<span class=\"yellow b\">".$tsk_time."</span>秒";
 								\skillbase\skill_setvalue($skv, 'tsk_expire', $now + $tsk_time, $pdata);
 							}
 						}
@@ -286,7 +303,7 @@ namespace song
 		unset($pdata['mrage']);
 		$ss_log_f = '';
 		if(!empty($ss_log)) $ss_log_f .= '歌声让你的'.implode('，',$ss_log).'。<br>';
-		if(strpos($ss_log_f,'获得了技能')!==false) $ss_log_f = str_replace('歌声让你的获得了技能','歌声让你获得了技能',$ss_log_f);
+		$ss_log_f = str_replace('歌声让你的获得了','歌声让你获得了',$ss_log_f);
 		if(!empty($ss_log_2)) $ss_log_f .= '<!--SPERATOR--><span class="red b">你的'.implode('、',$ss_log_2).'损坏了！</span><br>';
 		return $ss_log_f;
 	}
@@ -414,39 +431,42 @@ namespace song
 		//歌词显示部分
 		$lyricnum = sizeof($songcfg['lyrics']);
 		$songchat = '';$songprog = 1;
+		//生成要显示和发送的歌词列表
+		$songshowlist = $songchatlist = array();
 		$songloop = defined('MOD_SKILL1003');
-		if($songloop) {
-			$songprog = empty($songcfg['lyricdisp']) ? 1 : $songcfg['lyricdisp'];
-			$songkind = \skillbase\skill_getvalue(1003,'songkind');
-			$songpos = $songkind == $sn ? (int)\skillbase\skill_getvalue(1003,'songpos') : 0;//如果上一次唱的不是这首歌则从头
+
+		if(!empty($songcfg['lyric_rand'])) {//随机选取歌词，不需要记录
+			$songchatlist = $songshowlist = Array(rand(0, $lyricnum-1));
+		}else{//顺序显示歌词
+			if($songloop) {
+				$songprog = empty($songcfg['lyricdisp']) ? 1 : $songcfg['lyricdisp'];
+				$songkind = \skillbase\skill_getvalue(1003,'songkind');
+				$songpos = $songkind == $sn ? (int)\skillbase\skill_getvalue(1003,'songpos') : 0;//如果上一次唱的不是这首歌则从头
+			}
+			//显示歌词列表
+			//如果技能1003存在，且有同时显示的歌词数目限制，则只显示那些歌词。否则全部显示
+			if($songloop && !empty($songcfg['lyricdisp'])) {
+				for($i=$songpos; $i < $songprog+$songpos; $i++)
+					$songshowlist[] = $i;
+			}else{
+				$songshowlist = range(0,$lyricnum-1);
+			}
+			//聊天记录列表
+			//如果技能1003存在，会按顺序发聊天记录，否则只发前两句加省略号
+			if($songloop) {
+				for($i=$songpos; $i < $songprog+$songpos; $i++)
+					$songchatlist[] = $i;
+			}else{
+				for($i=0;$i<$songchatlimit;$i++)
+					$songchatlist[] = $i;
+			}
 		}
+		
+		//显示歌词
 		if(isset($songcfg['lyrics_ruby'])) {
 			$song_font_size = 16;
 			$song_line_height = 28;
 		}
-		//生成要显示和发送的歌词列表
-		$songshowlist = $songchatlist = array();
-		
-		//显示歌词列表
-		//如果技能1003存在，且有同时显示的歌词数目限制，则只显示那些歌词。否则全部显示
-		if($songloop && !empty($songcfg['lyricdisp'])) {
-			for($i=$songpos; $i < $songprog+$songpos; $i++)
-				$songshowlist[] = $i;
-		}else{
-			$songshowlist = range(0,$lyricnum-1);
-		}
-		
-		//聊天记录列表
-		//如果技能1003存在，会按顺序发聊天记录，否则只发前两句加省略号
-		if($songloop) {
-			for($i=$songpos; $i < $songprog+$songpos; $i++)
-				$songchatlist[] = $i;
-		}else{
-			for($i=0;$i<$songchatlimit;$i++)
-				$songchatlist[] = $i;
-		}
-		
-		//显示歌词
 		foreach($songshowlist as $i)
 		{
 			$ss_log = '<span style="font-size:<:fs:>px;line-height:<:lh:>px">'.$songcfg['lyrics'][$i].'</span>';
@@ -471,9 +491,11 @@ namespace song
 		\sys\addchat(0, $songchat, $name);
 		
 		if($songloop) {
-			if($songpos + $songprog >= sizeof($songcfg['lyrics']) ) $songpos = 0;
-			else $songpos += $songprog;
-			\skillbase\skill_setvalue(1003,'songpos',$songpos);
+			if(empty($songcfg['lyric_rand'])){
+				if($songpos + $songprog >= sizeof($songcfg['lyrics']) ) $songpos = 0;
+				else $songpos += $songprog;
+				\skillbase\skill_setvalue(1003,'songpos',$songpos);
+			}
 			\skillbase\skill_setvalue(1003,'songkind',$sn);
 		}
 		if (defined('MOD_NOISE') && !empty($nkey)) \noise\addnoise($pls,$nkey,$pid);
@@ -633,6 +655,7 @@ namespace song
 		elseif('爸爸野猪'==$sname) $sname = 'Baba yetu';
 		elseif('快说小仓唯唱歌贼！好！听！'==$sname) $sname = 'Clear Morning';
 		elseif('赠送的芙蓉王'==$sname) $sname = '『勇者』';
+		elseif('夜盲『夜雀之歌』'==$sname) $sname = '夜雀之歌';
 		return $sname;
 	}
 	

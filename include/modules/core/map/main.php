@@ -49,8 +49,7 @@ namespace map
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
 		$chprocess();
 		eval(import_module('map'));
-		$file = __DIR__.'/config/map.config.php';
-		include $file;
+		$plsinfo = $plsinfo_o;
 	}
 
 	//兼容不同地图组的地点判定。会自动判断是否存在该地图，如果不存在则会转到该模式的第一张地图

@@ -87,8 +87,9 @@ $mixinfo = array
 	array('class' => 'wp', 'stuff' => array('『延展御柱』','驱云弹','弹幕符札'),'result' => array('御柱「Meteoric Onbashira」','WP',200,140,'NirZ'),),
 	array('class' => 'wp', 'stuff' => array('手机','手枪子弹'),'result' => array('『诺基亚』','WP',50,9999,'Nw'),),
 	array('class' => 'wp', 'stuff' => array('手机','实体子弹'),'result' => array('『诺基亚』','WP',50,9999,'Nw'),),
-	array('class' => 'wp', 'stuff' => array('『诺基亚』','曾经的荣光-巨盾','防弹背心','防弹背心','防弹背心','防弹背心'),'result' => array('『诺基亚3210』','WP',321,9999,'NA^ac1^wc1Z'),),
-	array('class' => 'wp', 'stuff' => array('『诺基亚3210』[+4]','数据……碎片'),'result' => array('『曾经的荣光-诺基亚』','WP',1865,9999,'NAR^ac1^wc1^alt_REI=1Z'), 'tips' => '这是一把能当做身体装备使用的武器。'),
+	array('class' => 'wp', 'stuff' => array('『诺基亚』','曾经的荣光-巨盾','防弹背心','防弹背心','防弹背心','防弹背心'),'result' => array('『诺基亚3210』','WP',321,9999,'NAa^ac1Z'),),
+	array('class' => 'wp', 'stuff' => array('『诺基亚3210』[+4]','数据……碎片'),'result' => array('『曾经的荣光-诺基亚』','WP',1865,'∞','NAaR^ac1^alt_<:comp_itmsk:>{A}1Z'), 'tips' => '这是一把能当做饰品使用的武器。'),
+	array('class' => 'wp', 'stuff' => array('『诺基亚3210』[+4]','数据……碎片','★王家之盾★'),'result' => array('『曾经的荣光-诺基亚』','WP',1865,'∞','NAaR^ac1^wc1^alt_<:comp_itmsk:>{DB}1Z'), 'tips' => '这是一把能当做身体防具使用的武器。'),
 	array('class' => 'wp', 'stuff' => array('葱娘の葱','葱娘肉包'),'result' => array('葱娘V4X的合成器','WP',200,50,'tr^sa2'),),
 	array('class' => 'wp', 'stuff' => array('MIKU的原味内裤','MIKU的小葱'),'result' => array('MIKU V4X的双马尾','WP',600,100,'miku^sa4'),),
 	
@@ -261,7 +262,12 @@ $mixinfo = array
 	array('class' => 'cube', 'stuff' => array('黄鸡方块','黄鸡方块','黄鸡方块'),'result' => array('★黄鸡风暴★','WK',90,35,'rpd'),),
 	array('class' => 'cube', 'stuff' => array('★黄鸡风暴★','★黄鸡风暴★','★黄鸡风暴★'),'result' => array('★黄鸡经世★','WP',88888,8888,'rpdBb'),),
 	
-	
+	array('class' => 'wf', 'stuff' => array('空白符卡','夜雀歌谱'),'result' => array('声符『枭的夜鸣声』','WF',30,'∞','w'),),
+	array('class' => 'wf', 'stuff' => array('声符『枭的夜鸣声』','《灵系指南》'),'result' => array('夜盲『夜雀之歌』','WF',30,'∞','w^alt_<:comp_itmsk:>{ss}1'),),
+	array('class' => 'wf', 'stuff' => array('空白符卡','雏人形'),'result' => array('疵符『破裂的护身符』','WF',30,'∞','p'),),
+	array('class' => 'wf', 'stuff' => array('疵符『破裂的护身符』','《灵系指南》'),'result' => array('创符『流刑人形』','WF',30,'∞','p^alt_<:comp_itmsk:>{A}1'),),
+	array('class' => 'wf', 'stuff' => array('空白符卡','被遗忘的伞'),'result' => array('伞符『雨伞的星之交响』','WF',40,'∞','i'),),
+	array('class' => 'wf', 'stuff' => array('伞符『雨伞的星之交响』','《灵系指南》'),'result' => array('雨伞『超防水干爽伞妖』','WF',40,'∞','iI^alt_<:comp_itmsk:>{DAS}1'),),
 	array('class' => 'wf', 'stuff' => array('空白符卡','☆博丽护符☆'),'result' => array('霊符「夢想妙珠」','WF',40,'∞','r'),),
 	array('class' => 'wf', 'stuff' => array('空白符卡','红色方块','白色方块'),'result' => array('阴阳玉','WFC',90,'∞','d'),),
 	array('class' => 'wf', 'stuff' => array('霊符「夢想妙珠」','阴阳玉'),'result' => array('宝符「陰陽宝玉」','WFC',150,'∞','cd'),),

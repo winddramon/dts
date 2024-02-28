@@ -8,11 +8,11 @@ gameflow_antiafk,core/gameflow/gameflow_antiafk/,1
 logger,base/logger/,1
 skillbase,base/skillbase/,1
 replay,extra/misc/replay/,1
-bufficons,extra/misc/bufficons/,1
 map_display,base/map_display/,1
 explore,base/explore/,1
 noise,base/noise/,1
 lvlctl,base/lvlctl/,1
+bufficons,extra/misc/bufficons/,1
 skill4,base/skills/skill4/,1
 npc,base/npc/,1
 itemmain,base/itemmain/,1
@@ -428,7 +428,6 @@ ex_weapon_crack,extra/attr/ex_weapon_crack/,1
 skill568,extra/card/skills/skill568/,1
 skill585,extra/card/skills/skill585/,1
 skill705,extra/card/skills/skill705/,1
-ex_alternative,extra/attr/ex_alternative/,1
 ex_uselog,extra/attr/ex_uselog/,1
 skill89,extra/club/skills/skill89/,1
 skill96,extra/club/skills/skill96/,1
@@ -607,6 +606,7 @@ skill504,extra/card/skills/skill504/,1
 user_settings,extra/misc/user_settings/,1
 skill740,extra/card/skills/skill740/,1
 instance3,extra/instance/instance3_ascension/,1
+ex_alternative,extra/attr/ex_alternative/,1
 skill182,extra/club/skills/skill182/,1
 cooldown,base/cooldown/,1
 skill458,extra/card/skills/skill458/,1
@@ -672,6 +672,7 @@ skill554,extra/card/skills/skill554/,1
 skill1006,extra/club/skills/skill1006/,1
 skill542,extra/card/skills/skill542/,1
 skill905,extra/instance/instance3_ascension/skill905/,1
+skill605,extra/club/skills/skill605/,1
 skill563,extra/card/skills/skill563/,1
 skill36,extra/club/skills/skill36/,1
 skill38,extra/club/skills/skill38/,1

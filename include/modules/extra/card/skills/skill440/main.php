@@ -3,19 +3,27 @@
 namespace skill440
 {
 	$skill440_cd = 200;
+	$skill440_cause600_period = 40;
 	
 	function init() 
 	{
 		define('MOD_SKILL440_INFO','card;battle;');
-		eval(import_module('clubbase'));
+		eval(import_module('clubbase','bufficons'));
 		$clubskillname[440] = '父爱';
+		$bufficons_list[440] = Array(
+			'disappear' => 0,
+			'clickable' => 0,
+			'hint' => '战斗技「父爱」',
+			'activate_hint' => '战斗技「父爱」已就绪<br>在战斗界面可以发动',
+		);
 	}
 	
 	function acquire440(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','skill440'));
-		\skillbase\skill_setvalue(440,'lastuse',$now,$pa);
+		\skillbase\skill_setvalue(440,'end_ts',$now-1,$pa);	
+		\skillbase\skill_setvalue(440,'cd_ts',$now+$skill440_cd,$pa);	
 	}
 	
 	function lost440(&$pa)
@@ -40,16 +48,6 @@ namespace skill440
 		return $ret;
 	}
 	
-	//return 1:技能生效中 2:技能冷却中 3:技能冷却完毕 其他:不能使用这个技能
-	function check_skill440_state(&$pa){
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(440, $pa) || !check_unlocked440($pa)) return 0;
-		eval(import_module('sys','player','skill440'));
-		$l=\skillbase\skill_getvalue(440,'lastuse',$pa);
-		if (($now-$l)<=$skill440_cd) return 2;
-		return 3;
-	}
-	
 	function strike_prepare(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -66,13 +64,12 @@ namespace skill440
 		else
 		{
 			eval(import_module('sys','skill440'));
-			$l=\skillbase\skill_getvalue(440,'lastuse',$pa);
-			if ( !\clubbase\check_battle_skill_unactivatable($pa,$pd,440) ){
+			list($is_successful, $fail_hint) = \bufficons\bufficons_activate_buff(440, 0, $skill440_cd);
+			if ( $is_successful ){
 				eval(import_module('logger'));
 				if ($active)
 					$log.="<span class=\"lime b\">你对{$pd['name']}发动了技能「父爱」！</span><br>";
 				else  $log.="<span class=\"lime b\">{$pa['name']}对你发动了技能「父爱」！</span><br>";
-				\skillbase\skill_setvalue(440,'lastuse',$now,$pa);
 				$pd['skill440_flag']=1;
 				addnews ( 0, 'bskill440', $pa['name'], $pd['name'] );
 			}
@@ -81,44 +78,12 @@ namespace skill440
 				if ($active)
 				{
 					eval(import_module('logger'));
-					$log.='因对方非玩家或其他原因而未发动技能。<br>';
+					$log.=$fail_hint;
 				}
 				$pa['bskill']=0;
 			}
 		}
 		$chprocess($pa, $pd, $active);
-	}	
-	
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if ((\skillbase\skill_query(440,$sdata))&&check_unlocked440($sdata))
-		{
-			eval(import_module('skill440'));
-			$skill440_lst = (int)\skillbase\skill_getvalue(440,'lastuse'); 
-			$skill440_time = $now-$skill440_lst; 
-			$z=Array(
-				'disappear' => 0,
-				'clickable' => 1,
-				'hint' => '战斗技「父爱」',
-				'activate_hint' => '战斗技「父爱」已就绪<br>在战斗界面可以发动',
-				'onclick' => "",
-			);
-			if ($skill440_time<$skill440_cd)
-			{
-				$z['style']=2;
-				$z['totsec']=$skill440_cd;
-				$z['nowsec']=$skill440_time;
-			}
-			else 
-			{
-				$z['style']=3;
-			}
-			\bufficons\bufficon_show('img/skill440.gif',$z);
-		}
-		$chprocess();
 	}
 	
 	function skill_enabled_core($skillid, &$pa = NULL)
@@ -126,7 +91,7 @@ namespace skill440
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skillbase'));
 		$skillid=(int)$skillid;
-		if ($pa!=NULL && isset($pa['skill440_flag']) && $pa['skill440_flag'])
+		if ($pa!=NULL && !empty($pa['skill440_flag']))
 		{
 			//所有技能失效
 			if (!\skillbase\check_skill_info($skillid,'achievement') && !\skillbase\check_skill_info($skillid,'hidden'))
@@ -143,7 +108,7 @@ namespace skill440
 			return;
 		}
 		eval(import_module('logger','skill440','skill600','sys'));
-		$var_440=40;
+		$var_440=$skill440_cause600_period;
 		if (!\skillbase\skill_query(600,$pd)){
 			\skillbase\skill_acquire(600,$pd);
 			$var_440_2=$now;

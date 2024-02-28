@@ -663,6 +663,7 @@ function curl_post($url, $post_data=array(), $post_cookie=array(), $timeout = 10
 			$response_cookies[$ck] = $cv;
 		}
 	}
+	$body = trim($body);
 	return $body;
 }
 

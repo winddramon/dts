@@ -417,6 +417,25 @@ namespace song
 				'wf' => 30,
 			)
 		),
+		18 => array(
+			'songname' => '夜雀之歌',
+			'noisekey' => 'ss_nightbird',
+			'cost' => 30,
+			'lyrics' => array(
+				'♪ 巫女巫女灵梦~ 巫女巫女灵梦~ ♪',	
+				'♪ 笼中鸟~ 笼中鸟~ ♪',
+				'♪ 便当~ 便当~ 醋溜便当~ ♪',
+				'♪ 一二三 一二三 One Two Three One Two Three 123~ ♪',
+				'♪ 诶~ 简单模式？~ 不是只有小学生才玩简单模式吗~ ♪',
+				'♪ 好红~ 好甜~ 好红~ 好甜~ 好红~ 好甜~ ♪',
+				'♪ 3倍Ice Cream—— ♪',
+			),
+			'lyricdisp' => 1,
+			'lyric_rand' => true,
+			'effect' => array(
+				'special' => 4,
+			)
+		)
 		
 	);
 	

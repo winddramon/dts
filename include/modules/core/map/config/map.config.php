@@ -56,6 +56,8 @@ namespace map
 		34=>'英灵殿'
 	);
 
+	$plsinfo_o = $plsinfo;//游戏重置用
+
 	//某些地方的显示用参数，应该尽量用这个来替换全部的$plsinfo[xxx]
 	//会被chat等只载入core模块的地方用到，所以其他模式添加的地图名也必须加在这里
 	$plsinfo_disp = $plsinfo + Array(

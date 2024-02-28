@@ -344,7 +344,7 @@ namespace ex_storage
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa, $pd, $active, $whicharmor);
-		if (!\itemmain\check_in_itmsk('^vol', $pd[$whicharmor.'sk'])) \itemmain\replace_in_itmsk('^st', '', $pd[$whicharmor.'sk']);
+		if (!\itemmain\check_in_itmsk('^vol', $pd[$whicharmor.'sk'])) $pd[$whicharmor.'sk'] = \itemmain\replace_in_itmsk('^st', '', $pd[$whicharmor.'sk']);
 	}
 	
 }
