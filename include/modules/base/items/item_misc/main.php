@@ -237,7 +237,7 @@ namespace item_misc
 					$arf='权限狗的毛绒后爪';$arfk = 'DF';$arfe = 5000;$arfs = 1000;$arfsk = 'Mm';
 					$art='Untainted Glory';$artk = 'A';$arte = 1;$arts = 1;$artsk = 'c^hu2000';
 					if (defined('MOD_CLUBBASE')) eval(import_module('clubbase'));
-					foreach(array(1010,1011,1012) as $skv){
+					foreach(array(1010,1011,1012,1013) as $skv){
 						if(defined('MOD_SKILL'.$skv)) {
 							if (!\skillbase\skill_query($skv)) {
 								$log.="你获得了技能「<span class=\"yellow b\">$clubskillname[$skv]</span>」！<br>";

@@ -8,14 +8,19 @@ namespace skill490
 	function init() 
 	{
 		define('MOD_SKILL490_INFO','card;upgrade;unique;');
-		eval(import_module('clubbase'));
+		eval(import_module('clubbase','bufficons'));
 		$clubskillname[490] = '空想';
+		$bufficons_list[490] = Array(
+			'dummy' => 1,//占位符，如果其他设置全部都自动生成的话可以占位用……
+		);
 	}
 	
 	function acquire490(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		\skillbase\skill_setvalue(490,'nextuse',0,$pa);
+		eval(import_module('sys','skill490'));
+		\skillbase\skill_setvalue(490,'end_ts',$now-1,$pa);	
+		\skillbase\skill_setvalue(490,'cd_ts',$now+$skill490_cd,$pa);	
 	}
 	
 	function lost490(&$pa)
@@ -35,27 +40,23 @@ namespace skill490
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','player','skill490','logger'));
 		\player\update_sdata();
-		if (!\skillbase\skill_query(490) || !check_unlocked490($sdata))
-		{
-			$log.='你没有这个技能！<br>';
-			return;
-		}
-		$st = check_skill490_state($sdata);
-		if ($st==0){
-			$log.='你不能使用这个技能！<br>';
-			return;
-		}
-		if ($st==2){
-			$log.='技能冷却中！<br>';
+		list($can_activate, $fail_hint) = \bufficons\bufficons_check_buff_state_shell(490);
+		if(!$can_activate) {
+			$log .= $fail_hint;
 			return;
 		}
 		if($sp <= $skill490_minsp){
 			$log.='体力不足，无法使用技能！<br>';
 			return;
 		}
+		
+		$flag = \bufficons\bufficons_set_timestamp(490, 0, $skill490_cd);
+		if(!$flag) {
+			$log.='发动失败！<br>';
+			return;
+		}
 		$spdown = $sp - $skill490_minsp;
 		$sp = $skill490_minsp;
-		\skillbase\skill_setvalue(490,'nextuse',$now + $skill490_cd);
 		get_random_item490($spdown);
 		addnews ( 0, 'bskill490', $name , $itmk0, $itm0);
 		if($itms0) {
@@ -148,50 +149,6 @@ namespace skill490
 		$itm0 = $ritm; $itmk0 = $ritmk; $itmsk0 = $ritmsk;
 		$itme0 = $ritme; $itms0 = $ritms;
 		return;
-	}
-	
-	//return 1:技能生效中 2:技能冷却中 3:技能冷却完毕 其他:不能使用这个技能
-	function check_skill490_state(&$pa){
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(490, $pa) || !check_unlocked490($pa)) return 0;
-		eval(import_module('sys','player','skill490'));
-		$nextuse=\skillbase\skill_getvalue(490,'nextuse',$pa);
-		if ($nextuse > $now) return 2;
-		return 3;
-	}
-	
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if ((\skillbase\skill_query(490,$sdata)) && check_unlocked490($sdata))
-		{
-			eval(import_module('skill490'));
-			$skill490_nextuse = (int)\skillbase\skill_getvalue(490,'nextuse');
-			$skill490_lst = $skill490_nextuse-$skill490_cd;
-			$skill490_time = $now - $skill490_lst;
-			if($skill490_time > $skill490_cd) $skill490_time = $skill490_cd;
-			$z=Array(
-				'disappear' => 0,
-				'clickable' => 1,
-				'hint' => '技能「空想」',
-				'activate_hint' => '点击发动技能「空想」',
-				'onclick' => "$('mode').value='special';$('command').value='skill490_special';$('subcmd').value='activate';postCmd('gamecmd','command.php');this.disabled=true;",
-			);
-			if ($skill490_time < $skill490_cd)
-			{
-				$z['style']=2;
-				$z['totsec']=$skill490_cd;
-				$z['nowsec']=$skill490_time;
-			}
-			else 
-			{
-				$z['style']=3;
-			}
-			\bufficons\bufficon_show('img/skill490.gif',$z);
-		}
-		$chprocess();
 	}
 	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())
