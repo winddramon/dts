@@ -42,10 +42,15 @@ namespace skill543
 		$itms = 1;
 		$itmsk = '';
 		$crimson_i = rand(0,4);//红暮的位置
-		//添加4个红薯，其中随机一个位置是红暮
+		$result = $db->query("SELECT pid,pls FROM {$tablepre}players WHERE name='红暮' AND type>'0' LIMIT 1");
+		while($d = $db->fetch_array($result)) {
+			$crimson_pid = $d['pid'];
+			$crimson_pls = $d['pls'];
+		}
+		//添加4个红薯，其中随机一个位置是红暮。如果地图没有红暮那么全是红薯
 		for($i=0;$i<=4;$i++)
 		{
-			if($i != $crimson_i) {
+			if($i != $crimson_i || empty($crimson_pid)) {
 				//先把道具数据插入地图
 				$dropid = \itemmain\itemdrop_query($itm, $itmk, $itme, $itms, $itmsk, $pls);
 
@@ -54,7 +59,7 @@ namespace skill543
 				\skill1006\add_beacon($barr);
 			}else{
 				//添加红薯
-				$barr = array('pid' => 1, 'Pname' => '红暮', 'pls' => 0, 'smtype' => 'enemy', 'unseen' => 0);
+				$barr = array('pid' => $crimson_pid, 'Pname' => '红暮', 'pls' => $crimson_pls, 'smtype' => 'enemy', 'unseen' => 0);
 				\skill1006\add_beacon($barr);
 			}
 		}

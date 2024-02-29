@@ -274,10 +274,11 @@ namespace clubbase
 		$rage_func = '\\skill'.$skillno.'\\get_rage_cost'.$skillno;
 		$state_func = '\\skill'.$skillno.'\\check_skill'.$skillno.'_state';
 		$remain_func = '\\skill'.$skillno.'\\get_remaintime'.$skillno;
+
 		if(!empty($wepk_req) && substr($ldata['wepk'],0,2) != $wepk_req) $ret = 1;
 		elseif(!empty($wep_skillkind_req) && \weapon\get_skillkind($ldata,$edata,1) != $wep_skillkind_req) $ret = 2;
 		elseif(function_exists($rage_func) && $ldata['rage'] < $rage_func($ldata)) $ret = 3;
-		elseif(defined('MOD_BUFFICONS') && \bufficons\bufficons_check_buff_state($skillno,$ldata) <= 2) $ret = 4;
+		elseif(defined('MOD_BUFFICONS') && \bufficons\bufficons_check_buff_state($skillno,$ldata) == 2) $ret = 4;
 		elseif(function_exists($state_func) && 2 == $state_func($ldata)) $ret = 4;
 		elseif(function_exists($remain_func) && $remain_func($ldata) <= 0) $ret = 5;
 		//6以后请自定义
