@@ -13,8 +13,7 @@ namespace ex_equipskill
 	function itemuse(&$theitem)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		
+		eval(import_module('player'));
 		$itmk=&$theitem['itmk']; $itmsk=&$theitem['itmsk'];
 		
 		$eqpsk_id = (int)\itemmain\check_in_itmsk('^eqpsk', $itmsk);
@@ -26,9 +25,10 @@ namespace ex_equipskill
 		if (!empty($eqpsk_flag))
 		{
 			eval(import_module('clubbase'));
-			if (defined('MOD_SKILL'.$eqpsk_id) && !empty($clubskillname[$eqpsk_id] && !\skillbase\skill_query($eqpsk_id)))
+			if (defined('MOD_SKILL'.$eqpsk_id) && !empty($clubskillname[$eqpsk_id]) && !\skillbase\skill_query($eqpsk_id, $sdata))
 			{
 				//是否成功装备上
+				$dummy = \player\create_dummy_playerdata();
 				$skarr = \attrbase\get_ex_def_array($dummy, $sdata, 0);
 				if (in_array('^eqpsk'.$eqpsk_id, $skarr))
 				{
@@ -48,6 +48,7 @@ namespace ex_equipskill
 		$chprocess($skillid, $pa);
 		if (\skillbase\skill_query($skillid, $pa) && !empty(\skillbase\skill_getvalue($skillid, 'eqpsk_flag', $pa)))
 		{
+			$dummy = \player\create_dummy_playerdata();
 			$skarr = \attrbase\get_ex_def_array($dummy, $pa, 0);
 			if (!in_array('^eqpsk'.$skillid, $skarr))
 			{
