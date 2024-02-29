@@ -115,8 +115,8 @@ namespace skillbase
 	function skill_onload_event(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		//判定临时技能的失去
-		check_tempskill_process($pa);
+		//判定暂时获得的技能是否保留
+		check_skill_available_process($pa);
 	}
 	
 	//格式化并储存技能参数，基本上只有player_save()调用
@@ -251,6 +251,7 @@ namespace skillbase
 		if (defined('MOD_SKILL'.$skillid) && !($already && $no_cover)) $func($pa);
 		//每次获得技能时把临时参数删掉，避免获得了非临时技能被临时技能删掉
 		skill_delvalue($skillid, 'tsk_expire', $pa);
+		skill_delvalue($skillid, 'eqpsk_flag', $pa);
 	}
 	
 	//失去技能
@@ -467,20 +468,22 @@ namespace skillbase
 		}
 	}
 	
-	function check_tempskill_process(&$pa = NULL)
+	//判定暂时获得的技能是否保留，check_skill_available中的函数考虑移到别的模块
+	function check_skill_available_process(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$arr = get_acquired_skill_array($pa);
 		foreach ($arr as $key)
 		{
-			if (defined('MOD_SKILL'.$key.'_INFO') && (strpos(constant('MOD_SKILL'.$key.'_INFO'),'club;')!==false || strpos(constant('MOD_SKILL'.$key.'_INFO'),'card;')!==false))
+			if (defined('MOD_SKILL'.$key.'_INFO') && (strpos(constant('MOD_SKILL'.$key.'_INFO'),'club;')!==false || strpos(constant('MOD_SKILL'.$key.'_INFO'),'card;')!==false || strpos(constant('MOD_SKILL'.$key.'_INFO'),'debuff;')!==false))
 			{
-				check_skill_tempskill($key, $pa);
+				check_skill_available($key, $pa);
 			}
 		}
 	}
 	
-	function check_skill_tempskill($skillid, &$pa = NULL)
+	//该函数可保留空接口，临时技能的判定考虑移到别的模块
+	function check_skill_available($skillid, &$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
