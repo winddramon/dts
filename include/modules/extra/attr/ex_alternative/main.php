@@ -130,6 +130,7 @@ namespace ex_alternative
 			$altwords = \itemmain\parse_itmk_words($alts);
 			if ($suf) $altwords .= '类别';
 		}
+		$altwords = strip_tags($altwords);
 		return $altwords;
 	}	
 	
@@ -149,10 +150,10 @@ namespace ex_alternative
 						$sknarr[] = $v;
 						break;
 					case 2:
-						$sknarr[] = \itemmain\get_itmsk_words_single($v);
+						$sknarr[] = strip_tags(\itemmain\parse_itmsk_words($v));
 						break;
 					default:
-						$sknarr[] = \itemmain\parse_itmk_words($v);
+						$sknarr[] = strip_tags(\itemmain\parse_itmk_words($v));
 					break;
 				}
 			}
@@ -164,7 +165,7 @@ namespace ex_alternative
 	
 	//判定复合属性是否显示
 	function check_comp_itmsk_visible($cinfo){
-		if (eval(__MAGIC__)) return $___RET_VALUE;	
+		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$ret = $chprocess($cinfo);
 		if ($ret) {
 			//if (strpos($cinfo[0], '^alt') === 0) return false;
