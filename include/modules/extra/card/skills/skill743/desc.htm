@@ -1,0 +1,23 @@
+<!--{eval $___TEMP_SKILL_ID=743;}-->
+{template MOD_CLUBBASE_SKILLDESC_START}
+<span>
+$clubskillname[$___TEMP_SKILL_ID]
+</span>
+{template MOD_CLUBBASE_SKILLDESC_MID1}
+<td class="skilldesc_left b3"><span class="skilldesc">
+<!--{eval $trapnames743 = \skill743\get_trapnames743($who);}-->
+你不会受到触发过的同名陷阱的伤害<br>当前已触发过的陷阱：<br>
+<!--{if empty($trapnames743)}-->
+<span class="yellow b">无</span>
+<!--{else}-->
+<span class="yellow b"><!--{eval echo implode(' ', $trapnames743);}--></span>
+<!--{/if}-->
+</span></td>
+<td class="skilldesc_right b3">
+</td>
+{template MOD_CLUBBASE_SKILLDESC_MID2}
+<!--{if empty($___TEMP_THIS_SKILL_ACQUIRED)}-->
+<span class="yellow b">
+</span>
+<!--{/if}-->
+{template MOD_CLUBBASE_SKILLDESC_END}
