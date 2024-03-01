@@ -53,7 +53,7 @@ $tutorial_story[1] = Array(
 	700 => Array(
 		'tips' => '“很好。移动需要消耗体力，所以请确保你体力充足。移动之后也可能遇到<span class="yellow b">突发事件</span>甚至<span class="red b">敌人</span>，不过这次没事。<br><br>除了移动，你还可以原地探索。点击<span class="yellow b">【探索】</span>按钮。”<br>',
 		'object' => 'search',
-		'pulse' => '#zz',
+		'pulse' => "input.cmdbutton[value*='探索']",
 		'next' => 800
 	),
 	800 => Array(
@@ -67,13 +67,13 @@ $tutorial_story[1] = Array(
 			'itmsk' => 'E'
 		),
 		'prog' => '“如果你不小心丢弃了物品，可以把<span class="yellow b">视野</span>中的道具捡回来，或者在原地<span class="yellow b">探索</span>也有概率重新捡到。”<br>',
-		'pulse' => '#z',
+		'pulse' => Array("input.cmdbutton[value*='拾取']","button.memory_slot:contains('电磁充能手套')"),
 		'next' => 900
 	),
 	900 => Array(
 		'tips' => '“探索是获得有用的装备或道具的重要方式之一。<br>现在请再次点击<span class="yellow b">【探索】</span>按钮。”<br>',
 		'object' => 'search',
-		'pulse' => '#zz',
+		'pulse' => "input.cmdbutton[value*='探索']",
 		'next' => 1000
 	),
 	1000 => Array(
@@ -87,7 +87,7 @@ $tutorial_story[1] = Array(
 			'itmsk' => '1'
 		),
 		'prog' => '“如果你不小心丢弃了物品，可以把<span class="yellow b">视野</span>中的道具捡回来，或者在原地<span class="yellow b">探索</span>也有概率重新捡到。”<br>',
-		'pulse' => '#z',
+		'pulse' => Array("input.cmdbutton[value*='拾取']","button.memory_slot:contains('泡面')"),
 		'next' => 1100
 	),
 	1100 => Array(
@@ -121,7 +121,7 @@ $tutorial_story[1] = Array(
 //		'obj2' => Array(
 //			'meetnpc' => 91, 'meetsub' => 0,'active' => 0,'inf' => 'f','ex_inf' => 'p','always_hit' => 1
 //		),
-		'pulse' => '#zz',
+		'pulse' => "input.cmdbutton[value*='探索']",
 		'next' => 1400
 	),
 	1400 => Array(
@@ -130,7 +130,7 @@ $tutorial_story[1] = Array(
 		'obj2' => Array(
 			'meetnpc' => 91, 'meetsub' => 0,'active' => 0,'inf' => 'f','ex_inf' => 'p','always_hit' => 1
 		),
-		'pulse' => '#z',
+		'pulse' => "input.cmdbutton[value*='确定']",
 		'next' => 1500
 	),
 	1500 => Array(
@@ -155,7 +155,7 @@ $tutorial_story[1] = Array(
 		'obj2' => Array(
 			'meetnpc' => 91, 'meetsub' => 0,'active' => 1,'changevar' => Array('hp' => 1),'always_hit' => 1
 		),
-		'pulse' => '#zz',
+		'pulse' => "input.cmdbutton[value*='探索']",
 		'next' => 1800
 	),
 	1800 => Array(
@@ -164,7 +164,7 @@ $tutorial_story[1] = Array(
 		'obj2' => Array(
 			'meetnpc' => 91, 'meetsub' => 0,'active' => 1,'changevar' => Array('hp' => 1, 'money' => 2000),'always_hit' => 1
 		),
-		'pulse' => '#z',		
+		'pulse' => Array("input.cmdbutton[value*='探索']","input.cmdbutton[value*='殴打']","input.cmdbutton[value*='斩刺']","input.cmdbutton[value*='射击']","input.cmdbutton[value*='投掷']","input.cmdbutton[value*='伏击']","input.cmdbutton[value*='灵击']"),
 		'prog' => '“错过攻击机会也没有关系，在原地<span class="yellow b">探索</span>仍有机会发现同一个敌人。”<br>',
 		'next' => 1900
 	),
@@ -188,7 +188,7 @@ $tutorial_story[1] = Array(
 	2100 => Array(
 		'tips' => '“然后点击<span class="yellow b">【商店】</span>按钮。”<br>',
 		'object' => 'sp_shop',
-		'pulse' => '#t',
+		'pulse' => "input.cmdbutton[value*='商店']",
 		'next' => 2200		
 	),
 	2200 => Array(
@@ -314,7 +314,7 @@ $tutorial_story[1] = Array(
 //		'obj2' => Array(
 //			'meetnpc' => 9, 'meetsub' => 0,'active' => 0,'changehp' => 3000,'always_hit' => 1
 //		),
-		'pulse' => Array('#chat','#zz'),
+		'pulse' => Array('#chat',"input.cmdbutton[value*='探索']",),
 		'next' => 2900	
 	),
 	2900 => Array(
@@ -323,7 +323,7 @@ $tutorial_story[1] = Array(
 		'obj2' => Array(
 			'meetnpc' => 9, 'meetsub' => 0,'active' => 0,'changevar' => Array('hp' => 3000),'always_hit' => 1
 		),
-		'pulse' => '#z',
+		'pulse' => "input.cmdbutton[value*='确定']",
 		'next' => 3000	
 	),
 	3000 => Array(
@@ -350,7 +350,7 @@ $tutorial_story[1] = Array(
 		'tips' => '“接下来是强化武器。如果用<span class="yellow b">【电磁充能手套】</span>为这把<span class="red b">【红杀铁剑】</span>提供能量，可以使它变化为更强大的形态。你可以试着<span class="yellow b">【合成】</span>一下。<br>通过<span class="yellow b">【合成】</span>，你可以把多个较弱的道具转化为更有用的武器、防具或者别的东西。<br><br>点击<span class="yellow b">【道具合成】</span>按钮吧。”<br>',
 		'object' => 'itemmain',
 		'obj2' => Array('itemmix'),
-		'pulse' => '#itemmix',
+		'pulse' => "input.cmdbutton[value*='合成']",
 		'next' => 3300	
 	),
 	3300 => Array(
@@ -359,7 +359,7 @@ $tutorial_story[1] = Array(
 		'obj2' => Array(
 			'item' => '【红杀铁剑·雷击】'
 		),
-		'pulse' => Array('#z','#itemmix', ".slitmsingle :contains('电磁充能手套')",  ".slitmsingle :contains('【红杀铁剑】')"),
+		'pulse' => Array("input.cmdbutton[value*='合成']","input.cmdbutton[value*='提交']",'#itemmix', ".slitmsingle :contains('电磁充能手套')",  ".slitmsingle :contains('【红杀铁剑】')"),
 		'prog' => '“已经装备的道具要先<span class="yellow b">【卸下】</span>才能参与合成。”<br>如果你已经合成了装备，随便执行一次行动。<br>',
 		'next' => 3400	
 	),
@@ -382,7 +382,7 @@ $tutorial_story[1] = Array(
 			'money<300' => '“钱不够了？在<span class="yellow b">天使队移动格纳库</span>能找到我留下的一些盘缠。”<br>',
 			'“赶紧回去购买《斩系指南》吧。”',
 		),
-		'pulse' => Array('#c','#bshop10','#buy_6c086eaf'),
+		'pulse' => Array("input.cmdbutton[value*='商店']",'#bshop10','#buy_6c086eaf'),
 		'next' => 3600	
 	),
 	3600 => Array(
@@ -412,7 +412,7 @@ $tutorial_story[1] = Array(
 //		'obj2' => Array(
 //			'meetnpc' => 9, 'meetsub' => 0, 'changehp' => 400,
 //		),
-		'pulse' => '#zz',
+		'pulse' => "input.cmdbutton[value*='探索']",
 		'next' => 3800
 	),
 	3800 => Array(
@@ -424,7 +424,7 @@ $tutorial_story[1] = Array(
 		'pulse' => Array(
 			'wep!=【红杀铁剑·雷击】' => ".itmsingle :contains('【红杀铁剑·雷击】') __BUTTON__",
 			'hp<mhp*0.8' => ".itmsingle :contains('面包') __BUTTON__",
-			'#zz',
+			"input.cmdbutton[value*='探索']",
 		),
 		'prog' => Array(
 			'wep!=【红杀铁剑·雷击】' => '“对了，<span class="lime b">别忘了把刚才的武器装备上</span>。”<br>',
@@ -436,7 +436,7 @@ $tutorial_story[1] = Array(
 	3900 => Array(
 		'tips' => '“祝贺你，你已经能够最低限度地在这个『幻境』中存活下去了。”<br>',
 		'object' => 'any',
-		'pulse' => '#z',
+		'pulse' => "input.cmdbutton[value*='确定']",
 		'next' => -1
 	),
 );

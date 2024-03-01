@@ -65,7 +65,11 @@ $para['activate_hint']
 <div style="filter:alpha(opacity=95); opacity:0.95; background-color:#000000">
 <span style="height:5px; display:block;">&nbsp;</span>
 <span style="display:block; margin-left:5px; margin-right:5px;">
-<span>冷却时间还剩</span><span>$para['lsec']</span>秒
+	<!--{if !empty($para['cooling_hint'])}-->
+	$para['cooling_hint']
+	<!--{else}-->
+	<span>冷却时间还剩</span><span>$para['lsec']</span>秒
+	<!--{/if}-->
 </span>
 <span style="height:5px; display:block;">&nbsp;</span>
 </div>
