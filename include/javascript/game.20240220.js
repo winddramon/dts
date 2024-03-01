@@ -712,6 +712,7 @@ function bubblebox_hide_all()
 		$('hidden-persistent-fmsgbox-container').firstChild.style.display = 'none';
 		$('hidden-fmsgbox-container').appendChild($('hidden-persistent-fmsgbox-container').firstChild);
 	}
+	jQuery('#hoverHintMsg').css({display: "none"});
 }
 
 function bubblebox_clear_all()
@@ -728,6 +729,7 @@ function bubblebox_clear_all()
 			$('hidden-persistent-fmsgbox-container').appendChild($('hidden-fmsgbox-container').firstChild);
 		else  $('hidden-fmsgbox-container').removeChild($('hidden-fmsgbox-container').firstChild);
 	}
+	jQuery('#hoverHintMsg').css({display: "none"});
 }
 
 function bubblebox_show(bid, overlay)
@@ -750,6 +752,7 @@ function bubblebox_hide(bid)
 		$('fmsgbox-container').appendChild($('fmsgbox'+(bid.toString())));
 		$('fmsgbox'+(bid.toString())).style.display = 'none';
 	}
+	jQuery('#hoverHintMsg').css({display: "none"});
 }
 
 function bubblebox_switch(bid){
