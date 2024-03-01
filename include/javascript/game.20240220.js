@@ -858,7 +858,7 @@ function BuffIconSecTimer()
 				continue;
 			}
 		}
-		a.firstElementChild.nextElementSibling.innerHTML=nt;
+		a.firstElementChild.nextElementSibling.innerHTML=nt;//谁写的这种面向混淆的代码，sc，是你吗
 		var wh=Math.round(nt/t*32);
 		var z=a.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling;
 		z.nextElementSibling.firstElementChild.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.innerHTML=Number(t-nt).toString();;
