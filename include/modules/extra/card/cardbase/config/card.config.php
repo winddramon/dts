@@ -6655,7 +6655,7 @@ $cards = array(
 		'rare' => 'A',
 		'pack' => 'Way of Life',
 		'desc' => '常在雪中走，哪有不湿鞋',
-		'effect' => '同样的坑不会对你生效两次',
+		'effect' => '人不会两次踏上同一堆狗屎',
 		'desc_skills' => '你不会受到触发过的同名陷阱的伤害',
 		'energy' => 80,
 		'valid' => array(
@@ -6665,11 +6665,11 @@ $cards = array(
 		)
 	),
 	411 => array(
-		'name' => '潜伏的G',
+		'name' => '埋伏的G',
 		'rare' => 'A',
 		'pack' => 'Balefire Rekindle',
 		'desc' => 'BIG就像家里的G，当你发现第一只的时候……',
-		'effect' => '任何玩家触发你埋设的陷阱后，有70%几率再触发同地点的一个陷阱',
+		'effect' => '其他玩家在触发了你埋设的陷阱之后，有70%几率再次触发同一地点已经存在的一个陷阱',
 		'energy' => 100,
 		'valid' => array(
 			'skills' => array(
