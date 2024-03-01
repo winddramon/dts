@@ -1,0 +1,24 @@
+<!--{eval eval(import_module('skill744'));}-->
+<!--{eval $___TEMP_SKILL_ID=744;}-->
+{template MOD_CLUBBASE_SKILLDESC_START}
+<span>
+$clubskillname[$___TEMP_SKILL_ID]
+</span>
+{template MOD_CLUBBASE_SKILLDESC_MID1}
+<td class="skilldesc_left b3"><span class="skilldesc">
+<!--{eval $clv = (int)\skillbase\skill_getvalue(744,'lvl',$who); $exflag744 = (int)\skillbase\skill_getvalue(744,'exflag',$who);}-->
+<!--{if $exflag744}-->
+任何玩家触发你埋设的陷阱或因为此技能效果触发陷阱且受到伤害后，
+<!--{else}-->
+任何玩家触发你埋设的陷阱且受到伤害后，
+<!--{/if}-->
+<br>有<span class="yellow b">{$sk744_actrate[$clv]}%</span>几率再触发同地点的一个陷阱
+</span></td>
+<td class="skilldesc_right b3">
+</td>
+{template MOD_CLUBBASE_SKILLDESC_MID2}
+<!--{if empty($___TEMP_THIS_SKILL_ACQUIRED)}-->
+<span class="yellow b">
+</span>
+<!--{/if}-->
+{template MOD_CLUBBASE_SKILLDESC_END}
