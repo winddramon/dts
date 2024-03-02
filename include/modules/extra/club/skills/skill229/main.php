@@ -28,7 +28,7 @@ namespace skill229
 	function check_unlocked229(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if(\clubbase\skill_check_unlocked_state(229,$pa) > 0) return 0;
+		if(\clubbase\skill_check_alternative_state(229,$pa) > 0) return 0;
 		else return 1;
 	}
 	
@@ -60,7 +60,7 @@ namespace skill229
 			$log .= '你已经选择了这个技能<br>';
 			return;
 		}
-		if(\clubbase\skill_check_unlocked_state(229) & 4)
+		if(\clubbase\skill_check_alternative_state(229) & 4)
 		{
 			$log .= '你已经选择了互斥的技能！<br>';
 			return;

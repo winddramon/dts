@@ -526,8 +526,9 @@ namespace clubbase
 		$sdata = $o_sdata;
 	}
 	
+	//判定互斥可选技能是否能解锁
 	//-1 技能不存在 0 解锁 1 等级不够 2 存在互斥技能且尚未选择 4 互斥技能解锁
-	function skill_check_unlocked_state($skillid, &$pa = NULL)
+	function skill_check_alternative_state($skillid, &$pa = NULL)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		if(!defined('MOD_SKILL'.$skillid.'_INFO')) return -1;

@@ -86,7 +86,7 @@ namespace news_observe
 	function observe_main($obsv_id)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('logger'));
+		eval(import_module('sys','logger'));
 		if(!check_observe_act_allowed()) 
 		{
 			$log .= '<span class="red b">当前游戏设置不允许窥屏，或者你并未满足窥屏需求！</span><br>';
@@ -113,6 +113,8 @@ namespace news_observe
 		$ret = set_observe_groomid($obsv_id);
 		if($ret) $log .= '<span class="yellow b">你关注着'.$obsv_id.'号房间的状况，开始了窥屏……</span><br>';
 		else $log .= '<span class="red b">窥屏失败！</span><br>';
+		
+		$mode = 'command';
 		return;
 	}
 

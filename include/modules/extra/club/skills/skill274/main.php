@@ -48,7 +48,7 @@ namespace skill274
 	function check_unlocked274(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if(\clubbase\skill_check_unlocked_state(274, $pa) > 0) return 0;
+		if(\clubbase\skill_check_alternative_state(274, $pa) > 0) return 0;
 		else return 1;
 	}
 	
