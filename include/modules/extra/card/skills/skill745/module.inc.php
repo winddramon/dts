@@ -1,9 +1,9 @@
 <?php
 
-namespace skill500
+namespace skill745
 {
 	////////// MODULE HEADER START ///////////////
-	$___MODULE_dependency = 'skillbase clubbase player logger bufficons skill603 trap weapon metman enemy attack battle';
+	$___MODULE_dependency = 'sys player skillbase clubbase logger item_uv item_um';
 	$___MODULE_dependency_optional = '';
 	$___MODULE_conflict = '';
 	$___MODULE_codelist = 'main.php';

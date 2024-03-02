@@ -6679,6 +6679,19 @@ $cards = array(
 		),
 		'ignore_global_ach' => 1,
 	),
+	412 => array(
+		'name' => 'G.D.S 独立制作人',
+		'rare' => 'B',
+		'pack' => 'Crimson Swear',
+		'desc' => '先就这么用着，到瓶颈了再说',
+		'effect' => '在使用熟练技能书或熟练药物降低熟练度后，获得技能「解限」：使用熟练技能书或熟练药物时无衰减',
+		'energy' => 80,
+		'valid' => array(
+			'skills' => array(
+				'745' => '0',
+			),
+		)
+	),
 	
 	1000 => array(
 		'name'=>'萌新',
