@@ -6,6 +6,7 @@ namespace weather
 	{
 		eval(import_module('itemmain'));
 		$iteminfo['EW'] = '天气控制';
+		//$itemspkinfo['^wid'] = '天气';//天气控制道具的参数值。本模块没定义，只是占个位置
 	}
 	
 	function calculate_weather_itemfind_obbs()

@@ -131,8 +131,8 @@ namespace itemmain
 		//^mbid   item_umb 状态药物技能编号
 		//^mbtime   item_umb 状态药物技能时效
 		//^mblvl   item_umb 状态药物技能等级
-		//^psr   poison 下毒者编号
-		//^rdsk   radar 探测器等级
+		//^psr   poison 下毒者编号（在ex_digit模块接受定义）
+		//^rdsk   radar 探测器等级（在ex_digit模块接受定义）
 		//^res   ex_residue 余物
 		//^rtype   ex_residue 如何获得/改变记录物品
 		//^reptype   ex_residue 如何代表记录物品
@@ -147,6 +147,7 @@ namespace itemmain
 		//^tlog   ex_uselog 讯息（在后）
 		//^vol   ex_storage 储物容量
 		//^wc   ex_weapon_crack 碎刃
+		//^wid   weather 天气控制参数值（模块中未做定义，只是占位，在ex_digit模块接受定义）
 		//^xyz   itemmix_overlay 超量
 		
 		'^TEST' => '蛋疼',
