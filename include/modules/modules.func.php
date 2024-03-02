@@ -191,16 +191,17 @@ function import_module()
 }
 
 //从模块中获取单个变量的引用，用于大量循环调用eval(import_module())会降低性能的情况
+//返回的是引用，在使用这个函数时可以引用赋值
 function & get_var_in_module($varname, $modulename)
 {
 	if(empty($varname) || !defined('MOD_'.strtoupper($modulename))) return NULL;
 	global $___MOD_SRV;
 	$ret = NULL;
-	//DAEMON模式并且来源是input模块，先判定有没有被初始化过，如果没有，就去$___LOCAL_INPUT__VARS__INPUT_VAR_LIST里找
-	if(isset($GLOBALS['___LOCAL_'.strtoupper($modulename).'__VARS__'.$varname])) {
+	//DAEMON模式并且来源是input模块，先判定有没有被模块初始化过，如果没有再去$___LOCAL_INPUT__VARS__INPUT_VAR_LIST里找
+	if(isset($GLOBALS['___LOCAL_'.strtoupper($modulename).'__VARS__'.$varname]) || 'input' !== $modulename) {
 		$ret = & $GLOBALS['___LOCAL_'.strtoupper($modulename).'__VARS__'.$varname];
 	}
-	elseif($___MOD_SRV && defined('IN_DAEMON') && $modulename == 'input'){
+	elseif($___MOD_SRV && defined('IN_DAEMON') && 'input' === $modulename){
 		global $___LOCAL_INPUT__VARS__INPUT_VAR_LIST;
 		if(isset($___LOCAL_INPUT__VARS__INPUT_VAR_LIST[$varname]))
 			$ret = & $___LOCAL_INPUT__VARS__INPUT_VAR_LIST[$varname];

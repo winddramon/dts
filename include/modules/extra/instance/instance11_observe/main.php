@@ -330,7 +330,7 @@ namespace instance11
 			return;
 		}
 		set_current_roomid($rid);
-		eval(import_module('player'));
+		$gamedata = & get_var_in_module('gamedata','player');
 		$gamedata['url']='game.php';
 	}
 

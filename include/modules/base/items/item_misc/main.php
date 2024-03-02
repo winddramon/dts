@@ -405,7 +405,8 @@ namespace item_misc
 				}
 				return;
 			} elseif(strpos($itm,'测试道具A')!==false){
-				var_dump(\attrbase\config_process_encode_comp_itmsk('z^res_<:comp_itmsk:>{测试成功,HB,2,2,,}1Z'));
+				$url = & get_var_in_module('url','sys');
+				$url = 'winner.php';
 				return;
 			} elseif('『我是说在座的各位都是垃圾』' === $itm){
 				$mhpdown = 100;
