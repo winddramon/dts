@@ -89,8 +89,12 @@ namespace bufficons
 					eval(import_module('clubbase'));
 					if(!empty($clubskillname[$token])){
 						$config['hint'] = '技能「'.$clubskillname[$token].'」';
-						if(empty($config['activate_hint']) && !empty($config['clickable'])) {
-							$config['activate_hint'] = '点击发动技能「'.$clubskillname[$token].'」';
+						if(empty($config['activate_hint'])) {
+							if(!empty($config['clickable'])) {
+								$config['activate_hint'] = '点击发动技能「'.$clubskillname[$token].'」';
+							}else{
+								$config['activate_hint'] = '技能「'.$clubskillname[$token].'」冷却完毕';
+							}
 						}
 					}
 				}

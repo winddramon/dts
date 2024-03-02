@@ -1,4 +1,4 @@
-<!--{eval eval(import_module('skill499','sys'));}-->
+<!--{eval eval(import_module('skill499','sys','bufficons'));}-->
 <!--{eval $___TEMP_SKILL_ID=499;}-->
 {template MOD_CLUBBASE_SKILLDESC_START}
 <span>
@@ -6,12 +6,12 @@
 </span>
 {template MOD_CLUBBASE_SKILLDESC_MID1}
 <td class="skilldesc_left b3"><span class="skilldesc">
-<!--{eval $skill499_rm = \skillbase\skill_getvalue(499,'expire')-$now}-->
+<!--{eval $st = \bufficons\bufficons_check_buff_state(499,$who);$rm=$tmp_totsec-$tmp_nowsec;}-->
 <span class="yellow b">$skill499_act_time</span>秒内，你免疫一切战斗和陷阱伤害<br>
-<!--{if $skill499_rm>0}-->
-<span class="yellow b">技能作用有效时间还剩<span>$skill499_rm</span>秒。</span><br>
-<!--{else}-->
-<span class="yellow b">技能作用生效时间已经结束。</span><br>
+<!--{if 1 == $st}-->
+<span class="yellow b">技能作用有效时间还剩<span>$rm</span>秒。</span><br>
+<!--{elseif $st >= 2}-->
+<span class="red b">技能作用生效时间已经结束。</span><br>
 <!--{/if}-->
 </span></td>
 <td class="skilldesc_right b3">

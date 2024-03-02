@@ -7,7 +7,7 @@ namespace skill1002
 	
 	function init() 
 	{
-		define('MOD_SKILL1002_INFO','card;locked;unique;');
+		define('MOD_SKILL1002_INFO','card;locked;buffer;');
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[1002] = '无垢';
 		$bufficons_list[1002] = Array(
@@ -39,7 +39,7 @@ namespace skill1002
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','skill1002'));
-		if(\skillbase\skill_query(1002,$pa) && check_unlocked1002($pa) && 1 == \bufficons\bufficons_check_buff_state(1002, $pa))
+		if(1 == \bufficons\bufficons_check_buff_state(1002, $pa))
 			return true;
 		return false;
 	}

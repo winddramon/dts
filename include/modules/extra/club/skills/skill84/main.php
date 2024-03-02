@@ -4,7 +4,7 @@ namespace skill84
 {		
 	function init() 
 	{
-		define('MOD_SKILL84_INFO','club;hidden;debuff;');
+		define('MOD_SKILL84_INFO','club;hidden;buffer;');
 		eval(import_module('bufficons'));
 		$bufficons_list[84] = Array(
 			'disappear' => 1,

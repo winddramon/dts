@@ -6,11 +6,12 @@ namespace skill456
 	
 	function init() 
 	{
-		define('MOD_SKILL456_INFO','card;upgrade;');
+		define('MOD_SKILL456_INFO','card;buffer;');
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[456] = '突击';
 		$bufficons_list[456] = Array(
 			'disappear' => 1,
+			'activate_hint' => '<span class="red b">技能「突击」生效时间已经结束</span>',
 		);
 	}
 	

@@ -1,5 +1,5 @@
 <!--{eval $___TEMP_SKILL_ID=519;}-->
-<!--{eval eval(import_module('clubbase','sys','skill519'));}-->
+<!--{eval eval(import_module('clubbase','sys','skill519','bufficons'));}-->
 {template MOD_CLUBBASE_SKILLDESC_START}
 <span>
 $clubskillname[$___TEMP_SKILL_ID]
@@ -7,10 +7,10 @@ $clubskillname[$___TEMP_SKILL_ID]
 {template MOD_CLUBBASE_SKILLDESC_MID1}
 <td class="skilldesc_left b3"><span class="skilldesc">
 <span class="cyan b">称号特性</span> 只要冷却完毕，你被战斗和陷阱杀死时必然复活。<br>
-<!--{eval $skill519_lst = (int)\skillbase\skill_getvalue(519,'lastrev',$who); $skill519_time = ($now-$skill519_lst); $skill519_rem = $skill519_cd - $skill519_time;}-->
-<!--{if $skill519_time<$skill519_cd}-->
-<span class="red b">技能冷却中，冷却时间还剩<span>$skill519_rem</span>秒。</span><br>
-<!--{else}-->
+<!--{eval $st = \bufficons\bufficons_check_buff_state(519,$who);$rm=$tmp_totsec-$tmp_nowsec;}-->
+<!--{if 2 == $st}-->
+<span class="red b">技能冷却中，冷却时间还剩<span>$rm</span>秒。</span><br>
+<!--{elseif 3 == $st}-->
 <span class="cyan b">技能冷却完毕。</span><br>
 <!--{/if}-->
 </span></td>
