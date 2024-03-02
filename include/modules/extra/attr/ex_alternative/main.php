@@ -141,7 +141,10 @@ namespace ex_alternative
 		$skn = $chprocess($skk, $skn, $sks);
 		if(strpos($skk, '^alt')===0) {
 			eval(import_module('ex_alternative'));
-			if ($tmp_ex_alternative_atype == 4) return "<span class='yellow b' style='font-size:12px;'>■■■</span>";
+			if ($tmp_ex_alternative_atype == 4) {
+				$skn = "<span class='yellow b' style='font-size:12px;'>■■■</span>";
+				return $skn;
+			}
 			$skarr = explode(',',\attrbase\base64_decode_comp_itmsk($sks));
 			$sknarr = Array();
 			foreach($skarr as $v){
@@ -179,22 +182,20 @@ namespace ex_alternative
 	//出于性能考虑和避免潜在的无限嵌套问题，单纯用字符串判定而非check_in_itmsk()
 	function parse_itmsk_desc($sk_value){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('ex_alternative'));
 		$i = strpos($sk_value, '^ahid');
 		if(false !== $i) {
-			eval(import_module('ex_alternative'));
 			$tmp_ex_alternative_atype = 4;
 		}
 		else
 		{
 			$i = strpos($sk_value, '^atype');
 			if(false !== $i) {
-				eval(import_module('ex_alternative'));
 				$tmp_ex_alternative_atype = (int)substr($sk_value, $i+6, 1);
 			}
 		}
 
 		$ret = $chprocess($sk_value);
-
 		if (!empty($tmp_ex_alternative_atype)) {
 			$tmp_ex_alternative_atype = 0;
 		}
