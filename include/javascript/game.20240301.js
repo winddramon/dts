@@ -437,7 +437,10 @@ function showData_effect(shwData) {
 		effect_clear_all();
 		var sDe = shwData['effect'];
 		for(var ef in sDe){
-			if(ef == 'pulse'){
+			if(ef == 'class_changeto'){
+				let cls0 = sDe[ef][0]; let cls1 = sDe[ef][1];
+				jQuery('.'+cls0).removeClass(cls0).addClass(cls1);
+			} else if(ef == 'pulse'){
 				for (var ei=0; ei<sDe[ef].length; ei++){
 					if(sDe[ef][ei].search('__BUTTON__') >= 0){
 						sDe[ef][ei] = sDe[ef][ei].replace('__BUTTON__','');

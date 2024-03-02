@@ -60,6 +60,7 @@ if($mode == 'edit') {
 	$ustgkeys = Array(
 		'skip_opening' => 'int', //是否跳过开场剧情
 		'item_auto_merge' => 'int', //是否自动合并可合并的道具
+		'gscroll_type' => 'int',//滚动条样式
 	);
 	$ustgflag = 0;
 	foreach($ustgkeys as $pm => $tp) {

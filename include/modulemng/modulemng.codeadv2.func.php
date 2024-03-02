@@ -932,6 +932,7 @@ function merge_replace_return($ret_varname, $subject){
 		list($ret_behind, $ret_middle, $ret_ahead) = merge_add_braces_core($lval[0]+$global_offset, $subject);
 		$break_str = $break_str = $lval[1] > 1 ? 'break ' . $lval[1] : 'break';
 		$ret_middle = preg_replace('/return\s*?;/s', $ret_varname." = NULL;\r\n\t\t\t{$break_str}; ", $ret_middle, 1);
+		//下面这句如果return后面接的是一个里面有半角分号的字符串，就会断错句，回头精力充沛的时候来改掉吧，或者哪位路过的好心人帮忙改一下。
 		$ret_middle = preg_replace('/return\s*?(.*?);/s', $ret_varname." = $1;\r\n\t\t\t{$break_str}; ", $ret_middle, 1);
 		$tmp_subject = $ret_behind . $ret_middle . $ret_ahead;		
 		$global_offset += strlen($tmp_subject) - strlen($subject);

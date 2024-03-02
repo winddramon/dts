@@ -64,6 +64,19 @@ namespace user_settings
 		}
 		$chprocess($sameitem);
 	}
+
+	//给js传参改变滚动条样式
+	function parse_interface_gameinfo() 
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$chprocess();
+		$u_settings = get_u_settings();
+		if(!empty($u_settings['gscroll_type'])) {
+			$uip = & get_var_in_module('uip','sys');
+			$class_changeto = 'gscroll_'.(int)$u_settings['gscroll_type'];
+			$uip['effect']['class_changeto'] = Array('gscroll', $class_changeto);
+		}
+	}
 }
 
 ?>
