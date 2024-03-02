@@ -6,6 +6,7 @@ namespace weather
 	{
 		eval(import_module('itemmain'));
 		$iteminfo['EW'] = '天气控制';
+		//$itemspkinfo['^wid'] = '天气';//天气控制道具的参数值。本模块没定义，只是占个位置
 	}
 	
 	function calculate_weather_itemfind_obbs()
@@ -201,6 +202,20 @@ namespace weather
 				$log .= "你感觉到一股苍凉的杀气！可能是空调开得太冷了。<br>";
 			}
 		}
+		elseif($weather == 19) //暖气
+		{
+			$dice = rand(0,99);
+			if($dice == 0)
+			{
+				$log .= "<span class=\"ltcrimson b\">开的太高的暖气让你昏昏欲睡……</span><br>";
+				$state = 1;
+				$mode = 'rest';
+				$command = 'rest';
+			}elseif($dice <= 10)
+			{
+				$log .= "你好像闻到了<span class=\"ltcrimson b\">煤气罐</span>的气味……<br>";
+			}
+		}
 		return $chprocess($moveto);
 	}
 	
@@ -273,6 +288,20 @@ namespace weather
 				$log .= "你感觉到一股苍凉的杀气！可能是空调开得太冷了。<br>";
 			}
 		}
+		elseif($weather == 19) //暖气
+		{
+			$dice = rand(0,99);
+			if($dice == 0)
+			{
+				$log .= "<span class=\"ltcrimson b\">开的太高的暖气让你昏昏欲睡……</span><br>";
+				$state = 1;
+				$mode = 'rest';
+				$command = 'rest';
+			}elseif($dice <= 10)
+			{
+				$log .= "你好像闻到了<span class=\"ltcrimson b\">煤气罐</span>的气味……<br>";
+			}
+		}
 		return $chprocess();
 	}
 	
@@ -282,30 +311,29 @@ namespace weather
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		
 		eval(import_module('sys','map','player','logger','weather'));
-		if($weather >= 14 && $itmsk != 95){
+		if (empty($itmsk)) $wid = 0;
+		elseif (is_numeric($itmsk)) $wid = (int)$itmsk;
+		elseif (defined('MOD_ATTRBASE')) $wid = (int)\attrbase\check_in_itmsk('^wid', $itmsk);
+		else $wid = 0;
+		
+		if($weather >= 14 && !in_array($wid, array(18, 19, 95))){
 			addnews ( $now, 'wthfail', $name, $weather, $itm );
 			$log .= "你使用了{$itm}。<br /><span class=\"red b\">但是天气并未发生任何变化！</span><br />";
 		}else{
-			if($itmsk==99){$weather = rand ( 0, 13 );}//随机全天气
-			elseif($itmsk==98){$weather = rand ( 10, 13 );}//随机恶劣天气
-			elseif($itmsk==97){$weather = rand ( 0, 9 );}//随机一般天气
-			elseif($itmsk==96){$weather = rand ( 8, 9 );}//随机起雾天气
-			//elseif($itmsk==95){$weather = rand ( 14, 16 );}//随机末日天气
-			elseif($itmsk==95){$weather = 17;}//末日天气改为极光，数值和大晴是一样的
-			elseif(!empty($itmsk) && is_numeric($itmsk)){
-				if($itmsk >=0 && $itmsk < count($wthinfo)){
-					$weather = $itmsk;
-				}else{$weather = 0;}
-			}
-			else{$weather = 0;}
+			if($wid==99) $weather = rand ( 0, 13 );//随机全天气
+			elseif($wid==98) $weather = rand ( 10, 13 );//随机恶劣天气
+			elseif($wid==97) $weather = rand ( 0, 9 );//随机一般天气
+			elseif($wid==96) $weather = rand ( 8, 9 );//随机起雾天气
+			//elseif($wid==95){$weather = rand ( 14, 16 );}//随机末日天气
+			elseif($wid==95) $weather = 17;//末日天气改为极光，数值和大晴是一样的
+			elseif($wid >=0 && $wid < count($wthinfo)) $weather = $wid;
+			else $weather = 0;
 			save_gameinfo ();
 			addnews ( $now, 'wthchange', $name, $weather, $itm );
 			$log .= "你使用了{$itm}。<br />天气突然转变成了<span class=\"red b\">$wthinfo[$weather]</span>！<br />";
 		}
 		return;
 	}
-	
-	
 	
 	function add_once_area($atime)	//增加禁区天气变化
 	{

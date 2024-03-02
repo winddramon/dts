@@ -53,7 +53,7 @@ namespace skill483
 			return;
 		}
 		$money-=$c;
-		$flag = \bufficons\bufficons_set_timestamp(483, 120, 0);
+		$flag = \bufficons\bufficons_set_timestamp(483, $skill483_effect_duration, 0);
 		if(!$flag) {
 			$log.='发动失败！<br>';
 			return;
@@ -125,7 +125,7 @@ namespace skill483
 	function bufficons_display_single($token, $config, &$pa=NULL) {
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		list($src, $config_ret) = $chprocess($token, $config, $pa);
-		if(483 == $token) {
+		if(483 == $token && \skillbase\skill_query(483,$pa) && check_unlocked483($pa)) {
 			$config_ret['activate_hint'] = '点击发动技能「氪金」，消耗'.\skillbase\skill_getvalue(483,'cost',$pa).'元';
 		}
 		return Array($src, $config_ret);

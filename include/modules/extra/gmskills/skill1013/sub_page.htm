@@ -1,0 +1,19 @@
+<input type="hidden" name="mode" value="special">
+<input type="hidden" id="command" name="command" value="skill1013_special">
+<input type="hidden" id="subcmd" name="subcmd" value="acquire">
+<input type="hidden" id="skillid" name="skillid" value="0">
+<input type="button" class="cmdbutton" value="返回" onclick="$('command').value='menu'; postCmd('gamecmd','command.php',this);">
+<br>
+<!--{eval eval(import_module('clubbase')); $skilllist = array_keys($clubskillname); sort($skilllist); $min = $skilllist[0]; $max = $skilllist[count($skilllist)-1];}-->
+<!--{loop range($min,$max) $i}-->
+    <!--{if defined('MOD_SKILL'.$i) && !\skillbase\check_skill_info($i,'debuff') && !\skillbase\check_skill_info($i,'achievement') && !\skillbase\skill_query($i)}-->
+    <button onclick="$('skillid').value={$i};postCmd('gamecmd','command.php',this);" >
+        <!--{if !empty($clubskillname[$i])}-->
+        {$i}：<!--{eval echo strip_tags($clubskillname[$i]);}-->
+        <!--{else}-->
+        {$i}号无名技能
+        <!--{/if}-->
+    </button>
+    <br>
+    <!--{/if}-->
+<!--{/loop}-->

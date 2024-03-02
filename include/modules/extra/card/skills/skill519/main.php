@@ -7,15 +7,20 @@ namespace skill519
 	function init() 
 	{
 		define('MOD_SKILL519_INFO','club;feature;locked;');
-		eval(import_module('clubbase'));
+		eval(import_module('clubbase','bufficons'));
 		$clubskillname[519] = '幽灵';
+		$bufficons_list[519] = Array(
+			'disappear' => 0,
+		);
 	}
 	
 	function acquire519(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys'));
-		\skillbase\skill_setvalue(519,'lastrev',0,$pa);//开局就可使用
+		eval(import_module('sys','skill519'));
+		\skillbase\skill_setvalue(519,'start_ts',0,$pa);	
+		\skillbase\skill_setvalue(519,'end_ts',1,$pa);	
+		\skillbase\skill_setvalue(519,'cd_ts',0,$pa);
 	}
 
 	function lost519(&$pa)
@@ -59,10 +64,10 @@ namespace skill519
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa, $pd, $rkey);
 		if('skill519' == $rkey){
-			eval(import_module('sys'));
+			eval(import_module('sys','skill519'));
 			$pd['hp']=$pd['mhp'];
 			$pd['skill519_flag']=1;
-			\skillbase\skill_setvalue(519,'lastrev',$now,$pd);
+			\bufficons\bufficons_set_timestamp(519, 0, $skill519_cd, $pd);
 			$pd['rivival_news'] = array('revival519', $pd['name']);
 		}
 		return;
@@ -114,44 +119,7 @@ namespace skill519
 	//return 1:技能生效中 2:技能冷却中 3:技能冷却完毕 其他:不能使用这个技能
 	function check_skill519_state(&$pa){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(519, $pa) || !check_unlocked519($pa)) return 0;
-		eval(import_module('sys','player','skill519'));
-		$l=\skillbase\skill_getvalue(519,'lastrev',$pa);
-		if ($now-$l<=$skill519_cd) return 2;
-		return 3;
-	}
-	
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if ((\skillbase\skill_query(519,$sdata))&&check_unlocked519($sdata))
-		{
-			eval(import_module('skill519'));
-			$skill519_lst = (int)\skillbase\skill_getvalue(519,'lastrev'); 
-			$skill519_time = $now-$skill519_lst; 
-			$z=Array(
-				'disappear' => 0,
-				'clickable' => 0,
-				'hint' => '技能「幽灵」',
-			);
-			if ($skill519_time<$skill519_cd)
-			{
-				$z['style']=2;
-				$z['totsec']=$skill519_cd;
-				$z['nowsec']=$skill519_time;
-				$z['activate_hint'] = "技能「幽灵」冷却中";
-			}
-			else 
-			{
-				$z['clickable'] = 0;
-				$z['style']=3;
-				$z['activate_hint'] = "技能「幽灵」冷却完毕";
-			}
-			\bufficons\bufficon_show('img/skill519.gif',$z);
-		}
-		$chprocess();
+		return \bufficons\bufficons_check_buff_state(519, $pa);
 	}
 	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())

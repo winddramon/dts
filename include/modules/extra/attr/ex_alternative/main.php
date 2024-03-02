@@ -130,6 +130,7 @@ namespace ex_alternative
 			$altwords = \itemmain\parse_itmk_words($alts);
 			if ($suf) $altwords .= '类别';
 		}
+		$altwords = strip_tags($altwords);
 		return $altwords;
 	}	
 	
@@ -140,7 +141,10 @@ namespace ex_alternative
 		$skn = $chprocess($skk, $skn, $sks);
 		if(strpos($skk, '^alt')===0) {
 			eval(import_module('ex_alternative'));
-			if ($tmp_ex_alternative_atype == 4) return "<span class='yellow b' style='font-size:12px;'>■■■</span>";
+			if ($tmp_ex_alternative_atype == 4) {
+				$skn = "<span class='yellow b' style='font-size:12px;'>■■■</span>";
+				return $skn;
+			}
 			$skarr = explode(',',\attrbase\base64_decode_comp_itmsk($sks));
 			$sknarr = Array();
 			foreach($skarr as $v){
@@ -149,10 +153,10 @@ namespace ex_alternative
 						$sknarr[] = $v;
 						break;
 					case 2:
-						$sknarr[] = \itemmain\get_itmsk_words_single($v);
+						$sknarr[] = strip_tags(\itemmain\parse_itmsk_words($v));
 						break;
 					default:
-						$sknarr[] = \itemmain\parse_itmk_words($v);
+						$sknarr[] = strip_tags(\itemmain\parse_itmk_words($v));
 					break;
 				}
 			}
@@ -164,7 +168,7 @@ namespace ex_alternative
 	
 	//判定复合属性是否显示
 	function check_comp_itmsk_visible($cinfo){
-		if (eval(__MAGIC__)) return $___RET_VALUE;	
+		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$ret = $chprocess($cinfo);
 		if ($ret) {
 			//if (strpos($cinfo[0], '^alt') === 0) return false;
@@ -178,22 +182,20 @@ namespace ex_alternative
 	//出于性能考虑和避免潜在的无限嵌套问题，单纯用字符串判定而非check_in_itmsk()
 	function parse_itmsk_desc($sk_value){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('ex_alternative'));
 		$i = strpos($sk_value, '^ahid');
 		if(false !== $i) {
-			eval(import_module('ex_alternative'));
 			$tmp_ex_alternative_atype = 4;
 		}
 		else
 		{
 			$i = strpos($sk_value, '^atype');
 			if(false !== $i) {
-				eval(import_module('ex_alternative'));
 				$tmp_ex_alternative_atype = (int)substr($sk_value, $i+6, 1);
 			}
 		}
 
 		$ret = $chprocess($sk_value);
-
 		if (!empty($tmp_ex_alternative_atype)) {
 			$tmp_ex_alternative_atype = 0;
 		}

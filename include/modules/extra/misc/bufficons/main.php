@@ -76,11 +76,11 @@ namespace bufficons
 				$src = !empty($config['src']) ? $config['src'] : 'img/skill'.$token.'.gif';
 				if(!isset($config['disappear'])) {
 					$config['disappear'] = 1;
-					if(\skillbase\check_skill_info($token, 'upgrade')) $config['disappear'] = 0;
+					if(\skillbase\check_skill_info($token, 'upgrade;') || \skillbase\check_skill_info($token, 'battle;')) $config['disappear'] = 0;
 				}
 				if(!isset($config['clickable'])) {//这里先判定设定上是否需要激活
 					$config['clickable'] = 0;
-					if(\skillbase\check_skill_info($token, 'upgrade')) $config['clickable'] = 1;
+					if(\skillbase\check_skill_info($token, 'upgrade;')) $config['clickable'] = 1;
 				}
 				if(empty($config['onclick']) && !empty($config['clickable'])) {
 					$config['onclick'] = "$('mode').value='special';$('command').value='skill".$token."_special';$('subcmd').value='activate';postCmd('gamecmd','command.php',this);";
@@ -88,9 +88,21 @@ namespace bufficons
 				if(empty($config['hint'])){
 					eval(import_module('clubbase'));
 					if(!empty($clubskillname[$token])){
-						$config['hint'] = '技能「'.$clubskillname[$token].'」';
-						if(empty($config['activate_hint']) && !empty($config['clickable'])) {
-							$config['activate_hint'] = '点击发动技能「'.$clubskillname[$token].'」';
+						if(\skillbase\check_skill_info($token, 'battle;')) {
+							$config['hint'] = '战斗技「'.$clubskillname[$token].'」';
+						}else{
+							$config['hint'] = '技能「'.$clubskillname[$token].'」';
+						}
+						if(empty($config['activate_hint'])) {
+							if(!empty($config['clickable'])) {
+								$config['activate_hint'] = '点击发动技能「'.$clubskillname[$token].'」';
+							}else{
+								if(\skillbase\check_skill_info($token, 'battle;')) {
+									$config['activate_hint'] = '战斗技「'.$clubskillname[$token].'」已就绪<br>在战斗界面可以发动';
+								}else{
+									$config['activate_hint'] = '技能「'.$clubskillname[$token].'」冷却完毕';
+								}
+							}
 						}
 					}
 				}

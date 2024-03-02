@@ -303,6 +303,9 @@ skill735,extra/card/skills/skill735/,1
 skill736,extra/card/skills/skill736/,1
 skill110,extra/club/skills/skill110/,1
 club27,extra/club/clubs/club27/,1
+skill1013,extra/gmskills/skill1013/,1
+skill743,extra/card/skills/skill743/,1
+skill744,extra/card/skills/skill744/,1
 wep_g,base/weapon/wep_g/,1
 wep_j,base/weapon/wep_j/,1
 skill273,extra/club/skills/skill273/,1
@@ -320,6 +323,7 @@ skill12,extra/club/skills/skill12/,1
 skill223,extra/club/skills/skill223/,1
 event,base/event/,1
 skill710,extra/card/skills/skill710/,1
+skill745,extra/card/skills/skill745/,1
 npcchat_bubble,extra/misc/npcchat_bubble/,1
 item_slip,extra/item_extra/item_slip/,1
 skill331,extra/activities/halloween2017/skill331/,1
@@ -435,6 +439,7 @@ skill102,extra/club/skills/skill102/,1
 skill103,extra/club/skills/skill103/,1
 skill104,extra/club/skills/skill104/,1
 skill732,extra/card/skills/skill732/,1
+ex_equipskill,extra/attr/ex_equipskill/,1
 skill1000,extra/instance/instance7_tutorial/skill1000/,1
 skill711,extra/card/skills/skill711/,1
 skill1007,extra/npc_action/skill1007/,1

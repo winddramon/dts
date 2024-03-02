@@ -7,11 +7,12 @@ namespace skill455
 	
 	function init() 
 	{
-		define('MOD_SKILL455_INFO','card;');
+		define('MOD_SKILL455_INFO','card;buffer;');
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[455] = '无敌';
 		$bufficons_list[455] = Array(
 			'disappear' => 1,
+			'activate_hint' => '<span class="red b">技能「无敌」生效时间已经结束</span>',
 		);
 	}
 	

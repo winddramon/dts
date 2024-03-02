@@ -7,16 +7,21 @@ namespace skill1002
 	
 	function init() 
 	{
-		define('MOD_SKILL1002_INFO','card;locked;unique;');
-		eval(import_module('clubbase'));
+		define('MOD_SKILL1002_INFO','card;locked;buffer;');
+		eval(import_module('clubbase','bufficons'));
 		$clubskillname[1002] = '无垢';
+		$bufficons_list[1002] = Array(
+			'disappear' => 1,
+		);
 	}
 	
 	function acquire1002(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','skill1002'));
-		\skillbase\skill_setvalue(1002,'expire',$now + $skill1002_act_time,$pa);
+		\skillbase\skill_setvalue(1002,'start_ts',$now,$pa);	
+		\skillbase\skill_setvalue(1002,'end_ts',$now+$skill1002_act_time,$pa);	
+		\skillbase\skill_setvalue(1002,'cd_ts',$now+$skill1002_act_time,$pa);
 	}
 	
 	function lost1002(&$pa)
@@ -34,10 +39,9 @@ namespace skill1002
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','skill1002'));
-		if(!\skillbase\skill_query(1002,$pa)) return false;
-		$expire = \skillbase\skill_getvalue(1002,'expire',$pa);
-		if($now > $expire) return false;
-		else return true;
+		if(1 == \bufficons\bufficons_check_buff_state(1002, $pa))
+			return true;
+		return false;
 	}
 	
 	//无垢状态下不能遭遇尸体
@@ -74,9 +78,9 @@ namespace skill1002
 		if (in_array($pd['state'],Array(20,21,22,23,24,25,27,29)))
 			if (\skillbase\skill_query(1002,$pd) && in_array($pa['type'],$skill1002_no_effect_array))
 			{
-				eval(import_module('sys','logger'));
 				if (check_available1002($pd))
 				{
+					eval(import_module('logger'));
 					$log.="<span class=\"cyan b\">都告诉你了，无垢对某些NPC无效……快去死吧。</span><br>";
 				}
 			}
@@ -95,39 +99,6 @@ namespace skill1002
 			return 0;
 		}	
 		return $chprocess($pa,$pd,$tritm,$damage);
-	}
-	
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if (\skillbase\skill_query(1002,$sdata) && check_unlocked1002($sdata))
-		{
-			eval(import_module('skill1002'));
-			$skill1002_time = $skill1002_act_time - (\skillbase\skill_getvalue(1002,'expire') - $now);
-			$z=Array(
-				'disappear' => 0,
-			);
-			if ($skill1002_time < $skill1002_act_time)
-			{
-				$z['clickable'] = 1;
-				$z['style']=1;
-				$z['totsec']=$skill1002_act_time;
-				$z['nowsec']=$skill1002_time;
-				$skill1002_rm = $skill1002_act_time-$skill1002_time;
-				$z['hint'] = "技能「无垢」";
-			}
-			else  
-			{
-				$z['clickable'] = 0;
-				$z['style']=3;
-				$z['activate_hint'] = "技能「无垢」生效时间已经结束";
-				\skillbase\skill_lost(1002);	//仅限一次，进入CD即自动失去技能
-			}
-			\bufficons\bufficon_show('img/skill1002.gif',$z);
-		}
-		$chprocess();
 	}
 }
 

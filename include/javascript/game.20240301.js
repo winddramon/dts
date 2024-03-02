@@ -437,7 +437,10 @@ function showData_effect(shwData) {
 		effect_clear_all();
 		var sDe = shwData['effect'];
 		for(var ef in sDe){
-			if(ef == 'pulse'){
+			if(ef == 'class_changeto'){
+				let cls0 = sDe[ef][0]; let cls1 = sDe[ef][1];
+				jQuery('.'+cls0).removeClass(cls0).addClass(cls1);
+			} else if(ef == 'pulse'){
 				for (var ei=0; ei<sDe[ef].length; ei++){
 					if(sDe[ef][ei].search('__BUTTON__') >= 0){
 						sDe[ef][ei] = sDe[ef][ei].replace('__BUTTON__','');
@@ -712,6 +715,7 @@ function bubblebox_hide_all()
 		$('hidden-persistent-fmsgbox-container').firstChild.style.display = 'none';
 		$('hidden-fmsgbox-container').appendChild($('hidden-persistent-fmsgbox-container').firstChild);
 	}
+	jQuery('#hoverHintMsg').css({display: "none"});
 }
 
 function bubblebox_clear_all()
@@ -728,6 +732,7 @@ function bubblebox_clear_all()
 			$('hidden-persistent-fmsgbox-container').appendChild($('hidden-fmsgbox-container').firstChild);
 		else  $('hidden-fmsgbox-container').removeChild($('hidden-fmsgbox-container').firstChild);
 	}
+	jQuery('#hoverHintMsg').css({display: "none"});
 }
 
 function bubblebox_show(bid, overlay)
@@ -750,6 +755,7 @@ function bubblebox_hide(bid)
 		$('fmsgbox-container').appendChild($('fmsgbox'+(bid.toString())));
 		$('fmsgbox'+(bid.toString())).style.display = 'none';
 	}
+	jQuery('#hoverHintMsg').css({display: "none"});
 }
 
 function bubblebox_switch(bid){
@@ -855,7 +861,7 @@ function BuffIconSecTimer()
 				continue;
 			}
 		}
-		a.firstElementChild.nextElementSibling.innerHTML=nt;
+		a.firstElementChild.nextElementSibling.innerHTML=nt;//谁写的这种面向混淆的代码，sc，是你吗
 		var wh=Math.round(nt/t*32);
 		var z=a.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling;
 		z.nextElementSibling.firstElementChild.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.innerHTML=Number(t-nt).toString();;

@@ -259,7 +259,7 @@ namespace clubbase
 	//1:武器系别不正确，需要定义$wepk_req变量，其中是$iteminfo代码（WC WG等）
 	//2:攻击方式不正确，需要定义$wep_skillkind_req变量，其中是熟练度代码（wc wg等）
 	//3:怒气不足，需要定义get_rage_costXXX(&$pa)函数
-	//4:正在CD，需要定义check_skillXXX_state(&$pa)函数
+	//4:正在CD，需要定义check_skillXXX_state(&$pa)函数，或者依赖bufficons模块
 	//5:次数用尽
 	//6以后自定义
 	//6:神击特殊提示
@@ -274,10 +274,11 @@ namespace clubbase
 		$rage_func = '\\skill'.$skillno.'\\get_rage_cost'.$skillno;
 		$state_func = '\\skill'.$skillno.'\\check_skill'.$skillno.'_state';
 		$remain_func = '\\skill'.$skillno.'\\get_remaintime'.$skillno;
+
 		if(!empty($wepk_req) && substr($ldata['wepk'],0,2) != $wepk_req) $ret = 1;
 		elseif(!empty($wep_skillkind_req) && \weapon\get_skillkind($ldata,$edata,1) != $wep_skillkind_req) $ret = 2;
 		elseif(function_exists($rage_func) && $ldata['rage'] < $rage_func($ldata)) $ret = 3;
-		elseif(defined('MOD_BUFFICONS') && \bufficons\bufficons_check_buff_state($skillno,$ldata) <= 2) $ret = 4;
+		elseif(defined('MOD_BUFFICONS') && \bufficons\bufficons_check_buff_state($skillno,$ldata) == 2) $ret = 4;
 		elseif(function_exists($state_func) && 2 == $state_func($ldata)) $ret = 4;
 		elseif(function_exists($remain_func) && $remain_func($ldata) <= 0) $ret = 5;
 		//6以后请自定义
@@ -525,8 +526,9 @@ namespace clubbase
 		$sdata = $o_sdata;
 	}
 	
+	//判定互斥可选技能是否能解锁
 	//-1 技能不存在 0 解锁 1 等级不够 2 存在互斥技能且尚未选择 4 互斥技能解锁
-	function skill_check_unlocked_state($skillid, &$pa = NULL)
+	function skill_check_alternative_state($skillid, &$pa = NULL)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		if(!defined('MOD_SKILL'.$skillid.'_INFO')) return -1;

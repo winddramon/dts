@@ -240,11 +240,10 @@ namespace sys
 		} elseif(5 == $chat['type']) {
 			$msg = '【'.$chatinfo[$chat['type']].'】'.$chat['msg'].'('.date("H:i:s",$chat['time']).')';
 		} elseif(6 == $chat['type']) {
-			//占位符
 		}
 
 		//拼接生成基础版聊天信息
-		if(empty($msg)) $msg = '【'.$chatinfo[$chat['type']].'】'.$chat['send'].'：'.$chat['msg'].'('.date("H:i:s",$chat['time']).')';
+		if(empty($msg)) $msg = '【'.$chatinfo[$chat['type']].'】'.(!empty($chat['send']) ? $chat['send'].'：' : '').$chat['msg'].'('.date("H:i:s",$chat['time']).')';
 		
 		return $premsg.$msg.$postmsg;
 	}

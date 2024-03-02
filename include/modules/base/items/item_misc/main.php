@@ -237,7 +237,7 @@ namespace item_misc
 					$arf='权限狗的毛绒后爪';$arfk = 'DF';$arfe = 5000;$arfs = 1000;$arfsk = 'Mm';
 					$art='Untainted Glory';$artk = 'A';$arte = 1;$arts = 1;$artsk = 'c^hu2000';
 					if (defined('MOD_CLUBBASE')) eval(import_module('clubbase'));
-					foreach(array(1010,1011,1012) as $skv){
+					foreach(array(1010,1011,1012,1013) as $skv){
 						if(defined('MOD_SKILL'.$skv)) {
 							if (!\skillbase\skill_query($skv)) {
 								$log.="你获得了技能「<span class=\"yellow b\">$clubskillname[$skv]</span>」！<br>";
@@ -405,7 +405,8 @@ namespace item_misc
 				}
 				return;
 			} elseif(strpos($itm,'测试道具A')!==false){
-				var_dump(\attrbase\config_process_encode_comp_itmsk('z^res_<:comp_itmsk:>{测试成功,HB,2,2,,}1Z'));
+				$url = & get_var_in_module('url','sys');
+				$url = 'winner.php';
 				return;
 			} elseif('『我是说在座的各位都是垃圾』' === $itm){
 				$mhpdown = 100;

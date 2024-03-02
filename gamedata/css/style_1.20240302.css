@@ -560,6 +560,34 @@ div.battlecmd_desc{
 						transparent 83.3%,
 						transparent); */
 }
+.gscroll_3::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+	background:	#ededed;
+}
+.gscroll_3::-webkit-scrollbar
+{
+	width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
+	height: 1px;
+}
+.gscroll_3::-webkit-scrollbar-thumb 
+{
+	border-radius: 10px;
+	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+	background-color: #555;
+	background-image: -webkit-linear-gradient(135deg,
+						rgba(255, 255, 255, 0.2) 16.7%,
+						transparent 16.7%,
+						transparent 33.3%,
+						rgba(255, 255, 255, 0.2) 33.3%,
+						rgba(255, 255, 255, 0.2) 50%,
+						transparent 50%,
+						transparent 66.7%,
+						rgba(255, 255, 255, 0.2) 66.7%,
+						rgba(255, 255, 255, 0.2) 83.3%,
+						transparent 83.3%,
+						transparent);
+}
 /*==========对话气泡==========*/
 .dialogue-bubble-container{ 
 	position: absolute;
