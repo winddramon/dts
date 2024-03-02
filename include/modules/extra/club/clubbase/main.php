@@ -259,7 +259,7 @@ namespace clubbase
 	//1:武器系别不正确，需要定义$wepk_req变量，其中是$iteminfo代码（WC WG等）
 	//2:攻击方式不正确，需要定义$wep_skillkind_req变量，其中是熟练度代码（wc wg等）
 	//3:怒气不足，需要定义get_rage_costXXX(&$pa)函数
-	//4:正在CD，需要定义check_skillXXX_state(&$pa)函数
+	//4:正在CD，需要定义check_skillXXX_state(&$pa)函数，或者依赖bufficons模块
 	//5:次数用尽
 	//6以后自定义
 	//6:神击特殊提示

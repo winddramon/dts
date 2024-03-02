@@ -63,22 +63,20 @@ namespace skill440
 		}
 		else
 		{
-			eval(import_module('sys','skill440'));
-			list($is_successful, $fail_hint) = \bufficons\bufficons_activate_buff(440, 0, $skill440_cd);
-			if ( $is_successful ){
-				eval(import_module('logger'));
+			eval(import_module('logger','skill440'));
+			if ( !\clubbase\check_battle_skill_unactivatable($pa,$pd,440) ){
 				if ($active)
 					$log.="<span class=\"lime b\">你对{$pd['name']}发动了技能「父爱」！</span><br>";
 				else  $log.="<span class=\"lime b\">{$pa['name']}对你发动了技能「父爱」！</span><br>";
 				$pd['skill440_flag']=1;
+				\bufficons\bufficons_set_timestamp(440, 0, $skill440_cd, $pa);
 				addnews ( 0, 'bskill440', $pa['name'], $pd['name'] );
 			}
 			else
 			{
 				if ($active)
 				{
-					eval(import_module('logger'));
-					$log.=$fail_hint;
+					$log.='冷却时间未到或其他原因不能发动。<br>';
 				}
 				$pa['bskill']=0;
 			}

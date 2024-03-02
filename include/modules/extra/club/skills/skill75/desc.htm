@@ -1,4 +1,4 @@
-<!--{eval eval(import_module('skill75','sys'));}-->
+<!--{eval eval(import_module('skill75','sys','bufficons'));}-->
 <!--{eval $___TEMP_SKILL_ID=75;}-->
 {template MOD_CLUBBASE_SKILLDESC_START}
 <span>
@@ -6,14 +6,12 @@
 </span>
 {template MOD_CLUBBASE_SKILLDESC_MID1}
 <td class="skilldesc_left b3"><span class="skilldesc">
-<!--{eval $skill75_lst = (int)\skillbase\skill_getvalue(75,'lastuse'); $skill75_time = ($now-$skill75_lst);$skill75_cd_left=($skill75_cd-$skill75_time);}-->
+<!--{eval $st = \bufficons\bufficons_check_buff_state(499,$who);$rm=$tmp_totsec-$tmp_nowsec;}-->
 <span class="yellow b">战斗技</span>&nbsp;&nbsp;本次攻击附加<span class="yellow b">(30+等级)</span>点的最终伤害，技能冷却时间<span class="cyan b">$skill75_cd</span>秒<br>
-<!--{if $skill75_lst!=0}-->
-<!--{if $skill75_time<$skill75_cd}-->
-<span class="cyan b">技能冷却中，冷却时间还剩<span>$skill75_cd_left</span>秒。</span><br>
-<!--{else}-->
+<!--{if 2 == $st}-->
+<span class="cyan b">技能冷却中，冷却时间还剩<span>$rm</span>秒。</span><br>
+<!--{elseif 3 == $st}-->
 <span class="yellow b">技能已经就绪，可以发动<span>
-<!--{/if}-->
 <!--{/if}-->
 </span></td>
 <td class="skilldesc_right b3">
