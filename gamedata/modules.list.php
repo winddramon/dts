@@ -323,6 +323,7 @@ skill12,extra/club/skills/skill12/,1
 skill223,extra/club/skills/skill223/,1
 event,base/event/,1
 skill710,extra/card/skills/skill710/,1
+skill745,extra/card/skills/skill745/,1
 npcchat_bubble,extra/misc/npcchat_bubble/,1
 item_slip,extra/item_extra/item_slip/,1
 skill331,extra/activities/halloween2017/skill331/,1
