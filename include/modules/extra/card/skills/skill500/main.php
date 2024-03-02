@@ -10,15 +10,18 @@ namespace skill500
 	function init() 
 	{
 		define('MOD_SKILL500_INFO','card;upgrade;timectl;');
-		eval(import_module('clubbase'));
+		eval(import_module('clubbase','bufficons'));
 		$clubskillname[500] = '时停';
+		$bufficons_list[500] = Array(
+			'dummy' => 1,
+		);
 	}
 	
 	function acquire500(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		\skillbase\skill_setvalue(500,'lastuse',0,$pa);
-		save_gameinfo();
+		\skillbase\skill_setvalue(500,'end_ts',1,$pa);	
+		\skillbase\skill_setvalue(500,'cd_ts',0,$pa);
 	}
 	
 	function lost500(&$pa)
@@ -37,29 +40,20 @@ namespace skill500
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skill500','player','logger','sys'));
 		\player\update_sdata();
-		if (!\skillbase\skill_query(500) || !check_unlocked500($sdata))
-		{
-			$log.='你没有这个技能！<br>';
+		list($can_activate, $fail_hint) = \bufficons\bufficons_check_buff_state_shell(500);
+		if(!$can_activate) {
+			$log .= $fail_hint;
 			return;
 		}
-		elseif($rage < $skill500_rage){
+		if($rage < $skill500_rage){
 			$log.='怒气不足，需要<span class="yellow b">'.$skill500_rage.'点怒气</span>！<br>';
 			return;
 		}
-		$st = check_skill500_state($sdata);
-		if ($st==0){
-			$log.='你不能使用这个技能！<br>';
+		$flag = \bufficons\bufficons_set_timestamp(500, $skill500_act_time, $skill500_cd);
+		if(!$flag) {
+			$log.='发动失败！<br>';
 			return;
 		}
-		elseif ($st==1){
-			$log.='这一技能正在发动中！<br>';
-			return;
-		}
-		elseif ($st==2){
-			$log.='技能冷却中！<br>';
-			return;
-		}
-		\skillbase\skill_setvalue(500,'lastuse',$now);
 		addnews ( 0, 'bskill500', $name );
 		$gamevars['timestopped'] = 1;//设一个全局变量
 		save_gameinfo();
@@ -87,14 +81,7 @@ namespace skill500
 	//return 1:技能生效中 2:技能冷却中 3:技能冷却完毕 其他:不能使用这个技能
 	function check_skill500_state(&$pa){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(500, $pa) || !check_unlocked500($pa)) return 0;
-		eval(import_module('sys','player','skill500'));
-		$l=\skillbase\skill_getvalue(500,'lastuse',$pa);
-		if (($now-$l)<=$skill500_act_time) return 1;
-		if (($now-$l)<=$skill500_act_time+$skill500_cd) {
-			return 2;
-		}
-		return 3;
+		return \bufficons\bufficons_check_buff_state(500, $pa);
 	}
 	
 	//如果是时间停止导致的眩晕，在眩晕结束时自动判定一下是不是需要发送时间停止结束的讯息
@@ -132,9 +119,12 @@ namespace skill500
 	function check_enemy_meet_active(&$ldata,&$edata)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (1 == check_skill500_state($ldata) && !check_timectl($edata))
+		if (1 == check_skill500_state($ldata) && !check_timectl($edata)) {
+			eval(import_module('enemy'));
+			$findenemy_active_words = '在只属于你的时间里，对方毫无防备、任你宰割！';
 			return 1;
-		else  return $chprocess($ldata,$edata);
+		}
+		return $chprocess($ldata,$edata);
 	}
 	
 	//不会踩到陷阱
@@ -157,54 +147,33 @@ namespace skill500
 		return $chprocess($pa, $pd, $active);
 	}
 
+	//不会有无法反击的flag
+	function player_cannot_counter(&$pa,&$pd,$active)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if (!(1 == check_skill500_state($pd) && !check_timectl($pa))) $chprocess($pa, $pd, $active);
+	}
+
 	//判定$pa是否拥有带有时间操作标签的技能，如果有则返回1，否则返回0
 	function check_timectl(&$pa = NULL){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		return \skillbase\check_have_skill_info('timectl', $pa);
+		return \skillbase\check_have_skill_info('timectl;', $pa);
 	}
-	
-	function bufficons_list()
-	{
+
+	//第一次进入CD时侦测一下全局变量
+	function bufficons_display_single($token, $config, &$pa=NULL) {
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if ( \skillbase\skill_query(500,$sdata) && check_unlocked500($sdata))
-		{
-			eval(import_module('skill500'));
-			$skill500_lst = (int)\skillbase\skill_getvalue(500,'lastuse'); 
-			$skill500_time = $now-$skill500_lst; 
-			$z=Array(
-				'disappear' => 0,
-				'clickable' => 1,
-				'hint' => '技能「时停」',
-				'activate_hint' => '点击发动技能「时停」',
-				'onclick' => "$('mode').value='special';$('command').value='skill500_special';$('subcmd').value='activate';postCmd('gamecmd','command.php');this.disabled=true;",
-			);
-			if ($skill500_time < $skill500_act_time)
-			{
-				$z['style']=1;
-				$z['totsec']=$skill500_act_time;
-				$z['nowsec']=$skill500_time;
-			}
-			elseif ($skill500_time < $skill500_act_time+$skill500_cd)
-			{
-				$z['style']=2;
-				$z['totsec']=$skill500_cd;
-				$z['nowsec']=$skill500_time-$skill500_act_time;
-				//第一次进入CD时侦测一下全局变量
-				if(!empty($gamevars['timestopped'])) {
-					$gamevars['timestopped'] = 0;
-					save_gameinfo();
-					addnews ( 0, 'bskill500_end');
-				}
-			}
-			else 
-			{
-				$z['style']=3;
-			}
-			\bufficons\bufficon_show('img/skill500.gif',$z);
+		//事先记录全局时间状态
+		if(500 == $token && \skillbase\skill_query(500,$pa) && check_unlocked500($pa)) {
+			$timestopped_flag = & get_var_in_module('gamevars', 'sys')['timestopped'];
 		}
-		$chprocess();
+		list($src, $config_ret) = $chprocess($token, $config, $pa);
+		if(!empty($timestopped_flag) && $config_ret['style'] >= 2) {
+			$timestopped_flag = 0;
+			save_gameinfo();
+			addnews ( 0, 'bskill500_end');
+		}
+		return Array($src, $config_ret);
 	}
 	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())

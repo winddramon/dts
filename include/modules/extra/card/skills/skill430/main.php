@@ -62,16 +62,6 @@ namespace skill430
 		\itemmain\itemget();
 	}
 	
-	//return 1:技能生效中 2:技能冷却中 3:技能冷却完毕 其他:不能使用这个技能
-	function check_skill430_state(&$pa){
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(430, $pa) || !check_unlocked430($pa)) return 0;
-		eval(import_module('sys','player','skill430'));
-		$l=\skillbase\skill_getvalue(430,'lastuse',$pa);
-		if (($now-$l)<=$skill430_cd) return 2;
-		return 3;
-	}
-	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;

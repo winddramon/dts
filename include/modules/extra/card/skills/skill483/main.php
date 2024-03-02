@@ -53,7 +53,7 @@ namespace skill483
 			return;
 		}
 		$money-=$c;
-		$flag = \bufficons\bufficons_set_timestamp(483, 120, 0);
+		$flag = \bufficons\bufficons_set_timestamp(483, $skill483_effect_duration, 0);
 		if(!$flag) {
 			$log.='发动失败！<br>';
 			return;

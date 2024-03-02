@@ -7,15 +7,19 @@ namespace skill593
 	function init() 
 	{
 		define('MOD_SKILL593_INFO','card;upgrade;');
-		eval(import_module('clubbase'));
+		eval(import_module('clubbase','bufficons'));
 		$clubskillname[593] = '秘药';
+		$bufficons_list[593] = Array(
+			'dummy' => 1,//占位符，如果其他设置全部都自动生成的话可以占位用……
+		);
 	}
 	
 	function acquire593(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','skill593'));
-		\skillbase\skill_setvalue(593,'lastuse',-120,$pa);
+		\skillbase\skill_setvalue(593,'end_ts',$now-1,$pa);	
+		\skillbase\skill_setvalue(593,'cd_ts',$now+$skill593_cd,$pa);	
 	}
 	
 	function lost593(&$pa)
@@ -32,24 +36,16 @@ namespace skill593
 	function activate593()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('player','logger','sys'));
+		eval(import_module('player','logger','sys','skill593'));
 		\player\update_sdata();
-		if (!\skillbase\skill_query(593) || !check_unlocked593($sdata))
-		{
-			$log.='你没有这个技能！<br>';
+		$lastuse = \skillbase\skill_getvalue(593,'end_ts');
+		list($is_successful, $fail_hint) = \bufficons\bufficons_activate_buff(593, 0, $skill593_cd);
+		if(!$is_successful) {
+			$log .= $fail_hint;
 			return;
 		}
-		$st = check_skill593_state($sdata);
-		if ($st==0){
-			$log.='你不能使用这个技能！<br>';
-			return;
-		}
-		if ($st==2){
-			$log.='技能冷却中！<br>';
-			return;
-		}
-		$lastuse = \skillbase\skill_getvalue(593,'lastuse');
-		\skillbase\skill_setvalue(593,'lastuse',$now);
+		$log.='<span class="lime b">技能「秘药」发动成功。</span><br>';
+
 		get_skill593_item($lastuse);
 	}
 	
@@ -77,48 +73,6 @@ namespace skill593
 		$itmsk0=\attrbase\config_process_encode_comp_itmsk($iskind);
 		addnews(0, 'bskill593', $name, $iname);
 		\itemmain\itemget();
-	}
-	
-	//return 1:技能生效中 2:技能冷却中 3:技能冷却完毕 其他:不能使用这个技能
-	function check_skill593_state(&$pa){
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(593, $pa) || !check_unlocked593($pa)) return 0;
-		eval(import_module('sys','player','skill593'));
-		$l=\skillbase\skill_getvalue(593,'lastuse',$pa);
-		if (($now-$l)<=$skill593_cd) return 2;
-		return 3;
-	}
-	
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if ((\skillbase\skill_query(593,$sdata))&&check_unlocked593($sdata))
-		{
-			eval(import_module('skill593'));
-			$skill593_lst = (int)\skillbase\skill_getvalue(593,'lastuse'); 
-			$skill593_time = $now-$skill593_lst; 
-			$z=Array(
-				'disappear' => 0,
-				'clickable' => 1,
-				'hint' => '技能「秘药」',
-				'activate_hint' => '点击发动技能「秘药」',
-				'onclick' => "$('mode').value='special';$('command').value='skill593_special';$('subcmd').value='activate';postCmd('gamecmd','command.php');this.disabled=true;",
-			);
-			if ($skill593_time<$skill593_cd)
-			{
-				$z['style']=2;
-				$z['totsec']=$skill593_cd;
-				$z['nowsec']=$skill593_time;
-			}
-			else 
-			{
-				$z['style']=3;
-			}
-			\bufficons\bufficon_show('img/skill593.gif',$z);
-		}
-		$chprocess();
 	}
 	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())

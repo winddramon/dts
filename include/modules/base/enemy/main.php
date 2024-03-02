@@ -2,19 +2,21 @@
 
 namespace enemy
 {
+	$findenemy_active_words = '对方好像完全没有注意到你！';
+
 	function init() {}
 	
 	function findenemy(&$edata)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		
-		eval(import_module('sys','logger','player','metman'));
+		eval(import_module('sys','logger','player','metman','enemy'));
 		
 		\player\update_sdata();
 		
 		$battle_title = '发现敌人';
 		\metman\init_battle();
-		$log .= "你发现了敌人<span class=\"red b\">{$tdata['name']}</span>！<br>对方好像完全没有注意到你！<br>";
+		$log .= "你发现了敌人<span class=\"red b\">{$tdata['name']}</span>！<br>{$findenemy_active_words}<br>";
 		
 		include template(get_battlecmd_filename());
 		$cmd = ob_get_contents();

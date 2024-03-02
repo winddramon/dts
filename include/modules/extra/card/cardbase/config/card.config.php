@@ -3050,6 +3050,7 @@ $cards = array(
 	),
 	177 => array(
 		'name' => 'D级人员',
+		'print_rare_mark' => 'D',//只在显示罕贵字母时用的
 		'rare' => 'C',
 		'pack' => 'Way of Life',
 		'desc' => '如果你能坚持活过这个月，你将获得自由。不，你看，我说“活过”的意思是“和我们合作”，你懂吗？',

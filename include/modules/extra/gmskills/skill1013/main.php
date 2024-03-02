@@ -51,10 +51,12 @@ namespace skill1013
 		}
 		\skillbase\skill_acquire($skillid);
 		if(!empty($clubskillname[$skillid])) {
-			$log .= '<span class="cyan b">你学会了技能：'.$clubskillname[$skillid].'！</span><br>';
+			$skname = $skillid.'号技能「'.$clubskillname[$skillid].'」';
 		}else{
-			$log .= '<span class="cyan b">你学会了'.$skillid.'号无名技能！</span><br>';
+			$skname = $skillid.'号无名技能';
 		}
+		$log .= '<span class="cyan b">你学会了'.$skname.'！</span><br>';
+		addnews (0, 'admin_getsk', get_var_in_module('name', 'player'), $skname );
 		
 		return;
 	}
@@ -91,6 +93,17 @@ namespace skill1013
 			}
 		}
 		$chprocess();
+	}
+
+	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','player'));
+		
+		if($news == 'admin_getsk') 
+			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}发动了技能「禁录」，从十万三千本代码教程中立刻学会了{$b}！（管理员{$a}宣告自己正在进行技能测试。）</span></li>";
+		
+		return $chprocess($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr);
 	}
 }
 
