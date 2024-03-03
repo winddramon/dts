@@ -82,7 +82,7 @@ namespace skill490
 			//类别和属性是从地图和商店道具里随机一个的
 			$itemfc = openfile($mapitemfile);
 			foreach($itemfc as $ival){
-				$ival = explode(',',$ival);
+				$ival = explode(',',\attrbase\config_process_encode_comp_itmsk_sepr_transfer($ival));
 				if(is_numeric($ival[0]) && $ival[0] > 100) continue;//禁数在100以上的道具不考虑
 				if(isset($ival[4])) $itemklist[] = $ival[4];
 				if(isset($ival[7])) $itemsklist[] = \attrbase\config_process_encode_comp_itmsk($ival[7]);
@@ -90,7 +90,7 @@ namespace skill490
 			$shoplist = openfile($shopitemfile);
 			foreach($shoplist as $lst){
 				if(!empty($lst) && strpos($lst,',')!==false){
-					list($kind,$num,$price,$area,$item,$itmk,$itme,$itms,$itmsk)=explode(',',$lst);
+					list($kind,$num,$price,$area,$item,$itmk,$itme,$itms,$itmsk)=explode(',',\attrbase\config_process_encode_comp_itmsk_sepr_transfer($lst));
 					if($kind != 0){
 						$itemklist[] = $itmk;
 						$itemsklist[] = \attrbase\config_process_encode_comp_itmsk($itmsk);
