@@ -461,15 +461,19 @@ namespace itemmain
 		
 		$weplist = get_startingwepfilecont();
 		do { 
-			$index = rand(1,count($weplist)-1); 
-			list($ebp['wep'],$ebp['wepk'],$ebp['wepe'],$ebp['weps'],$ebp['wepsk']) = explode(",",$weplist[$index]);
+			$index = rand(1,count($weplist)-1);
+			$ival = $weplist[$index];
+			if (defined('MOD_ATTRBASE')) $ival = \attrbase\config_process_encode_comp_itmsk_sepr_transfer($ival);
+			list($ebp['wep'],$ebp['wepk'],$ebp['wepe'],$ebp['weps'],$ebp['wepsk']) = explode(",",$ival);
 		} while(!$ebp['wepk']);
 
 		$stitemlist = get_startingitemfilecont();
 		for($i=3;$i<=4;$i++){
 			do { 
-				$index = rand(1,count($stitemlist)-1); 
-				list($ebp['itm'.$i],$ebp['itmk'.$i],$ebp['itme'.$i],$ebp['itms'.$i],$ebp['itmsk'.$i]) = explode(",",$stitemlist[$index]);
+				$index = rand(1,count($stitemlist)-1);
+				$ival = $stitemlist[$index];
+				if (defined('MOD_ATTRBASE')) $ival = \attrbase\config_process_encode_comp_itmsk_sepr_transfer($ival);
+				list($ebp['itm'.$i],$ebp['itmk'.$i],$ebp['itme'.$i],$ebp['itms'.$i],$ebp['itmsk'.$i]) = explode(",",$ival);
 			} while(!$ebp['itms'.$i]);
 		}
 		return $ebp;
