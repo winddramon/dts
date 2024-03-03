@@ -326,7 +326,7 @@ namespace gtype5
 			'薇娜·安妮茜' => array(
 				'name' => '薇娜·安妮茜',
 				'gd' => 'f',
-				'icon' => 'avatar_rek/weena.png',
+				'icon' => 'avatar_rek/weena2.png',
 				'club' => 21,
 				'inf' => '',
 				'rage' => 0,
