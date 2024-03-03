@@ -487,7 +487,7 @@ namespace trap
 			$log .= "<span class=\"yellow b\">你笨拙的技术让陷阱的最大伤害限制在了<span class=\"red b\">$trape</span>点。</span><br>";
 		}
 		
-		$log .= "小心，自己也很难发现。<br>";
+		//$log .= "小心，自己也很难发现。<br>";
 		
 		$trapk = str_replace('TN','TO',$itmk);
 		$db->query("INSERT INTO {$tablepre}maptrap (itm, itmk, itme, itms, itmsk, pls) VALUES ('$itm', '$trapk', '$trape', '1', '$pid', '$pls')");

@@ -1396,7 +1396,7 @@ namespace instance3
 				0 => array
 				(
 				'name' => '薇娜·安妮茜',
-				'icon' => 'avatar_rek/weena.png',
+				'icon' => 'avatar_rek/weena2.png',
 				'mss' => 100,
 				'wep' => '「乌托邦暴风」',
 				'wepk' => 'WF',
