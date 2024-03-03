@@ -445,6 +445,13 @@ namespace attrbase
 		return $ret;
 	}
 
+	//入场基本数据（开局武器等）单行记录的分割处理，在分割前先把半角逗号变成<:sepr:>
+	function startingitem_row_data_seperate($data){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$data = config_process_encode_comp_itmsk_sepr_transfer($data);
+		return $chprocess($data);
+	}
+
 	//入场基本数据（开局武器等）的复合属性处理
 	function init_enter_battlefield_items($ebp){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
