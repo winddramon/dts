@@ -138,7 +138,6 @@ namespace instance10
 		{
 			$weather = 1;
 			//添加禁区
-			
 			$plsnum = sizeof($arealist);
 			$areanum += $plsnum - 8 + 1;
 		}
