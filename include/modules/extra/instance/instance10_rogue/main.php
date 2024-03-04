@@ -10,7 +10,7 @@ namespace instance10
 		$valid_skills[20] += array(181,951,952,960);
 	}
 	
-	//公路模式自动选择肉鸽来客
+	//肉鸽模式自动选择肉鸽来客
 	function get_enter_battlefield_card($card){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
@@ -21,7 +21,7 @@ namespace instance10
 		return $card;
 	}
 	
-	//公路模式自动选择肉鸽来客，禁止其他卡片
+	//肉鸽模式自动选择肉鸽来客，禁止其他卡片
 	function card_validate_get_forbidden_cards($card_disabledlist, $card_ownlist){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
@@ -36,7 +36,7 @@ namespace instance10
 		return $card_disabledlist;
 	}
 	
-	//公路模式选卡界面特殊显示
+	//肉鸽模式选卡界面特殊显示
 	function card_validate_display($cardChosen, $card_ownlist, $packlist, $hideDisableButton){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','cardbase'));
@@ -51,7 +51,7 @@ namespace instance10
 		return array($cardChosen, $card_ownlist, $packlist, $hideDisableButton);
 	}
 	
-	//公路模式入场道具
+	//肉鸽模式入场道具
 	function init_enter_battlefield_items($ebp){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
 		$ebp = $chprocess($ebp);
