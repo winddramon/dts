@@ -1,4 +1,4 @@
-<!--{eval eval(import_module('skill232','sys'));}-->
+<!--{eval eval(import_module('skill232','sys','bufficons'));}-->
 <!--{eval $___TEMP_SKILL_ID=232;}-->
 {template MOD_CLUBBASE_SKILLDESC_START}
 <span>
@@ -8,13 +8,16 @@
 <td class="skilldesc_left b3"><span class="skilldesc">
 <!--{eval $clv = (int)\skillbase\skill_getvalue(232,'lvl'); }-->
 <!--{eval $totlv = count($upgradecost)-1; }-->
-<!--{eval $skill232_lst = (int)\skillbase\skill_getvalue(232,'lastuse'); $skill232_time = ($now-$skill232_lst);$skill232_cd_left=($skill232_cd[$clv]-$skill232_time);}-->
+<!--{eval $st = \bufficons\bufficons_check_buff_state(232,$who);$rm=$tmp_totsec-$tmp_nowsec;}-->
 <span class="lime b">当前级别$clv/$totlv</span>&nbsp;
 <!--{if $upgradecost[$clv] !== -1}-->消耗<span class="lime b">$upgradecost[$clv]</span>点技能点升至下一级<!--{/if}--><br>
 立即恢复满生命值并使额外生命值增加至<span class="yellow b">$shieldgain[$clv]</span>点，冷却时间<span class="cyan b">$skill232_cd[$clv]</span>秒。<br>
 若你有额外生命值，你受到的战斗伤害减少<span class="yellow b">$shieldeff[$clv]</span>点，且不受反噬伤害。<br>
-<!--{if $skill232_time<$skill232_cd[$clv]}-->
-<span class="cyan b">技能冷却中，冷却时间还剩<span>$skill232_cd_left</span>秒。</span><br>
+升级可以强化效果和缩短下一次发动的冷却时间。<br>
+<!--{if 2 == $st}-->
+<span class="yellow b">技能冷却中，冷却时间还剩<span>$rm</span>秒。</span><br>
+<!--{elseif 3 == $st}-->
+<span class="cyan b">技能冷却完毕，可以使用</span><br>
 <!--{/if}-->
 </span></td>
 <td class="skilldesc_right b3">
