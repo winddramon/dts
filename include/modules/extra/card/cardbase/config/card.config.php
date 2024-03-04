@@ -1509,7 +1509,7 @@ $cards = array(
 				'B_odds' => 20,
 				'C_odds' => 20,
 				'allow_EB' => true,//开启后会把Event Bonus等需要特殊方式才能获得的卡也一并考虑
-				'ignore_cards' => Array(237, 241, 344, 381)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array()//机制上必定选不到自己和其他随机卡，这里可以放其他不想被选到的卡
 			)
 		)
 	),
@@ -4152,7 +4152,7 @@ $cards = array(
 				'S_odds' => 100,
 				'allow_EB' => true,
 				'forced' => Array(),//无视概率强制加入选择的卡
-				'ignore_cards' => Array(300)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array()//机制上必定选不到自己和其他随机卡，这里可以放其他不想被选到的卡
 			)
 		)
 	),
@@ -4215,7 +4215,7 @@ $cards = array(
 				'packlimit' => '東埔寨Protoject',
 				'allow_EB' => false,
 				'forced' => Array(),//无视概率强制加入选择的卡
-				'ignore_cards' => Array(344)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array()//机制上必定选不到自己和其他随机卡，这里可以放其他不想被选到的卡
 			)
 		)
 	),
@@ -5467,7 +5467,7 @@ $cards = array(
 				'packlimit' => '東埔寨Protoject',
 				'allow_EB' => false,
 				'forced' => Array(117, 153, 157, 158, 186),//无视概率强制加入选择的卡（星莲船，冴冴，诹访子，灵梦，超魔理沙）
-				'ignore_cards' => Array(241)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array()//机制上必定选不到自己和其他随机卡，这里可以放其他不想被选到的卡
 			),
 		)
 	),
@@ -6020,7 +6020,7 @@ $cards = array(
 				'B_odds' => 20,
 				'C_odds' => 20,
 				'allow_EB' => true,
-				'ignore_cards' => Array(81, 237, 241, 344)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array()//机制上必定选不到自己和其他随机卡，这里可以放其他不想被选到的卡
 			)
 		)
 	),
@@ -6724,7 +6724,7 @@ $cards = array(
 				'real_random' => true,//真随机，所有卡选1张
 				'perm_change' => true,//永久改变，换卡之后不会再把card字段切回来，也不会按这张卡判定成就
 				'forced' => Array(),//无视概率强制加入选择的卡
-				'ignore_cards' => Array(81, 237, 300, 344, 381)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array()//机制上必定选不到自己和其他随机卡，这里可以放其他不想被选到的卡
 			)
 		)
 	),

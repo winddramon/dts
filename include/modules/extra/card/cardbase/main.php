@@ -443,39 +443,40 @@ namespace cardbase
 		
 		//实际随机卡片
 		$arr=array(0);
-		do{
-			if(!empty($cs['real_random'])) {//真随机，把所有卡集合并
-				$arr = array_merge($arr,$cardindex['S'],$cardindex['A'],$cardindex['B'],$cardindex['C'],$cardindex['EB']);
+		if(!empty($cs['real_random'])) {//真随机，把所有卡集合并
+			$arr = array_merge($arr,$cardindex['S'],$cardindex['A'],$cardindex['B'],$cardindex['C'],$cardindex['EB']);
+		}else{
+			//判定随机到的卡的罕贵
+			$r=rand(1,100);
+			if ($r<=$S_odds){
+				$arr=$cardindex['S'];
+				if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_S']);
+			}elseif($r - $S_odds <= $A_odds){
+				$arr=$cardindex['A'];
+				if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_A']);
+			}elseif($r - $S_odds - $A_odds <= $B_odds){
+				$arr=$cardindex['B'];
+				if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_B']);
 			}else{
-				//判定随机到的卡的罕贵
-				$r=rand(1,100);
-				if ($r<=$S_odds){
-					$arr=$cardindex['S'];
-					if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_S']);
-				}elseif($r - $S_odds <= $A_odds){
-					$arr=$cardindex['A'];
-					if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_A']);
-				}elseif($r - $S_odds - $A_odds <= $B_odds){
-					$arr=$cardindex['B'];
-					if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_B']);
-				}else{
-					$arr=$cardindex['C'];
-					if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_C']);
-				}
+				$arr=$cardindex['C'];
+				if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_C']);
 			}
-			
-			if(!empty($packlimit)){//有卡包限制，那么对选择集挨个判定一遍卡包
-				foreach($arr as $i => $v) {
-					if($cards[$v]['pack'] != $packlimit) 
-						unset($arr[$i]);
-				}
-				$arr = array_filter($arr);
+		}
+		
+		if(!empty($packlimit)){//有卡包限制，那么对选择集挨个判定一遍卡包
+			foreach($arr as $i => $v) {
+				if($cards[$v]['pack'] != $packlimit) 
+					unset($arr[$i]);
 			}
-			
-			$arr = array_merge($arr, $forced);
-			$arr = array_unique($arr);
+			$arr = array_filter($arr);
+		}
+		$arr = array_merge($arr, $forced);
+		$arr = array_unique($arr);
+
+		do{
 			$ret = array_randompick($arr);
-		}while($ret == $card || in_array($ret, $ignore));//必定选不到自己
+		}while($ret == $card || !empty($cards[$ret]['valid']['cardchange']) || in_array($ret, $ignore));//必定选不到自己、其他有cardchange设置项的卡，以及特定忽略的卡
+		
 		return $ret;
 	}
 	
