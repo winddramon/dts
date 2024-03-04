@@ -140,7 +140,7 @@ namespace skill960
 			if ($i !== false) 
 			{
 				$flag = 0;
-				if (($tasks_info[$taskid]['tasktype'] === 'battle_kill') || ($tasks_info[$taskid]['tasktype'] === 'itemuse'))
+				if (($tasks_info[$taskid]['tasktype'] === 'battle_kill') || ($tasks_info[$taskid]['tasktype'] === 'item_use'))
 				{
 					if (isset($tasks_info[$taskid]['taskreq']['num']) && ((int)$taskprog[$i] >= $tasks_info[$taskid]['taskreq']['num']))
 					{
@@ -424,7 +424,7 @@ namespace skill960
 				$c = count($itm_ls);
 				if ($c == 1) $task_tip .= $itm_ls[0];
 				elseif ($c == 2) $task_tip .= implode('或', $itm_ls);
-				else $task_tip = implode('、', array_slice($itm_ls, 0, -1)).'或'.end($itm_ls);
+				else $task_tip .= implode('、', array_slice($itm_ls, 0, -1)).'或'.end($itm_ls);
 				$task_tip .= "的";
 			}
 			if (isset($tasks_info[$taskid]['taskreq']['itmk']))
