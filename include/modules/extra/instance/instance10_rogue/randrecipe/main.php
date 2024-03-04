@@ -9,14 +9,44 @@ namespace randrecipe
 	{
 	}
 	
+	function rs_game($xmode = 0)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$chprocess($xmode);
+		eval(import_module('sys','randrecipe'));
+		if ((in_array($gametype, $randrecipe_allow_mode))&&($xmode & 2)) 
+		{
+			//生成随机配方
+			\randrecipe\create_randrecipe_config(30);
+		}
+	}
+	
+	function get_recipe_mixinfo()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess();
+		eval(import_module('sys','randrecipe'));
+		if (in_array($gametype, $randrecipe_allow_mode))
+		{
+			$randrecipe_file = GAME_ROOT.'./gamedata/cache/randrecipe'.$room_id.'.php';
+			if(file_exists($randrecipe_file))
+			{
+				include $randrecipe_file;
+				$ret = $ret + $randrecipe;
+			}
+			return $ret;
+		}
+	}
+	
 	function create_randrecipe_config($num = 50)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
 		$rl = array();
+		$stidx = 300;//随机配方从301号开始
 		for ($i=1; $i<=$num; $i++)
 		{
-			$rl[] = generate_randrecipe();
+			$rl[$stidx+$i] = generate_randrecipe();
 		}
 		//保存为config文件。每个房间一个文件，这个函数应该是仅在每局开始时执行的，如果因为某些原因覆盖了那就覆盖了罢
 		$file = GAME_ROOT.'./gamedata/cache/randrecipe'.$room_id.'.php';
@@ -108,6 +138,8 @@ namespace randrecipe
 			$si += 1;
 			if ($si > 5) break;
 		}
+		$r['result'][2] = (int)$r['result'][2];
+		$r['result'][3] = (int)$r['result'][3];
 		if (isset($randrecipe_bonus_itmsk_list[$itmk[0]]))
 		{
 			foreach($randrecipe_bonus_itmsk_list[$itmk[0]] as $k => $v)
@@ -130,6 +162,7 @@ namespace randrecipe
 			unset($result[5]);
 		}
 		if (!empty($r['result'][4])) $r['result'][4] = implode('', array_unique($r['result'][4]));
+		else $r['result'][4] = '';
 		//生成名称
 		$dice = rand(0,2);
 		if ($dice) $r['result'][0] .= array_randompick($randrecipe_resultname['rand_prefix']).$r['result'][0];

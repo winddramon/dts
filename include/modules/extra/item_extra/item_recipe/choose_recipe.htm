@@ -6,7 +6,7 @@
 <!--{if empty($ls)}-->
 <span class="yellow b">你并没有学会任何配方。</span><br>
 <!--{else}--> 
-<!--{eval eval(import_module('item_recipe'));}-->
+<!--{$recipe_mixinfo = \item_recipe\get_recipe_mixinfo();}-->
 <!--{loop $ls $i}-->
 <input type="button" class="cmdbutton" value="{$recipe_mixinfo[$i]['result'][0]}" style="width: 200px;" onclick="$('recipe_choice').value='{$i}';postCmd('gamecmd','command.php');this.disabled=true;"><br>
 <!--{/loop}-->

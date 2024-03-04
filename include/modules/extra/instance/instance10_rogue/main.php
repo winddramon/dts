@@ -10,7 +10,7 @@ namespace instance10
 		$valid_skills[20] += array(181,951,952,960);
 	}
 	
-	//公路模式自动选择肉鸽来客
+	//肉鸽模式自动选择肉鸽来客
 	function get_enter_battlefield_card($card){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
@@ -21,7 +21,7 @@ namespace instance10
 		return $card;
 	}
 	
-	//公路模式自动选择肉鸽来客，禁止其他卡片
+	//肉鸽模式自动选择肉鸽来客，禁止其他卡片
 	function card_validate_get_forbidden_cards($card_disabledlist, $card_ownlist){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
@@ -36,7 +36,7 @@ namespace instance10
 		return $card_disabledlist;
 	}
 	
-	//公路模式选卡界面特殊显示
+	//肉鸽模式选卡界面特殊显示
 	function card_validate_display($cardChosen, $card_ownlist, $packlist, $hideDisableButton){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','cardbase'));
@@ -51,7 +51,7 @@ namespace instance10
 		return array($cardChosen, $card_ownlist, $packlist, $hideDisableButton);
 	}
 	
-	//公路模式入场道具
+	//肉鸽模式入场道具
 	function init_enter_battlefield_items($ebp){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
 		$ebp = $chprocess($ebp);
@@ -138,7 +138,6 @@ namespace instance10
 		{
 			$weather = 1;
 			//添加禁区
-			
 			$plsnum = sizeof($arealist);
 			$areanum += $plsnum - 8 + 1;
 		}
@@ -163,11 +162,12 @@ namespace instance10
 				\sys\gameover($atime,'end1');
 			}
 			elseif (\map\get_area_wavenum() >= 1){//限时1禁
-				//胜利条件待修改
-				$result = $db->query("SELECT * FROM {$tablepre}players WHERE hp>0 AND type=0 ORDER BY card LIMIT 1");
-				$wdata = $db->fetch_array($result);
-				$winner = $wdata;
-				\sys\gameover($atime,'end8',$winner);
+				//胜利条件改为使用特定道具结束游戏
+				// $result = $db->query("SELECT * FROM {$tablepre}players WHERE hp>0 AND type=0 ORDER BY card LIMIT 1");
+				// $wdata = $db->fetch_array($result);
+				// $winner = $wdata;
+				// \sys\gameover($atime,'end8',$winner);
+				\sys\gameover($atime,'end1');
 			}
 			return;
 		}
@@ -313,6 +313,7 @@ namespace instance10
 		if (20 == $gametype)
 		{
 			if (!isset($gamevars['instance10_topinv'])) $gamevars['instance10_topinv'] = 0;
+			if (!isset($gamevars['instance10_stage'])) $gamevars['instance10_stage'] = 1;
 			$invscore = (int)\skillbase\skill_getvalue(960,'invscore',$pa);
 			if ($invscore > $gamevars['instance10_topinv'])
 			{
@@ -320,10 +321,21 @@ namespace instance10
 				$map_unlock = floor($invscore/10) - floor($gamevars['instance10_topinv']/10);
 				if ($map_unlock > 0)
 				{
+					//解锁新地点
 					eval(import_module('map','logger'));
 					$log .= "<span class=\"yellow b\">你发现了新的地点！</span><br>";
 					$areanum -= 4 * $map_unlock;
 					$areanum = max($areanum, 0);
+					//增加新npc
+					$log .= "<span class=\"yellow b\">新的敌人加入了战场……</span><br>";
+					$newstage = get_stage($invscore);
+					for ($i=$gamevars['instance10_stage']+1; $i<=$newstage; $i++)
+					{
+						\randnpc\add_randnpc(2*$i-2, 20, 0, 0, 0, 0);
+						\randnpc\add_randnpc(2*$i-1, 20, 0, 0, 0, 0);
+					}
+					$gamevars['instance10_stage'] = $newstage;
+					addnews($now, 'instance10_newstage', $pa['name']);
 				}
 				$gamevars['instance10_topinv'] = $invscore;
 			}
@@ -331,11 +343,18 @@ namespace instance10
 		}
 	}
 	
-	//由调查度决定新任务等级
+	//根据调查度决定新任务等级
 	function get_newtask_rank(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$invscore = (int)\skillbase\skill_getvalue(960,'invscore',$pa);
+		return get_stage($invscore);
+	}
+	
+	//根据调查度计算游戏阶段
+	function get_stage($invscore)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
 		//以后可能需要细调，不写成算式了
 		if ($invscore < 10) return 1;
 		elseif ($invscore < 20) return 2;
@@ -344,6 +363,17 @@ namespace instance10
 		elseif ($invscore < 50) return 5;
 		elseif ($invscore < 60) return 6;
 		else return 7;
+	}
+	
+	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','player'));
+		
+		if($news == 'instance10_newstage') 
+			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}完成了任务，解锁了新的地区！同时，新的敌人加入了战场！</span></li>";
+		
+		return $chprocess($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr);
 	}
 	
 }

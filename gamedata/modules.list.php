@@ -28,7 +28,7 @@ item_uee,base/items/item_uee/,1
 apm,base/apm/,1
 item_addarea,extra/item_extra/item_addarea/,1
 radar,base/items/radar/,1
-randnpc,extra/instance/instance10_road/randnpc/,1
+randnpc,extra/instance/instance10_rogue/randnpc/,1
 npc_pick_item,extra/misc/npc_pick_item/,1
 corpse,base/corpse/,1
 trap,base/items/trap/,1
@@ -290,8 +290,8 @@ skill718,extra/card/skills/skill718/,1
 skill717,extra/card/skills/skill717/,1
 skill719,extra/card/skills/skill719/,1
 skill85,extra/club/skills/skill85/,1
-skill952,extra/instance/instance10_road/skill952/,1
-skill951,extra/instance/instance10_road/skill951/,1
+skill952,extra/instance/instance10_rogue/skill952/,1
+skill951,extra/instance/instance10_rogue/skill951/,1
 skill724,extra/card/skills/skill724/,1
 club25,extra/club/clubs/club25/,1
 skill95,extra/club/skills/skill95/,1
@@ -404,7 +404,7 @@ skill435,extra/card/skills/skill435/,1
 skill329,extra/activities/nationalday2017/skill329/,1
 skill512,extra/card/skills/skill512/,1
 addnpc_event,extra/misc/addnpc_event/,1
-skill961,extra/instance/instance10_road/skill961/,1
+skill961,extra/instance/instance10_rogue/skill961/,1
 supplycrate_event,extra/misc/supplycrate_event/,1
 skill593,extra/card/skills/skill593/,1
 skill731,extra/card/skills/skill731/,1
@@ -548,7 +548,7 @@ skill112,extra/club/skills/skill112/,1
 tutorial,extra/instance/instance7_tutorial/tutorial/,1
 skill51,extra/club/skills/skill51/,1
 skill493,extra/card/skills/skill493/,1
-randrecipe,extra/instance/instance10_road/randrecipe/,1
+randrecipe,extra/instance/instance10_rogue/randrecipe/,1
 skill100,extra/club/skills/skill100/,1
 skill101,extra/club/skills/skill101/,1
 skill98,extra/club/skills/skill98/,1
@@ -695,7 +695,7 @@ skill597,extra/card/skills/skill597/,1
 skill713,extra/card/skills/skill713/,1
 skill712,extra/card/skills/skill712/,1
 skill587,extra/card/skills/skill587/,1
-skill960,extra/instance/instance10_road/skill960/,1
+skill960,extra/instance/instance10_rogue/skill960/,1
 skill543,extra/card/skills/skill543/,1
 skill733,extra/card/skills/skill733/,1
 skill183,extra/club/skills/skill183/,1
@@ -710,7 +710,7 @@ skill106,extra/club/skills/skill106/,1
 skill709,extra/card/skills/skill709/,1
 skill722,extra/card/skills/skill722/,1
 skill737,extra/card/skills/skill737/,1
-instance10,extra/instance/instance10_road/,1
+instance10,extra/instance/instance10_rogue/,1
 skill714,extra/card/skills/skill714/,1
 ex_purity,extra/attr/ex_purity/,1
 skill26,extra/club/skills/skill26/,1
