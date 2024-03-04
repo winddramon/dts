@@ -33,16 +33,6 @@ namespace skill247
 		return 1;
 	}
 	
-	//return 1:技能生效中 2:技能冷却中 3:技能冷却完毕 其他:不能使用这个技能
-	function check_skill247_state(&$pa){
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(247, $pa) || !check_unlocked247($pa)) return 0;
-		eval(import_module('sys','player','skill247'));
-		$l=\skillbase\skill_getvalue(247,'lastuse',$pa);
-		if (($now-$l)<=$skill247_cd) return 2;
-		return 3;
-	}
-	
 	function get_skill247_trap_eff()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
