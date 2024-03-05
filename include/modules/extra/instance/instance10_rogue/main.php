@@ -416,7 +416,7 @@ namespace instance10
 					$gamevars['instance10_stage'] = $newstage;
 					addnews($now, 'instance10_newstage', $pa['name']);
 					//刷新商店
-					rs_game(32);
+					\sys\rs_game(32);
 				}
 				$gamevars['instance10_topinv'] = $invscore;
 			}
