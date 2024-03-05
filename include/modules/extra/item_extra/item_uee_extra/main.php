@@ -3,7 +3,7 @@
 namespace item_uee_extra
 {
 	//允许解禁小游戏的模式，与该模式中解禁小游戏需要调多少个数值，可以是4,5,7,8
-	$allow_uee_extra_gametype_num = array(18 => 5);
+	$allow_uee_extra_gametype_num = array(18 => 5, 20 => 8);
 	
 	//解禁小游戏中的显示用字符串
 	$uee_extra_words = array(
@@ -22,6 +22,15 @@ namespace item_uee_extra
 	
 	function init()
 	{
+	}
+	
+	//获取解禁小游戏需要调多少个数值
+	function uee_extra_get_hack_num()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','item_uee_extra'));
+		if (!isset($allow_uee_extra_gametype_num[$gametype])) return 0;
+		return $allow_uee_extra_gametype_num[$gametype];
 	}
 	
 	//使用移动PC可选择原PC功能或玩解禁小游戏
@@ -88,7 +97,7 @@ namespace item_uee_extra
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','item_uee_extra'));
-		$hack_num = $allow_uee_extra_gametype_num[$gametype];
+		$hack_num = uee_extra_get_hack_num();
 		$hack_state = range(0, $hack_num - 1);
 		shuffle($hack_state);
 		$gamevars['hack_state'] = $hack_state;
@@ -106,7 +115,7 @@ namespace item_uee_extra
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','item_uee_extra'));
-		$hack_num = $allow_uee_extra_gametype_num[$gametype];
+		$hack_num = uee_extra_get_hack_num();
 		if ($pos <= 0 || $pos > $hack_num) return false;
 		
 		if (empty($gamevars['hack_state'])) itemuse_uee_extra_reset();

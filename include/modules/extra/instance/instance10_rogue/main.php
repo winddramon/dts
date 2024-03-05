@@ -192,6 +192,20 @@ namespace instance10
 		else return $chprocess($p);
 	}
 	
+	//肉鸽模式中，商店道具的禁区次数改用游戏阶段判定
+	function shopitem_row_data_process($data)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess($data);
+		eval(import_module('sys'));
+		if (20 == $gametype)
+		{
+			if (!isset($gamevars['instance10_stage'])) return $ret;
+			if ($ret[3] + 1 >= $gamevars['instance10_stage']) $ret[3] = 0;
+		}
+		return $ret;
+	}
+	
 	//合成产物的效果、耐久、属性可能发生变化
 	function itemmix_success()
 	{
@@ -276,8 +290,65 @@ namespace instance10
 					return;
 				}
 			}
+			//使用结局道具
+			elseif (strpos($itmk, 'Y') === 0 || strpos($itmk, 'Z') === 0)
+			{	
+				if ($itm == '测试用结局道具')
+				{
+					$ueen = $theitem['itmn'];
+					$uee_extra_pos = (int)get_var_input('uee_extra_pos');
+					if($uee_extra_pos == 0) {
+						if (empty($gamevars['hack_state'])) \item_uee_extra\itemuse_uee_extra_reset();
+						ob_start();
+						include template(MOD_ITEM_UEE_EXTRA_USE_UEE_EXTRA);
+						$cmd = ob_get_contents();
+						ob_end_clean();
+					}
+					elseif ($uee_extra_pos <= 0 || $uee_extra_pos > \item_uee_extra\uee_extra_get_hack_num())
+					{
+						$log .= "输入参数错误。<br>";
+						$mode = 'command';
+						return true;
+					}
+					else
+					{
+						$ret = \item_uee_extra\itemuse_uee_extra($uee_extra_pos);
+						if ($ret)
+						{
+							$winner_flag = 3;
+							\player\player_save($sdata, 1);
+							$url = 'end.php';
+							\sys\gameover($now, 'end3', $name);
+						}
+						else
+						{
+							include template(MOD_ITEM_UEE_EXTRA_USE_UEE_EXTRA);
+							$cmd = ob_get_contents();
+							ob_end_clean();
+						}
+					}
+					return;
+				}
+			}
 		}
 		$chprocess($theitem);
+	}
+	
+	//获取结局道具的小游戏需要调多少个数值，根据gamevars中记录过的是否使用过某些剧情道具的flag减少
+	function uee_extra_get_hack_num()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess();
+		eval(import_module('sys'));
+		if (20 == $gametype)
+		{
+			//判定未完成
+			if (1)
+			{
+				$ret -= 4;
+			}
+		}
+		return $ret;
 	}
 	
 	//进场后随机获得三个1级任务
