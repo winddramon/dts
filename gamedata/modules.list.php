@@ -439,7 +439,6 @@ skill102,extra/club/skills/skill102/,1
 skill103,extra/club/skills/skill103/,1
 skill104,extra/club/skills/skill104/,1
 skill732,extra/card/skills/skill732/,1
-ex_equipskill,extra/attr/ex_equipskill/,1
 skill1000,extra/instance/instance7_tutorial/skill1000/,1
 skill711,extra/card/skills/skill711/,1
 skill1007,extra/npc_action/skill1007/,1
@@ -684,6 +683,7 @@ skill38,extra/club/skills/skill38/,1
 skill34,extra/club/skills/skill34/,1
 skill538,extra/card/skills/skill538/,1
 ex_phy_nullify,extra/attr/ex_phy_nullify/,1
+ex_equipskill,extra/attr/ex_equipskill/,1
 ex_storage,extra/attr/ex_storage/,1
 item_armor_empower,extra/item_extra/item_armor_empower/,1
 skill272,extra/club/skills/skill272/,1

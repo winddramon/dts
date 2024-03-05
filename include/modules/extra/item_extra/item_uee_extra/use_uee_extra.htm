@@ -3,7 +3,7 @@
 <input type="hidden" id="uee_extra_cmd" name="uee_extra_cmd" value="2">
 <input type="hidden" id="uee_extra_pos" name="uee_extra_pos" value="0">
 <!--{eval eval(import_module('sys','item_uee_extra'));}-->
-<!--{eval $hack_num=$allow_uee_extra_gametype_num[$gametype];$hack_state=$gamevars['hack_state'];$hack_seq=$gamevars['hack_seq'];}-->
+<!--{eval $hack_num=\item_uee_extra\uee_extra_get_hack_num();;$hack_state=$gamevars['hack_state'];$hack_seq=$gamevars['hack_seq'];}-->
 <!--{if !$uee_extra_pos}-->
     屏幕上显示着数个模块的输出情况……都是一些意味不明的天书。<br>
 <!--{else}-->
