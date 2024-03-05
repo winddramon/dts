@@ -17,7 +17,7 @@ if(file_exists($adminlogfile)) {
 $showdata=array();
 foreach($adminlogdata as $aval){
 	list($t, $u, $o, $p1, $p2, $p3) = $aval;
-	$t = gmdate("%Y-%m-%d  %X",$t);
+	$t = gmdate("Y-m-d h:i:s",$t);
 	$show_o = $show_p = $show_gnum = '';
 	if('infomng'==$o) {
 		$show_o = '游戏自检';

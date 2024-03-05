@@ -51,7 +51,7 @@ namespace instance_close_button
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
-		if(strpos($command,'instance_close')===0){
+		if(strpos((string)$command,'instance_close')===0){
 			instance_close();
 			return;
 		}

@@ -1184,8 +1184,7 @@ namespace cardbase
 		//最高优先级错误原因：卡片类别时间限制
 		foreach($cardtypecd as $ct => $ctcd){
 			if(!empty($ctcd) && in_array($gametype, $card_need_charge_gtype)){
-				$ctcdstr = seconds2hms($ctcd);
-				$card_error['e0'.$ct] = '这张卡片暂时不能使用，因为最近'.$ctcdstr.'内你已经使用过'.$ct.'卡了<br>在'.convert_tm($ctcd-($now-$udata['cd_'.strtolower($ct)])).'后你才能再次使用'.$ct.'卡';
+				$card_error['e0'.$ct] = '这张卡片暂时不能使用，因为最近你已经使用过'.$ct.'卡了<br>在'.convert_tm($ctcd-($now-$udata['cd_'.strtolower($ct)])).'后你才能再次使用'.$ct.'卡';
 		
 				if (($now-$udata['cd_'.strtolower($ct)]) < $ctcd){
 					foreach ($card_ownlist as $key)

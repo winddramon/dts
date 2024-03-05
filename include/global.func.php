@@ -15,13 +15,19 @@ register_shutdown_function('global_shutdown_function');
 function gameerrorhandler($code, $msg, $file, $line){
 	global $errorinfo;
 	if(!$errorinfo){return;}
-	if($code == 2){$emessage = '<b style="color:#ff0">Warning</b> ';}
+	if($code == 1){$emessage = '<b style="color:#f00>Fatal error</b> ';}
+	elseif($code == 2){$emessage = '<b style="color:#ff0">Warning</b> ';}
 	elseif($code == 4){$emessage = '<b style="color:#f00">Parse</b> ';}
 	elseif($code == 8){$emessage = '<b>Notice</b> ';}
 	elseif($code == 256){$emessage = '<b>User Error</b> ';}
 	elseif($code == 512){$emessage = '<b>User Warning</b> ';}
 	elseif($code == 1024){$emessage = '<b>User Notice</b> ';}
-	else{$emessage = '<b style="color:#f00>Fatal error</b> ';}
+	elseif($code == 2048){$emessage = '<b>E_STRICT</b> ';}
+	elseif($code == 4096){$emessage = '<b>E_RECOVERABLE_ERROR</b> ';}
+	elseif($code == 8192){$emessage = '<b>E_DEPRECATED</b> ';}
+	elseif($code == 16384){$emessage = '<b style="color:#f00">E_USER_DEPRECATED</b> ';}
+	else{$emessage = '<b style="color:#f00>E_ALL</b> ';}
+
 	$emessage .= "($code): $msg in $file on line $line";
 //	if ($code == 2){
 //		$d = debug_backtrace();
@@ -878,7 +884,7 @@ function combination($a, $m) {
 } 
 
 function seconds2hms($seconds){
-	list($d, $h, $m, $s) = explode(' ', gmdate('%j %H %M %S', $seconds));
+	list($d, $h, $m, $s) = explode(' ', gmdate('j h i s', $seconds));
 	$d=(int)$d - 1;
 	$h = (int)$h; $m = (int)$m; $s = (int)$s;
 	$ret = '';
