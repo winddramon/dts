@@ -6692,6 +6692,21 @@ $cards = array(
 			),
 		)
 	),
+	413 => array(
+		'name' => '刀客塔',
+		'rare' => 'M',
+		'pack' => 'Way of Life',
+		'desc' => '“你能回忆起你的名字吗？”<br>“不能”',
+		'effect' => '“你好，Dr.不能”',
+		'desc_skills' => '获得深渊学者称号特性「窥秘」和「智识」，但初始理智值为0',
+		'energy' => 0,
+		'valid' => array(
+			'skills' => array(
+				'107' => array('sanity' => '0'),
+				'108' => '0',
+			),
+		)
+	),
 	
 	1000 => array(
 		'name'=>'萌新',
