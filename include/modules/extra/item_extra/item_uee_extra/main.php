@@ -96,7 +96,7 @@ namespace item_uee_extra
 	function itemuse_uee_extra_reset()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','item_uee_extra'));
+		eval(import_module('sys'));
 		$hack_num = uee_extra_get_hack_num();
 		$hack_state = range(0, $hack_num - 1);
 		shuffle($hack_state);
@@ -114,7 +114,7 @@ namespace item_uee_extra
 	function itemuse_uee_extra($pos)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','item_uee_extra'));
+		eval(import_module('sys'));
 		$hack_num = uee_extra_get_hack_num();
 		if ($pos <= 0 || $pos > $hack_num) return false;
 		

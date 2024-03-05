@@ -153,6 +153,14 @@ namespace instance10
 		return $chprocess();
 	}
 	
+	//保持0禁
+	function get_area_wavenum(){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		if (20 == $gametype) return 0;
+		return $chprocess();
+	}
+	
 	//禁区时结束游戏
 	function check_addarea_gameover($atime){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -201,7 +209,7 @@ namespace instance10
 		if (20 == $gametype)
 		{
 			if (!isset($gamevars['instance10_stage'])) return $ret;
-			if ($ret[3] + 1 >= $gamevars['instance10_stage']) $ret[3] = 0;
+			if ((int)$ret[3] + 1 >= $gamevars['instance10_stage']) $ret[3] = 0;
 		}
 		return $ret;
 	}
@@ -278,6 +286,8 @@ namespace instance10
 			if (strpos($itmk, 'EE') === 0)
 			{
 				$log .= "你使用了{$itm}，却发现没有可以连接上的网络。怎么会这样？<br>";
+				$arean = \map\get_area_wavenum();
+				var_dump($arean);
 				return;
 			}
 			//每个人只能吃7个技能核心
@@ -388,7 +398,7 @@ namespace instance10
 			$invscore = (int)\skillbase\skill_getvalue(960,'invscore',$pa);
 			if ($invscore > $gamevars['instance10_topinv'])
 			{
-				//最高调查度每加10，减少4个禁区
+				//最高调查度每加10，推进游戏1个阶段，同时减少4个禁区
 				$map_unlock = floor($invscore/10) - floor($gamevars['instance10_topinv']/10);
 				if ($map_unlock > 0)
 				{
@@ -407,6 +417,8 @@ namespace instance10
 					}
 					$gamevars['instance10_stage'] = $newstage;
 					addnews($now, 'instance10_newstage', $pa['name']);
+					//刷新商店
+					rs_game(32);
 				}
 				$gamevars['instance10_topinv'] = $invscore;
 			}
