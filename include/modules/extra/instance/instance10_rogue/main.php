@@ -286,8 +286,6 @@ namespace instance10
 			if (strpos($itmk, 'EE') === 0)
 			{
 				$log .= "你使用了{$itm}，却发现没有可以连接上的网络。怎么会这样？<br>";
-				$arean = \map\get_area_wavenum();
-				var_dump($arean);
 				return;
 			}
 			//每个人只能吃7个技能核心
