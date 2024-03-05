@@ -8,7 +8,7 @@ namespace skill261
 	
 	function init() 
 	{
-		define('MOD_SKILL261_INFO','club;upgrade;locked;');
+		define('MOD_SKILL261_INFO','club;upgrade;locked;buffer;');
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[261] = '决战';
 		$bufficons_list[261] = Array(

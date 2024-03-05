@@ -6,7 +6,7 @@ namespace skill246
 	
 	function init() 
 	{
-		define('MOD_SKILL246_INFO','club;upgrade;locked;unique;');
+		define('MOD_SKILL246_INFO','club;upgrade;locked;unique;buffer;');
 		eval(import_module('clubbase','wep_j','dualwep','bufficons'));
 		$clubskillname[246] = '隐身';
 		$wj_allowed_bskill[] = 246;

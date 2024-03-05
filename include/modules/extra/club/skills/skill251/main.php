@@ -7,7 +7,7 @@ namespace skill251
 	
 	function init() 
 	{
-		define('MOD_SKILL251_INFO','club;');
+		define('MOD_SKILL251_INFO','club;buffer;');
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[251] = '天佑';
 		$bufficons_list[251] = Array(

@@ -9,7 +9,7 @@ namespace skill500
 	
 	function init() 
 	{
-		define('MOD_SKILL500_INFO','card;upgrade;timectl;');
+		define('MOD_SKILL500_INFO','card;upgrade;timectl;buffer;');
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[500] = '时停';
 		$bufficons_list[500] = Array(

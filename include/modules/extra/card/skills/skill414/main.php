@@ -6,7 +6,7 @@ namespace skill414
 	
 	function init() 
 	{
-		define('MOD_SKILL414_INFO','card;upgrade;');
+		define('MOD_SKILL414_INFO','card;upgrade;buffer;');
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[414] = '鹰眼';
 		$bufficons_list[414] = Array(

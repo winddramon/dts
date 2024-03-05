@@ -7,7 +7,7 @@ namespace skill210
 	
 	function init() 
 	{
-		define('MOD_SKILL210_INFO','club;upgrade;');
+		define('MOD_SKILL210_INFO','club;upgrade;buffer;');
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[210] = '歼灭';
 		$bufficons_list[210] = Array(

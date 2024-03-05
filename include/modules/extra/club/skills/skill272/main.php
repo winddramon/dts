@@ -15,7 +15,7 @@ namespace skill272
 	
 	function init() 
 	{
-		define('MOD_SKILL272_INFO','club;locked;');
+		define('MOD_SKILL272_INFO','club;locked;buffer;');
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[272] = '吸光';
 		$bufficons_list[272] = Array(
