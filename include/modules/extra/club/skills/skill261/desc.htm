@@ -1,4 +1,4 @@
-<!--{eval eval(import_module('skill261','sys'));}-->
+<!--{eval eval(import_module('skill261','sys','bufficons'));}-->
 <!--{eval $___TEMP_SKILL_ID=261;}-->
 {template MOD_CLUBBASE_SKILLDESC_START}
 <span>
@@ -6,13 +6,13 @@
 </span>
 {template MOD_CLUBBASE_SKILLDESC_MID1}
 <td class="skilldesc_left b3"><span class="skilldesc">
-<!--{eval $skill261_lst = (int)\skillbase\skill_getvalue(261,'lastuse'); $skill261_time = ($now-$skill261_lst);$skill261_cd_left=($skill261_cd-$skill261_time);}-->
-殴熟翻倍，但每次移动或探索将减少<span class="yellow b">5</span>点殴熟<br>
+<!--{eval $st = \bufficons\bufficons_check_buff_state(261,$who);$rm=$tmp_totsec-$tmp_nowsec;}-->
+殴熟翻倍，但每次移动或探索将减少<span class="yellow b">$skill261_wploss</span>点殴熟<br>
 技能“<span class="yellow b">格斗</span>”的减伤概率增加<span class="yellow b">15%</span><br>
-<!--{if $skill261_time<$skill261_cd}-->
+<!--{if 2 == $st}-->
 <span class="red b">你已经没有回头路了</span><br>
 <!--{else}-->
-<span class="red b">只能发动一次</span><br>
+<span class="yellow b">只能发动一次</span><br>
 <!--{/if}-->
 </span></td>
 <td class="skilldesc_right b3">

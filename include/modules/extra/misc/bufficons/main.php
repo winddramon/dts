@@ -9,7 +9,7 @@ namespace bufficons
 	function init() {}
 	
 	//一个完整的技能描述（$bufficons_list的元素数组，也是bufficon_show()接收到的$para变量）应包含以下字段：
-	//disappear: 生效结束后是消失还是进入冷却状态（1为消失）
+	//disappear: 冷却时间结束后是否消失（1为消失）
 	//clickable: 如不考虑冷却时间，本技能目前是否已满足主动激活条件。
 	//hint： 技能的描述文字。
 	//activate_hint： 激活技能的提示文字（或不能激活技能时的说明文字），如果本技能不是主动技能，与hint一样即可。
