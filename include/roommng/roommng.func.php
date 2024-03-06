@@ -684,7 +684,7 @@ function room_init_db_process($room_id){
 	$tablepre = room_get_tablepre();
 	$wtablepre = $gtablepre.'s';
 	//$tablepre = $gtablepre.$room_prefix.'_';
-	//创建对应类型的优胜列表
+	//创建对应类型的优胜列表。这个地方似乎已经没用了，install的时候会自动建立。不过暂且留着吧
 	$result = $db->query("SHOW TABLES LIKE '{$wtablepre}history';");
 	if (!$db->num_rows($result))
 	{

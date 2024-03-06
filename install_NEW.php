@@ -13,7 +13,8 @@ if(file_exists($lockfile)) {
 
 $php_version_lowest = '7.0.0';
 $mysql_version_lowest = '5.7';
-$diskspace_lowest = '200';//unit: MB
+$memory_lowest = 256;//unit: MB
+$diskspace_lowest = 200;//unit: MB
 if(PHP_VERSION < $php_version_lowest) {
 	exit('PHP version must >= '.$php_version_lowest.'!');
 }
@@ -756,18 +757,19 @@ if(!$action) {
 		$quit = TRUE;
 	}
 
+  $curr_memory = ini_get('memory_limit');
+  if(false !== strpos($curr_memory, 'M')) {
+    $curr_memory = (int)substr($curr_memory, 0, strpos($curr_memory, 'M'));
+  }
+  if($curr_memory < $memory_lowest) {
+    $msg .= "<font color=\"#FF0000\">$lang[memory_low]</font>\t";
+    $quit = TRUE;
+  }
+
   $curr_disk_space_m = intval(diskfreespace('.') / (1024 * 1024));
 	$curr_disk_space = $curr_disk_space_m.'M';
   if($curr_disk_space_m < $diskspace_lowest) {
     $msg .= "<font color=\"#FF0000\">$lang[diskspace_low]</font>\t";
-    $quit = TRUE;
-	}
-
-	if(dir_writeable('./templates')) {
-		$curr_tpl_writeable = $lang['writeable'];
-	} else {
-		$curr_tpl_writeable = $lang['unwriteable'];
-		$msg .= "<font color=\"#FF0000\">$lang[unwriteable_template]</font>\t";
     $quit = TRUE;
 	}
 
@@ -776,6 +778,22 @@ if(!$action) {
 	} else {
 		$curr_data_writeable = $lang['unwriteable'];
 		$msg .= "<font color=\"#FF0000\">$lang[unwriteable_gamedata]</font>\t";
+    $quit = TRUE;
+	}
+
+  if(dir_writeable('./include')) {
+		$curr_incl_writeable = $lang['writeable'];
+	} else {
+		$curr_incl_writeable = $lang['unwriteable'];
+		$msg .= "<font color=\"#FF0000\">$lang[unwriteable_include]</font>\t";
+    $quit = TRUE;
+	}
+
+  if(dir_writeable('./templates')) {
+		$curr_tpl_writeable = $lang['writeable'];
+	} else {
+		$curr_tpl_writeable = $lang['unwriteable'];
+		$msg .= "<font color=\"#FF0000\">$lang[unwriteable_template]</font>\t";
     $quit = TRUE;
 	}
 
@@ -866,10 +884,12 @@ if(!$action) {
   $server_address_available = 0;
   if($curl_ext_on) {
     $server_address = substr($server_address, strlen($server_address)-1) == '/' ? $server_address : $server_address.'/';
+    ob_start();
     $con = curl_init((string)$server_address.'install_NEW.php');
     curl_setopt($con, CURLOPT_TIMEOUT,10);
     $ret = curl_exec($con);
     $header_size = curl_getinfo($con, CURLINFO_HEADER_SIZE);
+    ob_end_clean();
     $server_address_available = $header_size ? 1 : 0;
   }
   if(!$server_address_available) {
@@ -991,21 +1011,27 @@ if(!$action) {
                 <td bgcolor="#EEEEF6" align="center"><?php echo $server_address_available ? $lang['yes'] : $lang['no']; ?></td>
               </tr>
               <tr>
-                <td bgcolor="#E3E3EA" align="center">./templates <?php echo $lang['env_dir_writeable']; ?></td>
-                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['writeable']; ?></td>
-                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['writeable']; ?></td>
-                <td bgcolor="#EEEEF6" align="center"><?php echo $curr_tpl_writeable; ?></td>
-              </tr>
-              <tr>
                 <td bgcolor="#E3E3EA" align="center">./gamedata <?php echo $lang['env_dir_writeable']; ?></td>
                 <td bgcolor="#EEEEF6" align="center"><?php echo $lang['writeable']; ?></td>
                 <td bgcolor="#E3E3EA" align="center"><?php echo $lang['writeable']; ?></td>
                 <td bgcolor="#EEEEF6" align="center"><?php echo $curr_data_writeable; ?></td>
               </tr>
               <tr>
+                <td bgcolor="#E3E3EA" align="center">./include <?php echo $lang['env_dir_writeable']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['writeable']; ?></td>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['writeable']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $curr_incl_writeable; ?></td>
+              </tr>
+              <tr>
+                <td bgcolor="#E3E3EA" align="center">./templates <?php echo $lang['env_dir_writeable']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['writeable']; ?></td>
+                <td bgcolor="#E3E3EA" align="center"><?php echo $lang['writeable']; ?></td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $curr_tpl_writeable; ?></td>
+              </tr>
+              <tr>
                 <td bgcolor="#E3E3EA" align="center"><?php echo $lang['env_php_memory']; ?></td>
-                <td bgcolor="#EEEEF6" align="center"><?php echo $lang['unlimited']; ?></td>
-                <td bgcolor="#E3E3EA" align="center">256M+</td>
+                <td bgcolor="#EEEEF6" align="center"><?php echo $memory_lowest.'M'; ?></td>
+                <td bgcolor="#E3E3EA" align="center">512M+</td>
                 <td bgcolor="#EEEEF6" align="center"><?php echo ini_get('memory_limit'); ?></td>
               </tr>
               <tr>
@@ -1378,10 +1404,10 @@ function runquery($sql) {
 	foreach($ret as $query) {
 		$query = trim($query);
 		if($query) {
-			if(substr($query, 0, 12) == 'CREATE TABLE') {
-				$name = preg_replace("/CREATE TABLE `*([a-z0-9_]+)`*\s*\(.*/is", "\\1", $query);
-				echo $lang['create_table'].' '.$name.' ... <font color="#0000EE">'.$lang['succeed'].'</font><br>';
+			if(substr($query, 0, 12) == 'CREATE TABLE' && false !== strpos($query, 'ENGINE')) {
 				$db->query(createtable($query, $dbcharset));
+        $name = preg_replace("/CREATE TABLE `*([a-z0-9_]+)`*\s*\(.*/is", "\\1", $query);
+        echo $lang['create_table'].' '.$name.' ... <font color="#0000EE">'.$lang['succeed'].'</font><br>';
 			} else {
 				$db->query($query);
 			}
