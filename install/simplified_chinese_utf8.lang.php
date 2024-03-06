@@ -112,9 +112,12 @@ $lang = array
 	'attach_disabled' => '不允许上传附件',
 	'attach_disabled_info' => '附件上传或相关操作被服务器禁止。',
 	'mysql_version_low' => '您的 MySQL 版本过低，安装无法继续进行。',
+	'memory_low' => 'php进程内存空间限制过低，安装无法继续进行。',
 	'diskspace_low' => '您的可用磁盘空间不足，安装无法继续进行。',
-	'unwriteable_template' => '模板目录(./templates)属性非 777 或无法写入，安装无法继续进行。',
 	'unwriteable_gamedata' => '数据目录(./gamedata)属性非 777 或无法写入，安装无法继续进行。',
+	'unwriteable_include' => '模块系统目录(./include)属性非 777 或无法写入，安装无法继续进行。',
+	'unwriteable_template' => '模板目录(./templates)属性非 777 或无法写入，安装无法继续进行。',
+	
 	'extension_off' => '扩展没有开启，安装无法继续进行。',
 	'server_address_unavailable' => '本地程序地址无法从本地访问，请检查服务器配置，安装无法继续进行。',
 
