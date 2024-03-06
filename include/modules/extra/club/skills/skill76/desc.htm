@@ -1,4 +1,4 @@
-<!--{eval eval(import_module('skill76','sys'));}-->
+<!--{eval eval(import_module('skill76','sys','bufficons'));}-->
 <!--{eval $___TEMP_SKILL_ID=76;}-->
 {template MOD_CLUBBASE_SKILLDESC_START}
 <span>
@@ -6,20 +6,28 @@
 </span>
 {template MOD_CLUBBASE_SKILLDESC_MID1}
 <td class="skilldesc_left b3"><span class="skilldesc">
-<!--{eval $skill76_lst = (int)\skillbase\skill_getvalue(76,'lastuse'); $skill76_time = ($now-$skill76_lst);$skill76_cd_left=($skill76_cd-$skill76_time);$max_rage = \player\get_max_rage();}-->
+<!--{eval $st = \bufficons\bufficons_check_buff_state(76,$who);$rm=$tmp_totsec-$tmp_nowsec;}-->
+<!--{eval $max_rage = (int)\player\get_max_rage();$rmt = (int)\skillbase\skill_getvalue(76,'rmt',$who);}-->
 发动后立即回复怒气至上限（<span class="yellow b">$max_rage</span>点）。<br>
-前<span class="yellow b">2</span>次发动没有冷却时间，之后冷却时间<span class="cyan b">600</span>秒<br>
-<!--{if $skill76_lst!=0}-->
-<!--{if $skill76_time<$skill76_cd}-->
-<span class="cyan b">技能冷却中，冷却时间还剩<span>$skill76_cd_left</span>秒。</span><br>
-<!--{/if}-->
+前<span class="yellow b">2</span>次发动没有冷却时间，之后冷却时间<span class="cyan b">$skill76_cd</span>秒<br>
+<!--{if 2 == $st}-->
+    <span class="yellow b">技能冷却中，冷却时间还剩<span>$rm</span>秒。</span><br>
+<!--{elseif 3 == $st}-->
+    <span class="cyan b">
+        技能冷却完毕，可以发动。
+        <!--{if $rmt}-->
+        无需冷却次数还剩：{$rmt}次
+        <!--{else}-->
+        发动后需要冷却
+        <!--{/if}-->
+    </span>
 <!--{/if}-->
 </span></td>
 <td class="skilldesc_right b3">
-<!--{if $skill76_time>$skill76_cd}-->
-<input type="button" style="width:46px" onclick="$('mode').value='special';$('command').value='skill76_special';$('subcmd').value='activate';postCmd('gamecmd','command.php');this.disabled=true;" value="发动">
+<!--{if 3 == $st}-->
+    <input type="button" style="width:46px" onclick="$('mode').value='special';$('command').value='skill76_special';$('subcmd').value='activate';postCmd('gamecmd','command.php',this);" value="发动">
 <!--{else}-->
-<input type="button" style="width:46px" disabled="true" value="发动">
+    <input type="button" style="width:46px" disabled="true" value="发动">
 <!--{/if}-->
 </td>
 {template MOD_CLUBBASE_SKILLDESC_MID2}
