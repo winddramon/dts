@@ -758,8 +758,7 @@ if(!$action) {
 
   $curr_disk_space_m = intval(diskfreespace('.') / (1024 * 1024));
 	$curr_disk_space = $curr_disk_space_m.'M';
-
-  if($curr_disk_space < $diskspace_lowest) {
+  if($curr_disk_space_m < $diskspace_lowest) {
     $msg .= "<font color=\"#FF0000\">$lang[diskspace_low]</font>\t";
     $quit = TRUE;
 	}
@@ -844,7 +843,7 @@ if(!$action) {
 		$dbpriv_droptable = $lang['yes'];
 	}
 
-	$query = $db->query("SELECT COUNT(*) FROM $tablepre"."users", 'SILENT');
+	$query = $db->query("SELECT COUNT(*) FROM $gtablepre"."users", 'SILENT');
 	if(!$db->error()) {
 		$msg .= "<font color=\"#FF0000\">$lang[db_not_null]</font>\t";
 		$alert = " onSubmit=\"return confirm('$lang[db_drop_table_confirm]');\"";
