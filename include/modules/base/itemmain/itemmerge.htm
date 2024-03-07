@@ -1,32 +1,18 @@
 你想要做什么？<br>
-
 <input type="hidden" name="mode" value="itemmain">
 <input type="hidden" id="cmdspare" name="cmdspare" value="">
-<input type="radio" name="command" id="itemmerge" value="itemmerge" checked><a onclick=sl('itemmerge'); href="javascript:void(0);">合并两个道具</a><br>
-<input type="radio" name="command" id="itemmove" value="itemmove"><a onclick=sl('itemmove'); href="javascript:void(0);">移动或交换道具的位置</a><br>
-<br>
+<input type="radio" name="command" id="itemmerge" value="itemmerge" >
+<input type="radio" name="command" id="itemmove" value="itemmove" >
 请选择参与合并/移动/交换位置的两个道具：<br><br>
 <input type="hidden" name="from" id="from" value="0">
-<select name="merge1" id="merge1" href="javascript:void(0);">
-<option style="width:220px;" value="0">■ 道具一 ■<br />
-<!--{if $itms1}--><option value="1">包裹1：$itm1/$itme1/$itms1<br /><!--{/if}-->
-<!--{if $itms2}--><option value="2">包裹2：$itm2/$itme2/$itms2<br /><!--{/if}-->
-<!--{if $itms3}--><option value="3">包裹3：$itm3/$itme3/$itms3<br /><!--{/if}-->
-<!--{if $itms4}--><option value="4">包裹4：$itm4/$itme4/$itms4<br /><!--{/if}-->
-<!--{if $itms5}--><option value="5">包裹5：$itm5/$itme5/$itms5<br /><!--{/if}-->
-<!--{if $itms6}--><option value="6">包裹6：$itm6/$itme6/$itms6<br /><!--{/if}-->
-</select>
-<br><br>
 <input type="hidden" name="to" id="to" value="0">
-<select name="merge2" id="merge2" href="javascript:void(0);">
-<option style="width:220px;" value="0">■ 道具二 ■<br />
-<!--{if $itms1}--><option value="1">包裹1：$itm1/$itme1/$itms1<!--{else}--><option value="1">包裹1：将道具1移动到这里<!--{/if}-->
-<!--{if $itms2}--><option value="2">包裹2：$itm2/$itme2/$itms2<!--{else}--><option value="2">包裹2：将道具1移动到这里<!--{/if}-->
-<!--{if $itms3}--><option value="3">包裹3：$itm3/$itme3/$itms3<!--{else}--><option value="3">包裹3：将道具1移动到这里<!--{/if}-->
-<!--{if $itms4}--><option value="4">包裹4：$itm4/$itme4/$itms4<!--{else}--><option value="4">包裹4：将道具1移动到这里<!--{/if}-->
-<!--{if $itms5}--><option value="5">包裹5：$itm5/$itme5/$itms5<!--{else}--><option value="5">包裹5：将道具1移动到这里<!--{/if}-->
-<!--{if $itms6}--><option value="6">包裹6：$itm6/$itme6/$itms6<!--{else}--><option value="6">包裹6：将道具1移动到这里<!--{/if}-->
-</select>
+<input type="hidden" name="merge1" id="merge1" value="0">
+<input type="hidden" name="merge2" id="merge2" value="0">
+<!--{if $itms1}--><button type="button" class="item_noselecte"  id="item1" value="1" empty="false" onclick=itemMoveAndMerge(this);>$itm1/$itme1/$itms1</button><br><!--{else}--><button type="button"  class="item_noselecte"  id="item1" value="1" empty="true" onclick=itemMoveAndMerge(this);>空</button><!--{/if}-->
+<!--{if $itms2}--><button type="button" class="item_noselecte"  id="item2" value="2" empty="false" onclick=itemMoveAndMerge(this);>$itm2/$itme2/$itms2</button><br><!--{else}--><button type="button"  class="item_noselecte"  id="item2" value="2" empty="true" onclick=itemMoveAndMerge(this);>空</button><!--{/if}-->
+<!--{if $itms3}--><button type="button" class="item_noselecte"  id="item3" value="3" empty="false" onclick=itemMoveAndMerge(this);>$itm3/$itme3/$itms3</button><br><!--{else}--><button type="button"  class="item_noselecte"  id="item3" value="3" empty="true" onclick=itemMoveAndMerge(this);>空</button><!--{/if}-->
+<!--{if $itms4}--><button type="button" class="item_noselecte"  id="item4" value="4" empty="false" onclick=itemMoveAndMerge(this);>$itm4/$itme4/$itms4</button><br><!--{else}--><button type="button"  class="item_noselecte"  id="item4" value="4" empty="true" onclick=itemMoveAndMerge(this);>空</button><!--{/if}-->
+<!--{if $itms5}--><button type="button" class="item_noselecte"  id="item5" value="5" empty="false" onclick=itemMoveAndMerge(this);>$itm5/$itme5/$itms5</button><br><!--{else}--><button type="button"  class="item_noselecte"  id="item5" value="5" empty="true" onclick=itemMoveAndMerge(this);>空</button><!--{/if}-->
+<!--{if $itms6}--><button type="button" class="item_noselecte"  id="item6" value="6" empty="false" onclick=itemMoveAndMerge(this);>$itm6/$itme6/$itms6</button><br><!--{else}--><button type="button"  class="item_noselecte"  id="item6" value="6" empty="true" onclick=itemMoveAndMerge(this);>空</button><!--{/if}-->
 <br><br>
-<input type="button" class="cmdbutton"  id="z" value="[Z]提交" onclick="$('from').value=$('merge1').value;$('to').value=$('merge2').value;postCmd('gamecmd','command.php');this.disabled=true;">
-<input type="button" class="cmdbutton"  id="x" value="[X]返回" onclick="$('cmdspare').name='command';$('cmdspare').value='menu';$('itemmerge').checked=false;$('itemmove').checked=false;postCmd('gamecmd','command.php');this.disabled=true;">
+<input type="button" class="cmdbutton"  id="x" value="[X]返回" onclick="$('cmdspare').name='command';$('cmdspare').value='menu';$('itemmerge').checked=false;$('itemmove').checked=false;postCmd('gamecmd','command.php');this.disabled=true;exchange= []">
