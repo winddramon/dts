@@ -1,4 +1,4 @@
-<!--{eval eval(import_module('skill425','player','sys'));}-->
+<!--{eval eval(import_module('skill425','player','sys','bufficons'));}-->
 <!--{eval $___TEMP_SKILL_ID=425;}-->
 {template MOD_CLUBBASE_SKILLDESC_START}
 <span>
@@ -6,24 +6,24 @@
 </span>
 {template MOD_CLUBBASE_SKILLDESC_MID1}
 <td class="skilldesc_left b3"><span class="skilldesc">
-<!--{eval $skill425_lst = (int)\skillbase\skill_getvalue(425,'lastuse'); $skill425_time = ($now-$skill425_lst);$skill425_cd_left=($skill425_cd-$skill425_time);}-->
-<!--{eval $skill425_bt = (int)\skillbase\skill_getvalue(425,'bribe_times'); $skill425_rt=max(0, \skill425\get_skill425_max_times()-$skill425_bt);}-->
-更换除错所需求的物品，冷却时间<span class="cyan b">90</span>秒<br>
-<!--{if $skill425_lst!=0}-->
-	<!--{if $skill425_time<$skill425_cd}-->
-	<span class="cyan b">技能冷却中，冷却时间还剩<span>$skill425_cd_left</span>秒。</span><br>
-		<!--{if $skill425_rt>0 && $money >= $skill425_cost}-->可花费<span class="yellow b">500</span>元贿赂后台工作人员来无视CD发动技能，<br>当前级别还剩<span class="yellow b">$skill425_rt</span>次机会<br>
-		<!--{elseif $skill425_rt<=0 }--><span class="yellow b">你的贿赂次数已经耗尽，请提升除错层数！</span>
-		<!--{else}--><span class="yellow b">你当前金钱不足以贿赂工作人员！</span>
+<!--{eval $st = \skill425\check_skill425_state($who);$rm=$tmp_totsec-$tmp_nowsec;}-->
+<!--{eval $skill425_bt = (int)\skillbase\skill_getvalue(425,'bribe_times',$who); $skill425_rt=max(0, \skill425\get_skill425_max_times()-$skill425_bt);}-->
+更换除错所需求的物品，冷却时间<span class="cyan b">$skill425_cd</span>秒<br>
+<!--{if $st > 0}-->
+	<!--{if 3 != $st}-->
+	<span class="cyan b">技能冷却中，冷却时间还剩<span>$rm</span>秒。</span><br>
+		<!--{if 1 == $st}--><span class="yellow b">你当前金钱不足以贿赂工作人员！</span>
+		<!--{elseif 4 == $st }--><span class="yellow b">你的贿赂次数已经耗尽，请提升除错层数！</span>
+		<!--{else}-->可花费<span class="yellow b">$skill425_cost</span>元贿赂后台工作人员来无视CD发动技能，<br>当前级别还剩<span class="yellow b">$skill425_rt</span>次机会<br>
 		<!--{/if}-->
 	<!--{/if}-->
 <!--{/if}-->
 </span></td>
 <td class="skilldesc_right b3">
-<!--{if $skill425_time>$skill425_cd}-->
-<input type="button" style="width:46px" onclick="$('mode').value='special';$('command').value='skill425_special';$('subcmd').value='activate';postCmd('gamecmd','command.php');this.disabled=true;" value="发动">
-<!--{elseif $skill425_rt>0 && $money >= $skill425_cost}-->
-<input type="button" style="width:46px" onclick="$('mode').value='special';$('command').value='skill425_special';$('subcmd').value='activate';postCmd('gamecmd','command.php');this.disabled=true;" value="花钱">
+<!--{if 3 == $st}-->
+<input type="button" style="width:46px" onclick="$('mode').value='special';$('command').value='skill425_special';$('subcmd').value='activate';postCmd('gamecmd','command.php',this);" value="发动">
+<!--{elseif 2 == $st}-->
+<input type="button" style="width:46px" onclick="$('mode').value='special';$('command').value='skill425_special';$('subcmd').value='activate';postCmd('gamecmd','command.php',this);" value="花钱">
 <!--{else}-->
 <input type="button" style="width:46px" disabled value="花钱">
 <!--{/if}-->
