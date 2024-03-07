@@ -169,12 +169,13 @@ namespace skill731
 		$itme0 = $skill731_itemlist[$bi][2];
 		$itms0 = $skill731_itemlist[$bi][3] * $bnum;
 		$itmsk0 = \attrbase\config_process_encode_comp_itmsk($skill731_itemlist[$bi][4]);
-		//更新库存		
+		//更新库存
 		$skill731_stocks[$bi] -= $bnum;
 		$gamevars['skill731_stocks'] = $skill731_stocks;
 		save_gameinfo();
 		$log .= "购买成功，总计花费<span class='yellow b'>$cost</span>元。<br>";
 		addnews(0, 'buy731', $name, $bnum, $skill731_itemlist[$bi][0]);
+		skill731_add_record(1, $bi, $bnum, $skill731_prices[$bi], $sdata);
 		\itemmain\itemget();
 		return;
 	}
@@ -234,7 +235,70 @@ namespace skill731
 		save_gameinfo();
 		$log .= "出售成功，获得了<span class='yellow b'>$gain</span>元<span style='font-size:6px'>（已扣除手续费{$cmsn}元）</span>。<br>";
 		addnews(0, 'sell731', $name, $snum, $skill731_itemlist[$si][0]);
+		skill731_add_record(0, $si, $snum, $skill731_prices[$si], $sdata);
 		return;
+	}
+	
+	function skill731_encode_record($arr)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return gencode($arr);
+	}
+	
+	function skill731_decode_record($str)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return gdecode($str, 1);
+	}
+	
+	function skill731_get_record(&$pa=NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if (empty($pa))
+		{
+			eval(import_module('player'));
+			$pa = $sdata;
+		}
+		if (!\skillbase\skill_query(731, $pa)) return array();
+		$skill731_record_str = \skillbase\skill_getvalue(731, 'record', $pa);
+		if (empty($skill731_record_str)) return array();
+		return skill731_decode_record($skill731_record_str);
+	}
+	
+	function skill731_add_record($ttype, $ti, $tnum, $tprice, &$pa=NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if (empty($pa))
+		{
+			eval(import_module('player'));
+			$pa = $sdata;
+		}
+		if (!\skillbase\skill_query(731, $pa)) return;
+		$skill731_record = skill731_get_record($pa);
+		$skill731_record[] = array($ttype, $ti, $tnum, $tprice);
+		if (sizeof($skill731_record) > 10) array_shift($skill731_record);
+		\skillbase\skill_setvalue(731, 'record', skill731_encode_record($skill731_record), $pa);
+	}
+	
+	function skill731_show_record(&$pa=NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if(empty($pa))
+		{
+			eval(import_module('player'));
+			$pa = $sdata;
+		}
+		$skill731_text = "";
+		$skill731_record = skill731_get_record($pa);
+		if (empty($skill731_record)) return "无";
+		eval(import_module('skill731'));
+		foreach($skill731_record as $v)
+		{
+			if ($v[0]) $skill731_text .= "<span class='lime b'>买入</span>";
+			else $skill731_text .= "<span class='red b'>卖出</span>";
+			$skill731_text .= "了<span class='yellow b'>{$v[2]}</span>个<span class='yellow b'>{$skill731_itemlist[$v[1]][0]}</span>，单价为<span class='yellow b'>{$v[3]}</span>元。<br>";
+		}
+		return $skill731_text;
 	}
 	
 	function cast_skill731()

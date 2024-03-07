@@ -66,16 +66,18 @@ namespace randrecipe
 		$r['result'][0] = '';
 		$r['result'][1] = $itmk;
 		$r['result'][4] = array();
+		//记录特殊变化
+		$r['result'][5] = array();
 		if ($itmk[0] == 'H')
 		{
 			$r['result'][2] = rand(50,140);
-			$r['result'][3] = rand(10,30);
+			$r['result'][3] = rand(20,40);
 		}
 		elseif ($itmk[0] == 'W')
 		{
-			$r['result'][2] = rand(50,200);
-			$r['result'][3] = rand(20,50);
-			$skcount = rand(0,2);
+			$r['result'][2] = rand(70,220);
+			$r['result'][3] = rand(30,60);
+			$skcount = rand(1,2);
 			if ($skcount == 1) $r['result'][4] = [array_randompick($randrecipe_itmsk_list['W'])];
 			elseif ($skcount > 1) $r['result'][4] = array_randompick($randrecipe_itmsk_list['W'], $skcount);
 			else
@@ -88,8 +90,8 @@ namespace randrecipe
 		}
 		elseif ($itmk[0] == 'D')
 		{
-			$r['result'][2] = rand(60,150);
-			$r['result'][3] = rand(15,30);
+			$r['result'][2] = rand(80,160);
+			$r['result'][3] = rand(30,50);
 			$skcount = rand(0,2);
 			if ($skcount == 1) $r['result'][4] = [array_randompick($randrecipe_itmsk_list['D'])];
 			elseif ($skcount > 1) $r['result'][4] = array_randompick($randrecipe_itmsk_list['D'], $skcount);
@@ -125,7 +127,7 @@ namespace randrecipe
 				$si += 1;
 			}
 		}
-		//额外素材0-2个，饰品则为1-3个，但总素材数不超过6个
+		//额外素材0-2个，饰品则为1-3个，但总素材数不超过5个
 		if ($itmk[0] == 'A') $c = rand(1,3);
 		else $c = rand(0,2);
 		for ($i=0; $i<$c; $i++)
@@ -144,10 +146,16 @@ namespace randrecipe
 		{
 			foreach($randrecipe_bonus_itmsk_list[$itmk[0]] as $k => $v)
 			{
-				if (($r['result'][2] >= $k) && (rand(0,99) > 70)) $r['result'][4][] = array_randompick($v);
+				if ($r['result'][2] >= $k)
+				{
+					if (rand(0,99) > 30) $r['result'][4][] = array_randompick($v);
+					if (rand(0,99) > 70) $r['result'][4][] = array_randompick($v);
+				}
 			}
-		}		
-		if (isset($result[5]))
+		}
+		//效耐不均衡补正
+		if (($itmk[0] == 'D') && ($r['result'][2] > 10 * $r['result'][3])) $r['result'][3] = rand($r['result'][3], ceil($r['result'][2]/10));
+		if (in_array('u', $r['result'][5]))
 		{
 			if ($itmk == 'WG')
 			{
@@ -161,6 +169,7 @@ namespace randrecipe
 			elseif ($itmk == 'WC') $r['result'][1] == 'WB';
 			unset($result[5]);
 		}
+		if (in_array('i', $r['result'][5])) $r['result'][3] = '∞';
 		if (!empty($r['result'][4])) $r['result'][4] = implode('', array_unique($r['result'][4]));
 		else $r['result'][4] = '';
 		//生成名称
@@ -171,7 +180,7 @@ namespace randrecipe
 		if ($dice) $r['result'][0] .= array_randompick(array('','','之'));
 		else $r['result'][0] .= '的';
 		$r['result'][0] .= array_randompick($randrecipe_resultname[$itmk]);
-		if (($itmk[0] != 'H') && rand(0,1))
+		if (($itmk[0] != 'H') && rand(0,2))
 		{
 			$bracket = array_randompick(array(array('☆','☆'),array('★','★'),array('〖','〗'),array('【','】'),array('『','』'),array('「','」')));
 			$r['result'][0]	= $bracket[0].$r['result'][0].$bracket[1];
@@ -203,8 +212,8 @@ namespace randrecipe
 			else $rk = 3;
 			if (!empty($change))
 			{
-				if (($type == 'itme') && ($change == 'u')) $result[5] == 1;
-				elseif (($type == 'itms') && ($change == 'i')) $result[3] == '∞';
+				if (($type == 'itme') && ($change == 'u')) $result[5][] = 'u';
+				elseif (($type == 'itms') && ($change == 'i')) $result[5][] = 'i';
 				else
 				{
 					$c = (float)substr($change, 1);
@@ -274,7 +283,7 @@ namespace randrecipe
 			}
 			elseif ($itm == '测试配方生成器')
 			{
-				$log .= "使用了<span class=\"yellow b\">$itm</span>。<br>";
+				$log .= "使用了<span class=\"yellow b\">$itm</span>。<br><br>";
 				$recipe = \randrecipe\generate_randrecipe();
 				$recipe_tip = '';
 				$flag = 0;
