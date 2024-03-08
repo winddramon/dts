@@ -659,26 +659,49 @@ div.battlecmd_desc{
 
 
 /*==========selected==========*/
-
-.item_select{
-	width:200px;
-	min-height:35px;
+.item_select, 
+.item_noselecte,
+.to_merge,
+.to_move,
+.drop{
 	margin:4px;
 	padding:0;
-	vertical-align:top;
 	line-height:15px;
 	word-wrap:break-word;
-	background-color:rgb(255, 116, 116); 
 	border: 2px solid #ccbb00;
 }
-.item_noselecte{
-	width:200px;
+.item_select{
+	width:150px;
 	min-height:35px;
-	margin:4px;
-	padding:0;
 	vertical-align:top;
-	line-height:15px;
-	word-wrap:break-word;
-	
-	border: 2px solid #ccbb00;
+	background-color:rgb(255, 116, 116); 
+}
+.item_noselecte{
+	width:150px;
+	min-height:35px;
+	vertical-align:top;
+}
+.to_merge{
+	width: 100px;
+	min-height: 50px;
+	background-color:rgb(35, 123, 247); 
+}
+.to_move{
+	width: 100px;
+	min-height: 50px;
+	background-color:rgb(191, 247, 35); 
+}
+
+.item_drop{
+	width: 50px;
+	height: 70px;
+	margin-left: 30px;
+	background-color:rgb(255, 36, 36); 
+}
+
+.option1 , .option2{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	min-height: 100px;
 }
