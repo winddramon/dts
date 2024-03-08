@@ -7,7 +7,7 @@ namespace instance10
 		if(!isset($valid_skills[20])) {
 			$valid_skills[20] = array();
 		}
-		$valid_skills[20] += array(181,951,952,960);
+		$valid_skills[20] += array(181,951,952,960,962);
 	}
 	
 	//肉鸽模式自动选择肉鸽来客

@@ -1,0 +1,13 @@
+<input type="hidden" name="mode" value="special">
+<input type="hidden" id="command" name="command" value="skill746_special">
+<input type="hidden" id="subcmd" name="subcmd" value="castsk746">
+你可以选择一个仅装有爆炸物的<span class="yellow b">储物</span>道具，将其改造为爆炸物。<br><br>
+请选择要改造的道具：<br><br>
+<!--{loop range(1,6) $i}-->
+	<!--{if ${'itms'.$i} && \itemmain\check_in_itmsk('^st', ${'itmsk'.$i})}-->	
+	<input type="radio" name="skill746_choice" id="skill746_choice$i" value="$i"><a onclick="sl('skill746_choice$i');">${'itm'.$i}/${'itme'.$i}/${'itms'.$i}</a><br>
+	<!--{/if}-->
+<!--{/loop}-->
+<br><br>
+<input type="button" class="cmdbutton"  id="z" value="[Z]提交" onclick="postCmd('gamecmd','command.php');this.disabled=true;">
+<input type="button" class="cmdbutton"  id="x" value="[X]返回" onclick="$('command').value='menu'; postCmd('gamecmd','command.php');this.disabled=true;">

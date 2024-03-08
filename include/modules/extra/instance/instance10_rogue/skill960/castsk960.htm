@@ -11,7 +11,9 @@
 <!--{loop $taskarr $i $taskid}-->
 <!--{eval $task_tip=\skill960\show_task_tip($taskid, $taskprog[$i], 1);}-->
 $task_tip<br>
-<input type="button" class="cmdbutton" value="提交" onclick="$('taskid_submit').value='$taskid';postCmd('gamecmd','command.php');this.disabled=true;"><br><br>
+<input type="button" class="cmdbutton" value="提交" onclick="$('taskid_submit').value='$taskid';postCmd('gamecmd','command.php');this.disabled=true;">
+<!--{eval echo \skill960\show_extra_task_cmds($who, $taskid);}-->
+<br><br>
 <!--{/loop}-->
 <!--{/if}-->
 <br><br>
