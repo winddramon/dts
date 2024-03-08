@@ -1,4 +1,4 @@
-<!--{eval eval(import_module('skill426','sys'));}-->
+<!--{eval eval(import_module('skill426','sys','bufficons'));}-->
 <!--{eval $___TEMP_SKILL_ID=426;}-->
 {template MOD_CLUBBASE_SKILLDESC_START}
 <span>
@@ -6,20 +6,22 @@
 </span>
 {template MOD_CLUBBASE_SKILLDESC_MID1}
 <td class="skilldesc_left b3"><span class="skilldesc">
-<!--{eval $clv = (int)\skillbase\skill_getvalue(426,'lvl'); }-->
+<!--{eval $clv = (int)\skillbase\skill_getvalue(426,'lvl',$who); }-->
 <!--{eval $totlv = count($upgradecost)-1; }-->
-<!--{eval $skill426_lst = (int)\skillbase\skill_getvalue(426,'lastuse'); $skill426_time = ($now-$skill426_lst);$skill426_cd_left=($skill426_cd[$clv]-$skill426_time);}-->
+<!--{eval $st = \skill426\check_skill426_state($who);$rm=$tmp_totsec-$tmp_nowsec;}-->
 <span class="lime b">当前级别$clv/$totlv</span>&nbsp;
 <!--{if $upgradecost[$clv] !== -1}-->消耗<span class="lime b">$upgradecost[$clv]</span>点技能点升至下一级<!--{/if}--><br>
 恢复满HP、SP，并治好所有伤口和异常状态，冷却时间<span class="cyan b">$skill426_cd[$clv]</span>秒<br>
-<!--{if $skill426_time<$skill426_cd[$clv]}-->
-<span class="cyan b">技能冷却中，冷却时间还剩<span>$skill426_cd_left</span>秒。</span><br>
+<!--{if 2 == $st}-->
+<span class="yellow b">技能冷却中，冷却时间还剩<span>$rm</span>秒。</span><br>
+<!--{elseif 3 == $st}-->
+<span class="cyan b">技能冷却完毕，可以发动</span><br>
 <!--{/if}-->
 </span></td>
 <td class="skilldesc_right b3">
 <!--{if $upgradecost[$clv] !== -1}-->
 <!--{if $skillpoint>=$upgradecost[$clv]}-->
-<input type="button" style="width:46px" onclick="$('mode').value='special';$('command').value='skill426_special';$('subcmd').value='upgrade';postCmd('gamecmd','command.php');this.disabled=true;" value="升级">
+<input type="button" style="width:46px" onclick="$('mode').value='special';$('command').value='skill426_special';$('subcmd').value='upgrade';postCmd('gamecmd','command.php',this);" value="升级">
 <!--{else}-->
 <input type="button" style="width:46px" disabled="true" value="升级">
 <!--{/if}-->

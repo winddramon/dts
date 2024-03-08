@@ -1697,8 +1697,8 @@ $cards = array(
 		'name' => '软件测试工程师',
 		'rare' => 'S',
 		'pack' => 'hidden',
-		'desc' => '“据称阁下乃软件测试界的精英，谨邀请阁下参加幻境除错任务，望阁下予以支持。”<br><span class="red b" style="text-align:right">——红暮</span>',
-		'effect' => '你其实对代码一窍不通，不过你搞野路子的经验很丰富。',
+		'desc' => '<span class="ltcrimson b">“据称阁下乃软件测试界之精英，<br>诚邀阁下加入敝社幻境除错项目，<br>望予以支持。”</span><br><br><span class="red b" style="text-align:right">——红暮</span>',
+		'effect' => '你其实对代码一窍不通，<br>不过你搞野路子的经验非常丰富。',
 		'energy' => 0,
 		'valid' => array(
 			'club' => '7',
@@ -1716,7 +1716,7 @@ $cards = array(
 				//'495' => '0',
 			),
 			'itm6' => '任务指令书A',
-			'itmk6' => 'Y',
+			'itmk6' => 'Z',
 			'itme6' => '1',
 			'itms6' => '1',
 			'itmsk6' => '',
@@ -5014,7 +5014,7 @@ $cards = array(
 		'rare' => 'A',
 		'pack' => 'Top Players',
 		'desc' => '他除错的力量无人能及',
-		'effect' => '获得除错模式特殊技能「除错」，每层都会让物理固定伤害增加3点，但20级之前不会获得金钱和技能点奖励',
+		'effect' => '获得除错模式特殊技能「除错」，并且每层都会让物理固定伤害增加3点，但20级之前不会获得金钱和技能点奖励',
 		'desc_skills' => '「除错」：提交指定的物品来追查病毒、修复幻境系统，除错成功会获得奖励。在某些等级会获得与正常除错模式不同的奖励',
 		'energy' => 100,
 		'valid' => array(
