@@ -717,6 +717,7 @@ skill26,extra/club/skills/skill26/,1
 skill265,extra/club/skills/skill265/,1
 skill507,extra/card/skills/skill507/,1
 skill113,extra/club/skills/skill113/,1
+skill962,extra/instance/instance10_rogue/skill962/,1
 skill27,extra/club/skills/skill27/,1
 skill489,extra/card/skills/skill489/,1
 skill266,extra/club/skills/skill266/,1

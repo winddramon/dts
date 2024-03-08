@@ -483,6 +483,13 @@ namespace skill960
 		return $task_tip;
 	}
 	
+	//显示额外的任务操作
+	function show_extra_task_cmds(&$pa, $taskid)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return '';
+	}
+	
 	//查看任务
 	function cast_skill960()
 	{
