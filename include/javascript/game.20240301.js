@@ -934,13 +934,19 @@ function skilldesc_onmouseout(caller_id, skill_id) {
 ////////////////////////////////////////////////////////////////////////
 
 exchange = []
+drop = 0;//是否丢弃询问
 
-function itemMoveAndMerge(item)//replay_record_DOM_path应该是保存到录像？
+function itemMoveAndMerge(item)//replay_record_DOM_path不能记录按钮，所以现在记录不了
 {
-	var $i = jQuery(item)
-
+	var $i = jQuery(item);
+	var judge = jQuery("#judge").val();
+	if(judge == "0"){//html里这个input初始值是0，然后但凡执行函数就把这个input值改成1,归零数组防止污染
+		jQuery("#judge").attr("value", "1");
+		exchange = [];
+		drop = 0;
+	}
+	jQuery(".item_drop").text("丢弃");
 	exchange.push(item);
-
 	if (exchange.length === 1) {//第一次点击 如果是空则不点击
 		if ($i.attr("empty") === "true") {
 			exchange = []
@@ -948,37 +954,77 @@ function itemMoveAndMerge(item)//replay_record_DOM_path应该是保存到录像�
 			itemSelectitem($i)
 		}
 	} else if (exchange.length === 2) {//第二次点击 如果是空则交换
-
-		if (exchange[0] !== exchange[1]) {//先判断合并再判断交换
-			if (exchange[1].innerHTML.split('/')[0] === exchange[0].innerHTML.split('/')[0]) {//可以合并的名字应该相同吧
-				$('itemmerge').checked = true;//from,to,merge1,merge2都要传
-				$('itemmove').checked = false;
-				$('from').value = exchange[0].value;
-				$('to').value = exchange[1].value;
-				$('merge1').value = exchange[0].value;
-				$('merge2').value = exchange[1].value;
-			} else {
-				$('itemmove').checked = true;
-				$('itemmerge').checked = false;
-				$('from').value = exchange[0].value;
-				$('to').value = exchange[1].value;
-				$('merge1').value = exchange[0].value;
-				$('merge2').value = exchange[1].value;
-			}
-			jQuery("button").attr("disabled",true);//防止在卡顿的情况下再次点击，不过好丑，就先这样吧
-			postCmd('gamecmd', 'command.php');
-
+		if (exchange[0].value == exchange[1].value) //相同的位置
+		{
+			jQuery(".item_select").removeClass("item_select").addClass("item_noselecte")
+			exchange = []
+			return;	
 		}
-		jQuery(".item_select").removeClass("item_select").addClass("item_noselecte")
-		exchange = []
-	} 
-	replay_record_DOM_path($i[0]);
+		if (exchange[1].textContent.split('/')[0] === exchange[0].textContent.split('/')[0]) {//先判断合并再判断交换可以合并的名字应该相同吧,应该没有名字带/的吧
+			jQuery(".option1").hide();
+			jQuery(".option2").show();//后面给按钮决定应该没事吧？
+
+		} else {
+			$('command').value='itemmove'
+			toPostCmd();
+		}
+		itemSelectitem($i)
+		jQuery(".item_noselecte").attr('disabled', true);//防止在卡顿的情况下再次点击，以及如果有合并的阻止操作
+		jQuery(".item_select").removeAttr('onclick');
+	
+	}else{//一般应该不会到这吧
+		exchange.pop();
+	}
 }
-function itemSelectitem($i) {
+function itemSelectitem($i) {//录像保存和点击样式
 	if ($i.attr("class") === "item_noselecte") {
 		$i.removeClass("item_noselecte").addClass("item_select");
-	} else {
+	} else if($i.attr("class") === "item_select"){
 		$i.removeClass("item_select").addClass("item_noselecte");
+	}
+}
+function toPostCmd(){//在物品交换和合并执行postCmd的，from,to,merge1,merge2都要传
+	jQuery(".item_drop").attr('disabled', true);
+	$('from').value = exchange[0].value;
+	$('to').value = exchange[1].value;
+	$('merge1').value = exchange[0].value;
+	$('merge2').value = exchange[1].value;
+	postCmd('gamecmd', 'command.php');
+	exchange = [];
+	drop = 0;
+}
+function toMove(){
+	$('command').value='itemmove'
+	jQuery(".to_merge").attr('disabled', true);
+	jQuery(".to_move").removeAttr('onclick');
+	toPostCmd()
+}
+function toMerge(){
+	$('command').value='itemmerge'
+	jQuery(".to_move").attr('disabled', true);
+	jQuery(".to_merge").removeAttr('onclick');
+	toPostCmd()
+}
+
+function itemDrop(){
+	var $i = jQuery(".item_drop");
+	if(exchange.length === 0){
+		$i.text("请选择目标")
+	}else if(exchange.length === 1){
+		if(drop == 1){
+			$('command').value='dropitm' + exchange[0].value;
+			console.log($('command'))
+			postCmd('gamecmd','command.php')
+			exchange = [];
+			drop = 0;
+			$i.attr('disabled', true)
+			jQuery(".item_noselecte").attr('disabled', true);//保证结算
+			jQuery(".item_select").removeAttr('onclick');
+		}
+		$i.text("确定丢弃");
+		drop = 1;
+	}else{
+		$i.text("目标过多")
 	}
 }
 
