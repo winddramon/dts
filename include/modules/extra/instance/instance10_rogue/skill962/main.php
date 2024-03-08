@@ -41,10 +41,7 @@ namespace skill962
 		$st = \bufficons\bufficons_check_buff_state(962, $pa);
 		if(!$st) return 0;
 		
-		eval(import_module('skill962'));
-		$invscore = (int)\skillbase\skill_getvalue(960,'invscore',$pa);
-		$stage = \instance10\get_stage($invscore);
-		$skill962_cost = $skill962_base_cost * pow(2, $stage);
+		$skill962_cost = get_skill962_cost($pa);
 		if (2 == $st){
 			if ($pa['money'] < $skill962_cost) return 1;
 			return 2;
