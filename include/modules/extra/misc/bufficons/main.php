@@ -10,7 +10,7 @@ namespace bufficons
 	
 	//一个完整的技能描述（$bufficons_list的元素数组，也是bufficon_show()接收到的$para变量）应包含以下字段：
 	//disappear: 冷却时间结束后是否消失（1为消失）
-	//clickable: 如不考虑冷却时间，本技能目前是否已满足主动激活条件。
+	//clickable: 冷却时间结束后，如果技能不消失，图标是否变亮且可点击（1为可点击）
 	//hint： 技能的描述文字。
 	//activate_hint： 激活技能的提示文字（或不能激活技能时的说明文字），如果本技能不是主动技能，与hint一样即可。
 	//onclick： 点击时的js操作（clickable时有效）
@@ -212,7 +212,7 @@ namespace bufficons
 		return Array($can_activate, $fail_hint);
 	}
 
-	//常见的一组激活buff技能的执行逻辑
+	//常见的一组激活buff技能的执行逻辑，需要事先获得技能
 	function bufficons_activate_buff($token, $end, $cd, &$pa=NULL)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -224,10 +224,29 @@ namespace bufficons
 		if($is_successful){
 			$is_successful = \bufficons\bufficons_set_timestamp($token, $end, $cd, $pa);
 			if(!$is_successful) {
-				$fail_hint = '因技能编号错误等原因，发动失败！<br>';
+				$fail_hint = '因技能编号错误或者时间为0等原因，发动技能失败！<br>';
 			}
 		}
 		
+		return Array($is_successful, $fail_hint);
+	}
+
+	//常见的另一组激活buff技能的执行逻辑，不需要事先获得技能（会自动获得）
+	//传参$tp代表叠加方式，1为刷新，2为累加
+	function bufficons_impose_buff($token, $end, $cd, &$pa=NULL, $tp=1) {
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if(!\skillbase\skill_query($token, $pa)) {
+			\skillbase\skill_acquire($token, $pa);
+		}
+		if(2 == $tp && 1 == \bufficons\bufficons_check_buff_state($token, $pa)) {//如果技能正在生效，判定是否累加时间
+			eval(import_module('bufficons'));
+			$end += $tmp_totsec - $tmp_nowsec;
+		}
+		$is_successful = \bufficons\bufficons_set_timestamp($token, $end, $cd, $pa);
+		if(!$is_successful) {
+			$fail_hint = '因技能编号错误或者时间为0等原因，施加异常状态失败！<br>';
+		}
+
 		return Array($is_successful, $fail_hint);
 	}
 }

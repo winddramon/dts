@@ -42,13 +42,15 @@ namespace skill906
 				if (!isset($pa['sk906_flag']))
 				{
 					eval(import_module('logger'));
-					$log .= "<span class=\"red b\">你感到了钻心的疼痛！</span><br>";
-					$pa['sk906_flag'] = 1;
+					list($is_successful, $fail_hint) = \bufficons\bufficons_impose_buff(600, 20, 0, $pa);
+					if(!$is_successful) {
+						$log .= $fail_hint;
+					}else{
+						$log .= "<span class=\"red b\">你感到了钻心的疼痛！</span><br>";
+						$pa['sk906_flag'] = 1;
+					}
 				}
-				eval(import_module('sys'));
-				\skillbase\skill_acquire(600,$pa);
-				\skillbase\skill_setvalue(600,'start',$now,$pa);
-				\skillbase\skill_setvalue(600,'end',$now+20,$pa);
+				
 			}
 			if ($skill906_lvl >= 2)
 			{
