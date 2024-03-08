@@ -705,6 +705,7 @@ ex_gender_attr,extra/attr/ex_gender_attr/,1
 ex_attr_pierce,extra/attr/ex_attr_pierce/,1
 skill903,extra/instance/instance3_ascension/skill903/,1
 skill730,extra/card/skills/skill730/,1
+skill746,extra/card/skills/skill746/,1
 skill505,extra/card/skills/skill505/,1
 skill106,extra/club/skills/skill106/,1
 skill709,extra/card/skills/skill709/,1
