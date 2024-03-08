@@ -432,7 +432,7 @@ namespace player
 		$icon_list = get_pc_icon_selecting_list();
 		do {
 			$ret = rand($icon_range[0], $icon_range[1]);
-		} while(empty($icon_list[$gd][$ret]));
+		} while(!$ret || empty($icon_list[$gd][$ret]));
 		return $ret;
 	}
 	
