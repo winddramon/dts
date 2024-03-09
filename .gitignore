@@ -1,8 +1,12 @@
 *.swp
+*.bak
+*.lock
+log.txt
 ideas.txt
 nohup.out
 include/modules/core/sys/config/server.config.php
 include/modules/core/sys/config/system.config.php
+include/modules/core/sys/config/game.config.php
 include/modulemng/modulemng.config.php
 gamedata/adminlog_nf.php
 gamedata/adminmsg.htm
@@ -16,17 +20,9 @@ gamedata/banlist.list
 gamedata/replays/*.*
 gamedata/remote_replays/
 gamedata/tmp/
-templates/default/itemhelp.htm
-templates/default/tmp_*.htm
-*.bak
-query_log.txt
-*.lock
 gamedata/cache/
+templates/default/itemhelp.htm
 templates/default/mixhelp.htm
-include/modules/extra/club/skills/skill206/desc - 副本.htm
-include/modules/extra/club/skills/skill206/main - 副本.php
-gamedata/adminlog_nf.php
+templates/default/tmp_*.htm
+
 !callmesilly.txt
-include/modules/core/sys/config/game.config.php
-img/card_blink_mask.psd
-log.txt
