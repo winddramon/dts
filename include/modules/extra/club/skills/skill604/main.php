@@ -6,15 +6,18 @@ namespace skill604
 	function init() 
 	{
 		define('MOD_SKILL604_INFO','hidden;debuff;');
-		eval(import_module('clubbase'));
+		eval(import_module('clubbase','bufficons'));
 		$clubskillname[604] = '灾厄';
+		$bufficons_list[604] = Array(
+			'hint' => '<span class="purple b">你已经梦魇缠身了！</span>',
+		);
 	}
 	
 	function acquire604(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		\skillbase\skill_setvalue(604,'start',0,$pa);
-		\skillbase\skill_setvalue(604,'end',0,$pa);
+		// \skillbase\skill_setvalue(604,'start',0,$pa);
+		// \skillbase\skill_setvalue(604,'end',0,$pa);
 	}
 	
 	function lost604(&$pa)
@@ -25,41 +28,11 @@ namespace skill604
 	function check_skill604_state(&$pa = NULL)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(604,$pa)) return 0;
-		eval(import_module('sys'));
-		$e=\skillbase\skill_getvalue(604,'end',$pa);
-		if ($now<$e) return 1;
-		return 0;
-	}
-	
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if (\skillbase\skill_query(604,$sdata))
-		{
-			eval(import_module('skill604','skillbase'));
-			$skill604_start = (int)\skillbase\skill_getvalue(604,'start'); 
-			$skill604_end = (int)\skillbase\skill_getvalue(604,'end'); 
-			$z=Array(
-				'disappear' => 1,
-				'clickable' => 0,
-				'hint' => '你已经大难临头了！',
-			);
-			if ($now<$skill604_end)
-			{
-				$z['style']=1;
-				$z['totsec']=$skill604_end-$skill604_start;
-				$z['nowsec']=$now-$skill604_start;
-				\bufficons\bufficon_show('img/skill604.gif',$z);
-			}
-			else 
-			{
-				\skillbase\skill_lost(604);
-			}
+		if(!$pa) {
+			eval(import_module('player'));
+			$pa = & $sdata;
 		}
-		$chprocess();
+		return \bufficons\bufficons_check_buff_state(604, $pa);
 	}
 	
 	//命中率降低30%
@@ -67,7 +40,7 @@ namespace skill604
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$r = 1;
-		if (\skillbase\skill_query(604,$pa) && 1 == check_skill604_state($pa))
+		if (1 == check_skill604_state($pa))
 		{
 			$r = 0.7;
 		}
@@ -79,10 +52,10 @@ namespace skill604
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$r = 1;
-		if (\skillbase\skill_query(604,$ldata) && 1 == check_skill604_state($ldata)) 
+		if (1 == check_skill604_state($ldata)) 
 		{
 			$r = 0.7;
-		}elseif(\skillbase\skill_query(604,$edata) && 1 == check_skill604_state($edata))
+		}elseif(1 == check_skill604_state($edata))
 		{
 			$r = 1/0.7;
 		}
@@ -95,7 +68,7 @@ namespace skill604
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$ret = $chprocess($pa, $pd, $active);
-		if(\skillbase\skill_query(604,$pd) && 1 == check_skill604_state($pd)) {
+		if(1 == check_skill604_state($pd)) {
 			$ret *= 0.7;
 		}
 		return $ret;
@@ -106,7 +79,7 @@ namespace skill604
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$ret = $chprocess($pa, $pd, $active, $key);
-		if(\skillbase\skill_query(604,$pd) && 1 == check_skill604_state($pd)) {
+		if(1 == check_skill604_state($pd)) {
 			$ret *= 0.7;
 		}
 		return $ret;
@@ -117,7 +90,7 @@ namespace skill604
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$ret = $chprocess($pa, $pd, $active);
-		if(\skillbase\skill_query(604,$pd) && 1 == check_skill604_state($pd)) {
+		if(1 == check_skill604_state($pd)) {
 			$ret *= 0.7;
 		}
 		return $ret;
@@ -128,18 +101,18 @@ namespace skill604
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$ret = $chprocess($pa, $pd, $active);
-		if(\skillbase\skill_query(604,$pd) && 1 == check_skill604_state($pd)) {
+		if(1 == check_skill604_state($pd)) {
 			$ret *= 0.7;
 		}
 		return $ret;
 	}
 	
-	//伤害制御效果发生率
+	//控伤效果发生率
 	function get_dmg_def_proc_rate(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$ret = $chprocess($pa, $pd, $active);
-		if(\skillbase\skill_query(604,$pd) && 1 == check_skill604_state($pd)) {
+		if(1 == check_skill604_state($pd)) {
 			$ret *= 0.7;
 		}
 		return $ret;

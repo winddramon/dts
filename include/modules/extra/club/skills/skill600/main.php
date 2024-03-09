@@ -9,8 +9,8 @@ namespace skill600
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[600] = '衰弱';
 		$bufficons_list[600] = Array(
-			'disappear' => 1,
-			'clickable' => 0,
+			// 'disappear' => 1,//默认就是
+			// 'clickable' => 0,
 			'hint' => '状态「衰弱」<br>无法解除异常状态或包扎伤口',
 		);
 	}
@@ -18,9 +18,9 @@ namespace skill600
 	function acquire600(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$now = get_var_in_module('now','sys');
-		\skillbase\skill_setvalue(600,'end_ts',$now+60,$pa);//默认时间1分钟
-		\skillbase\skill_setvalue(600,'cd_ts',0,$pa);
+		// $now = get_var_in_module('now','sys');
+		// \skillbase\skill_setvalue(600,'end_ts',$now+60,$pa);//默认时间1分钟
+		// \skillbase\skill_setvalue(600,'cd_ts',0,$pa);
 	}
 	
 	function lost600(&$pa)

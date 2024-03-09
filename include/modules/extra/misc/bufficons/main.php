@@ -212,7 +212,7 @@ namespace bufficons
 		return Array($can_activate, $fail_hint);
 	}
 
-	//常见的一组激活buff技能的执行逻辑，需要事先获得技能
+	//激活buff：常见的一组激活buff技能的执行逻辑，使用对象主要是主动技能，需要事先获得技能
 	function bufficons_activate_buff($token, $end, $cd, &$pa=NULL)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -231,8 +231,8 @@ namespace bufficons
 		return Array($is_successful, $fail_hint);
 	}
 
-	//常见的另一组激活buff技能的执行逻辑，不需要事先获得技能（会自动获得）
-	//传参$tp代表叠加方式，1为刷新，2为累加
+	//施加buff：常见的另一组激活buff技能的执行逻辑，使用对象主要是debuff，不需要事先获得技能（会自动获得）
+	//传参$tp代表时间累加方式，1为获得技能时刷新时长，2为时长累加
 	function bufficons_impose_buff($token, $end, $cd, &$pa=NULL, $tp=1) {
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		if(!\skillbase\skill_query($token, $pa)) {
@@ -242,6 +242,7 @@ namespace bufficons
 			eval(import_module('bufficons'));
 			$end += $tmp_totsec - $tmp_nowsec;
 		}
+		$fail_hint = '';
 		$is_successful = \bufficons\bufficons_set_timestamp($token, $end, $cd, $pa);
 		if(!$is_successful) {
 			$fail_hint = '因技能编号错误或者时间为0等原因，施加异常状态失败！<br>';
