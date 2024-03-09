@@ -6721,6 +6721,34 @@ $cards = array(
 			),
 		)
 	),
+	415 => array(
+		'name' => '废品战士',
+		'rare' => 'B',
+		'pack' => 'Way of Life',
+		'desc' => '垃圾就是摆错了位置的财富',
+		'effect' => '聚集的废品将成为新的力量！',
+		'desc_skills' => '开局获得一个收集特定道具的任务，完成后可获得金钱和切糕奖励',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'960' => array('taskarr' => '1001', 'taskprog' => '0'),
+			),
+		)
+	),
+	416 => array(
+		'name' => '美食家',
+		'rare' => 'B',
+		'pack' => 'Way of Life',
+		'desc' => '非常的新鲜，非常的美味',
+		'effect' => '香啊，很香啊',
+		'desc_skills' => '开局获得一个<del>食用</del>使用特定道具的任务，完成后可获得强力的补给道具',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'960' => array('taskarr' => '1002', 'taskprog' => '0'),
+			),
+		)
+	),
 	
 	1000 => array(
 		'name'=>'萌新',

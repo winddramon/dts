@@ -73,7 +73,7 @@ namespace skill960
 			'name' => '测试任务Lv.2',
 			'rank' => 2,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		32 => array
@@ -81,7 +81,7 @@ namespace skill960
 			'name' => '测试任务Lv.2',
 			'rank' => 2,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		33 => array
@@ -89,7 +89,7 @@ namespace skill960
 			'name' => '测试任务Lv.2',
 			'rank' => 2,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		34 => array
@@ -97,7 +97,7 @@ namespace skill960
 			'name' => '测试任务Lv.2',
 			'rank' => 2,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		35 => array
@@ -105,7 +105,7 @@ namespace skill960
 			'name' => '测试任务Lv.2',
 			'rank' => 2,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		61 => array
@@ -113,7 +113,7 @@ namespace skill960
 			'name' => '测试任务Lv.3',
 			'rank' => 3,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		62 => array
@@ -121,7 +121,7 @@ namespace skill960
 			'name' => '测试任务Lv.3',
 			'rank' => 3,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		63 => array
@@ -129,7 +129,7 @@ namespace skill960
 			'name' => '测试任务Lv.3',
 			'rank' => 3,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		64 => array
@@ -137,7 +137,7 @@ namespace skill960
 			'name' => '测试任务Lv.3',
 			'rank' => 3,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		65 => array
@@ -145,7 +145,7 @@ namespace skill960
 			'name' => '测试任务Lv.3',
 			'rank' => 3,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		91 => array
@@ -153,7 +153,7 @@ namespace skill960
 			'name' => '测试任务Lv.4',
 			'rank' => 4,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		92 => array
@@ -161,7 +161,7 @@ namespace skill960
 			'name' => '测试任务Lv.4',
 			'rank' => 4,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		93 => array
@@ -169,7 +169,7 @@ namespace skill960
 			'name' => '测试任务Lv.4',
 			'rank' => 4,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		94 => array
@@ -177,7 +177,7 @@ namespace skill960
 			'name' => '测试任务Lv.4',
 			'rank' => 4,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		95 => array
@@ -185,7 +185,7 @@ namespace skill960
 			'name' => '测试任务Lv.4',
 			'rank' => 4,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		121 => array
@@ -193,7 +193,7 @@ namespace skill960
 			'name' => '测试任务Lv.5',
 			'rank' => 5,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		122 => array
@@ -201,7 +201,7 @@ namespace skill960
 			'name' => '测试任务Lv.5',
 			'rank' => 5,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		123 => array
@@ -209,7 +209,7 @@ namespace skill960
 			'name' => '测试任务Lv.5',
 			'rank' => 5,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		124 => array
@@ -217,7 +217,7 @@ namespace skill960
 			'name' => '测试任务Lv.5',
 			'rank' => 5,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		125 => array
@@ -225,7 +225,7 @@ namespace skill960
 			'name' => '测试任务Lv.5',
 			'rank' => 5,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		151 => array
@@ -233,7 +233,7 @@ namespace skill960
 			'name' => '测试任务Lv.6',
 			'rank' => 6,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		152 => array
@@ -241,7 +241,7 @@ namespace skill960
 			'name' => '测试任务Lv.6',
 			'rank' => 6,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		153 => array
@@ -249,7 +249,7 @@ namespace skill960
 			'name' => '测试任务Lv.6',
 			'rank' => 6,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		154 => array
@@ -257,7 +257,7 @@ namespace skill960
 			'name' => '测试任务Lv.6',
 			'rank' => 6,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		155 => array
@@ -265,7 +265,7 @@ namespace skill960
 			'name' => '测试任务Lv.6',
 			'rank' => 6,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		181 => array
@@ -273,7 +273,7 @@ namespace skill960
 			'name' => '测试任务Lv.7',
 			'rank' => 7,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		182 => array
@@ -281,7 +281,7 @@ namespace skill960
 			'name' => '测试任务Lv.7',
 			'rank' => 7,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		183 => array
@@ -289,7 +289,7 @@ namespace skill960
 			'name' => '测试任务Lv.7',
 			'rank' => 7,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		184 => array
@@ -297,7 +297,7 @@ namespace skill960
 			'name' => '测试任务Lv.7',
 			'rank' => 7,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
 		),
 		185 => array
@@ -305,8 +305,25 @@ namespace skill960
 			'name' => '测试任务Lv.7',
 			'rank' => 7,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itmlist'=>array('黄鸡方块'),'num'=>1),
+			'taskreq' => array('itm'=>array('黄鸡方块'),'num'=>1),
 			'reward' => array('invscore'=>8),
+		),
+		//1001号之后的任务为卡片任务
+		1001 => array
+		(
+			'name' => '废品增速',
+			'rank' => 233,
+			'tasktype' => 'item_search',
+			'taskreq' => array('itm'=>array('罐子','空瓶','喷雾器罐','塑料瓶火箭','空罐头','鱼骨','苹果皮','香蕉皮','西瓜皮','钢琴线'),'num'=>20),
+			'reward' => array('money'=>2500,'qiegao'=>666),
+		),
+		1002 => array
+		(
+			'name' => '饕餮盛宴',
+			'rank' => 233,
+			'tasktype' => 'item_use',
+			'taskreq' => array('itm'=>array('肥料','雪','「机关傀儡 梦魇」 ★8','『我是说在座的各位都是垃圾』'),'num'=>3),
+			'reward' => array('item'=>array(array('itm'=>'会员制大餐','itmk'=>'HB','itme'=>1919,'itms'=>810,'itmsk'=>'O'))),
 		),
 	);
 }

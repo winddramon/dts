@@ -269,6 +269,11 @@ namespace skill960
 					$log .= "<span class=\"yellow b\">究竟是从哪儿送来的？</span><br>";
 				}
 			}
+			elseif ($k === 'qiegao')
+			{
+				\cardbase\get_qiegao($v, $pa);
+				$log .= "你获得了<span class=\"yellow b\">{$v}</span>切糕。<br>";
+			}
 		}
 	}
 	
@@ -477,6 +482,10 @@ namespace skill960
 						$itemarr = array_values($theitem);
 						$task_tip .= "<span class=\"yellow b\">".\itemmix\parse_itemmix_resultshow($itemarr)."</span> ";
 					}
+				}
+				elseif ($k === 'qiegao')
+				{
+					$task_tip .= "切糕<span class=\"yellow b\">$v</span>";
 				}
 			}
 		}
