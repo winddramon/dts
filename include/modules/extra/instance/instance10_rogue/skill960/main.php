@@ -62,14 +62,9 @@ namespace skill960
 	}
 	
 	//更新任务完成度
-	function update_taskprog(&$pa=NULL, $taskid, $newprog)
+	function update_taskprog(&$pa, $taskid, $newprog)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (empty($pa))
-		{
-			eval(import_module('player'));
-			$pa = $sdata;
-		}
 		$taskarr = get_taskarr($pa);
 		$taskprog = get_taskprog($pa);
 		$i = array_search($taskid, $taskarr);
