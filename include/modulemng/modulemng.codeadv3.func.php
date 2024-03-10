@@ -15,11 +15,15 @@ function to_base64($num)
 function parse_codeadv3(&$content)
 {
 	$content=str_replace('<br />',"\n",$content);
-	
-	$content=substr($content,strlen('<code><span style="color: #000000">'."\n"),-strlen('</span>'."\n".'</code>'));
-	
+
+	if (PHP_VERSION_ID < 80300) {
+		$content=substr($content,strlen('<code><span style="color: #000000">'."\n"),-strlen('</span>'."\n".'</code>'));
+	} else {
+		$content=substr($content,strlen('<pre><code style="color: #000000">'),-strlen('</code></pre>'));
+	}
+
 	global $___TEMP_codeadv3, $___TEMP_codeadv3_v, $___TEMP_codeadv3_c;
-	
+
 	$i=0; $ret='';
 	while ($i<strlen($content))
 	{
@@ -28,7 +32,7 @@ function parse_codeadv3(&$content)
 		{
 			$con.=$content[$i]; $i++;
 		}
-		
+
 		if (strlen($con)>=7)
 		{
 			$conmd5=md5($con);
@@ -36,7 +40,7 @@ function parse_codeadv3(&$content)
 			{
 				$___TEMP_codeadv3_c++; $___TEMP_codeadv3[$conmd5]=$___TEMP_codeadv3_c;
 				$_con=$con;
-				$_con=str_replace('&nbsp;',' ',$_con);	
+				$_con=str_replace('&nbsp;',' ',$_con);
 				$_con=html_entity_decode($_con);
 				$___TEMP_codeadv3_v[to_base64($___TEMP_codeadv3_c)]=$_con;
 			}
@@ -46,14 +50,19 @@ function parse_codeadv3(&$content)
 			$ret.='<?php } else { echo \'___'.$val.'\'; } ?>';
 		}
 		else  $ret.=$con;
-		
+
 		if ($i<strlen($content) && substr($content,$i,strlen('<span'))=='<span')
 		{
 			while ($content[$i]!='>') $i++;
 			$i++;
 			$j=strpos($content,'</span>',$i);
+			if ($j === false) {
+				echo('模板错误<br>');
+				echo($content);
+				die();
+			}
 			$con=substr($content,$i,$j-$i);
-			
+
 			$i=$j+strlen('</span>');
 			$ret.=$con;
 		}
