@@ -50,7 +50,7 @@ namespace randrecipe
 		}
 		//保存为config文件。每个房间一个文件，这个函数应该是仅在每局开始时执行的，如果因为某些原因覆盖了那就覆盖了罢
 		$file = GAME_ROOT.'./gamedata/cache/randrecipe'.$room_id.'.php';
-		$contents = str_replace('?>','',$checkstr);//防窥屏字符串"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
+		$contents = str_replace('?>','',IN_GAME_CHECK_STR);//防窥屏字符串"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
 		$contents .= '$randrecipe = '.var_export($rl,1).';';
 		file_put_contents($file, $contents);
 	}

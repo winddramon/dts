@@ -5,7 +5,7 @@ namespace sys
 	/*Game system settings*/
 
 	//文件验证字符串
-	$checkstr = "<?php if(!defined('IN_GAME')) exit('Access Denied'); ?>\r\n";
+	/*$checkstr = "<?php if(!defined('IN_GAME')) exit('Access Denied'); ?>\r\n";*/
 	//是否开启密码兼容模式（登录时兼容1.25之前密码储存模式）
 	$oldpswdcmp = 0;
 	//是否缓存css文件。0=不缓存，1=缓存

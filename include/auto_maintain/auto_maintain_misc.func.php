@@ -98,7 +98,6 @@ function am_main($mcode, $forced = 0)
 	if(!$forced && !am_is_last_maintain_old_enough()) return;
 
 	if($mcode & 16) {
-		global $checkstr;
 		//保留3天的用户数据
 		$dir = dir_init(GAME_ROOT.'./gamedata/cache/user_backup');
 		//加锁，不然如果穿透就爆数据了
@@ -108,7 +107,7 @@ function am_main($mcode, $forced = 0)
 		if(file_exists($dir.'/'.'userdb_1.php')) rename($dir.'/'.'userdb_1.php', $dir.'/'.'userdb_0.php');
 		if(file_exists($dir.'/'.'userdb_2.php')) rename($dir.'/'.'userdb_2.php', $dir.'/'.'userdb_1.php');
 		$file = 'userdb_2.php';
-		writeover($dir.'/'.$file, $checkstr);
+		writeover($dir.'/'.$file, IN_GAME_CHECK_STR);
 		//这里只读取本地数据库
 		$result = $db->query("SELECT * FROM {$gtablepre}users");
 		$am_num = 0;

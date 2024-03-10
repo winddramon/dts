@@ -959,7 +959,7 @@ namespace cardbase
 		if(empty($new_cardindex)) return;
 		
 		//开始生成文件。这里不直接用var_export()是为了生成方便查看的文件结构
-		$contents = str_replace('?>','',$checkstr);//"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
+		$contents = str_replace('?>','',IN_GAME_CHECK_STR);//"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
 		$contents .= '$cardindex = Array('."\r\n";
 		$i = 1;$z = sizeof($new_cardindex);
 		foreach($new_cardindex as $nk => $nv){
@@ -1118,7 +1118,7 @@ namespace cardbase
 		
 		
 		if(empty($cgmethod)) return;
-		$contents = str_replace('?>','',$checkstr);//"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
+		$contents = str_replace('?>','',IN_GAME_CHECK_STR);//"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
 
 		$contents .= '$card_gaining_method = '.var_export($cgmethod,1).';';
 		

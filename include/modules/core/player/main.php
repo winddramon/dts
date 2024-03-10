@@ -34,11 +34,10 @@ namespace player
 				$db_player_structure_types[$sttdata['Field']] = $sttdata['Type'];
 				//array_push($db_player_structure,$pdata['Field']);
 			}
-			$dps_cont = str_replace('?>','',$checkstr);
+			$dps_cont = str_replace('?>','',IN_GAME_CHECK_STR);
 			$dps_cont .= '$db_player_structure = ' . var_export($db_player_structure,1).";\r\n".'$db_player_structure_types = ' . var_export($db_player_structure_types,1).';';
 			writeover($dps_file, $dps_cont);
 			chmod($dps_file,0777);
-			
 		}else{//若不需要更新，则直接读文件就好
 			include $dps_file ;
 			foreach ($db_player_structure as $dps_field) {

@@ -82,7 +82,7 @@ namespace skill490
 	function get_random_itmksklist490()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys'));
+		//eval(import_module('sys'));
 		
 		$writefile = GAME_ROOT.'/gamedata/cache/skill490itmksk.config.php';
 		$mapitemfile = GAME_ROOT.'/include/modules/base/itemmain/config/mapitem.config.php';
@@ -109,7 +109,7 @@ namespace skill490
 					}
 				}	
 			}
-			$writecont = str_replace('?>','',$checkstr);//"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
+			$writecont = str_replace('?>','',IN_GAME_CHECK_STR);//"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
 			$writecont .= '$itemklist = '.var_export($itemklist, 1).";\r\n\r\n";
 			$writecont .= '$itemsklist = '.var_export($itemsklist, 1).";\r\n\r\n";
 			$writecont .= "/* End of file skill490itmksk.config.php */";
@@ -151,7 +151,7 @@ namespace skill490
 		
 		foreach($itemklist as $ik => &$iv){//防止一些奇葩武器类型的出现
 			foreach($exception as $ev){
-				if(strpos($iv, $ev)===0) $iv=NULL;
+				if(!empty($iv) && strpos($iv, $ev)===0) $iv=NULL;
 			}
 		}
 		$itemklist = array_filter($itemklist);

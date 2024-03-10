@@ -9,6 +9,12 @@ require GAME_ROOT.'./include/roommng/roommng.config.php';
 register_shutdown_function('global_shutdown_function');
 
 //----------------------------------------
+//              常量定义区
+//----------------------------------------
+
+define('IN_GAME_CHECK_STR', "<?php if(!defined('IN_GAME')) exit('Access Denied'); ?>\r\n");
+
+//----------------------------------------
 //              底层机制函数
 //----------------------------------------
     

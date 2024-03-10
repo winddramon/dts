@@ -52,7 +52,7 @@ namespace sys
 		$db->queries($sql);
 		
 		//重设游戏进行状况的时间
-		writeover(GAME_ROOT.'./gamedata/tmp/news/newsinfo_'.$room_prefix.'.php',$checkstr);
+		writeover(GAME_ROOT.'./gamedata/tmp/news/newsinfo_'.$room_prefix.'.php',IN_GAME_CHECK_STR);
 		
 		//清空战斗信息
 		$hdamage = 0;

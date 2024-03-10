@@ -93,7 +93,7 @@ namespace randmix
 		$file2 = GAME_ROOT.'./gamedata/cache/common_itemnum.config.php';
 		\itemnumlist\itemnumlist_create('common_itemnum');
 		$cont = create_randmix_list();
-		$cont = str_replace('?>','',$checkstr)."\r\n\$randmixinfo = ".var_export($cont,1).';';
+		$cont = str_replace('?>','',IN_GAME_CHECK_STR)."\r\n\$randmixinfo = ".var_export($cont,1).';';
 		writeover($file, $cont);
 		chmod($file, 0777);
 		
