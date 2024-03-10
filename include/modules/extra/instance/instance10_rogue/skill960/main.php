@@ -269,6 +269,11 @@ namespace skill960
 					$log .= "<span class=\"yellow b\">究竟是从哪儿送来的？</span><br>";
 				}
 			}
+			elseif ($k === 'qiegao')
+			{
+				\cardbase\get_qiegao($v, $pa);
+				$log .= "你获得了<span class=\"yellow b\">{$v}</span>切糕。<br>";
+			}
 		}
 	}
 	
@@ -333,16 +338,16 @@ namespace skill960
 		{
 			if (isset($req['itm_match']) && ($req['itm_match'] == 1))
 			{
+				$flag = 0;
 				foreach ($req['itm'] as $v)
 				{
-					$flag = 0;
 					if (strpos($theitem['itm'], $v) !== false)
 					{
 						$flag = 1;
 						break;
 					}
-					if (!$flag) return false;
 				}
+				if (!$flag) return false;
 			}
 			elseif (!in_array($theitem['itm'], $req['itm'])) return false;
 		}
@@ -420,26 +425,27 @@ namespace skill960
 			{
 				if (isset($tasks_info[$taskid]['taskreq']['itm_match']) && ($tasks_info[$taskid]['taskreq']['itm_match'] == 1)) $task_tip .= "名称包含";
 				else $task_tip .= "名称为";
-				$itm_ls = $tasks_info[$taskid]['taskreq']['itm'];
+				$itm_ls = array();
+				foreach ($tasks_info[$taskid]['taskreq']['itm'] as $v)
+				{
+					$itm_ls[] = "<span class=\"yellow b\">$v</span>";
+				}
 				$c = count($itm_ls);
 				if ($c == 1) $task_tip .= $itm_ls[0];
-				elseif ($c == 2) $task_tip .= implode('或', $itm_ls);
-				else $task_tip .= implode('、', array_slice($itm_ls, 0, -1)).'或'.end($itm_ls);
+				else $task_tip .= implode('、', array_slice($itm_ls, 0, $c-1)).'或'.end($itm_ls);
 				$task_tip .= "的";
 			}
 			if (isset($tasks_info[$taskid]['taskreq']['itmk']))
 			{
-				$itmk_ls = $tasks_info[$taskid]['taskreq']['itmk'];
-				$c = count($itmk_ls);
 				$itmk_info_ls = array();
 				foreach ($tasks_info[$taskid]['taskreq']['itmk'] as $v)
 				{
 					eval(import_module('itemmain'));
-					$itmk_info_ls[] = $iteminfo[$v];
+					$itmk_info_ls[] = "<span class=\"yellow b\">{$iteminfo[$v]}</span>";
 				}
+				$c = count($itmk_info_ls);
 				if ($c == 1) $task_tip .= $itmk_info_ls[0];
-				elseif ($c == 2) $task_tip .= implode('或', $itmk_info_ls);
-				else $task_tip = implode('、', array_slice($itmk_info_ls, 0, -1)) . '或' . end($itmk_info_ls);
+				else $task_tip = implode('、', array_slice($itmk_info_ls, 0, $c-1)) . '或' . end($itmk_info_ls);
 			}
 			else $task_tip .= "道具";
 			if (isset($tasks_info[$taskid]['taskreq']['num'])) $task_tip .= "<span class=\"yellow b\">{$tasks_info[$taskid]['taskreq']['num']}</span>次";
@@ -477,6 +483,10 @@ namespace skill960
 						$itemarr = array_values($theitem);
 						$task_tip .= "<span class=\"yellow b\">".\itemmix\parse_itemmix_resultshow($itemarr)."</span> ";
 					}
+				}
+				elseif ($k === 'qiegao')
+				{
+					$task_tip .= "切糕<span class=\"yellow b\">$v</span>";
 				}
 			}
 		}

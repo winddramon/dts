@@ -85,7 +85,7 @@ namespace skill962
 		
 		$taskid = get_var_input('taskid_submit');
 		$taskarr = \skill960\get_taskarr($sdata);
-		if (!isset($tasks_info[$taskid]) || !in_array($taskid, $taskarr))
+		if (!isset($tasks_info[$taskid]) || (isset($tasks_info[$taskid]['rank']) && $tasks_info[$taskid]['rank'] > 10) || !in_array($taskid, $taskarr))
 		{
 			$log .= '输入参数错误。<br>';
 			return;
@@ -127,6 +127,13 @@ namespace skill962
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$ret = $chprocess($pa, $taskid);
 		$st = check_skill962_state($pa);
+		eval(import_module('skill960'));
+		//特殊任务不能更换
+		if ($st > 0 && isset($tasks_info[$taskid]['rank']) && $tasks_info[$taskid]['rank'] > 10)
+		{
+			$ret .= '<input type="button" class="cmdbutton"  title="<span class=\'yellow b\'>此任务无法更换</span>" disabled="true" value="更换">';
+			return $ret;
+		}
 		if ($st == 2)
 		{
 			$skill962_cost = get_skill962_cost($pa);
