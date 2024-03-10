@@ -34,7 +34,6 @@ namespace skill602
 	function set_stun_period($t, &$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys'));
 		if (\gameflow_duel\is_gamestate_duel()) $t=$t/3;	//死斗眩晕时间变为1/3
 		\bufficons\bufficons_impose_buff(602, $t/1000, 0, $pa, 1, 1);
 		$pa['new_stun_flag']=1;
@@ -118,10 +117,9 @@ namespace skill602
 	function pre_act()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','logger'));
 		if (1 == check_skill602_state())
 		{
-			eval(import_module('bufficons'));
+			eval(import_module('sys','logger','bufficons'));
 			$rmt = number_format($tmp_totsec - $tmp_nowsec, 1);
 			$rmt_msec = $rmt * 1000;
 			$log .= '<span class="yellow b">你现在处于晕眩状态，什么都做不了！<br>晕眩状态持续时间还剩<span id="timer">'.$rmt.'</span>秒</span><br><img style="display:none;" type="hidden" src="img/blank.png" onload="demiSecTimerStarter('.$rmt_msec.');">';
