@@ -65,6 +65,7 @@ namespace skill730
 			$pa = $sdata;
 		}
 		$ret = $chprocess($bagn, $pos, $pa);
+		if (\itemmain\check_in_itmsk('O', $ret['itmsk'])) return $ret;
 		if (\skillbase\skill_query(730,$pa) && check_unlocked730($pa))
 		{
 			if(!empty($ret))

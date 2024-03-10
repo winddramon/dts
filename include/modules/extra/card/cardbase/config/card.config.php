@@ -16,7 +16,7 @@ $card_cooldown_discount_gtype = Array();//18=>0.5,19=>0.5,21=>0.8
 $cardtypecd=array(//卡片类别CD，单位秒
 	'S' => 7200,//S卡类别CD：2小时
 	'A' => 3600,//A卡类别CD：1小时
-	'B' => 1800,//A卡类别CD：半小时
+	'B' => 1800,//B卡类别CD：半小时
 	'C' => 0,
 	'M' => 0
 );
@@ -6718,6 +6718,34 @@ $cards = array(
 		'valid' => array(
 			'skills' => array(
 				'746' => '0',
+			),
+		)
+	),
+	415 => array(
+		'name' => '废品战士',
+		'rare' => 'B',
+		'pack' => 'Way of Life',
+		'desc' => '垃圾就是摆错了位置的财富',
+		'effect' => '聚集的废品将成为新的力量！',
+		'desc_skills' => '开局获得一个收集特定道具的任务，完成后可获得金钱和切糕奖励',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'960' => array('taskarr' => '1001', 'taskprog' => '0'),
+			),
+		)
+	),
+	416 => array(
+		'name' => '沈阳美食家',
+		'rare' => 'B',
+		'pack' => 'Way of Life',
+		'desc' => '鉴定一下网络热门美食视频',
+		'effect' => '非常的新鲜，非常的美味',
+		'desc_skills' => '开局获得一个<del>食用</del>使用特定道具的任务，完成后可获得强力的补给道具',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'960' => array('taskarr' => '1002', 'taskprog' => '0'),
 			),
 		)
 	),

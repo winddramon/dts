@@ -379,7 +379,11 @@ namespace instance10
 		eval(import_module('sys'));
 		if (20 == $gametype)
 		{
-			\skill960\get_rand_task($pa, get_newtask_rank($pa), 1);
+			eval(import_module('skill960'));
+			if (isset($tasks_info[$taskid]['rank']) && $tasks_info[$taskid]['rank'] <= 10)
+			{
+				\skill960\get_rand_task($pa, get_newtask_rank($pa), 1);
+			}
 		}
 	}
 	
