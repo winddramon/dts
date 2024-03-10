@@ -16,8 +16,6 @@ namespace skill604
 	function acquire604(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		// \skillbase\skill_setvalue(604,'start',0,$pa);
-		// \skillbase\skill_setvalue(604,'end',0,$pa);
 	}
 	
 	function lost604(&$pa)

@@ -15,6 +15,7 @@ namespace bufficons
 	//activate_hint： 激活技能的提示文字（或不能激活技能时的说明文字），如果本技能不是主动技能，与hint一样即可。
 	//onclick： 点击时的js操作（clickable时有效）
 	//corner-text: （可选）在右下角显示的内容。
+	//msec: （可选）显示时是否考虑毫秒（1为考虑，0为不考虑）注意这只是显示，在设置时间戳时还需要手动提供参数
 
 	//以下数据必需，但技能类有数字id的可以由bufficons_display_single()自动生成
 	//src为图片链接
@@ -29,13 +30,13 @@ namespace bufficons
 		if ($para['style']==1)
 		{
 			$wh=round($para['nowsec']/$para['totsec']*32).'px';
-			$para['lsec']=$para['totsec']-$para['nowsec'];
+			$para['lsec']=(int)($para['totsec']-$para['nowsec']);
 			include template('MOD_BUFFICONS_ICON_STYLE_1');
 		}
 		if ($para['style']==2)
 		{
 			$wh=round($para['nowsec']/$para['totsec']*32).'px';
-			$para['lsec']=$para['totsec']-$para['nowsec'];
+			$para['lsec']=(int)($para['totsec']-$para['nowsec']);
 			include template('MOD_BUFFICONS_ICON_STYLE_2');
 		}
 		if ($para['style']==3)
@@ -70,7 +71,8 @@ namespace bufficons
 		$src = '';
 		if(is_numeric($token) && defined('MOD_SKILL'.$token) && \skillbase\skill_query($token, $pa)){
 			eval(import_module('bufficons'));
-			$buff_state = bufficons_check_buff_state($token, $pa);
+			$msec = !empty($config['msec']) ? 1 : 0;
+			$buff_state = bufficons_check_buff_state($token, $pa, $msec);
 			//一些参数的自动识别，依赖于技能标签
 			if(!empty($buff_state)) {
 				$src = !empty($config['src']) ? $config['src'] : 'img/skill'.$token.'.gif';
@@ -131,17 +133,34 @@ namespace bufficons
 	//激活buff图标通用的时间戳设置
 	//本模块只做数字id技能的判定
 	//会用$now填充$start_st，需要生效时间和冷却时间两个值，不能同时为零
+	//传参$tp代表时间累加方式，1为获得技能时刷新时长，2为时长累加
+	//传参$msec代表时间计算时考虑毫秒，1为考虑，0为不考虑
 	//返回true为设置成功，否则设置失败
-	function bufficons_set_timestamp($token, $end, $cd, &$pa=NULL)
+	function bufficons_set_timestamp($token, $end, $cd, &$pa=NULL, $tp=1, $msec=0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		if(is_numeric($token) && defined('MOD_SKILL'.$token) && \skillbase\skill_query($token, $pa) && \skillbase\skill_check_unlocked($token, $pa) && ($end || $cd)){
 			$now = get_var_in_module('now','sys');
 			$end_ts = $now + (int)$end;
 			$cd_ts = $end_ts + (int)$cd;
+			if(2 == $tp && 1 == \bufficons\bufficons_check_buff_state($token, $pa, $msec)) {//如果技能正在生效，判定是否累加时间
+				eval(import_module('bufficons'));
+				$addsec = $tmp_totsec - $tmp_nowsec;
+				$end_ts += $addsec;
+				$cd_ts += $addsec;
+			}
 			\skillbase\skill_setvalue($token,'start_ts',$now,$pa);
 			\skillbase\skill_setvalue($token,'end_ts',$end_ts,$pa);
 			\skillbase\skill_setvalue($token,'cd_ts',$cd_ts,$pa);
+			if(!empty($msec)) {//考虑毫秒，则把毫秒尾数也同时记录
+				$now_calc = \sys\get_now(1);
+				$addmsec = (int)(1000*($now_calc - $now));
+				$end_addmsec = (int)(1000*($end - (int)$end)) + $addmsec;
+				$cd_addmsec = (int)(1000*($cd - (int)$cd)) + $addmsec;
+				\skillbase\skill_setvalue($token,'start_msec',$addmsec,$pa);
+				\skillbase\skill_setvalue($token,'end_msec',$end_addmsec,$pa);
+				\skillbase\skill_setvalue($token,'cd_msec',$cd_addmsec,$pa);
+			}
 			return true;
 		}
 		return false;
@@ -149,36 +168,42 @@ namespace bufficons
 
 	//判定buff图标状态（实际上是buff状态）
 	//同时也会计算当前状态的剩余时间（生效/冷却时间），存放在本模块的$tmp_countdown变量中，请即算即用
-	//传参$token为技能或者效果的标记，可以是数字也可以是字符串
+	//传参$token为技能或者效果的标记，可以是数字也可以是字符串。传参$msec为1则表示时间需要考虑毫秒
 	//返回值为0时表示不适用，返回值为1时表示生效，返回值为2时表示冷却中，返回值为3时表示冷却完毕
 	//本模块把$token当做技能id处理
 	//几个特殊用法：end_ts非空，cd_ts是0的时候是开局就能使用（end_ts是0的话不会进判断）
-	function bufficons_check_buff_state($token, &$pa=NULL)
+	function bufficons_check_buff_state($token, &$pa=NULL, $msec=0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('bufficons'));
 		$ret = 0;
 		if(!empty($bufficons_list[$token]) && is_numeric($token) && \skillbase\skill_query($token, $pa) && \skillbase\skill_check_unlocked($token, $pa)) {
-			$now = get_var_in_module('now','sys');
+			$now_calc = get_var_in_module('now','sys');
 			$tmp_totsec = $tmp_nowsec = 0;
 			$start_ts = (int)\skillbase\skill_getvalue($token,'start_ts',$pa);
 			$end_ts = (int)\skillbase\skill_getvalue($token,'end_ts',$pa);
 			$cd_ts = (int)\skillbase\skill_getvalue($token,'cd_ts',$pa);
-			if(!empty($end_ts)) {
-				if($now <= $end_ts && $end_ts > $start_ts) {
+			if(!empty($msec)) {//时间需要考虑毫秒。注意毫秒尾数在skillpara里是按整数储存的，但是在计算时是化为时间戳的小数部分
+				$now_calc = \sys\get_now(1);
+				$start_ts += ((int)\skillbase\skill_getvalue($token,'start_msec',$pa))/1000;
+				$end_ts += ((int)\skillbase\skill_getvalue($token,'end_msec',$pa))/1000;
+				$cd_ts += ((int)\skillbase\skill_getvalue($token,'cd_msec',$pa))/1000;
+			}
+			if(!empty($end_ts)) {//这里的数字是原始的，在显示的时候再按需要四舍五入
+				if($now_calc <= $end_ts && $end_ts > $start_ts) {
 					$ret = 1;
 					if(!$start_ts) {
-						$tmp_totsec = max($end_ts - $now, 1);
+						$tmp_totsec = max($end_ts - $now_calc, 0.1);
 						$tmp_nowsec = 0;
 					}else{
 						$tmp_totsec = $end_ts - $start_ts;
-						$tmp_nowsec = $now - $start_ts;
+						$tmp_nowsec = $now_calc - $start_ts;
 					}
 				}
-				elseif($now <= $cd_ts && $cd_ts > $end_ts) {
+				elseif($now_calc <= $cd_ts && $cd_ts > $end_ts) {
 					$ret = 2;
 					$tmp_totsec = $cd_ts - $end_ts;
-					$tmp_nowsec = $now - $end_ts;
+					$tmp_nowsec = $now_calc - $end_ts;
 				}
 				else {
 					$ret = 3;
@@ -190,11 +215,11 @@ namespace bufficons
 
 	//常见的一组bufficons_check_buff_state()状态判定逻辑，用于判定是否允许激活技能
 	//会自动调用bufficons_check_buff_state()，生成判定失败时的反馈，并根据是否允许来返回true/false
-	function bufficons_check_buff_state_shell($token, &$pa=NULL)
+	function bufficons_check_buff_state_shell($token, &$pa=NULL, $msec=0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('bufficons'));
-		$st = \bufficons\bufficons_check_buff_state($token, $pa);
+		$st = \bufficons\bufficons_check_buff_state($token, $pa, $msec);
 		
 		$can_activate = true;
 		$fail_hint = '';
@@ -213,16 +238,17 @@ namespace bufficons
 	}
 
 	//激活buff：常见的一组激活buff技能的执行逻辑，使用对象主要是主动技能，需要事先获得技能
-	function bufficons_activate_buff($token, $end, $cd, &$pa=NULL)
+	//传参$tp代表时间累加方式，1为获得技能时刷新时长，2为时长累加
+	//传参$msec代表时间计算时考虑毫秒，1为考虑，0为不考虑
+	function bufficons_activate_buff($token, $end, $cd, &$pa=NULL, $tp=1, $msec=0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		
 		$is_successful = true;
 		$fail_hint = '';
-
-		list($is_successful, $fail_hint) = \bufficons\bufficons_check_buff_state_shell($token, $pa);
+		list($is_successful, $fail_hint) = \bufficons\bufficons_check_buff_state_shell($token, $pa, $msec);
 		if($is_successful){
-			$is_successful = \bufficons\bufficons_set_timestamp($token, $end, $cd, $pa);
+			$is_successful = \bufficons\bufficons_set_timestamp($token, $end, $cd, $pa, $tp, $msec);
 			if(!$is_successful) {
 				$fail_hint = '因技能编号错误或者时间为0等原因，发动技能失败！<br>';
 			}
@@ -233,17 +259,14 @@ namespace bufficons
 
 	//施加buff：常见的另一组激活buff技能的执行逻辑，使用对象主要是debuff，不需要事先获得技能（会自动获得）
 	//传参$tp代表时间累加方式，1为获得技能时刷新时长，2为时长累加
-	function bufficons_impose_buff($token, $end, $cd, &$pa=NULL, $tp=1) {
+	//传参$msec代表时间计算时考虑毫秒，1为考虑，0为不考虑。注意不是传一个真实毫秒值进来
+	function bufficons_impose_buff($token, $end, $cd, &$pa=NULL, $tp=1, $msec=0) {
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		if(!\skillbase\skill_query($token, $pa)) {
 			\skillbase\skill_acquire($token, $pa);
 		}
-		if(2 == $tp && 1 == \bufficons\bufficons_check_buff_state($token, $pa)) {//如果技能正在生效，判定是否累加时间
-			eval(import_module('bufficons'));
-			$end += $tmp_totsec - $tmp_nowsec;
-		}
 		$fail_hint = '';
-		$is_successful = \bufficons\bufficons_set_timestamp($token, $end, $cd, $pa);
+		$is_successful = \bufficons\bufficons_set_timestamp($token, $end, $cd, $pa, $tp, $msec);
 		if(!$is_successful) {
 			$fail_hint = '因技能编号错误或者时间为0等原因，施加异常状态失败！<br>';
 		}

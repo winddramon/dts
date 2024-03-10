@@ -13,7 +13,7 @@ namespace skill500
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[500] = '时停';
 		$bufficons_list[500] = Array(
-			'dummy' => 1,
+			'msec' => 1,
 		);
 	}
 	
@@ -49,7 +49,7 @@ namespace skill500
 			$log.='怒气不足，需要<span class="yellow b">'.$skill500_rage.'点怒气</span>！<br>';
 			return;
 		}
-		$flag = \bufficons\bufficons_set_timestamp(500, $skill500_act_time, $skill500_cd);
+		$flag = \bufficons\bufficons_set_timestamp(500, $skill500_act_time, $skill500_cd, $sdata, 1, 1);//考虑毫秒
 		if(!$flag) {
 			$log.='发动失败！<br>';
 			return;

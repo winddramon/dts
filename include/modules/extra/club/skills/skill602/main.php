@@ -6,8 +6,12 @@ namespace skill602
 	function init() 
 	{
 		define('MOD_SKILL602_INFO','hidden;debuff;');
-		eval(import_module('clubbase'));
+		eval(import_module('clubbase','bufficons'));
 		$clubskillname[602] = '晕眩';
+		$bufficons_list[602] = Array(
+			'msec' => 1,
+			'hint' => '你处于晕眩状态！<br>无法进行任何行动，也无法战斗，受到的伤害增加',
+		);
 	}
 	
 	function acquire602(&$pa)
@@ -23,34 +27,16 @@ namespace skill602
 	function check_skill602_state(&$pa = NULL)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(602,$pa)) return 0;
-		$e=\skillbase\skill_getvalue(602,'end',$pa);
-		$ct = floor(getmicrotime()*1000);
-		if ($ct<$e) return 1;
-		return 0;
+		return \bufficons\bufficons_check_buff_state(602, $pa);
 	}
 	
-	function set_stun_period($t, &$pa)	//单位毫秒
+	//设置眩晕时间，单位毫秒。眩晕时间是获得时刷新的
+	function set_stun_period($t, &$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
-		if ($gamestate>=50) $t=round($t/3);	//死斗眩晕时间变为1/3
-		$flag=1;
-		$ct = floor(getmicrotime()*1000);
-		$e = 0;
-		if (\skillbase\skill_query(602,$pa))
-		{
-			$e = floor(\skillbase\skill_getvalue(602,'end',$pa)); 
-			if ($ct>=$e) $flag=0;
-		}
-		else  $flag=0;
-		if ($flag==0)
-		{
-			\skillbase\skill_acquire(602,$pa);
-			\skillbase\skill_setvalue(602,'start',$ct,$pa);
-		}
-		if ($ct+$t>$e) $e=$ct+$t;
-		\skillbase\skill_setvalue(602,'end',$e,$pa);
+		if (\gameflow_duel\is_gamestate_duel()) $t=$t/3;	//死斗眩晕时间变为1/3
+		\bufficons\bufficons_impose_buff(602, $t/1000, 0, $pa, 1, 1);
 		$pa['new_stun_flag']=1;
 	}
 	
@@ -94,49 +80,18 @@ namespace skill602
 		return $chprocess($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr);
 	}
 	
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if (\skillbase\skill_query(602,$sdata))
-		{
-			eval(import_module('skill602','skillbase'));
-			$skill602_start = floor(\skillbase\skill_getvalue(602,'start')); 
-			$skill602_end = floor(\skillbase\skill_getvalue(602,'end')); 
-			$z=Array(
-				'disappear' => 1,
-				'clickable' => 0,
-				'hint' => '你处于晕眩状态！<br>无法进行任何行动或战斗，受到的伤害增加',
-			);
-			$ct = floor(getmicrotime()*1000);
-			if ($ct<$skill602_end)
-			{
-				$z['style']=1;
-				$z['totsec']=round(($skill602_end-$skill602_start)/1000);
-				$z['nowsec']=round(($ct-$skill602_start)/1000);
-				\bufficons\bufficon_show('img/skill602.gif',$z);
-			}
-			else 
-			{
-				\skillbase\skill_lost(602);
-			}
-		}
-		$chprocess();
-	}
-	
 	function check_cooltime_on()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (check_skill602_state()) return 0;	//不显示冷却时间提示
+		if (1 == check_skill602_state()) return 0;	//不显示冷却时间提示
 		return $chprocess();
 	}
 	
 	function calculate_active_obbs_change(&$ldata,&$edata,$active_r)	//不会先手敌人
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (check_skill602_state($ldata)) $change_to = 0;
-		if (check_skill602_state($edata)) $change_to = 100;
+		if (1 == check_skill602_state($ldata)) $change_to = 0;
+		if (1 == check_skill602_state($edata)) $change_to = 100;
 		if(isset($change_to)){
 			$ldata['active_words'] .= '→'.$change_to;
 			return $change_to;
@@ -149,51 +104,31 @@ namespace skill602
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		//注意判定的是$pa能否反击$pd
-		if (check_skill602_state($pa)) return 0; 
+		if (1 == check_skill602_state($pa)) return 0; 
 		return $chprocess($pa, $pd, $active);
 	}
 	
 	function strike_prepare(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (check_skill602_state($pd)) $pd['stun_flag']=1;
+		if (1 == check_skill602_state($pd)) $pd['stun_flag']=1;
 		$chprocess($pa, $pd, $active);
 	}
-	
-	/*function get_final_dmg_multiplier(&$pa, &$pd, $active)
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$r=Array();
-		if (isset($pd['stun_flag']) && $pd['stun_flag'])	
-		{
-			eval(import_module('logger'));
-			if ($active)
-				$log.='<span class="yellow b">敌人处于眩晕状态，受到的伤害增加！</span><br>';
-			else  $log.='<span class="yellow b">你处于眩晕状态，受到的伤害增加！</span><br>';
-			$r=Array(1.2);
-		}
-		return array_merge($r,$chprocess($pa,$pd,$active));
-	}*/
 	
 	function pre_act()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player','logger'));
-		if (\skillbase\skill_query(602,$sdata))
+		eval(import_module('sys','logger'));
+		if (1 == check_skill602_state())
 		{
-			$ct = floor(getmicrotime()*1000);
-			$e = floor(\skillbase\skill_getvalue(602,'end')); 
-			$rmt = $e - $ct;
-			if ($ct<$e)
-			{
-				$log .= '<span class="yellow b">你现在处于晕眩状态，什么都做不了！<br>晕眩状态持续时间还剩<span id="timer">'.floor($rmt/1000).'.'.(floor($rmt/100)%10).'</span>秒</span><br><img style="display:none;" type="hidden" src="img/blank.png" onload="demiSecTimerStarter('.$rmt.');">';
-				$mode = 'command'; $command = 'menu';
-			}
+			eval(import_module('bufficons'));
+			$rmt = number_format($tmp_totsec - $tmp_nowsec, 1);
+			$rmt_msec = $rmt * 1000;
+			$log .= '<span class="yellow b">你现在处于晕眩状态，什么都做不了！<br>晕眩状态持续时间还剩<span id="timer">'.$rmt.'</span>秒</span><br><img style="display:none;" type="hidden" src="img/blank.png" onload="demiSecTimerStarter('.$rmt_msec.');">';
+			$mode = 'command'; $command = 'menu';
 		}
 		$chprocess();
 	}
-	
-			
 }
 
 ?>

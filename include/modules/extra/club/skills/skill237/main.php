@@ -93,50 +93,18 @@ namespace skill237
 		return $ret;
 	}
 	
-	//跳过整个物理伤害判定
-//	function calculate_physical_dmg(&$pa, &$pd, $active)
-//	{
-//		if (eval(__MAGIC__)) return $___RET_VALUE;
-//		eval(import_module('logger'));
-//		
-//		if ($pa['bskill']==237) 
-//		{
-//			eval(import_module('logger'));
-//			$log .=  \battle\battlelog_parser($pa, $pd, $active, '<span class="yellow b"><:pa_name:>将武器的伤害转化成了电磁干扰攻击！</span><br>');
-//		}
-//		else return $chprocess($pa, $pd, $active);
-//	}
-	
-//	function get_physical_dmg_multiplier(&$pa, &$pd, $active)
-//	{
-//		if (eval(__MAGIC__)) return $___RET_VALUE;
-//		$r=Array();
-//		if ($pa['bskill']==237) 
-//		{
-//			eval(import_module('logger'));
-//			$r=Array(1.3);
-//			if ($active)
-//				$log.='<span class="yellow b">你借用武器施展出了电磁干扰攻击！</span><br>';
-//			else  $log.='<span class="yellow b">敌人借用武器施展出了电磁干扰攻击！</span><br>';
-//		}
-//		return array_merge($r,$chprocess($pa, $pd, $active));
-//	}
-	
 	function strike_finish(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		if ($pa['bskill']==237 && $pa['is_hit'])
 		{
-			eval(import_module('logger','skill237','skill601','sys'));
-			if (!\skillbase\skill_query(601,$pd)){
-				\skillbase\skill_acquire(601,$pd);
-				$var_237=$now;
-			}else{
-				$var_237=\skillbase\skill_getvalue(601,'end',$pd);
-				if ($var_237<$now) $var_237=$now;
+			eval(import_module('logger','skill237'));
+
+			list($is_successful, $fail_hint) = \bufficons\bufficons_impose_buff(601, $cdtime237, 0, $pd);
+			if(!$is_successful) {
+				$log .= $fail_hint;
 			}
-			\skillbase\skill_setvalue(601,'start',$var_237,$pd);
-			\skillbase\skill_setvalue(601,'end',$var_237 + $cdtime237,$pd);
+
 			\skill602\set_stun_period($stuntime237,$pd);
 			\skill602\send_stun_battle_news($pa['name'],$pd['name']);
 		}
