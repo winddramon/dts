@@ -41,26 +41,38 @@ namespace skill483
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skill483','player','logger','sys'));
 		\player\update_sdata();
-		list($can_activate, $fail_hint) = \bufficons\bufficons_check_buff_state_shell(483);
-		if(!$can_activate) {
+
+		//所有主动技能统一的触发语句
+		list($is_successful, $fail_hint) = \bufficons\bufficons_activate_buff(483, $skill483_effect_duration, 0);
+		if(!$is_successful) {
 			$log .= $fail_hint;
 			return;
 		}
+
 		$c=(int)\skillbase\skill_getvalue(483,'cost',$pa);
-		if ($money<$c)
-		{
-			$log.='<span class="yellow b">金钱不足！用你的脑子想一想，不充钱你会变得更强吗？</span><br>';
-			return;
-		}
 		$money-=$c;
-		$flag = \bufficons\bufficons_set_timestamp(483, $skill483_effect_duration, 0);
-		if(!$flag) {
-			$log.='发动失败！<br>';
-			return;
-		}
 		\skillbase\skill_setvalue(483,'cost',$c*2);
 		addnews ( 0, 'bskill483', $name );
 		$log.='<span class="lime b">技能「氪金」发动成功。</span><br>';
+	}
+
+	//能否触发技能的特殊判定
+	function bufficons_check_buff_state_shell($token, &$pa=NULL, $msec=0)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		list($can_activate, $fail_hint) = $chprocess($token, $pa, $msec);
+		if ($can_activate && 483 == $token){
+			if(!$pa) {
+				eval(import_module('player'));
+				$pa = & $sdata;
+			}
+			$c=(int)\skillbase\skill_getvalue(483,'cost',$pa);
+			if($pa['money'] < $c) {
+				$fail_hint.='<span class="yellow b">金钱不足！用你的脑子想一想，不充钱你会变得更强吗？</span><br>';
+				$can_activate = false;
+			}
+		}
+		return array($can_activate, $fail_hint);
 	}
 	
 	//复活判定注册

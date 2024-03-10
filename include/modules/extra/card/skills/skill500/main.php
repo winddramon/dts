@@ -40,20 +40,14 @@ namespace skill500
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skill500','player','logger','sys'));
 		\player\update_sdata();
-		list($can_activate, $fail_hint) = \bufficons\bufficons_check_buff_state_shell(500);
-		if(!$can_activate) {
+
+		//所有主动技能统一的触发语句
+		list($is_successful, $fail_hint) = \bufficons\bufficons_activate_buff(500, $skill500_act_time, $skill500_cd, $sdata, 1, 1);//考虑毫秒
+		if(!$is_successful) {
 			$log .= $fail_hint;
 			return;
 		}
-		if($rage < $skill500_rage){
-			$log.='怒气不足，需要<span class="yellow b">'.$skill500_rage.'点怒气</span>！<br>';
-			return;
-		}
-		$flag = \bufficons\bufficons_set_timestamp(500, $skill500_act_time, $skill500_cd, $sdata, 1, 1);//考虑毫秒
-		if(!$flag) {
-			$log.='发动失败！<br>';
-			return;
-		}
+		
 		addnews ( 0, 'bskill500', $name );
 		$gamevars['timestopped'] = 1;//设一个全局变量
 		save_gameinfo();
@@ -76,6 +70,25 @@ namespace skill500
 		}
 		
 		$log.='<span class="lime b">技能「时停」发动成功，你让时间暂时停止了！</span><br>';
+	}
+
+	//能否触发技能的特殊判定
+	function bufficons_check_buff_state_shell($token, &$pa=NULL, $msec=0)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		list($can_activate, $fail_hint) = $chprocess($token, $pa, $msec);
+		if ($can_activate && 500 == $token){
+			eval(import_module('skill500'));
+			if(!$pa) {
+				eval(import_module('player'));
+				$pa = & $sdata;
+			}
+			if($pa['rage'] < $skill500_rage){
+				$fail_hint.='怒气不足，需要<span class="yellow b">'.$skill500_rage.'点怒气</span>！<br>';
+				$can_activate = false;
+			}
+		}
+		return array($can_activate, $fail_hint);
 	}
 	
 	//return 1:技能生效中 2:技能冷却中 3:技能冷却完毕 其他:不能使用这个技能

@@ -40,29 +40,41 @@ namespace skill490
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','player','skill490','logger'));
 		\player\update_sdata();
-		list($can_activate, $fail_hint) = \bufficons\bufficons_check_buff_state_shell(490);
-		if(!$can_activate) {
+
+		//所有主动技能统一的触发语句
+		list($is_successful, $fail_hint) = \bufficons\bufficons_activate_buff(490, 0, $skill490_cd);
+		if(!$is_successful) {
 			$log .= $fail_hint;
 			return;
 		}
-		if($sp <= $skill490_minsp){
-			$log.='体力不足，无法使用技能！<br>';
-			return;
-		}
-		
-		$flag = \bufficons\bufficons_set_timestamp(490, 0, $skill490_cd);
-		if(!$flag) {
-			$log.='发动失败！<br>';
-			return;
-		}
+
 		$spdown = $sp - $skill490_minsp;
 		$sp = $skill490_minsp;
 		get_random_item490($spdown);
 		addnews ( 0, 'bskill490', $name , $itmk0, $itm0);
 		if($itms0) {
-			$log.='<span class="lime b">获得了「空想道具」！</span><br>';
+			$log.='<span class="lime b">技能「空想」发动成功，获得了「空想道具」！</span><br>';
 			\itemmain\itemget();
 		}
+	}
+
+	//能否触发技能的特殊判定
+	function bufficons_check_buff_state_shell($token, &$pa=NULL, $msec=0)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		list($can_activate, $fail_hint) = $chprocess($token, $pa, $msec);
+		if ($can_activate && 490 == $token){
+			eval(import_module('skill490'));
+			if(!$pa) {
+				eval(import_module('player'));
+				$pa = & $sdata;
+			}
+			if($pa['sp'] <= $skill490_minsp){
+				$fail_hint.='体力不足，无法使用技能！<br>';
+				$can_activate = false;
+			}
+		}
+		return array($can_activate, $fail_hint);
 	}
 	
 	//计算空想类别和属性表。会自动生成缓存文件。

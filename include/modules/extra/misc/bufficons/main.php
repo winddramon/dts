@@ -215,6 +215,7 @@ namespace bufficons
 
 	//常见的一组bufficons_check_buff_state()状态判定逻辑，用于判定是否允许激活技能
 	//会自动调用bufficons_check_buff_state()，生成判定失败时的反馈，并根据是否允许来返回true/false
+	//其他模块要增加判定可以继承这个函数
 	function bufficons_check_buff_state_shell($token, &$pa=NULL, $msec=0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;

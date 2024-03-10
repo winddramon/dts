@@ -45,6 +45,7 @@ namespace skill76
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skill76','player','logger','sys'));
 		\player\update_sdata();
+		//充能根据情况有两种不同的CD，特殊处理，正常请参见skill500等模块，用\bufficons\bufficons_activate_buff()统一处理
 		list($can_activate, $fail_hint) = \bufficons\bufficons_check_buff_state_shell(76);
 		if(!$can_activate) {
 			$log .= $fail_hint;

@@ -64,6 +64,7 @@ namespace skill426
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skill426','player','logger','sys'));
 		\player\update_sdata();
+		//整备根据情况有不同的CD，特殊处理，正常请参见skill500等模块，用\bufficons\bufficons_activate_buff()统一处理
 		list($can_activate, $fail_hint) = \bufficons\bufficons_check_buff_state_shell(426);
 		if(!$can_activate) {
 			$log .= $fail_hint;

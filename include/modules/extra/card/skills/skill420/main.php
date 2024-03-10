@@ -38,21 +38,11 @@ namespace skill420
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skill420','player','logger','sys','itemmain'));
 		\player\update_sdata();
-		//在bufficons_check_buff_state()里已经做了技能存在性判定
-		list($can_activate, $fail_hint) = \bufficons\bufficons_check_buff_state_shell(420);
-		if(!$can_activate) {
-			$log .= $fail_hint;
-			return;
-		}
 
-		if ($skillpoint<1){
-			$log.='你需要消耗1个技能点来发动这个技能！<br>';
-			return;
-		}
-		
-		$flag = \bufficons\bufficons_set_timestamp(420, 0, $skill420_cd);
-		if(!$flag) {
-			$log.='发动失败！<br>';
+		//所有主动技能统一的触发语句
+		list($is_successful, $fail_hint) = \bufficons\bufficons_activate_buff(420, 0, $skill420_cd);
+		if(!$is_successful) {
+			$log .= $fail_hint;
 			return;
 		}
 		
@@ -69,6 +59,24 @@ namespace skill420
 		$itm0=$nl[$r];
 		$itme0=1;$itms0=1;$itmsk0='';$itmk0='X';
 		\itemmain\itemget();	
+	}
+
+	//能否触发技能的特殊判定
+	function bufficons_check_buff_state_shell($token, &$pa=NULL, $msec=0)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		list($can_activate, $fail_hint) = $chprocess($token, $pa, $msec);
+		if ($can_activate && 420 == $token){
+			if(!$pa) {
+				eval(import_module('player'));
+				$pa = & $sdata;
+			}
+			if($pa['skillpoint'] < 1) {
+				$fail_hint.='你需要消耗1个技能点来发动这个技能！<br>';
+				$can_activate = false;
+			}
+		}
+		return array($can_activate, $fail_hint);
 	}
 	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())
