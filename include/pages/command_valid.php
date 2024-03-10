@@ -113,7 +113,7 @@ if($mode == 'enter') {
 				if(!empty($cardtypecd[$r])){
 					$cardtype_cd_period = $cardtypecd[$r];
 					if(!empty($card_cooldown_discount_gtype[$gametype])) {
-						$cardtype_cd_period *= $card_cooldown_discount_gtype[$gametype];//荣誉模式、极速模式类别CD减半
+						$cardtype_cd_period *= 1 - $card_cooldown_discount_gtype[$gametype];//荣誉模式、极速模式类别CD减半，蹲站模式类别CD为20%
 					}
 					if($cards[$cc]['energy'] < 100) {//如果卡片本身的能量小于100，那么根据能量叠加一层折数
 						$cardtype_cd_period *= $cards[$cc]['energy']/100;
