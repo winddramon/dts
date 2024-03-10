@@ -52,7 +52,7 @@ $___MOD_CONN_PORT_HIGH = 21000;
 $___MOD_CONN_W_DB = 0;
 //daemon模式下，如最终结果通过文件返回，临时文件存放目录
 //默认使用游戏内目录
-$___MOD_TMP_FILE_DIRECTORY = GAME_ROOT.'./gamedata/tmp/response/';
+$___MOD_TMP_FILE_DIRECTORY = (defined('GAME_ROOT') ? GAME_ROOT : '').'./gamedata/tmp/response/';
 //daemon模式下驻留进程最小执行时间。如果服务器max_execution_time小于这个值，会以这个值为准；超过则以max_execution_time为准
 $___MOD_SRV_MIN_EXECUTION_TIME = 180;
 //daemon模式下驻留进程最大执行时间。
@@ -68,6 +68,6 @@ $___MOD_LOG_LEVEL = 2;
 
 //默认修正
 //非command页面不使用代码缓存后的结果，加快加载速度（因为非游戏界面无法利用daemon）
-if (!defined('IN_MODULEMNG') && !defined('IN_COMMAND') && CURSCRIPT!=='news') $___MOD_CODE_ADV2 = 0;
+if (!defined('IN_MODULEMNG') && !defined('IN_COMMAND') && defined('CURSCRIPT') && CURSCRIPT!=='news') $___MOD_CODE_ADV2 = 0;
 
 ?>
