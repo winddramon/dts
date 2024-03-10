@@ -90,7 +90,9 @@ namespace skill107
 		{
 			eval(import_module('item_randskills'));
 			$ls_skills = array_merge($rs_cardskills['S'], $rs_cardskills['A'], $rs_cardskills['B'], $rs_cardskills['C']);
-			$newskillid = array_randompick($ls_skills, 1);
+			$ls_skills = array_diff($ls_skills, \skillbase\get_acquired_skill_array($pa));
+			if (empty($ls_skills)) $newskillid = 83;
+			else $newskillid = array_randompick($ls_skills, 1);
 			\skillbase\skill_acquire($newskillid, $pa);
 		}
 		return $newskillid;
