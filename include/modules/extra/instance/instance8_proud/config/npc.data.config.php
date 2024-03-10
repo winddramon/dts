@@ -597,7 +597,7 @@ namespace instance8
 				0 => array
 				(
 					'name' => 'Acg_Xilin',
-					'icon' => 2,
+					'icon' => 'avatar_rek/xilin.png',
 					'mss' => 100,
 					'wep' => '【全屏幕弹幕发射】',
 					'wepk' => 'WG',

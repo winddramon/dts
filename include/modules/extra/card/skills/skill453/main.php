@@ -8,7 +8,7 @@ namespace skill453
 	
 	function init() 
 	{
-		define('MOD_SKILL453_INFO','card;');
+		define('MOD_SKILL453_INFO','card;buffer;');
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[453] = '狂击';
 		$bufficons_list[453] = Array(

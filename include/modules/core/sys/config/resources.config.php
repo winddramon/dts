@@ -43,7 +43,7 @@ namespace sys
 		17=>'教程模式',
 		18=>'<font class="cyan">荣耀模式</font>',
 		19=>'<font class="red">极速模式</font>',
-		20=>'<font class="gold">公路模式</font>',
+		20=>'<font class="gold">肉鸽模式</font>',
 		21=>'<font class="ltazure">蹲站模式</font>',
 	);
 	$gtdesc=array(

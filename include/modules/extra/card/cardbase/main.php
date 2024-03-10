@@ -443,39 +443,40 @@ namespace cardbase
 		
 		//实际随机卡片
 		$arr=array(0);
-		do{
-			if(!empty($cs['real_random'])) {//真随机，把所有卡集合并
-				$arr = array_merge($arr,$cardindex['S'] ?? array(),$cardindex['A'] ?? array(),$cardindex['B'] ?? array(),$cardindex['C'] ?? array(),$cardindex['EB'] ?? array());
+		if(!empty($cs['real_random'])) {//真随机，把所有卡集合并
+			$arr = array_merge($arr,$cardindex['S'] ?? array(),$cardindex['A'] ?? array(),$cardindex['B'] ?? array(),$cardindex['C'] ?? array(),$cardindex['EB'] ?? array());
+		}else{
+			//判定随机到的卡的罕贵
+			$r=rand(1,100);
+			if ($r<=$S_odds){
+				$arr=$cardindex['S'];
+				if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_S']);
+			}elseif($r - $S_odds <= $A_odds){
+				$arr=$cardindex['A'];
+				if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_A']);
+			}elseif($r - $S_odds - $A_odds <= $B_odds){
+				$arr=$cardindex['B'];
+				if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_B']);
 			}else{
-				//判定随机到的卡的罕贵
-				$r=rand(1,100);
-				if ($r<=$S_odds){
-					$arr=$cardindex['S'];
-					if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_S']);
-				}elseif($r - $S_odds <= $A_odds){
-					$arr=$cardindex['A'];
-					if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_A']);
-				}elseif($r - $S_odds - $A_odds <= $B_odds){
-					$arr=$cardindex['B'];
-					if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_B']);
-				}else{
-					$arr=$cardindex['C'];
-					if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_C']);
-				}
+				$arr=$cardindex['C'];
+				if(!empty($cs['allow_EB'])) $arr=array_merge($arr, $cardindex['EB_C']);
 			}
-			
-			if(!empty($packlimit)){//有卡包限制，那么对选择集挨个判定一遍卡包
-				foreach($arr as $i => $v) {
-					if($cards[$v]['pack'] != $packlimit) 
-						unset($arr[$i]);
-				}
-				$arr = array_filter($arr);
+		}
+		
+		if(!empty($packlimit)){//有卡包限制，那么对选择集挨个判定一遍卡包
+			foreach($arr as $i => $v) {
+				if($cards[$v]['pack'] != $packlimit) 
+					unset($arr[$i]);
 			}
-			
-			$arr = array_merge($arr, $forced);
-			$arr = array_unique($arr);
+			$arr = array_filter($arr);
+		}
+		$arr = array_merge($arr, $forced);
+		$arr = array_unique($arr);
+
+		do{
 			$ret = array_randompick($arr);
-		}while($ret == $card || in_array($ret, $ignore));//必定选不到自己
+		}while($ret == $card || !empty($cards[$ret]['valid']['cardchange']) || in_array($ret, $ignore));//必定选不到自己、其他有cardchange设置项的卡，以及特定忽略的卡
+		
 		return $ret;
 	}
 	
@@ -958,7 +959,7 @@ namespace cardbase
 		if(empty($new_cardindex)) return;
 		
 		//开始生成文件。这里不直接用var_export()是为了生成方便查看的文件结构
-		$contents = str_replace('?>','',$checkstr);//"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
+		$contents = str_replace('?>','',IN_GAME_CHECK_STR);//"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
 		$contents .= '$cardindex = Array('."\r\n";
 		$i = 1;$z = sizeof($new_cardindex);
 		foreach($new_cardindex as $nk => $nv){
@@ -1117,7 +1118,7 @@ namespace cardbase
 		
 		
 		if(empty($cgmethod)) return;
-		$contents = str_replace('?>','',$checkstr);//"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
+		$contents = str_replace('?>','',IN_GAME_CHECK_STR);//"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
 
 		$contents .= '$card_gaining_method = '.var_export($cgmethod,1).';';
 		
@@ -1183,8 +1184,7 @@ namespace cardbase
 		//最高优先级错误原因：卡片类别时间限制
 		foreach($cardtypecd as $ct => $ctcd){
 			if(!empty($ctcd) && in_array($gametype, $card_need_charge_gtype)){
-				$ctcdstr = seconds2hms($ctcd);
-				$card_error['e0'.$ct] = '这张卡片暂时不能使用，因为最近'.$ctcdstr.'内你已经使用过'.$ct.'卡了<br>在'.convert_tm($ctcd-($now-$udata['cd_'.strtolower($ct)])).'后你才能再次使用'.$ct.'卡';
+				$card_error['e0'.$ct] = '这张卡片暂时不能使用，因为最近你已经使用过'.$ct.'卡了<br>在'.convert_tm($ctcd-($now-$udata['cd_'.strtolower($ct)])).'后你才能再次使用'.$ct.'卡';
 		
 				if (($now-$udata['cd_'.strtolower($ct)]) < $ctcd){
 					foreach ($card_ownlist as $key)

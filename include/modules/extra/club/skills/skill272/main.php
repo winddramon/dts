@@ -15,15 +15,20 @@ namespace skill272
 	
 	function init() 
 	{
-		define('MOD_SKILL272_INFO','club;locked;');
-		eval(import_module('clubbase'));
+		define('MOD_SKILL272_INFO','club;locked;buffer;');
+		eval(import_module('clubbase','bufficons'));
 		$clubskillname[272] = '吸光';
+		$bufficons_list[272] = Array(
+			'disappear' => 0,
+			'clickable' => 1,
+		);
 	}
 	
 	function acquire272(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		\skillbase\skill_setvalue(272,'lastuse',0,$pa);
+		\skillbase\skill_setvalue(272,'end_ts',1,$pa);
+		\skillbase\skill_setvalue(272,'cd_ts',0,$pa);
 		\skillbase\skill_setvalue(272,'unlockcount',0,$pa);
 		\skillbase\skill_setvalue(272,'lvl',0,$pa);
 		\skillbase\skill_setvalue(272,'num',0,$pa);
@@ -32,7 +37,6 @@ namespace skill272
 	function lost272(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		\skillbase\skill_delvalue(272,'lastuse',$pa);
 		\skillbase\skill_delvalue(272,'unlockcount',$pa);
 		\skillbase\skill_delvalue(272,'lvl',$pa);
 		\skillbase\skill_delvalue(272,'num',$pa);
@@ -129,16 +133,6 @@ namespace skill272
 	//即时生成可以吸光的属性
 	function create_effect_list272(){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		//eval(import_module('skill272','skill23'));
-//		$effect_list = Array();
-//		foreach($bufflist23 as $bval){
-//			foreach($bval as $eval){
-//				foreach($eval as $val){
-//					if(!in_array($val, array('z'))) $effect_list[] = $val[1];
-//				}
-//			}
-//		}
-//		$effect_list = array_unique($effect_list);
 		
 		//现在改成只吸下位5属性的攻击、防御属性，6系的防御属性，以及集气属性、同志、热恋属性
 		$effect_list = Array('c','l','g');
@@ -183,24 +177,13 @@ namespace skill272
 	function activate272($ipos)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('player','logger','sys'));
+		eval(import_module('player','logger','sys','skill272'));
 		\player\update_sdata();
-		if (!\skillbase\skill_query(272) || !check_unlocked272($sdata))
-		{
-			$log.='你没有这个技能！<br>';
-			return;
-		}
-		$st = check_skill272_state($sdata);
-		if ($st==0){
-			$log.='你不能使用这个技能！<br>';
-			return;
-		}
-		if ($st==1){
-			$log.='你已经发动过这个技能了！<br>';
-			return;
-		}
-		if ($st==2){
-			$log.='技能冷却中！<br>';
+
+		//吸光判定较多较杂，特殊处理，正常请参见skill500等模块，用\bufficons\bufficons_activate_buff()统一处理
+		list($can_activate, $fail_hint) = \bufficons\bufficons_check_buff_state_shell(272);
+		if(!$can_activate) {
+			$log .= $fail_hint;
 			return;
 		}
 		//即时生成可以吸光的属性
@@ -224,7 +207,12 @@ namespace skill272
 			return;
 		}
 		$itmsk = $itmsk_after;
-		\skillbase\skill_setvalue(272,'lastuse',$now);
+		$skill272_real_cd = \skillbase\skill_getvalue(272,'lvl') ? 0 : $skill272_cd;//升级以后无CD
+		$flag = \bufficons\bufficons_set_timestamp(272, $skill272_act_time, $skill272_real_cd);
+		if(!$flag) {
+			$log.='发动失败！<br>';
+			return;
+		}
 		\skillbase\skill_setvalue(272,'num',$effect_num);
 		addnews ( 0, 'bskill272', $name );
 		eval(import_module('skill272','itemmain'));
@@ -279,27 +267,14 @@ namespace skill272
 	//return 1:技能生效中 2:技能冷却中 3:技能冷却完毕 其他:不能使用这个技能
 	function check_skill272_state(&$pa){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(272, $pa) || !check_unlocked272($pa)) return 0;
-		eval(import_module('sys','player','skill272'));
-		$l=\skillbase\skill_getvalue(272,'lastuse',$pa);
-		$clv = (int)\skillbase\skill_getvalue(272,'lvl',$pa);
-		if (($now-$l)<=$skill272_act_time) return 1;
-		if (!$clv && (($now-$l)<=$skill272_act_time+$skill272_cd)) return 2;
-		return 3;
+		return \bufficons\bufficons_check_buff_state(272,$pa);
 	}
-	
-	/*function get_hitrate_multiplier(&$pa,&$pd,$active)
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(272,$pd) || !(check_skill272_state($pd)==1) || $pd['club']!=2 || $pd['wepk']!='WK') return $chprocess($pa, $pd, $active);
-		return $chprocess($pa, $pd, $active)*0.75;
-	}*/
 	
 	function calculate_ex_attack_dmg_multiplier(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$r=Array();
-		if (\skillbase\skill_query(272,$pa) && check_unlocked272($pa) && 1==check_skill272_state($pa))
+		if (1==check_skill272_state($pa))
 		{
 			eval(import_module('logger','skill272'));
 			$effect = $skill272_factor * \skillbase\skill_getvalue(272,'num',$pa);
@@ -310,62 +285,6 @@ namespace skill272
 			$r[] = 1 + $effect / 100;
 		}
 		return array_merge($r,$chprocess($pa,$pd,$active));
-	}
-	
-//	function calculate_ex_single_dmg_multiple(&$pa, &$pd, $active, $key)
-//	{
-//		if (eval(__MAGIC__)) return $___RET_VALUE;
-//		$ret = $chprocess($pa, $pd, $active, $key);
-//		if (\skillbase\skill_query(272,$pa) && check_unlocked272($pa) && 1==check_skill272_state($pa)){
-//			eval(import_module('logger','skill272'));
-//			$effect = $skill272_factor * \skillbase\skill_getvalue(272,'num',$pa);
-//			if(empty($pa['skill272_log'])){
-//				$log .= \battle\battlelog_parser($pa, $pd, $active, '<span class="yellow b">「吸光」使<:pa_name:>的属性伤害增强了'.$effect.'%！</span><br>');
-//				$pa['skill272_log'] = 1;
-//			}
-//			return $ret * (1 + $effect / 100);
-//		}
-//			
-//		else return $ret;
-//	}
-	
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if ((\skillbase\skill_query(272,$sdata))&&check_unlocked272($sdata))
-		{
-			eval(import_module('skill272'));
-			$skill272_lst = (int)\skillbase\skill_getvalue(272,'lastuse'); 
-			$skill272_clv = (int)\skillbase\skill_getvalue(272,'lvl');
-			$skill272_time = $now-$skill272_lst; 
-			$z=Array(
-				'disappear' => 0,
-				'clickable' => 1,
-				'hint' => '技能「吸光」',
-				'activate_hint' => '点击发动技能「吸光」',
-				'onclick' => "$('mode').value='special';$('command').value='skill272_special';$('subcmd').value='activate';postCmd('gamecmd','command.php');this.disabled=true;",
-			);
-			if ($skill272_time<$skill272_act_time)
-			{
-				$z['style']=1;
-				$z['totsec']=$skill272_act_time;
-				$z['nowsec']=$skill272_time;
-			}
-			elseif (!$skill272_clv && ($skill272_time<$skill272_act_time+$skill272_cd))
-			{
-				$z['style']=2;
-				$z['totsec']=$skill272_cd;
-				$z['nowsec']=$skill272_time-$skill272_act_time;
-			}
-			else 
-			{
-				$z['style']=3;
-			}
-			\bufficons\bufficon_show('img/skill272.gif',$z);
-		}
-		$chprocess();
 	}
 	
 	function act()

@@ -1,32 +1,42 @@
 你想要做什么？<br>
-
 <input type="hidden" name="mode" value="itemmain">
 <input type="hidden" id="cmdspare" name="cmdspare" value="">
-<input type="radio" name="command" id="itemmerge" value="itemmerge" checked><a onclick=sl('itemmerge'); href="javascript:void(0);">合并两个道具</a><br>
-<input type="radio" name="command" id="itemmove" value="itemmove"><a onclick=sl('itemmove'); href="javascript:void(0);">移动或交换道具的位置</a><br>
-<br>
-请选择参与合并/移动/交换位置的两个道具：<br><br>
+<!-- <input type="radio" name="command" id="itemmerge" value="itemmerge" >
+<input type="radio" name="command" id="itemmove" value="itemmove" > -->
+请选择合并/移动/丢弃的两个道具：<br><br>
 <input type="hidden" name="from" id="from" value="0">
-<select name="merge1" id="merge1" href="javascript:void(0);">
-<option style="width:220px;" value="0">■ 道具一 ■<br />
-<!--{if $itms1}--><option value="1">包裹1：$itm1/$itme1/$itms1<br /><!--{/if}-->
-<!--{if $itms2}--><option value="2">包裹2：$itm2/$itme2/$itms2<br /><!--{/if}-->
-<!--{if $itms3}--><option value="3">包裹3：$itm3/$itme3/$itms3<br /><!--{/if}-->
-<!--{if $itms4}--><option value="4">包裹4：$itm4/$itme4/$itms4<br /><!--{/if}-->
-<!--{if $itms5}--><option value="5">包裹5：$itm5/$itme5/$itms5<br /><!--{/if}-->
-<!--{if $itms6}--><option value="6">包裹6：$itm6/$itme6/$itms6<br /><!--{/if}-->
-</select>
-<br><br>
 <input type="hidden" name="to" id="to" value="0">
-<select name="merge2" id="merge2" href="javascript:void(0);">
-<option style="width:220px;" value="0">■ 道具二 ■<br />
-<!--{if $itms1}--><option value="1">包裹1：$itm1/$itme1/$itms1<!--{else}--><option value="1">包裹1：将道具1移动到这里<!--{/if}-->
-<!--{if $itms2}--><option value="2">包裹2：$itm2/$itme2/$itms2<!--{else}--><option value="2">包裹2：将道具1移动到这里<!--{/if}-->
-<!--{if $itms3}--><option value="3">包裹3：$itm3/$itme3/$itms3<!--{else}--><option value="3">包裹3：将道具1移动到这里<!--{/if}-->
-<!--{if $itms4}--><option value="4">包裹4：$itm4/$itme4/$itms4<!--{else}--><option value="4">包裹4：将道具1移动到这里<!--{/if}-->
-<!--{if $itms5}--><option value="5">包裹5：$itm5/$itme5/$itms5<!--{else}--><option value="5">包裹5：将道具1移动到这里<!--{/if}-->
-<!--{if $itms6}--><option value="6">包裹6：$itm6/$itme6/$itms6<!--{else}--><option value="6">包裹6：将道具1移动到这里<!--{/if}-->
-</select>
+<input type="hidden" name="merge1" id="merge1" value="0">
+<input type="hidden" name="merge2" id="merge2" value="0">
+<input type="hidden" name="judge" id="judge" value="0">
+<input type="hidden" id="command" name="command" value="">
+<div >
+    <ul>
+<!--{eval $loopn = Array(1,2,3,4,5,6);}-->
+	<!--{loop $loopn $n}-->
+		<!--{if ${'itms'.$n}}-->
+        <li style="list-style:none">
+            <button type="button" class="item_noselecte"  id="item$n" value="$n" empty="false" onclick=itemMoveAndMerge(this);>${'itm'.$n}/${'itme'.$n}/${'itms'.$n}</button><br>
+        </li>
+            <!--{else}-->
+        <li style="list-style:none">
+            <button type="button"  class="item_noselecte"  id="item$n" value="$n" empty="true" onclick=itemMoveAndMerge(this);>空</button><br>
+        </li>
+            <!--{/if}-->
+<!--{/loop}-->
+</ul>
+</div>
+    <div class="merge_options" >
+        <div class="option1" style="width: 78%;">
+            <p class="merge_text">单个选中后可以点击该按钮进行丢弃</p>
+            <button type="button" class="item_drop"  onclick=itemDrop();>丢弃</button>
+        </div>
+        <div class="option2" style="width: 100%;display:none">
+            <p class="merge_text">选中的物品有合并的可能，请选择合并或者移动</p>
+            <button type="button" class="to_merge" onclick="toMerge();">合并</button>
+            <button type="button" class="to_move" onclick="toMove();">移动</button>
+        </div>
+    </div>
+</div>
 <br><br>
-<input type="button" class="cmdbutton"  id="z" value="[Z]提交" onclick="$('from').value=$('merge1').value;$('to').value=$('merge2').value;postCmd('gamecmd','command.php');this.disabled=true;">
-<input type="button" class="cmdbutton"  id="x" value="[X]返回" onclick="$('cmdspare').name='command';$('cmdspare').value='menu';$('itemmerge').checked=false;$('itemmove').checked=false;postCmd('gamecmd','command.php');this.disabled=true;">
+<input type="button" class="cmdbutton"  id="x" value="[X]返回" onclick="$('cmdspare').name='command';$('cmdspare').value='menu';$('command').value='';postCmd('gamecmd','command.php');this.disabled=true;exchange=[];drop = 0;">

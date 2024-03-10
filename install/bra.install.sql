@@ -164,3 +164,6 @@ CREATE TABLE `bra_history` (
   INDEX `WMODE` (`wmode`),
   INDEX `WINNER` (`winner`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=COMPRESSED;
+
+DROP TABLE IF EXISTS `bra_shistory`;
+CREATE TABLE IF NOT EXISTS `bra_shistory` LIKE `bra_history`;

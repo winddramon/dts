@@ -437,6 +437,7 @@ namespace itemmain
 		return $l;
 	}
 	
+	//开局装备道具文件的读取
 	function get_startingitemfilecont(){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
 		$file = __DIR__.'/config/stitem.config.php';
@@ -450,6 +451,20 @@ namespace itemmain
 		$l = openfile($file);
 		return $l;
 	}
+
+	//开局装备道具的单行数据分割处理
+	//本模块是explode后调用startingitem_row_data_process()处理
+	function startingitem_row_data_seperate($data){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return startingitem_row_data_process(explode(",", $data));
+	}
+
+	//单条开局装备道具数据的处理
+	//本模块直接返回
+	function startingitem_row_data_process($data){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return $data;
+	}
 	
 	//初始化开局装备道具，仅在valid流程调用，也非引用而是直接传回数组
 	function init_enter_battlefield_items($ebp){
@@ -461,15 +476,15 @@ namespace itemmain
 		
 		$weplist = get_startingwepfilecont();
 		do { 
-			$index = rand(1,count($weplist)-1); 
-			list($ebp['wep'],$ebp['wepk'],$ebp['wepe'],$ebp['weps'],$ebp['wepsk']) = explode(",",$weplist[$index]);
+			$index = rand(1,count($weplist)-1);
+			list($ebp['wep'],$ebp['wepk'],$ebp['wepe'],$ebp['weps'],$ebp['wepsk']) = startingitem_row_data_seperate($weplist[$index]);
 		} while(!$ebp['wepk']);
 
 		$stitemlist = get_startingitemfilecont();
 		for($i=3;$i<=4;$i++){
 			do { 
-				$index = rand(1,count($stitemlist)-1); 
-				list($ebp['itm'.$i],$ebp['itmk'.$i],$ebp['itme'.$i],$ebp['itms'.$i],$ebp['itmsk'.$i]) = explode(",",$stitemlist[$index]);
+				$index = rand(1,count($stitemlist)-1);
+				list($ebp['itm'.$i],$ebp['itmk'.$i],$ebp['itme'.$i],$ebp['itms'.$i],$ebp['itmsk'.$i]) = startingitem_row_data_seperate($stitemlist[$index]);
 			} while(!$ebp['itms'.$i]);
 		}
 		return $ebp;

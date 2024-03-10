@@ -6,21 +6,24 @@ namespace skill110
 	
 	function init()
 	{
-		define('MOD_SKILL110_INFO','club;locked;');
-		eval(import_module('clubbase'));
+		define('MOD_SKILL110_INFO','club;locked;upgrade;');
+		eval(import_module('clubbase','bufficons'));
 		$clubskillname[110] = '通才';
+		$bufficons_list[110] = Array(
+			'onclick' => "$('mode').value='special';$('command').value='skill110_special';$('subcmd').value='castsk110';postCmd('gamecmd','command.php',this);",
+		);
 	}
 	
 	function acquire110(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		\skillbase\skill_setvalue(110,'lastuse',-3000,$pa);
+		\skillbase\skill_setvalue(110,'end_ts',1,$pa);	
+		\skillbase\skill_setvalue(110,'cd_ts',0,$pa);	
 	}
 	
 	function lost110(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		\skillbase\skill_delvalue(110,'lastuse',$pa);
 	}
 	
 	function check_unlocked110(&$pa)
@@ -60,19 +63,8 @@ namespace skill110
 			return;
 		}
 		\skillbase\skill_delvalue($skillid, 'tsk_expire', $pa);
-		\skillbase\skill_setvalue(110, 'lastuse', $now, $pa);
 		eval(import_module('clubbase'));
 		$log .= "你记住了技能<span class=\"yellow b\">「{$clubskillname[$skillid]}」</span>。<br>";
-	}
-	
-	//return 1:技能生效中 2:技能冷却中 3:技能冷却完毕 其他:不能使用这个技能
-	function check_skill110_state(&$pa){
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(110, $pa) || !check_unlocked110($pa)) return 0;
-		eval(import_module('sys','player','skill110'));
-		$l=\skillbase\skill_getvalue(110,'lastuse',$pa);
-		if (($now-$l)<=$skill110_cd) return 2;
-		return 3;
 	}
 	
 	function cast_skill110()
@@ -87,15 +79,10 @@ namespace skill110
 		$skill110_skillid = (int)get_var_input('skill110_skillid');
 		if (!empty($skill110_skillid))
 		{
-			$st = check_skill110_state($sdata);
-			if ($st==0)
-			{
-				$log .= '你不能使用这个技能！<br>';
-				return;
-			}
-			elseif ($st==2)
-			{
-				$log .= '技能冷却中！<br>';
+			eval(import_module('skill110'));
+			list($is_successful, $fail_hint) = \bufficons\bufficons_activate_buff(110, 0, $skill110_cd);
+			if(!$is_successful) {
+				$log .= $fail_hint;
 				return;
 			}
 			skill110_learn_tempskill($skill110_skillid, $sdata);
@@ -118,39 +105,6 @@ namespace skill110
 		}
 		$chprocess();
 	}
-	
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if ((\skillbase\skill_query(110,$sdata))&&check_unlocked110($sdata))
-		{
-			eval(import_module('skill110'));
-			$skill110_lst = (int)\skillbase\skill_getvalue(110,'lastuse'); 
-			$skill110_time = $now-$skill110_lst;
-			$z=Array(
-				'disappear' => 0,
-				'clickable' => 1,
-				'hint' => '技能「通才」',
-				'activate_hint' => '点击发动技能「通才」',
-				'onclick' => "$('mode').value='special';$('command').value='skill110_special';$('subcmd').value='castsk110';postCmd('gamecmd','command.php');this.disabled=true;",
-			);
-			if ($skill110_time<$skill110_cd)
-			{
-				$z['style']=2;
-				$z['totsec']=$skill110_cd;
-				$z['nowsec']=$skill110_time;
-			}
-			else 
-			{
-				$z['style']=3;
-			}
-			\bufficons\bufficon_show('img/skill110.gif',$z);
-		}
-		$chprocess();
-	}
-	
 }
 
 ?>

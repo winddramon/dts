@@ -10,15 +10,19 @@ namespace skill232
 	function init() 
 	{
 		define('MOD_SKILL232_INFO','club;upgrade;locked;');
-		eval(import_module('clubbase'));
+		eval(import_module('clubbase','bufficons'));
 		$clubskillname[232] = '力场';
+		$bufficons_list[232] = Array(
+			'dummy' => 1,
+		);
 	}
 	
 	function acquire232(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		\skillbase\skill_setvalue(232,'lvl','0',$pa);
-		\skillbase\skill_setvalue(232,'lastuse',-3000,$pa);
+		\skillbase\skill_setvalue(232,'end_ts',1,$pa);
+		\skillbase\skill_setvalue(232,'cd_ts',0,$pa);
 	}
 	
 	function lost232(&$pa)
@@ -62,36 +66,23 @@ namespace skill232
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skill232','player','logger','sys'));
 		\player\update_sdata();
-		if (!\skillbase\skill_query(232) || !check_unlocked232($sdata))
-		{
-			$log.='你没有这个技能！<br>';
-			return;
-		}
-		$st = check_skill232_state($sdata);
-		if ($st==0){
-			$log.='你不能使用这个技能！<br>';
-			return;
-		}
-		if ($st==2){
-			$log.='技能冷却中！<br>';
-			return;
-		}
-		\skillbase\skill_setvalue(232,'lastuse',$now);
 		$clv=\skillbase\skill_getvalue(232,'lvl');
+		list($is_successful, $fail_hint) = \bufficons\bufficons_activate_buff(232, 0, $skill232_cd[$clv]);
+		if(!$is_successful) {
+			$log .= $fail_hint;
+			return;
+		}
+		
 		$sc = $shieldgain[$clv];
 		if ($hp<($mhp+$sc)) $hp=$mhp+$sc;
 		addnews ( 0, 'bskill232', $name );
 		$log.='<span class="lime b">技能「力场」发动成功。</span><br>';
 	}
 	
+	//return 1:技能生效中 2:技能冷却中 3:技能冷却完毕 其他:不能使用这个技能
 	function check_skill232_state(&$pa){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(232, $pa) || !check_unlocked232($pa)) return 0;
-		eval(import_module('sys','player','skill232'));
-		$l=\skillbase\skill_getvalue(232,'lastuse',$pa);
-		$clv = (int)\skillbase\skill_getvalue(232,'lvl',$pa);
-		if (($now-$l)<=$skill232_cd[$clv]) return 2;
-		return 3;
+		return \bufficons\bufficons_check_buff_state(232,$pa);
 	}
 	
 	function check_skill232_shield_on(&$pa)
@@ -127,53 +118,6 @@ namespace skill232
 			return 0;
 		}
 		return $chprocess($pa,$pd,$active);
-	}
-	
-//	function apply_total_damage_modifier_invincible(&$pa,&$pd,$active)
-//	{
-//		if (eval(__MAGIC__)) return $___RET_VALUE;
-//		if (\skillbase\skill_query(232,$pd) && $pd['hp']>$pd['mhp'])
-//		{
-//			eval(import_module('logger','skill232'));
-//			$clv = (int)\skillbase\skill_getvalue(232,'lvl',$pd);
-//			$v=$shieldeff[$clv];
-//			$log.='力场护盾使你受到的伤害降低了<span class="yellow b">'.$v.'</span>点！<br>';
-//			$pa['dmg_dealt']=max($pa['dmg_dealt']-$v,1);
-//		}
-//		return $chprocess($pa, $pd, $active);
-//	}
-	
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if ((\skillbase\skill_query(232,$sdata))&&check_unlocked232($sdata))
-		{
-			eval(import_module('skill232'));
-			$skill232_lst = (int)\skillbase\skill_getvalue(232,'lastuse'); 
-			$skill232_time = $now-$skill232_lst; 
-			$clv = (int)\skillbase\skill_getvalue(232,'lvl');
-			$z=Array(
-				'disappear' => 0,
-				'clickable' => 1,
-				'hint' => '技能「力场」',
-				'activate_hint' => '点击发动技能「力场」',
-				'onclick' => "$('mode').value='special';$('command').value='skill232_special';$('subcmd').value='activate';postCmd('gamecmd','command.php');this.disabled=true;",
-			);
-			if ($skill232_time<$skill232_cd[$clv])
-			{
-				$z['style']=2;
-				$z['totsec']=$skill232_cd[$clv];
-				$z['nowsec']=$skill232_time;
-			}
-			else 
-			{
-				$z['style']=3;
-			}
-			\bufficons\bufficon_show('img/skill232.gif',$z);
-		}
-		$chprocess();
 	}
 	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())

@@ -564,7 +564,7 @@ namespace instance3
 				0 => array
 				(
 				'name' => 'Acg_Xilin',
-				'icon' => 2,
+				'icon' => 'avatar_rek/xilin.png',
 				'mss' => 100,
 				'wep' => '【全屏幕弹幕发射】',
 				'wepk' => 'WG',
@@ -1396,7 +1396,7 @@ namespace instance3
 				0 => array
 				(
 				'name' => '薇娜·安妮茜',
-				'icon' => 'avatar_rek/weena.png',
+				'icon' => 'avatar_rek/weena2.png',
 				'mss' => 100,
 				'wep' => '「乌托邦暴风」',
 				'wepk' => 'WF',

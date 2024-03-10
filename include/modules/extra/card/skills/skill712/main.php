@@ -7,14 +7,19 @@ namespace skill712
 	function init() 
 	{
 		define('MOD_SKILL712_INFO','card;upgrade;');
-		eval(import_module('clubbase'));
+		eval(import_module('clubbase','bufficons'));
 		$clubskillname[712] = '宝槌';
+		$bufficons_list[712] = Array(
+			'dummy' => 1,//占位符，如果其他设置全部都自动生成的话可以占位用……
+		);
 	}
 	
 	function acquire712(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		\skillbase\skill_setvalue(712,'lastuse',0,$pa);
+		eval(import_module('skill712'));
+		\skillbase\skill_setvalue(712,'end_ts',$now-1,$pa);	
+		\skillbase\skill_setvalue(712,'cd_ts',$now+$skill712_cd,$pa);	
 	}
 	
 	function lost712(&$pa)
@@ -31,24 +36,14 @@ namespace skill712
 	function activate712()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('player','logger','sys'));
+		eval(import_module('logger','skill712'));
 		\player\update_sdata();
-		if (!\skillbase\skill_query(712) || !check_unlocked712($sdata))
-		{
-			$log.='你没有这个技能！<br>';
+		list($is_successful, $fail_hint) = \bufficons\bufficons_activate_buff(712, 0, $skill712_cd);
+		if(!$is_successful) {
+			$log .= $fail_hint;
 			return;
 		}
-		$st = check_skill712_state($sdata);
-		if ($st==0){
-			$log.='你不能使用这个技能！<br>';
-			return;
-		}
-		if ($st==2){
-			$log.='技能冷却中！<br>';
-			return;
-		}
-		$lastuse = \skillbase\skill_getvalue(712,'lastuse');
-		\skillbase\skill_setvalue(712,'lastuse',$now);
+		//$log.='<span class="lime b">技能「宝槌」发动成功。</span><br>';
 		skill712_process();
 	}
 	
@@ -72,48 +67,6 @@ namespace skill712
 		\searchmemory\change_memory_unseen('ALL');
 		\skill1006\add_beacon_from_itempool($mipool, \searchmemory\calc_memory_slotnum());
 		$log .= '<span class="yellow b">你挥动万宝槌，将全部视野刷新了！</span><br>';
-	}
-
-	//return 1:技能生效中 2:技能冷却中 3:技能冷却完毕 其他:不能使用这个技能
-	function check_skill712_state(&$pa){
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(712, $pa) || !check_unlocked712($pa)) return 0;
-		eval(import_module('sys','player','skill712'));
-		$l=\skillbase\skill_getvalue(712,'lastuse',$pa);
-		if (($now-$l)<=$skill712_cd) return 2;
-		return 3;
-	}
-
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if ((\skillbase\skill_query(712,$sdata))&&check_unlocked712($sdata))
-		{
-			eval(import_module('skill712'));
-			$skill712_lst = (int)\skillbase\skill_getvalue(712,'lastuse'); 
-			$skill712_time = $now-$skill712_lst; 
-			$z=Array(
-				'disappear' => 0,
-				'clickable' => 1,
-				'hint' => '技能「宝槌」',
-				'activate_hint' => '点击发动技能「宝槌」',
-				'onclick' => "$('mode').value='special';$('command').value='skill712_special';$('subcmd').value='activate';postCmd('gamecmd','command.php');this.disabled=true;",
-			);
-			if ($skill712_time<$skill712_cd)
-			{
-				$z['style']=2;
-				$z['totsec']=$skill712_cd;
-				$z['nowsec']=$skill712_time;
-			}
-			else 
-			{
-				$z['style']=3;
-			}
-			\bufficons\bufficon_show('img/skill712.gif',$z);
-		}
-		$chprocess();
 	}
 	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())

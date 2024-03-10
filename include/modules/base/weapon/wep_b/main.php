@@ -418,7 +418,7 @@ namespace wep_b
 	function deathnews(&$pa, &$pd)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if('B' == $pa['wep_kind'] && !empty($pa['attackwith_arrowarr'])) {
+		if(isset($pa['wep_kind']) && 'B' == $pa['wep_kind'] && !empty($pa['attackwith_arrowarr'])) {
 			//如果有箭矢信息那么提供箭矢的信息，并用特殊的分隔符隔开
 			if(!empty($pa['attackwith_arrowarr']['itm'])) {
 				$o_pa_attackwith = $pa['attackwith'];

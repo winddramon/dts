@@ -57,10 +57,9 @@ namespace sys
 		
 		//游戏时间变量初始化
 		date_default_timezone_set('Etc/GMT');
-		global $now; $now = time() + $moveut*3600 + $moveutmin*60;   
+		global $now; $now = get_now();   
 		global $sec,$min,$hour,$day,$month,$year,$wday;
 		list($sec,$min,$hour,$day,$month,$year,$wday) = explode(',',date("s,i,H,j,n,Y,w",$now));
-		
 		
 		//从玩家提交的信息（一般是$_POST）里获取用户名和密码
 		global $___LOCAL_INPUT__VARS__INPUT_VAR_LIST;

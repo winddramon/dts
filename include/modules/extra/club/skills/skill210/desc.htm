@@ -1,4 +1,4 @@
-<!--{eval eval(import_module('skill210','sys'));}-->
+<!--{eval eval(import_module('skill210','sys','bufficons'));}-->
 <!--{eval $___TEMP_SKILL_ID=210;}-->
 {template MOD_CLUBBASE_SKILLDESC_START}
 <span>
@@ -6,7 +6,7 @@
 </span>
 {template MOD_CLUBBASE_SKILLDESC_MID1}
 <td class="skilldesc_left b3"><span class="skilldesc">
-<!--{eval $skill210_lst = (int)\skillbase\skill_getvalue(210,'lastuse'); $skill210_time = ($now-$skill210_lst);$skill210_cd_left=($skill210_cd+$skill210_act_time-$skill210_time);$skill210_rem=($skill210_act_time-$skill210_time);}-->
+<!--{eval $st = \bufficons\bufficons_check_buff_state(210,$who);$rm=$tmp_totsec-$tmp_nowsec;}-->
 发动后获得增益效果：<br>
 <!--{if $card==5}-->
 	<!--{if $club==2}-->
@@ -22,19 +22,24 @@
 	<!--{/if}-->
 <!--{/if}-->
 
-<!--{if $club!=2}-->计算属性伤害时你基础攻击力的1/2将视作武器攻击力。<!--{else}-->计算属性伤害时你的基础攻击力将视作武器攻击力。<!--{/if}--><br>
-增益效果持续时间<span class="yellow b">$skill210_act_time</span>秒，冷却时间<span class="cyan b">$skill210_cd</span>秒。<br>
-<!--{if $skill210_time>$skill210_act_time && $skill210_time<$skill210_cd+$skill210_act_time}-->
-<span class="cyan b">技能冷却中，冷却时间还剩<span>$skill210_cd_left</span>秒。</span><br>
+<!--{if $club!=2}-->
+计算属性伤害时你基础攻击力的1/2将视作武器攻击力。
 <!--{else}-->
-<!--{if $skill210_time<=$skill210_act_time}-->
-<span class="yellow b">技能发动中！持续时间还剩<span>$skill210_rem</span>秒。</span><br>
+计算属性伤害时你的基础攻击力将视作武器攻击力。
 <!--{/if}-->
+<br>
+增益效果持续时间<span class="yellow b">$skill210_act_time</span>秒，冷却时间<span class="cyan b">$skill210_cd</span>秒。<br>
+<!--{if 1==$st}-->
+<span class="yellow b">技能发动中！持续时间还剩<span>$rm</span>秒</span>
+<!--{elseif 2==$st}-->
+<span class="cyan b">技能冷却中，冷却时间还剩<span>$rm</span>秒</span>
+<!--{elseif 3==$st}-->
+<span class="cyan b">技能冷却完毕，可以使用</span>
 <!--{/if}-->
 </span></td>
 <td class="skilldesc_right b3">
-<!--{if $skill210_time>$skill210_cd+$skill210_act_time}-->
-<input type="button" style="width:46px" onclick="$('mode').value='special';$('command').value='skill210_special';$('subcmd').value='activate';postCmd('gamecmd','command.php');this.disabled=true;" value="发动">
+<!--{if 3==$st}-->
+<input type="button" style="width:46px" onclick="$('mode').value='special';$('command').value='skill210_special';$('subcmd').value='activate';postCmd('gamecmd','command.php',this);" value="发动">
 <!--{else}-->
 <input type="button" style="width:46px" disabled="true" value="发动">
 <!--{/if}-->

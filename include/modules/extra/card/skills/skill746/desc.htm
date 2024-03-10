@@ -1,0 +1,17 @@
+<!--{eval $___TEMP_SKILL_ID=746;}-->
+{template MOD_CLUBBASE_SKILLDESC_START}
+<span>
+$clubskillname[$___TEMP_SKILL_ID]
+</span>
+{template MOD_CLUBBASE_SKILLDESC_MID1}
+<td class="skilldesc_left b3"><span class="skilldesc">
+一次性技能。你可以将一个仅装有爆炸物的<span class="yellow b">储物</span>道具改造为爆炸物，<br>其效果变为其中所有爆炸物的效果和，耐久变为<span class="yellow b">1</span>，<br>且获得它们的属性（少数属性不保留）
+</span></td>
+<td class="skilldesc_right b3">
+</td>
+{template MOD_CLUBBASE_SKILLDESC_MID2}
+<!--{if empty($___TEMP_THIS_SKILL_ACQUIRED)}-->
+<span class="yellow b">
+</span>
+<!--{/if}-->
+{template MOD_CLUBBASE_SKILLDESC_END}

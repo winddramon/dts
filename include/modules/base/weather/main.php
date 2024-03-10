@@ -205,13 +205,7 @@ namespace weather
 		elseif($weather == 19) //暖气
 		{
 			$dice = rand(0,99);
-			if($dice == 0)
-			{
-				$log .= "<span class=\"ltcrimson b\">开的太高的暖气让你昏昏欲睡……</span><br>";
-				$state = 1;
-				$mode = 'rest';
-				$command = 'rest';
-			}elseif($dice <= 10)
+			if($dice <= 10)
 			{
 				$log .= "你好像闻到了<span class=\"ltcrimson b\">煤气罐</span>的气味……<br>";
 			}
@@ -291,18 +285,27 @@ namespace weather
 		elseif($weather == 19) //暖气
 		{
 			$dice = rand(0,99);
-			if($dice == 0)
-			{
-				$log .= "<span class=\"ltcrimson b\">开的太高的暖气让你昏昏欲睡……</span><br>";
-				$state = 1;
-				$mode = 'rest';
-				$command = 'rest';
-			}elseif($dice <= 10)
+			if($dice <= 10)
 			{
 				$log .= "你好像闻到了<span class=\"ltcrimson b\">煤气罐</span>的气味……<br>";
 			}
 		}
 		return $chprocess();
+	}
+	
+	function pre_act()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$chprocess();
+		eval(import_module('sys','player'));
+		if (($weather == 19) && ($state == 0) && (rand(0,99) == 0)) //暖气，并且原先没在睡觉
+		{
+			eval(import_module('logger'));
+			$state = 1;
+			$mode = 'rest';
+			$command = 'rest';
+			$log .= "<span class=\"ltcrimson b\">开的太高的暖气让你昏昏欲睡……</span><br>你克制不住睡意，然后倒了下去。<br>";
+		}
 	}
 	
 	//天气控制道具

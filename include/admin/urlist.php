@@ -342,9 +342,9 @@ include template('admin_urlist');
 
 //直接读本地数据库比较快，也省内存
 function urlist_userdb_backup($file){
-	global $db, $gtablepre, $checkstr;
+	global $db, $gtablepre;
 	$result = $db->query("SELECT * FROM {$gtablepre}users");
-	writeover($file, $checkstr);
+	writeover($file, IN_GAME_CHECK_STR);
 	while($r = $db->fetch_array($result)){
 		writeover($file, json_encode($r, JSON_UNESCAPED_UNICODE)."\r\n", 'ab+');
 	}

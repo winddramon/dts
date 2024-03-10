@@ -105,17 +105,12 @@ namespace skill440
 			$chprocess($pa, $pd, $active);
 			return;
 		}
-		eval(import_module('logger','skill440','skill600','sys'));
-		$var_440=$skill440_cause600_period;
-		if (!\skillbase\skill_query(600,$pd)){
-			\skillbase\skill_acquire(600,$pd);
-			$var_440_2=$now;
-		}else{
-			$var_440_2=\skillbase\skill_getvalue(600,'end',$pd);
-			if ($var_440_2<$now) $var_440_2=$now;
+		eval(import_module('logger','skill440'));
+		list($is_successful, $fail_hint) = \bufficons\bufficons_impose_buff(600, $skill440_cause600_period, 0, $pd, 2);
+		if(!$is_successful) {
+			$log .= $fail_hint;
+			return;
 		}
-		\skillbase\skill_setvalue(600,'start',$var_440_2,$pd);
-		\skillbase\skill_setvalue(600,'end',$var_440_2+$var_440,$pd);
 		if (strpos($pd['inf'],'u')===false)
 		{
 			$pd['inf'].='u';

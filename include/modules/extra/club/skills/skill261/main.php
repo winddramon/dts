@@ -2,27 +2,33 @@
 
 namespace skill261
 {
-	$skill261_cd = 60000;
+	$skill261_cd = 1919810;
+	$skill261_wploss = 5;
+	$tmp_skill261_flag = 0;//本次行动是否已经扣过功德（划掉）殴熟
 	
 	function init() 
 	{
-		define('MOD_SKILL261_INFO','club;upgrade;locked;');
-		eval(import_module('clubbase'));
+		define('MOD_SKILL261_INFO','club;upgrade;locked;buffer;');
+		eval(import_module('clubbase','bufficons'));
 		$clubskillname[261] = '决战';
+		$bufficons_list[261] = Array(
+			'dummy' => 1,
+		);
 	}
 	
 	function acquire261(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','skill261'));
-		\skillbase\skill_setvalue(261,'lastuse',-3000,$pa);
+		\skillbase\skill_setvalue(261,'end_ts',1,$pa);
+		\skillbase\skill_setvalue(261,'cd_ts',0,$pa);
 	}
 	
 	function lost261(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$t=\skillbase\skill_getvalue(261,'lastuse',$pa);
-		if ($t>0) $pa['wp']=floor($pa['wp']/2);
+		if (\skillbase\skill_getvalue(261,'end_ts',$pa) > 1) 
+			$pa['wp']=floor($pa['wp']/2);
 	}
 	
 	function check_unlocked261(&$pa)
@@ -36,22 +42,12 @@ namespace skill261
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skill261','player','logger','sys','itemmain'));
 		\player\update_sdata();
-		if (!\skillbase\skill_query(261) || !check_unlocked261($sdata))
-		{
-			$log.='你没有这个技能！<br>';
+		list($is_successful, $fail_hint) = \bufficons\bufficons_activate_buff(261, 0, $skill261_cd);
+		if(!$is_successful) {
+			$log .= $fail_hint;
 			return;
 		}
-		$st = check_skill261_state($sdata);
-		if ($st==0){
-			$log.='你不能使用这个技能！<br>';
-			return;
-		}
-		if ($st==2){
-			$log.='你已经使用过这个技能了！<br>';
-			return;
-		}
-		\skillbase\skill_setvalue(261,'lastuse',$now);
-		$wp=$wp+$wp;
+		$wp *= 2;
 		addnews ( 0, 'bskill261', $name );
 		$log.='<span class="red b">技能「决战」发动成功。</span><br>';
 	}
@@ -59,91 +55,57 @@ namespace skill261
 	//return 1:技能生效中 2:技能冷却中 3:技能冷却完毕 其他:不能使用这个技能
 	function check_skill261_state(&$pa){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!\skillbase\skill_query(261, $pa) || !check_unlocked261($pa)) return 0;
-		eval(import_module('sys','player','skill261'));
-		$l=\skillbase\skill_getvalue(261,'lastuse',$pa);
-		if (($now-$l)<=$skill261_cd) return 2;
-		return 3;
+		return \bufficons\bufficons_check_buff_state(261,$pa);
 	}
-	//效果改到discover()处理后
+
+	//每次行动扣殴熟
+	function skill261_wploss(&$pa=NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if(!$pa) {
+			eval(import_module('player'));
+			$pa = & $sdata;
+		}
+		eval(import_module('skill261'));
+		if(!$tmp_skill261_flag) {
+			$pa['wp']-=$skill261_wploss;
+			if($pa['wp']<50) $pa['wp']=50;
+			$tmp_skill261_flag = 1;
+		}
+	}
+
 	function discover($schmode){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$ret = $chprocess($schmode);
 		eval(import_module('sys','player','skill261'));
-		if (\skillbase\skill_query(261) && check_skill261_state($sdata)==2)
+		if (2 == check_skill261_state($sdata))
 		{
-			$wp-=5;
-			if ($wp<50) $wp=50;
+			skill261_wploss($sdata);
 		}
 		return $ret;
 	}
-	
-//	function search_area()	
-//	{
-//		if (eval(__MAGIC__)) return $___RET_VALUE;
-//		eval(import_module('sys','player','skill261'));
-//		if (\skillbase\skill_query(261) && check_skill261_state($sdata)==2)
-//		{
-//			$wp-=5;
-//			if ($wp<50) $wp=50;
-//		}
-//		$chprocess();
-//	}
 	
 	function move_to_area($moveto)	
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','player','skill261'));
-		if (\skillbase\skill_query(261) && check_skill261_state($sdata)==2)
+		if (2 == check_skill261_state($sdata))
 		{
-			$wp-=5;
-			if ($wp<50) $wp=50;
+			skill261_wploss($sdata);
 		}
 		return $chprocess($moveto);
 	}
 	
+	//格斗生效概率上升
 	function get_skill263_chance(&$pa, &$pd, $active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$ret = $chprocess($pa, $pd, $active);
-		if (\skillbase\skill_query(261,$pd) && check_unlocked261($pd))
+		if (2 == check_skill261_state($pd))
 		{
-			$t=(int)\skillbase\skill_getvalue(261,'lastuse',$pd);
-			if ($t>0) $ret += 15;
+			$ret += 15;
 		}
 		return $ret;
-	}
-	
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if ((\skillbase\skill_query(261,$sdata))&&check_unlocked261($sdata))
-		{
-			eval(import_module('skill261'));
-			$skill261_lst = (int)\skillbase\skill_getvalue(261,'lastuse'); 
-			$skill261_time = $now-$skill261_lst; 
-			$z=Array(
-				'disappear' => 0,
-				'clickable' => 1,
-				'hint' => '技能「决战」',
-				'activate_hint' => '点击发动技能「决战」',
-				'onclick' => "$('mode').value='special';$('command').value='skill261_special';$('subcmd').value='activate';postCmd('gamecmd','command.php');this.disabled=true;",
-			);
-			if ($skill261_time<$skill261_cd)
-			{
-				$z['style']=2;
-				$z['totsec']=$skill261_cd;
-				$z['nowsec']=$skill261_time;
-			}
-			else 
-			{
-				$z['style']=3;
-			}
-			\bufficons\bufficon_show('img/skill261.gif',$z);
-		}
-		$chprocess();
 	}
 	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())

@@ -7,7 +7,7 @@ namespace skill555
 	
 	function init() 
 	{
-		define('MOD_SKILL555_INFO','card;upgrade;');
+		define('MOD_SKILL555_INFO','card;upgrade;buffer;');
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[555] = '迷彩';
 		$bufficons_list[555] = Array(

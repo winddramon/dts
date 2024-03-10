@@ -25,15 +25,15 @@
 
 ## 部署指南
 
-0. 环境要求：php 7.0以上，推荐7.0至8.0（超过8.0版本尚未充分测试）。必须开启curl和socket两项扩展。必须支持本地对本地php文件的http访问，并准备一个不需经过dns解析的本地文件地址（类似于http://127.0.0.1/dts）。建议将php所需内存修改为256M或更高，将php最大执行时间修改为180秒或更高，将php.ini中output_buffering一项打开（一般设为output_buffering = 4096）。
-1. 部署准备：把游戏根目录下的gamedata、include和templates三个文件夹全部chmod 0777，win7以上系统需要为IUSR用户添加完全访问权限，可自行查找相关教程进行设置。另外，去gamedata文件夹删掉install.lock文件。
+0. 环境要求：php 7.0以上，推荐8.0以上（最高兼容至8.2.9）。必须开启curl和socket两项扩展。必须支持本地对本地php文件的http访问，并准备一个不需经过dns解析的本地文件地址（类似于`http://127.0.0.1/dts`）。php进程内存限制最少需要有256M。建议将php进程内存限制修改为512M或更高，将php最大执行时间修改为180秒或更高，将php.ini中`output_buffering`一项打开（一般设为`output_buffering = 4096`）。
+1. 部署准备：把游戏根目录下的gamedata、include和templates三个文件夹全部`chmod 0777`，win7以上系统需要为IUSR用户和USER用户添加完全访问权限，可自行查找相关教程进行设置。另外，去gamedata文件夹删掉install.lock文件。
 2. 自助部署：访问install_NEW.php，一路照提示走，其中网站地址、数据库名、数据库用户名和密码、管理员用户名和密码应根据实际情况进行改动。安装程序会自动新建数据表并生成server.config.php、system.config.php、modulemng.config.php等本地配置文件，并自动修改___MOD_CODE_ADV一系列变量。如果提示找不到 `<db>.users` 表，请手动创建一个空表。
 3. 检查基础文件完整性：访问首页，用刚才安装时输的管理员帐号登录，并测试游戏是否能正常开始和结束。到这一步如果没有错误，游戏已经可以运行，但是处于基础模式，执行效率极低，建议仅用于开发。
 
 - 如果你想实际部署，请继续往下看。
 
 4. 开启adv模式：在第3步登陆后获取了cookie的前提下，访问modulemng.php，根据需求开启ADV1 ADV2 ADV3和SRV共4个选项（生产环境建议全部开启），之后点击“重设代码缓存”-->“应用更改”，等系统自动处理完毕。
-5. 检查daemon运行情况：访问daemonmng.php，如果显示有进程在运行，则游戏已进入daemon模式，可以高效运行了。根据需要，还可以运行游戏目录下的sh文件（linux环境）或者bat文件（WIN幻境）作为外部触发程序，保证一直有daemon进程在运行。sh文件可通过“nohup ./acdts-daemonctl.sh &”指令在后台执行，bat需要先把php.exe所在文件夹设为系统环境变量。
+5. 检查daemon运行情况：访问daemonmng.php，如果显示有进程在运行，则游戏已进入daemon模式，可以高效运行了。根据需要，还可以运行游戏目录下的sh文件（linux环境）或者bat文件（WIN幻境）作为外部触发程序，保证一直有daemon进程在运行。sh文件可通过`nohup ./acdts-daemonctl.sh &`指令在后台执行，bat需要先把php.exe所在文件夹设为系统环境变量。
 
 - 注意：开启adv和daemon模式后，所有对源代码的更改都必须通过modulemng.php重新编译才能生效。
 
@@ -52,6 +52,6 @@
 
     http服务器将会运行在8080端口。
 
-3. 自助部署：同上，访问install_NEW.php，一路照提示走，其中数据库用户名为root，密码为password，数据库地址为mariadb。安装程序会自动新建数据表并生成server.config.php、system.config.php、modulemng.config.php等本地配置文件，并自动修改___MOD_CODE_ADV一系列变量。
+3. 自助部署：同上，访问install_NEW.php，一路照提示走，其中数据库用户名为`root`，密码为`password`，数据库地址为`mariadb`。
 
 4. 接下来的流程同上。

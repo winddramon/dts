@@ -2,11 +2,11 @@
 	<td>
 		<span class="subtitle" align="left">$v</span>
 		<!--{if isset($ach_available_period[$k]) && $ach_available_period[$k][0] > 0}-->
-			开始时间：<!--{eval echo gmstrftime('%Y-%m-%d', $ach_available_period[$k][0]);}-->
+			开始时间：<!--{eval echo gmdate('Y-n-j', $ach_available_period[$k][0]);}-->
 		<!--{/if}-->
 		&nbsp;&nbsp;&nbsp;
 		<!--{if isset($ach_available_period[$k]) && $ach_available_period[$k][1] > 0}-->
-			结束时间：<!--{eval echo gmstrftime('%Y-%m-%d', $ach_available_period[$k][1]);}-->
+			结束时间：<!--{eval echo gmdate('Y-n-j', $ach_available_period[$k][1]);}-->
 			<!--{if $ach_available_period[$k][1] < $now}-->
 				 <span class="red b">已结束</span>
 			<!--{/if}-->

@@ -510,9 +510,9 @@ function real_ip()
 
 function convert_tm($t, $simple=0)
 {
-	$s1=floor($t/86400);
-	$s2=floor(($t%86400)/3600);
-	$s3=round(($t%3600)/60);
+	$s1=floor((int)$t/86400);
+	$s2=floor(((int)$t%86400)/3600);
+	$s3=floor(((int)$t%3600)/60);
 	$ret='';
 	if ($s1>0) $ret.=$s1.'天';
 	if($simple && $s1 > 0 && $s3 > 30) $s2 += 1;//如果$simple，有天数显示（则不显示分钟数），那么如果分钟数大于30则小时数+1

@@ -50,12 +50,15 @@ namespace skill520
 		$chprocess($pa,$pd,$active);
 		if (\skillbase\skill_query(520,$pd) && check_unlocked520($pd))
 		{
-			eval(import_module('logger','skill520','sys'));	
-			$log .= \battle\battlelog_parser($pa, $pd, $active, '<span class="red b"><:pa_name:>击杀<:pd_name:>的行为触怒了<:pd_name:>身上寄宿着的梦魇之力！</span><br>');	
+			eval(import_module('logger','skill520'));	
+			
 			//击杀者获得灾厄DEBUFF
-			\skillbase\skill_acquire(604,$pa);
-			\skillbase\skill_setvalue(604,'start',$now,$pa);
-			\skillbase\skill_setvalue(604,'end',$now + $skill520_debufftime,$pa);
+			list($is_successful, $fail_hint) = \bufficons\bufficons_impose_buff(604, $skill520_debufftime, 0, $pa, 2);
+			if(!$is_successful) {
+				$log .= $fail_hint;
+			}else{
+				$log .= \battle\battlelog_parser($pa, $pd, $active, '<span class="red b"><:pa_name:>击杀<:pd_name:>的行为触怒了<:pd_name:>身上寄宿着的梦魇之力！</span><br>');	
+			}
 		}
 	}
 }

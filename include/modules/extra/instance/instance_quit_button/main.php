@@ -52,7 +52,7 @@ namespace instance_quit_button
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
-		if(strpos($command,'instance_quit')===0){
+		if(strpos((string)$command,'instance_quit')===0){
 			instance_quit();
 			return;
 		}

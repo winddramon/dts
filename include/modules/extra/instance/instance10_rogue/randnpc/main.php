@@ -204,7 +204,7 @@ namespace randnpc
 		return $skills;
 	}
 	
-	function add_randnpc($rank, $num=1, $offens_tend=0, $defens_tend=0, $variety=0, $use_preset=1) 
+	function add_randnpc($rank, $num=1, $offens_tend=0, $defens_tend=0, $variety=0, $use_preset=1, $addnews=0) 
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','player','addnpc'));
@@ -222,7 +222,7 @@ namespace randnpc
 			$db->array_insert("{$tablepre}players", $npc);
 			$summon_ids[] = $db->insert_id();
 			$newsname = $typeinfo[$npc['type']].' '.$npc['name'];
-			addnews($now, 'addnpc', $newsname);
+			if ($addnews) addnews($now, 'addnpc', $newsname);
 		}
 		return $summon_ids;
 	}

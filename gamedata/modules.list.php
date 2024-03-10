@@ -28,7 +28,7 @@ item_uee,base/items/item_uee/,1
 apm,base/apm/,1
 item_addarea,extra/item_extra/item_addarea/,1
 radar,base/items/radar/,1
-randnpc,extra/instance/instance10_road/randnpc/,1
+randnpc,extra/instance/instance10_rogue/randnpc/,1
 npc_pick_item,extra/misc/npc_pick_item/,1
 corpse,base/corpse/,1
 trap,base/items/trap/,1
@@ -152,7 +152,6 @@ skill234,extra/club/skills/skill234/,1
 skill235,extra/club/skills/skill235/,1
 skill420,extra/card/skills/skill420/,1
 skill424,extra/instance/gtype1/skill424/,1
-skill426,extra/instance/gtype1/skill426/,1
 skill428,extra/instance/gtype1/skill428/,1
 club21,extra/club/clubs/club21/,1
 skill240,extra/club/skills/skill240/,1
@@ -290,8 +289,8 @@ skill718,extra/card/skills/skill718/,1
 skill717,extra/card/skills/skill717/,1
 skill719,extra/card/skills/skill719/,1
 skill85,extra/club/skills/skill85/,1
-skill952,extra/instance/instance10_road/skill952/,1
-skill951,extra/instance/instance10_road/skill951/,1
+skill952,extra/instance/instance10_rogue/skill952/,1
+skill951,extra/instance/instance10_rogue/skill951/,1
 skill724,extra/card/skills/skill724/,1
 club25,extra/club/clubs/club25/,1
 skill95,extra/club/skills/skill95/,1
@@ -364,6 +363,7 @@ skill562,extra/card/skills/skill562/,1
 skill600,extra/club/skills/skill600/,1
 skill487,extra/card/skills/skill487/,1
 skill20,extra/club/skills/skill20/,1
+skill426,extra/instance/gtype1/skill426/,1
 skill492,extra/card/skills/skill492/,1
 skill723,extra/card/skills/skill723/,1
 skill24,extra/club/skills/skill24/,1
@@ -404,7 +404,7 @@ skill435,extra/card/skills/skill435/,1
 skill329,extra/activities/nationalday2017/skill329/,1
 skill512,extra/card/skills/skill512/,1
 addnpc_event,extra/misc/addnpc_event/,1
-skill961,extra/instance/instance10_road/skill961/,1
+skill961,extra/instance/instance10_rogue/skill961/,1
 supplycrate_event,extra/misc/supplycrate_event/,1
 skill593,extra/card/skills/skill593/,1
 skill731,extra/card/skills/skill731/,1
@@ -439,7 +439,6 @@ skill102,extra/club/skills/skill102/,1
 skill103,extra/club/skills/skill103/,1
 skill104,extra/club/skills/skill104/,1
 skill732,extra/card/skills/skill732/,1
-ex_equipskill,extra/attr/ex_equipskill/,1
 skill1000,extra/instance/instance7_tutorial/skill1000/,1
 skill711,extra/card/skills/skill711/,1
 skill1007,extra/npc_action/skill1007/,1
@@ -548,7 +547,7 @@ skill112,extra/club/skills/skill112/,1
 tutorial,extra/instance/instance7_tutorial/tutorial/,1
 skill51,extra/club/skills/skill51/,1
 skill493,extra/card/skills/skill493/,1
-randrecipe,extra/instance/instance10_road/randrecipe/,1
+randrecipe,extra/instance/instance10_rogue/randrecipe/,1
 skill100,extra/club/skills/skill100/,1
 skill101,extra/club/skills/skill101/,1
 skill98,extra/club/skills/skill98/,1
@@ -684,6 +683,7 @@ skill38,extra/club/skills/skill38/,1
 skill34,extra/club/skills/skill34/,1
 skill538,extra/card/skills/skill538/,1
 ex_phy_nullify,extra/attr/ex_phy_nullify/,1
+ex_equipskill,extra/attr/ex_equipskill/,1
 ex_storage,extra/attr/ex_storage/,1
 item_armor_empower,extra/item_extra/item_armor_empower/,1
 skill272,extra/club/skills/skill272/,1
@@ -695,7 +695,7 @@ skill597,extra/card/skills/skill597/,1
 skill713,extra/card/skills/skill713/,1
 skill712,extra/card/skills/skill712/,1
 skill587,extra/card/skills/skill587/,1
-skill960,extra/instance/instance10_road/skill960/,1
+skill960,extra/instance/instance10_rogue/skill960/,1
 skill543,extra/card/skills/skill543/,1
 skill733,extra/card/skills/skill733/,1
 skill183,extra/club/skills/skill183/,1
@@ -705,18 +705,20 @@ ex_gender_attr,extra/attr/ex_gender_attr/,1
 ex_attr_pierce,extra/attr/ex_attr_pierce/,1
 skill903,extra/instance/instance3_ascension/skill903/,1
 skill730,extra/card/skills/skill730/,1
+skill746,extra/card/skills/skill746/,1
 skill505,extra/card/skills/skill505/,1
 skill106,extra/club/skills/skill106/,1
 skill709,extra/card/skills/skill709/,1
 skill722,extra/card/skills/skill722/,1
 skill737,extra/card/skills/skill737/,1
-instance10,extra/instance/instance10_road/,1
+instance10,extra/instance/instance10_rogue/,1
 skill714,extra/card/skills/skill714/,1
 ex_purity,extra/attr/ex_purity/,1
 skill26,extra/club/skills/skill26/,1
 skill265,extra/club/skills/skill265/,1
 skill507,extra/card/skills/skill507/,1
 skill113,extra/club/skills/skill113/,1
+skill962,extra/instance/instance10_rogue/skill962/,1
 skill27,extra/club/skills/skill27/,1
 skill489,extra/card/skills/skill489/,1
 skill266,extra/club/skills/skill266/,1

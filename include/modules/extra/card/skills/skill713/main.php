@@ -28,11 +28,22 @@ namespace skill713
 		return 1;
 	}
 
+	//判定本技能是否生效，本模块规则为必须在探物姿态
+	function check_skill713_available(&$pa=NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if(!$pa){
+			eval(import_module('player'));
+			$pa = & $sdata;
+		}
+		return (3 == $pa['pose']);
+	}
+
 	function discover_extra_item($mipool)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$itemnum = count($mipool);
-		if ($itemnum > 0 && \skillbase\skill_query(713) && check_unlocked713())
+		if ($itemnum > 0 && \skillbase\skill_query(713) && check_unlocked713() && check_skill713_available())
 		{
 			$sk713_lvl = min(\skillbase\skill_getvalue(713,'lvl'), $itemnum);
 			for($sk713_t=0;$sk713_t<$sk713_lvl;$sk713_t++) {//先判定实际发现几次

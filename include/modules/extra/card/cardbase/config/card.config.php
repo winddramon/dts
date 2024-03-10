@@ -16,7 +16,7 @@ $card_cooldown_discount_gtype = Array();//18=>0.5,19=>0.5,21=>0.8
 $cardtypecd=array(//卡片类别CD，单位秒
 	'S' => 7200,//S卡类别CD：2小时
 	'A' => 3600,//A卡类别CD：1小时
-	'B' => 1800,//A卡类别CD：半小时
+	'B' => 1800,//B卡类别CD：半小时
 	'C' => 0,
 	'M' => 0
 );
@@ -1509,7 +1509,7 @@ $cards = array(
 				'B_odds' => 20,
 				'C_odds' => 20,
 				'allow_EB' => true,//开启后会把Event Bonus等需要特殊方式才能获得的卡也一并考虑
-				'ignore_cards' => Array(237, 241, 344, 381)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array()//机制上必定选不到自己和其他随机卡，这里可以放其他不想被选到的卡
 			)
 		)
 	),
@@ -1697,8 +1697,8 @@ $cards = array(
 		'name' => '软件测试工程师',
 		'rare' => 'S',
 		'pack' => 'hidden',
-		'desc' => '“据称阁下乃软件测试界的精英，谨邀请阁下参加幻境除错任务，望阁下予以支持。”<br><span class="red b" style="text-align:right">——红暮</span>',
-		'effect' => '你其实对代码一窍不通，不过你搞野路子的经验很丰富。',
+		'desc' => '<span class="ltcrimson b">“据称阁下乃软件测试界之精英，<br>诚邀阁下加入敝社幻境除错项目，<br>望予以支持。”</span><br><br><span class="red b" style="text-align:right">——红暮</span>',
+		'effect' => '你其实对代码一窍不通，<br>不过你搞野路子的经验非常丰富。',
 		'energy' => 0,
 		'valid' => array(
 			'club' => '7',
@@ -1716,7 +1716,7 @@ $cards = array(
 				//'495' => '0',
 			),
 			'itm6' => '任务指令书A',
-			'itmk6' => 'Y',
+			'itmk6' => 'Z',
 			'itme6' => '1',
 			'itms6' => '1',
 			'itmsk6' => '',
@@ -4152,7 +4152,7 @@ $cards = array(
 				'S_odds' => 100,
 				'allow_EB' => true,
 				'forced' => Array(),//无视概率强制加入选择的卡
-				'ignore_cards' => Array(300)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array()//机制上必定选不到自己和其他随机卡，这里可以放其他不想被选到的卡
 			)
 		)
 	),
@@ -4215,7 +4215,7 @@ $cards = array(
 				'packlimit' => '東埔寨Protoject',
 				'allow_EB' => false,
 				'forced' => Array(),//无视概率强制加入选择的卡
-				'ignore_cards' => Array(344)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array()//机制上必定选不到自己和其他随机卡，这里可以放其他不想被选到的卡
 			)
 		)
 	),
@@ -5014,7 +5014,7 @@ $cards = array(
 		'rare' => 'A',
 		'pack' => 'Top Players',
 		'desc' => '他除错的力量无人能及',
-		'effect' => '获得除错模式特殊技能「除错」，每层都会让物理固定伤害增加3点，但20级之前不会获得金钱和技能点奖励',
+		'effect' => '获得除错模式特殊技能「除错」，并且每层都会让物理固定伤害增加3点，但20级之前不会获得金钱和技能点奖励',
 		'desc_skills' => '「除错」：提交指定的物品来追查病毒、修复幻境系统，除错成功会获得奖励。在某些等级会获得与正常除错模式不同的奖励',
 		'energy' => 100,
 		'valid' => array(
@@ -5467,7 +5467,7 @@ $cards = array(
 				'packlimit' => '東埔寨Protoject',
 				'allow_EB' => false,
 				'forced' => Array(117, 153, 157, 158, 186),//无视概率强制加入选择的卡（星莲船，冴冴，诹访子，灵梦，超魔理沙）
-				'ignore_cards' => Array(241)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array()//机制上必定选不到自己和其他随机卡，这里可以放其他不想被选到的卡
 			),
 		)
 	),
@@ -6020,7 +6020,7 @@ $cards = array(
 				'B_odds' => 20,
 				'C_odds' => 20,
 				'allow_EB' => true,
-				'ignore_cards' => Array(81, 237, 241, 344)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array()//机制上必定选不到自己和其他随机卡，这里可以放其他不想被选到的卡
 			)
 		)
 	),
@@ -6692,6 +6692,63 @@ $cards = array(
 			),
 		)
 	),
+	413 => array(
+		'name' => '刀客塔',
+		'rare' => 'M',
+		'pack' => 'Way of Life',
+		'desc' => '“你能回忆起你的名字吗？”<br>“不能”',
+		'effect' => '“你好，Dr.不能”',
+		'desc_skills' => '获得深渊学者称号特性「窥秘」和「智识」，但初始理智值为0',
+		'energy' => 0,
+		'valid' => array(
+			'skills' => array(
+				'107' => array('sanity' => '0'),
+				'108' => '0',
+			),
+		)
+	),
+	414 => array(
+		'name' => '爆破艺术家',
+		'rare' => 'A',
+		'pack' => 'Way of Life',
+		'desc' => '艺术就是爆炸！',
+		'effect' => '获得一次性技能「艺术」',
+		'desc_skills' => '「艺术」：可以将一个仅装有爆炸物的储物道具改造为耐久为1的爆炸物，其效果变为这些爆炸物的效果和，且获得它们的大部分属性',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'746' => '0',
+			),
+		)
+	),
+	415 => array(
+		'name' => '废品战士',
+		'rare' => 'B',
+		'pack' => 'Way of Life',
+		'desc' => '垃圾就是摆错了位置的财富',
+		'effect' => '聚集的废品将成为新的力量！',
+		'desc_skills' => '开局获得一个收集特定道具的任务，完成后可获得金钱和切糕奖励',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'960' => array('taskarr' => '1001', 'taskprog' => '0'),
+			),
+		)
+	),
+	416 => array(
+		'name' => '沈阳美食家',
+		'rare' => 'B',
+		'pack' => 'Way of Life',
+		'desc' => '鉴定一下网络热门美食视频',
+		'effect' => '非常的新鲜，非常的美味',
+		'desc_skills' => '开局获得一个<del>食用</del>使用特定道具的任务，完成后可获得强力的补给道具',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'960' => array('taskarr' => '1002', 'taskprog' => '0'),
+			),
+		)
+	),
 	
 	1000 => array(
 		'name'=>'萌新',
@@ -6724,7 +6781,7 @@ $cards = array(
 				'real_random' => true,//真随机，所有卡选1张
 				'perm_change' => true,//永久改变，换卡之后不会再把card字段切回来，也不会按这张卡判定成就
 				'forced' => Array(),//无视概率强制加入选择的卡
-				'ignore_cards' => Array(81, 237, 300, 344, 381)//机制上必定选不到自己，这里可以放其他不想被选到的卡
+				'ignore_cards' => Array()//机制上必定选不到自己和其他随机卡，这里可以放其他不想被选到的卡
 			)
 		)
 	),

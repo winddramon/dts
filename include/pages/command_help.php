@@ -22,7 +22,14 @@ if(!file_exists($writefile) || filemtime($mixfile) > filemtime($writefile)){
 			if(!empty($mix['result'][4])) $mixitmsk = \itemmain\parse_itmsk_words($mix['result'][4]);
 			if ($mixitmsk == '--') $mixitmsk = '';
 			$resultjwords = get_resultjwords($mix['result']);
-			if (!empty($mix['tips'])) $resultjwords = '<span class=\'yellow b\'>'.$mix['tips'].'</span><br>'.$resultjwords;
+			if (!empty($mix['tips'])) $resultjwords = '<span class=\'yellow b\'>'.$mix['tips'].'</span><br>'.$resultjwords;//多态或余物的提示在这里手动加入
+			if (!empty($mix['result'][4]) && (strpos($mix['result'][4], '^eqpsk') !== false))//秘传的提示自动生成
+			{
+				$sk_arr = \itemmain\get_itmsk_array($mix['result'][4]);
+				foreach($sk_arr as $sv){
+					if (strpos($sv, '^eqpsk')===0) $resultjwords .= \itemmain\get_itmsk_desc_single($sv);
+				}
+			}
 
 			$mixitem[$mix['class']][] = array('stuff' => $mix['stuff'], 'result' => array($mix['result'][0],$mixitmk,$mix['result'][2],$mix['result'][3],$mixitmsk), 'resultjwords' => $resultjwords);
 		}

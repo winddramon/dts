@@ -353,6 +353,21 @@ namespace sys
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		return $show;
 	}
+
+	//获取当前时间戳，如果$msec非空则带上毫秒尾数
+	function get_now($msec=0)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if ($msec) {
+			$ret = floor(getmicrotime()*1000)/1000;
+		}else{
+			$ret = time();
+		}
+		global $moveut,$moveutmin;
+		$ret += $moveut*3600 + $moveutmin*60;
+		
+		return $ret; 
+	}
 }
 
 ?>

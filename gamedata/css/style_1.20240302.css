@@ -1,4 +1,4 @@
-﻿html {
+html {
   overflow-y: scroll;
 }
 
@@ -46,7 +46,7 @@ input {cursor: crosshair;}
 .subtitle {font: bold 24px/32px "微软雅黑","黑体";margin: 6px;color: #cceafa; width: 100%;}
 .headerlink{}
 .small {font-size: 9pt}
-.ver a{font:10pt "Viner Hand ITC","隶书";color:#ff0000;}
+.ver a{font:10pt "Viner Hand ITC","隶书";color:#f66;}
 .b1 {background-color:rgba(98,135,163,0.6); *BACKGROUND: rgb(98,135,163); *filter:alpha(opacity=60); BORDER: #000 0px none; TEXT-ALIGN: center; COLOR: #fff; border-right: #111 1px solid; border-bottom: #111 1px solid;}
 .b2 {background-color:rgba(98,135,163,0.6); *BACKGROUND: rgb(98,135,163); *filter:alpha(opacity=80); BORDER: #000 0px none; TEXT-ALIGN: center; COLOR: #fff; border-right: #111 1px solid;}
 .b2h {background-color:rgba(98,135,163,0.3); *BACKGROUND: rgb(98,135,163); *filter:alpha(opacity=30); }
@@ -654,4 +654,54 @@ div.battlecmd_desc{
 	from {  -webkit-box-shadow: 0 0 12px #666; }
   50% {  -webkit-box-shadow: 0 0 24px 8px #fa5; }
   to {  -webkit-box-shadow: 0 0 12px #666; }
+}
+
+
+
+/*==========selected==========*/
+.item_select, 
+.item_noselecte,
+.to_merge,
+.to_move,
+.drop{
+	margin:4px;
+	padding:0;
+	line-height:15px;
+	word-wrap:break-word;
+	border: 2px solid #ccbb00;
+}
+.item_select{
+	width:150px;
+	min-height:35px;
+	vertical-align:top;
+	background-color:rgb(255, 116, 116); 
+}
+.item_noselecte{
+	width:150px;
+	min-height:35px;
+	vertical-align:top;
+}
+.to_merge{
+	width: 100px;
+	min-height: 50px;
+	background-color:rgb(35, 123, 247); 
+}
+.to_move{
+	width: 100px;
+	min-height: 50px;
+	background-color:rgb(191, 247, 35); 
+}
+
+.item_drop{
+	width: 50px;
+	height: 70px;
+	margin-left: 30px;
+	background-color:rgb(255, 36, 36); 
+}
+
+.option1 , .option2{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	min-height: 100px;
 }

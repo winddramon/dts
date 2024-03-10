@@ -17,6 +17,13 @@ namespace item_recipe
 		$itemspkinfo['^l5'] = '连接5';
 		$itemspkinfo['^l6'] = '连接6';
 	}
+	
+	function get_recipe_mixinfo()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('item_recipe'));
+		return $recipe_mixinfo;
+	}
 
 	function itemuse(&$theitem) 
 	{
@@ -92,7 +99,7 @@ namespace item_recipe
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$recipe_tip = '';
-		eval(import_module('item_recipe'));
+		$recipe_mixinfo = get_recipe_mixinfo();
 		if (isset($recipe_mixinfo[$recipekey])) $recipe = $recipe_mixinfo[$recipekey];
 		else return $recipe_tip;
 		$flag = 0;
@@ -341,7 +348,7 @@ namespace item_recipe
 				if(!empty(get_var_input('mitm'.$i)))
 					$mixlist[] = $i;
 			}
-			eval(import_module('item_recipe'));
+			$recipe_mixinfo = get_recipe_mixinfo();
 			$minfo = $recipe_mixinfo[${'itmsk'.(int)$itmp}];
 			//这里把配方id塞进$minfo，作为使用配方道具合成的标记
 			$minfo['key'] = ${'itmsk'.(int)$itmp};
@@ -379,7 +386,7 @@ namespace item_recipe
 				if(!empty(get_var_input('mitm'.$i)))
 					$mixlist[] = $i;
 			}
-			eval(import_module('item_recipe'));
+			$recipe_mixinfo = get_recipe_mixinfo();
 			$rkey = get_var_input('rkey');
 			$minfo = $recipe_mixinfo[$rkey];
 			$ls = get_learned_recipes();

@@ -51,7 +51,7 @@ namespace skill430
 		$in = sizeof($itemlist);
 		do{
 			$i=rand(4,$in-1);//妈了个臀
-			list($iarea,$imap,$inum,$iname,$ikind,$ieff,$ista,$iskind) = explode(',',$itemlist[$i]);
+			list($iarea,$imap,$inum,$iname,$ikind,$ieff,$ista,$iskind) = explode(',',\attrbase\config_process_encode_comp_itmsk_sepr_transfer($itemlist[$i]));
 		} while (!is_numeric($iarea) || $iarea > 100 || \itemmain\check_in_itmsk('x', $iskind));
 		$itm0=$iname;
 		$itme0=$ieff;

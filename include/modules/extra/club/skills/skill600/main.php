@@ -6,12 +6,21 @@ namespace skill600
 	function init() 
 	{
 		define('MOD_SKILL600_INFO','hidden;debuff;');
+		eval(import_module('clubbase','bufficons'));
+		$clubskillname[600] = '衰弱';
+		$bufficons_list[600] = Array(
+			// 'disappear' => 1,//默认就是
+			// 'clickable' => 0,
+			'hint' => '状态「衰弱」<br>无法解除异常状态或包扎伤口',
+		);
 	}
 	
 	function acquire600(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','skill600'));
+		// $now = get_var_in_module('now','sys');
+		// \skillbase\skill_setvalue(600,'end_ts',$now+60,$pa);//默认时间1分钟
+		// \skillbase\skill_setvalue(600,'cd_ts',0,$pa);
 	}
 	
 	function lost600(&$pa)
@@ -23,7 +32,7 @@ namespace skill600
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('logger','sys','player','skill600'));
-		if ((\skillbase\skill_query(600))&&(check_skill600_state()==1)) 
+		if (1 == check_skill600_state()) 
 		{
 			$log .= '你现在不能处理伤口或异常状态！';
 			$mode = 'command';
@@ -36,7 +45,7 @@ namespace skill600
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('logger','skill600'));
-		if ((strpos ( $theitem['itmk'], 'C' ) === 0)&&(\skillbase\skill_query(600))&&(check_skill600_state()==1)) 
+		if ((strpos ( $theitem['itmk'], 'C' ) === 0)&&(1 == check_skill600_state())) 
 		{
 			$log .= '你喝了一小口药剂，感觉自己根本就喝不下去！';
 			$mode = 'command';
@@ -49,7 +58,7 @@ namespace skill600
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('player','logger','skill600'));
-		if ((\skillbase\skill_query(600))&&(check_skill600_state()==1))
+		if (1 == check_skill600_state())
 		{
 			$log.='你现在不能处理伤口或异常状态！<br>';
 			$mode = 'command';
@@ -58,44 +67,16 @@ namespace skill600
 		$chprocess();
 	}
 	
-	function check_skill600_state(){
+	//检查状态，返回值同bufficons_check_buff_state()
+	function check_skill600_state(&$pa=NULL){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player','skill600'));
-		if (!\skillbase\skill_query(600)) return 0;
-		$e=\skillbase\skill_getvalue(600,'end');
-		if ($now<$e) return 1;
-		return 0;
+		if(!$pa) {
+			eval(import_module('player'));
+			$pa = & $sdata;
+		}
+		return \bufficons\bufficons_check_buff_state(600, $pa);
 	}
 	
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if (\skillbase\skill_query(600,$sdata))
-		{
-			eval(import_module('skill600','skillbase'));
-			$skill600_start = (int)\skillbase\skill_getvalue(600,'start'); 
-			$skill600_end = (int)\skillbase\skill_getvalue(600,'end'); 
-			$z=Array(
-				'disappear' => 1,
-				'clickable' => 0,
-				'hint' => '状态「衰弱」<br>无法解除异常状态或包扎伤口',
-			);
-			if ($now<$skill600_end)
-			{
-				$z['style']=1;
-				$z['totsec']=$skill600_end-$skill600_start;
-				$z['nowsec']=$now-$skill600_start;
-			}
-			else 
-			{
-				$z['style']=4;
-			}
-			\bufficons\bufficon_show('img/skill600.gif',$z);
-		}
-		$chprocess();
-	}
 }
 
 ?>

@@ -204,7 +204,7 @@ class dbstuff {
 		foreach($fields as $val){
 			if(!empty(${$val.'qry'})){
 				${$val.'qry'} .= "END) ";
-				$query .= "$val = ${$val.'qry'},";
+				$query .= "$val = ".${$val.'qry'}.",";
 			}
 		}
 		

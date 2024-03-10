@@ -159,7 +159,7 @@ if($command == 'kill' || $command == 'live' || $command == 'del') {
 		$cmd_info = "无法修改角色 $name";
 	} else {
 		//记录操作，蛋疼
-		$log_diff_data = array_diff_assoc($log_new_data, $log_old_data);
+		$log_diff_data = Array();
 		if($log_new_data['nskill'] !== $log_old_data['nskill']) {
 			$log_nskill = implode(' ',array_keys(array_diff_assoc($log_new_data['nskill'], $log_old_data['nskill'])));
 			if($log_nskill) $log_diff_data['nskill'] = $log_nskill;
@@ -172,6 +172,8 @@ if($command == 'kill' || $command == 'live' || $command == 'del') {
 //			$log_nskillparadel = json_encode(array_diff_assoc($log_old_data['nskillpara'], $log_new_data['nskillpara']));
 //			if($log_nskillparadel) $log_diff_data['nskillparadel'] = $log_nskillparadel;
 		}
+		unset($log_new_data['nskill'], $log_old_data['nskill'], $log_new_data['nskillpara'], $log_old_data['nskillpara']);
+		$log_diff_data = array_merge($log_diff_data, array_diff_assoc($log_new_data, $log_old_data));
 		adminlog('editpc',$room_prefix.'_'.$gamenum,$name,gencode($log_diff_data));
 		addnews($now,'editpc',$name);
 		$cmd_info = "角色 $name 的属性被修改了";

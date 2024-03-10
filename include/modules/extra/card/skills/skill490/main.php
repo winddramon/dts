@@ -40,29 +40,41 @@ namespace skill490
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','player','skill490','logger'));
 		\player\update_sdata();
-		list($can_activate, $fail_hint) = \bufficons\bufficons_check_buff_state_shell(490);
-		if(!$can_activate) {
+
+		//所有主动技能统一的触发语句
+		list($is_successful, $fail_hint) = \bufficons\bufficons_activate_buff(490, 0, $skill490_cd);
+		if(!$is_successful) {
 			$log .= $fail_hint;
 			return;
 		}
-		if($sp <= $skill490_minsp){
-			$log.='体力不足，无法使用技能！<br>';
-			return;
-		}
-		
-		$flag = \bufficons\bufficons_set_timestamp(490, 0, $skill490_cd);
-		if(!$flag) {
-			$log.='发动失败！<br>';
-			return;
-		}
+
 		$spdown = $sp - $skill490_minsp;
 		$sp = $skill490_minsp;
 		get_random_item490($spdown);
 		addnews ( 0, 'bskill490', $name , $itmk0, $itm0);
 		if($itms0) {
-			$log.='<span class="lime b">获得了「空想道具」！</span><br>';
+			$log.='<span class="lime b">技能「空想」发动成功，获得了「空想道具」！</span><br>';
 			\itemmain\itemget();
 		}
+	}
+
+	//能否触发技能的特殊判定
+	function bufficons_check_buff_state_shell($token, &$pa=NULL, $msec=0)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		list($can_activate, $fail_hint) = $chprocess($token, $pa, $msec);
+		if ($can_activate && 490 == $token){
+			eval(import_module('skill490'));
+			if(!$pa) {
+				eval(import_module('player'));
+				$pa = & $sdata;
+			}
+			if($pa['sp'] <= $skill490_minsp){
+				$fail_hint.='体力不足，无法使用技能！<br>';
+				$can_activate = false;
+			}
+		}
+		return array($can_activate, $fail_hint);
 	}
 	
 	//计算空想类别和属性表。会自动生成缓存文件。
@@ -70,7 +82,7 @@ namespace skill490
 	function get_random_itmksklist490()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys'));
+		//eval(import_module('sys'));
 		
 		$writefile = GAME_ROOT.'/gamedata/cache/skill490itmksk.config.php';
 		$mapitemfile = GAME_ROOT.'/include/modules/base/itemmain/config/mapitem.config.php';
@@ -82,7 +94,7 @@ namespace skill490
 			//类别和属性是从地图和商店道具里随机一个的
 			$itemfc = openfile($mapitemfile);
 			foreach($itemfc as $ival){
-				$ival = explode(',',$ival);
+				$ival = explode(',',\attrbase\config_process_encode_comp_itmsk_sepr_transfer($ival));
 				if(is_numeric($ival[0]) && $ival[0] > 100) continue;//禁数在100以上的道具不考虑
 				if(isset($ival[4])) $itemklist[] = $ival[4];
 				if(isset($ival[7])) $itemsklist[] = \attrbase\config_process_encode_comp_itmsk($ival[7]);
@@ -90,14 +102,14 @@ namespace skill490
 			$shoplist = openfile($shopitemfile);
 			foreach($shoplist as $lst){
 				if(!empty($lst) && strpos($lst,',')!==false){
-					list($kind,$num,$price,$area,$item,$itmk,$itme,$itms,$itmsk)=explode(',',$lst);
+					list($kind,$num,$price,$area,$item,$itmk,$itme,$itms,$itmsk)=explode(',',\attrbase\config_process_encode_comp_itmsk_sepr_transfer($lst));
 					if($kind != 0){
 						$itemklist[] = $itmk;
 						$itemsklist[] = \attrbase\config_process_encode_comp_itmsk($itmsk);
 					}
 				}	
 			}
-			$writecont = str_replace('?>','',$checkstr);//"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
+			$writecont = str_replace('?>','',IN_GAME_CHECK_STR);//"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
 			$writecont .= '$itemklist = '.var_export($itemklist, 1).";\r\n\r\n";
 			$writecont .= '$itemsklist = '.var_export($itemsklist, 1).";\r\n\r\n";
 			$writecont .= "/* End of file skill490itmksk.config.php */";
@@ -139,7 +151,7 @@ namespace skill490
 		
 		foreach($itemklist as $ik => &$iv){//防止一些奇葩武器类型的出现
 			foreach($exception as $ev){
-				if(strpos($iv, $ev)===0) $iv=NULL;
+				if(!empty($iv) && strpos($iv, $ev)===0) $iv=NULL;
 			}
 		}
 		$itemklist = array_filter($itemklist);
