@@ -4,7 +4,7 @@ namespace skill96
 {
 	function init()
 	{
-		define('MOD_SKILL96_INFO','club;');
+		define('MOD_SKILL96_INFO','club;buffer;');
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[96] = '魂音';
 		$bufficons_list[96] = Array(
