@@ -5,8 +5,13 @@ namespace skill96
 	function init()
 	{
 		define('MOD_SKILL96_INFO','club;');
-		eval(import_module('clubbase'));
+		eval(import_module('clubbase','bufficons'));
 		$clubskillname[96] = '魂音';
+		$bufficons_list[96] = Array(
+			'disappear' => 1,
+			'clickable' => 0,
+			'hint' => '状态「魂音」：歌曲使你获得了强化！',
+		);
 	}
 	
 	function acquire96(&$pa)
@@ -17,10 +22,6 @@ namespace skill96
 	function lost96(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		\skillbase\skill_delvalue(96, 'bufftime', $pa);
-		\skillbase\skill_delvalue(96, 'expire', $pa);
-		\skillbase\skill_delvalue(96, 'type', $pa);
-		\skillbase\skill_setvalue(96, 'effect', $pa);
 	}
 	
 	function check_unlocked96(&$pa)
@@ -34,7 +35,7 @@ namespace skill96
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$r = array();
-		if (\skillbase\skill_query(96, $pa) && check_unlocked96($pa))
+		if (1 == \bufficons\bufficons_check_buff_state(96, $pa))
 		{
 			$skill96_type = \skillbase\skill_getvalue(96, 'type', $pa);
 			if (!empty($skill96_type) && ($skill96_type[0] == '1'))
@@ -47,7 +48,7 @@ namespace skill96
 				$r[] = 1 + $dmggain / 100;
 			}
 		}
-		if (\skillbase\skill_query(96, $pd) && check_unlocked96($pd)) 
+		if (1 == \bufficons\bufficons_check_buff_state(96, $pd)) 
 		{
 			$skill96_type = \skillbase\skill_getvalue(96, 'type', $pd);
 			if (!empty($skill96_type) && ($skill96_type[1] == '3'))
@@ -68,7 +69,7 @@ namespace skill96
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$r = 1;
-		if (\skillbase\skill_query(96,$ldata) && check_unlocked96($ldata))
+		if (1 == \bufficons\bufficons_check_buff_state(96, $ldata))
 		{
 			$skill96_type = \skillbase\skill_getvalue(96, 'type', $ldata);
 			if (!empty($skill96_type) && ($skill96_type[0] == '2'))
@@ -77,7 +78,7 @@ namespace skill96
 				$r *= 1 + round(0.06 * $skill96_effect) / 100;
 			}
 		}
-		if (\skillbase\skill_query(96,$edata) && check_unlocked96($edata))
+		if (1 == \bufficons\bufficons_check_buff_state(96, $edata))
 		{
 			$skill96_type = \skillbase\skill_getvalue(96, 'type', $edata);
 			if (!empty($skill96_type) && ($skill96_type[0] == '2'))
@@ -95,7 +96,7 @@ namespace skill96
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$ret = $chprocess($pa, $pd, $active);
-		if (\skillbase\skill_query(96, $pd) && check_unlocked96($pd))
+		if (1 == \bufficons\bufficons_check_buff_state(96, $pd))
 		{
 			$skill96_type = \skillbase\skill_getvalue(96, 'type', $pd);
 			if (!empty($skill96_type))
@@ -117,45 +118,12 @@ namespace skill96
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$ret = $chprocess($pa, $pd, $active);
-		if (\skillbase\skill_query(96, $pa) && check_unlocked96($pa))
+		if (1 == \bufficons\bufficons_check_buff_state(96, $pa))
 		{
 			$skill96_type = \skillbase\skill_getvalue(96, 'type', $pa);
 			if (!empty($skill96_type) && ($skill96_type[1] == '2')) array_push($ret,'t');
 		}
 		return $ret;
-	}
-	
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		\player\update_sdata();
-		if (\skillbase\skill_query(96,$sdata) && check_unlocked96($sdata))
-		{
-			$skill96_buff_time = \skillbase\skill_getvalue(96, 'bufftime', $sdata);
-			$skill96_time = $skill96_buff_time - (\skillbase\skill_getvalue(96,'expire') - $now);
-			$z=Array(
-				'disappear' => 0,
-			);
-			if ($skill96_time < $skill96_buff_time)
-			{
-				$z['clickable'] = 1;
-				$z['style']=1;
-				$z['totsec']=$skill96_buff_time;
-				$z['nowsec']=$skill96_time;
-				$skill96_rm = $skill96_buff_time-$skill96_time;
-				$z['hint'] = "状态「魂音」";
-			}
-			else
-			{
-				$z['clickable'] = 0;
-				$z['style']=3;
-				$z['activate_hint'] = "状态「魂音」生效时间已经结束";
-				\skillbase\skill_lost(96);
-			}
-			\bufficons\bufficon_show('img/skill96.gif',$z);
-		}
-		$chprocess();
 	}
 	
 }
