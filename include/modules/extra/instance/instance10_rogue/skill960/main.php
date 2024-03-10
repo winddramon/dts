@@ -338,16 +338,16 @@ namespace skill960
 		{
 			if (isset($req['itm_match']) && ($req['itm_match'] == 1))
 			{
+				$flag = 0;
 				foreach ($req['itm'] as $v)
 				{
-					$flag = 0;
 					if (strpos($theitem['itm'], $v) !== false)
 					{
 						$flag = 1;
 						break;
-					}
-					if (!$flag) return false;
+					}	
 				}
+				if (!$flag) return false;
 			}
 			elseif (!in_array($theitem['itm'], $req['itm'])) return false;
 		}

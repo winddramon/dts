@@ -314,7 +314,7 @@ namespace skill960
 			'name' => '废品增速',
 			'rank' => 233,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itm'=>array('罐子','空瓶','喷雾器罐','塑料瓶火箭','空罐头','鱼骨','苹果皮','香蕉皮','西瓜皮','钢琴线'),'num'=>20),
+			'taskreq' => array('itm'=>array('罐子','空瓶','喷雾器罐','塑料','空罐头','鱼骨','苹果皮','香蕉皮','西瓜皮','钢琴线'),'itm_match'=>1,'num'=>20),
 			'reward' => array('money'=>2500,'qiegao'=>666),
 		),
 		1002 => array
