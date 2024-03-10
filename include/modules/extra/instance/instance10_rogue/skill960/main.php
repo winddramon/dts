@@ -345,7 +345,7 @@ namespace skill960
 					{
 						$flag = 1;
 						break;
-					}	
+					}
 				}
 				if (!$flag) return false;
 			}
