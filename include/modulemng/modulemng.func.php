@@ -547,6 +547,7 @@ function show_adv_state(){
 
 //自动判定并给必要的css、js文件改名字的功能，虽然不是模块但也放在这里好了
 function index_scriptfile_autorename($retlog){
+	if(!defined('IN_DEVELOPMENT') || false == IN_DEVELOPMENT) return $retlog;
 	$modified = Array();
 	$file = GAME_ROOT.'./templates/default/header.htm';
 	$cont = $cont_o = file_get_contents($file);

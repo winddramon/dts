@@ -1,4 +1,6 @@
 <?php
+//开发环境标记
+define('IN_DEVELOPMENT', FALSE);
 
 //修改了本文件任何设置后务必在modulemng.php里[进入编辑模式]=>[保存]=>[应用更改]
 
