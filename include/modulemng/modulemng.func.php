@@ -544,6 +544,35 @@ function show_adv_state(){
 			($___MOD_SRV ? '<a href="modulemng.php?mode=advmng&action=turn_off&type=40">'.$lang_turn_off.'</a>' : '<a href="modulemng.php?mode=advmng&action=turn_on&type=40">'.$lang_turn_on.'</a>').'</span> 完全消除模块加载时间，建议生产环境开启并搭配外部触发程序使用<br>';
 	return $adv_state_log;
 }
+
+//自动判定并给必要的css、js文件改名字的功能，虽然不是模块但也放在这里好了
+function index_scriptfile_autorename($retlog){
+	$modified = Array();
+	$file = GAME_ROOT.'./templates/default/header.htm';
+	$cont = $cont_o = file_get_contents($file);
+	foreach(Array(
+		'/<link\s+rel="stylesheet"\s+type="text\/css"\s+href="(gamedata\/css\/\w+\.\d+\.css)">/s',
+		'/<script\s+type="text\/javascript"\s+src="(include\/javascript\/\w+\.\d+\.js)">/s',
+		) as $pat) {
+		preg_match_all($pat, $cont, $matches);
+		foreach($matches[1] as $m){
+			$n = (int)date('Ymd', filemtime(GAME_ROOT.'./'.$m));//文件的实际日期
+			$o = (int)explode('.', $m)[1];//文件名上的日期
+			if($n > $o){
+				$m2 = str_replace($o, $n, $m);
+				$cont = str_replace($m, $m2, $cont);
+				rename(GAME_ROOT.'./'.$m, GAME_ROOT.'./'.$m2);
+				$modified[] = $m;
+			}
+		}
+	}
+	
+	if($cont != $cont_o) {
+		file_put_contents($file, $cont);
+		$retlog .= '<br>已识别并修改以下文件的文件名：'.implode(', ', $modified).'<br>';
+	}
+	return $retlog;
+}
 		
 		
 /* End of file modulemng.func.php */

@@ -159,6 +159,7 @@ elseif ($_GET['action']=='disable')
 elseif ($_GET['action']=='save')
 {
 	$res=module_validity_check(GAME_ROOT.'./gamedata/modules.list.temp.php');
+	$notice_log = index_scriptfile_autorename($notice_log);
 	echo '<br><span><font size=5>模块管理系统</font></span><br><br>';
 	$page = 'checking';
 	if ($res === 1)
