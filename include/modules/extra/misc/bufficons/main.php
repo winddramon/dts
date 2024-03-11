@@ -153,7 +153,7 @@ namespace bufficons
 			\skillbase\skill_setvalue($token,'end_ts',$end_ts,$pa);
 			\skillbase\skill_setvalue($token,'cd_ts',$cd_ts,$pa);
 			if(!empty($msec)) {//考虑毫秒，则把毫秒尾数也同时记录
-				$now_calc = \sys\get_now(1);
+				$now_calc = get_now(1);
 				$addmsec = (int)(1000*($now_calc - $now));
 				$end_addmsec = (int)(1000*($end - (int)$end)) + $addmsec;
 				$cd_addmsec = (int)(1000*($cd - (int)$cd)) + $addmsec;
@@ -184,7 +184,7 @@ namespace bufficons
 			$end_ts = (int)\skillbase\skill_getvalue($token,'end_ts',$pa);
 			$cd_ts = (int)\skillbase\skill_getvalue($token,'cd_ts',$pa);
 			if(!empty($msec)) {//时间需要考虑毫秒。注意毫秒尾数在skillpara里是按整数储存的，但是在计算时是化为时间戳的小数部分
-				$now_calc = \sys\get_now(1);
+				$now_calc = get_now(1);
 				$start_ts += ((int)\skillbase\skill_getvalue($token,'start_msec',$pa))/1000;
 				$end_ts += ((int)\skillbase\skill_getvalue($token,'end_msec',$pa))/1000;
 				$cd_ts += ((int)\skillbase\skill_getvalue($token,'cd_msec',$pa))/1000;

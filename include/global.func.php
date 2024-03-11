@@ -1053,6 +1053,21 @@ if ( !function_exists('mb_substr') ) {
 //              重要游戏功能
 //----------------------------------------
 
+//初始化当前时间（加上时区和分钟偏移，可支持毫秒）
+//如果$msec非空则带上毫秒尾数
+function get_now($msec=0)
+{
+	if ($msec) {
+		$ret = floor(getmicrotime()*1000)/1000;
+	}else{
+		$ret = time();
+	}
+	global $moveut,$moveutmin;
+	$ret += (int)$moveut*3600 + (int)$moveutmin*60;
+	
+	return $ret; 
+}
+
 //初始化数据库操作类
 function init_dbstuff(){
 	include GAME_ROOT.'./include/modules/core/sys/config/server.config.php';
