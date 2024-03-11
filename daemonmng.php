@@ -113,7 +113,7 @@ if ($handle=opendir(GAME_ROOT.'./gamedata/tmp/server'))
 		die();
 	}
 	
-	$now = time();
+	$now_gmt = time();
 	$i=0;
 	foreach ($srvlist as $key)
 	{
@@ -129,7 +129,7 @@ if ($handle=opendir(GAME_ROOT.'./gamedata/tmp/server'))
 			if(file_exists($keyadrs.'/busy')) echo '<font color="orange">正常&忙碌</font>';
 			else echo '<font color="green">正常</font>';
 			list($worknum, $memorysize) = explode(',', file_get_contents($keyadrs.'/worknum'));
-			echo '&nbsp;分均请求数：'.ceil((int)$worknum / (max(1, $now - filemtime($keyadrs.'/start_time')) / 60) * 1000) / 1000;
+			echo '&nbsp;分均请求数：'.ceil((int)$worknum / (max(1, $now_gmt - filemtime($keyadrs.'/start_time')) / 60) * 1000) / 1000;
 			echo '&nbsp;内存占用：'.ceil((int)$memorysize/1024/1024).'MB';
 		}
 		else
