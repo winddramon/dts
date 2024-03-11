@@ -6725,8 +6725,8 @@ $cards = array(
 		'name' => '废品战士',
 		'rare' => 'B',
 		'pack' => 'Way of Life',
-		'desc' => '垃圾就是摆错了位置的财富',
-		'effect' => '聚集的废品将成为新的力量！',
+		'desc' => '老爷爷也和我一样是垃圾卡组吗？',
+		'effect' => '聚集的祈愿将成为新生的闪耀之星，<br>化作光芒闪耀的道路吧！<br>同调召唤，现身吧——<br><br>水晶机巧·继承玻纤',
 		'desc_skills' => '开局获得一个收集特定道具的任务，完成后可获得金钱和切糕奖励',
 		'energy' => 100,
 		'valid' => array(
@@ -6736,11 +6736,11 @@ $cards = array(
 		)
 	),
 	416 => array(
-		'name' => '沈阳美食家',
+		'name' => 'AI沈阳美食家',
 		'rare' => 'B',
 		'pack' => 'Way of Life',
-		'desc' => '鉴定一下网络热门美食视频',
-		'effect' => '非常的新鲜，非常的美味',
+		'desc' => '泻点解析',
+		'effect' => '令人忍俊不禁',
 		'desc_skills' => '开局获得一个<del>食用</del>使用特定道具的任务，完成后可获得强力的补给道具',
 		'energy' => 100,
 		'valid' => array(

@@ -1,4 +1,4 @@
-<!--{eval eval(import_module('sys'));}-->
+<!--{eval eval(import_module('sys','bufficons','clubbase'));}-->
 <!--{eval $___TEMP_SKILL_ID=96;}-->
 {template MOD_CLUBBASE_SKILLDESC_START}
 <span>
@@ -27,9 +27,9 @@ $clubskillname[$___TEMP_SKILL_ID]
 受到最终伤害<span class="yellow b">-{$v6}%</span>
 <!--{/if}-->
 <br>
-<!--{eval $skill96_rm = \skillbase\skill_getvalue(96,'expire') - $now;}-->
-<!--{if $skill96_rm>0}-->
-<span class="yellow b">状态有效时间还剩<span>$skill96_rm</span>秒。</span><br>
+<!--{eval $st = \bufficons\bufficons_check_buff_state(96,$who);$rm=$tmp_totsec-$tmp_nowsec;}-->
+<!--{if 1 == $st}-->
+<span class="yellow b">状态有效时间还剩<span>$rm</span>秒。</span><br>
 <!--{else}-->
 <span class="yellow b">状态生效时间已经结束。</span><br>
 <!--{/if}-->

@@ -1,0 +1,518 @@
+/*==========log div==========*/
+
+div.log_block{
+	width:325px;height:200px;
+	margin:5px 10px;
+	padding:5px;
+	vertical-align:middle;
+	border:1px solid #999;
+		 -moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	        border-radius: 6px;
+	line-height:15px;
+}
+div#log_cont{
+	width:inherit;height:inherit;
+}
+div.log_hover_detail{
+	position:absolute;
+	top:0;left:0;
+	z-index:50;
+	background-color:rgba(15,15,15,0.75);
+}
+
+/*==========杂项界面==========*/
+
+#chat{
+	position:relative;
+}
+#chat #chattitle{
+	margin:5px 5px 0 5px;
+	text-align:center;
+	color:#999;
+}
+#chat .showlist{
+	margin:5px 5px 0 5px;
+	padding:3px;
+	height:119px;
+	width:702px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	position:relative;
+	background-color:rgba(0,0,0,0.5);
+	border:1px solid #333;
+		 -moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	        border-radius: 6px;
+}
+#chat .chatlist{
+	word-break:break-all;
+}
+#chat .newslist{
+	word-break:normal;
+}
+#chat .sendchat{
+	margin:5px;
+	height:35px;
+	text-align:center;
+}
+
+/*==========空的时候有提示的文本框==========*/
+div.inputhint_container{
+	display:inline-block;
+	position:relative;
+	width:100px;height:25px;
+	background-color:rgba(51,51,51,0.5);
+		 -moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	        border-radius: 6px;
+	vertical-align:bottom;
+}
+div.inputhint_container div.inputhint{
+	position:absolute;
+	top:1px;left:1px;
+	width:inherit;height:inherit;
+	padding-left:5px;
+	line-height:25px;
+	text-align:left;
+	color:#999;
+	display:block;
+}
+div.inputhint_container input[type="text"]{
+	position:absolute;
+	top:0px;left:0px;
+	width:inherit;height:inherit;
+	border: 1px solid #999;
+		 -moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	        border-radius: 6px;
+	box-shadow: 0px;
+	color:white;
+	outline:none;
+	background-color:transparent;
+	padding:0 5px;
+}
+
+div.inputhint_container input[type="text"]:focus{
+	border-color: #fff;
+}
+
+/*==========菜单标签==========*/
+div.cmd_tag_container{
+	margin:auto 10px;
+}
+div.cmd_tag{
+	display:inline-block;
+	margin-right:3px;
+	height:30px;width:108px;
+	border:1px solid #999;
+	border-bottom-width:0px;
+		 -moz-border-radius: 6px 6px 0px 0px;
+	-webkit-border-radius: 6px 6px 0px 0px;
+	        border-radius: 6px 6px 0px 0px;
+	color:#999;
+	background-color:rgba(153,153,153,0.1);
+	font-size:12pt;
+	text-align:center;line-height:30px;
+}
+div.cmd_tag.choosed{
+	border:1px solid #0ff;
+	border-bottom-width:0px;
+	color:#0ff;
+	background-color:rgba(0,255,255,0.1);
+}
+hr.cmd_tag{
+	margin:0 auto 10px auto;
+	border:1px solid #999;
+}
+div.cmd_tag img{
+	height:25px;
+	margin:0px;
+	vertical-align:middle;
+	filter: grayscale(100%);
+}
+div.cmd_tag.choosed img{
+	filter: grayscale(0%);
+}
+div.cmd_subpage{
+	overflow:hidden;
+}
+/*====================================*/
+/*==========霓虹灯状态页面==========*/
+/*====================================*/
+div.profile_box{
+	position:absolute;
+	top:0;left:0;
+	background-color:rgba(34,34,34,0.5);
+	border:1px solid #333;
+		 -moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	        border-radius: 6px;
+}
+div.profile_box hr{
+	margin:5px;
+	border:1px dashed #333;	
+}
+div.profile_row{
+	position:relative;
+	margin-top:5px;
+	
+}
+div.profile_bar{
+	display:inline-block;
+	margin-left:5px;
+	padding:0px;
+	width:150px; height:23px; 
+	background-color:rgba(0,0,0,0.5);
+	border:1px solid #333;
+		 -moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	        border-radius: 6px;
+	text-align:left;
+	vertical-align:top;
+	overflow:hidden;
+}
+div.profile_bar.right_panel{
+	padding:0;
+	width:223px;text-align:center;
+}
+div.profile_bar span.typename{
+	margin:0 8px;
+	font-size:9pt;color:#999;
+	line-height:23px;
+}
+div.profile_bar span.main_cont{
+	font-size:10pt;font-weight:bold;color:#ddd;
+	line-height:23px;
+}
+div.profile_box div.pack{
+	margin-left:3px;
+	text-align:center;
+}
+div.profile_box div.pack span{
+	line-height:23px;
+}
+div.profile_box div.pack.packtitle{
+	border:1px solid transparent;
+	background-color:transparent;
+	height:16px;line-height:16px;
+	font-size:9pt;color:#999;
+}
+div.profile_box div.itmk{width:60px;}
+div.profile_box div.itmname{width:190px;}
+div.profile_box div.itmsk{width:170px;}
+div.profile_box div.itme{width:60px;}
+div.profile_box div.itms{width:60px;}
+
+div.profile_box div.forshort{margin-left:5px;width:128px;}
+
+div.profile_box div.profile_mode_button{
+	top:1px; right: 10px;
+	position:absolute; 
+	width:30px; height:15px;
+	line-height:15px;
+}
+
+div.profile_box div.hpstate_container{
+	display:inline-block;
+	position:relative;
+	width:55px;height:165px;
+}
+div.profile_box div.hpstate_container div.hpstate_elm{
+	top:0;left:0;z-index:0;
+	position:absolute;
+}
+
+div.command_box{
+	position:relative;
+	width:360px;height:720px;
+	background-color:rgba(34,34,34,0.5);
+	border:1px solid #333;
+		 -moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	        border-radius: 6px;
+	text-align:left;overflow:auto;overflow-x:hidden;
+}
+
+div.profile_box select{
+	height:20px;vertical-align:middle;
+	border:1px solid #333;
+		 -moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	        border-radius: 6px;
+	background-color:rgba(51,51,51,0.5);
+	color:#ddd;
+}
+div.profile_box select:disabled{
+	color:#666;
+}
+/*====================================*/
+/*==========霓虹灯按钮==========*/
+/*====================================*/
+div.cmd_row{
+	margin:0 0 10px 10px;
+}
+div.cmd_positioner{
+	display:inline-block;
+	position:relative;
+	margin:3px 3px 0 0;
+		 -moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	        border-radius: 6px;
+	background-color:rgba(9,9,9,0.5);
+}
+div.cmd_positioner input[type="button"]{outline:none;}
+input.cmd_button{
+	position:absolute;z-index:10;
+}
+/*==========道具按钮，一行3个==========*/
+div.itm_cmd{
+	width:110px;height:60px;
+}
+div.itm_cmd div.itm_cmd_info{
+	position:absolute;
+	bottom:0;
+	width:inherit;height:40px;
+	display: flex;
+	flex-direction:column;
+	align-items: center;
+	justify-content: center;
+}
+div.itm_cmd div.itm_cmd_info div{
+	text-align:center;
+	width:inherit;
+	white-space:nowrap;
+	overflow:hidden;
+}
+div.itm_cmd div.itm_cmd_info div.itm_name{
+	color:#ff0;font-weight:bold;
+}
+div.itm_cmd div.itm_cmd_info div.itm_bg{
+	position:absolute;
+	top:0;
+	width:inherit;height:inherit;
+	filter:alpha(opacity=50); -moz-opacity:0.50; opacity:0.50;
+	background-repeat: no-repeat;
+	background-position:center;
+}
+div.itm_cmd.grey div.itm_cmd_info div.itm_name{
+	color:#999;
+}
+div.itm_cmd.grey div.itm_cmd_info div.itm_bg{
+	filter:alpha(opacity=25); -moz-opacity:0.25; opacity:0.25;
+}
+div.itm_cmd input.itm_cmd_button{
+	width:inherit;height:inherit;
+	padding-bottom:35px;
+}
+div.itm_cmd input.itm_cmd_button.forbidden{
+	padding-bottom:0px;
+}
+/*==========一般按钮，一行3个==========*/
+div.common_cmd{
+	width:110px;height:35px;
+}
+input.common_cmd{
+	width:inherit;height:inherit;
+}
+/*==========探索按钮，一行2个（不止探索用）==========*/
+div.explore_cmd{
+	width:167px;height:50px;
+}
+div.explore_cmd div.explore_info{
+	position:absolute;
+	bottom:0;
+	width:inherit;height:25px;
+	text-align:center;
+	display: flex;
+	flex-direction:column;
+	align-items: center;
+	justify-content: center;
+}
+div.explore_cmd input.explore_cmd{
+	width:inherit;height:inherit;
+	font-size:12pt;
+}
+/*==========移动按钮==========*/
+input.move_to_button{
+	margin:5px 5px 0 0;
+	width:165px;height:35px;
+	background-repeat: no-repeat;
+	background-position:4px 50%;
+	background-size:auto 16px;
+	padding-top:3px;
+}
+input.move_to_button.map_rest{
+	background-image:url('../../img/icons/map_rest.png');
+}
+input.move_to_button.map_rest:disabled{
+	background-image:url('../../img/icons/map_rest_d.png');
+}
+input.move_to_button.map_shop{
+	background-image:url('../../img/icons/map_shop.png');
+}
+input.move_to_button.map_shop:disabled{
+	background-image:url('../../img/icons/map_shop_d.png');
+}
+/*==========视野按钮，一行3个==========*/
+div.searchmemory_cmd{
+	width:110px;height:50px;
+	text-align:left;
+}
+div.searchmemory_cmd div.searchmemory_info{
+	position:absolute;
+	bottom:0;
+	width:inherit;height:30px;
+	text-align:center;
+	display: flex;
+	flex-direction:column;
+	align-items: center;
+	justify-content: center;
+}
+div.searchmemory_cmd div.searchmemory_info span{font-weight:bold;}
+div.searchmemory_cmd div.searchmemory_info span.danger{color:#f00;}
+div.searchmemory_cmd div.searchmemory_info span.corpse{color:#ff0;}
+div.searchmemory_cmd div.searchmemory_info span.safe{color:#0f0;}
+div.searchmemory_cmd div.searchmemory_info span.item{color:#0ff;}
+div.searchmemory_cmd.grey div.searchmemory_info span{color:#999;}
+
+div.searchmemory_cmd input.searchmemory_cmd{
+	width:inherit;height:inherit;
+	padding-bottom:20px;
+}
+/*==========贯通式按钮==========*/
+div.zx_cmd{
+	width:336px;
+}
+/*==========调整包裹的按钮==========*/
+/*==========35x35小按钮的背景是通过div实现的，通过filter省掉一个变灰的div==========*/
+div.pack_row{
+	margin:5px 0 0 10px;
+}
+div.pack_cell_eqp{
+	margin:3px 3px 0 0;
+	width:260px;height:35px;
+	display: inline-block;
+	text-align:center;
+	vertical-align:top;
+	line-height:33px;
+}
+div.pack_cell_eqp span{
+	line-height:33px;
+}
+div.pack_cell_eqp span.hotkey_hint{
+	margin-left:5px;
+	float:left;
+	color:#999;
+}
+div.pack_cell_eqp input.pack_cell_eqp{
+	position:absolute;
+	top:0;left:0;
+	width:inherit;height:inherit;
+}
+div.pack_button{
+	width:35px;height:35px;
+	vertical-align:top;
+	background-repeat: no-repeat;
+	background-position:center;
+}
+div.pack_button div.bg{
+	position:absolute;
+	background-repeat: no-repeat;
+	background-position:center;
+}
+div.pack_button input.pack_button{
+	position:absolute;
+	width:inherit;height:35px;
+	line-height:35px;
+}
+div.pack_button.ticked div.bg{
+	background-image:url('../../img/icons/itemticked.png');
+}
+div.pack_button.itemmix_search div.bg{
+	background-image:url('../../img/icons/itemsearch.png');
+}
+div.pack_button.itemmix_search.grey div.bg{
+	filter: brightness(50%);
+}
+div.pack_button.pack_off div.bg{
+	background-image:url('../../img/icons/itemoff.png');
+}
+div.pack_button.pack_off.grey div.bg{
+	filter: brightness(50%);
+}
+div.pack_button.pack_drop div.bg{
+	background-image:url('../../img/icons/itemdrop.png');
+}
+div.pack_button.pack_drop.grey div.bg{
+	filter: grayscale(100%) brightness(150%);
+}
+div.pack_button.pack_switch div.bg{
+	font-size:12pt;font-weight:bold;
+}
+div.pack_button.pack_from div.bg{
+	background-image:url('../../img/icons/itemfrom.png');
+}
+div.pack_button.pack_to div.bg{
+	background-image:url('../../img/icons/itemto.png');
+}
+/*==========尸体按钮==========*/
+div.corpse_cmd{
+	margin:5px 5px 0 0px; 
+	width:336px;height:35px;
+	position:relative;
+}
+div.corpse_cmd.multi_cont{
+	display: flex;
+	flex-direction:column;
+	align-items: center;
+	justify-content: center;
+}
+div.corpse_cmd div.corpse_info{
+	width:100%;
+	text-align:center;line-height:13px;
+	padding:0 3px;
+}
+div.corpse_info.b span{
+	font-weight:bold;
+}
+div.corpse_cmd input.corpse_cmd{
+	width:inherit;height:inherit;
+}
+/*==========战斗技解说==========*/
+div.battlecmd_desc{
+	width:222px;height:63px;
+}
+div.battlecmd_desc div.battlecmd_desc_cont{
+	vertical-align:middle;
+	padding:2px 5px;
+	text-align:left;
+	white-space:normal;
+}
+/*==========快捷键标记==========*/
+div.hotkey_mark {
+	position:absolute;
+	margin:auto;
+	width:25px;height:15px;	
+	background-color:transparent;
+	border:1px solid #999;
+	color:#999;
+	   -moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	        border-radius: 6px;
+	line-height:15px;text-align:center;
+	right:3px;top:3px;
+}
+/*==========style2的进度条==========*/
+#progressbar-border-2
+{
+	width:320px;
+	height:15px;
+	left:7px;
+	background-color: #000000;
+	border:1px solid #ffffff;
+	overflow:hidden;
+	   -moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	        border-radius: 3px;
+}

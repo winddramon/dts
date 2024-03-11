@@ -41,10 +41,21 @@ namespace instance_quit_button
 		set_current_roomid(0);
 		$gamedata['url']='index.php';
 
-		if(in_array($gametype, $gametype_delete_player_after_quit)) {//如果退出时立刻删除角色，会把角色丢到一个其他人遇不到的地图
+		post_instance_quit_event();
+		return;
+	}
+
+	//退出房间时的角色处理
+	//如果退出时立刻删除角色，会把角色丢到一个其他人遇不到的地图，并杀死角色
+	function post_instance_quit_event()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','player','instance_quit_button'));
+		if(in_array($gametype, $gametype_delete_player_after_quit)) {
+			$hp = 0;
+			$state = 42;//暂时借用自我完结这个死法
 			$pls = 233;
 		}
-		return;
 	}
 	
 	//关闭房间指令，接管pre_act()
