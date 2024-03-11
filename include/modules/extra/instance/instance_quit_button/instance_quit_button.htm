@@ -3,9 +3,14 @@
 	<form method="post" id="instance_quit" name="instance_quit" style="margin: 0px" >
 		<input type="hidden" id="dummycommand" name="dummycommand" value="instance_quit">
 	</form>
-	<!--{eval bubblebox_start('id:instance_quit_box;height:120;width:240;cancellable:1');}-->
+	<!--{eval bubblebox_start('id:instance_quit_box;height:125;width:240;cancellable:1');}-->
 	<div style="margin:20px;text-align: center;">
-		<span class="yellow b" style="font-size:14px">真的要退出当前房间吗？</span>
+		<span class="yellow b" style="font-size:14px">
+			真的要退出当前房间吗？
+			<!--{if in_array(get_var_in_module('gametype', 'sys'), get_var_in_module('gametype_delete_player_after_quit', 'instance_quit_button'))}-->
+			<br>你的角色将会被删除！
+			<!--{/if}-->
+		</span>
 	</div>
 	<div style="margin:20px;text-align: center;">
 		<a class="b_button bc_black" onclick=
