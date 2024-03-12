@@ -482,20 +482,10 @@ namespace skillbase
 		}
 	}
 	
-	//该函数可保留空接口，临时技能的判定考虑移到别的模块
+	//本模块为空函数，实际判定目前移到\extra\skill_temp模块
 	function check_skill_available($skillid, &$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys'));
-		$tsk_expire = skill_getvalue($skillid, 'tsk_expire', $pa);
-		if (skill_query($skillid, $pa) && !empty($tsk_expire))
-		{
-			if ($now > $tsk_expire)
-			{
-				skill_lost($skillid, $pa);
-				skill_delvalue($skillid, 'tsk_expire', $pa);
-			}
-		}
 	}
 
 }
