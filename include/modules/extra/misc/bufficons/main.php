@@ -46,10 +46,11 @@ namespace bufficons
 	}
 	
 	//需要显示buff图标只需接管这个函数调用bufficon_show即可
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-	}
+	//本函数已经废弃
+	// function bufficons_list()
+	// {
+	// 	if (eval(__MAGIC__)) return $___RET_VALUE;
+	// }
 
 	//2024.02.26 原bufficons_list()函数大量重复实现太愚蠢了，改为每个技能或者效果只提供必要参数，在这里统一实现
 	function bufficons_display(&$pa=NULL)

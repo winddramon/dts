@@ -177,7 +177,7 @@ namespace skill_temp
 	}
 	
 	//每次行动后，准备临时技能的显示信息
-	//感觉可以在check_state那里合并
+	//因为执行顺序，不能在check_state那里合并
 	function act()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
