@@ -11,7 +11,7 @@ namespace skill107
 		define('MOD_SKILL107_INFO','club;upgrade;feature;');
 		eval(import_module('clubbase'));
 		$clubskillname[107] = '窥秘';
-		$clubdesc_h[27] = $clubdesc_a[25] = '获得7点初始理智值，损失理智值时可能获得一个随机技能';
+		$clubdesc_h[27] = $clubdesc_a[27] = '获得7点初始理智值，损失理智值时可能获得一个随机技能';
 	}
 	
 	function acquire107(&$pa)

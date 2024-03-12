@@ -62,7 +62,7 @@ namespace skill111
 					{
 						eval(import_module('clubbase','skill111'));
 						$log .= "你习得了技能<span class=\"yellow b\">「{$clubskillname[$newskillid]}」</span>，持续时间<span class=\"cyan b\">$skill111_tempskill_time</span>秒！<br>";
-						\skillbase\skill_setvalue($newskillid, 'tsk_expire', $now + $skill111_tempskill_time, $sdata);
+						\skill_temp\set_skill_temp_time($newskillid, $skill111_tempskill_time, $sdata);
 					}
 				}
 			}

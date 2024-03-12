@@ -157,7 +157,7 @@ namespace skill112
 				}
 				eval(import_module('sys','skill112','logger'));
 				if ($active) $log .= "<span class=\"cyan b\">你从敌人的灵魂中汲取了新的知识！</span><br>";
-				\skillbase\skill_setvalue($newskillid, 'tsk_expire', $now + $skill112_tempskill_time);
+				\skill_temp\set_skill_temp_time($newskillid, $skill112_tempskill_time, $pa);
 			}
 			else
 			{
