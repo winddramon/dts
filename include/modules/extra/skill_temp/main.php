@@ -94,7 +94,7 @@ namespace skill_temp
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
 		$temp_time = (int)$temp_time;
-		if ($temp_time > 0) \skillbase\skill_setvalue($skillid, 'tsk_expire', $now + $temp_time);
+		if ($temp_time > 0) \skillbase\skill_setvalue($skillid, 'tsk_expire', $now + $temp_time, $pa);
 	}
 	
 	//技能图标显示。对应的$token标记为tsk，应该是第一个不是数字的$token
