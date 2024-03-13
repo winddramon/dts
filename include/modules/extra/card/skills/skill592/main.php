@@ -40,9 +40,9 @@ namespace skill592
 				if ($active) $log.="<span class=\"lime b\">你向{$pd['name']}施加了怨恨，并唤起了对方的嫉妒心！</span><br>";
 				else $log.="<span class=\"lime b\">{$pa['name']}向你施加了怨恨，并唤起了你的嫉妒心！</span><br>";
 				\skillbase\skill_acquire(478, $pd);
-				\skillbase\skill_setvalue(478, 'tsk_expire', $now + $debuff_time, $pd);
+				\skill_temp\set_skill_temp_time(478, $debuff_time, $pd);
 				\skillbase\skill_acquire(592, $pd);
-				\skillbase\skill_setvalue(592, 'tsk_expire', $now + $debuff_time, $pd);
+				\skill_temp\set_skill_temp_time(592, $debuff_time, $pd);
 			}
 		}
 		$chprocess($pa, $pd, $active);

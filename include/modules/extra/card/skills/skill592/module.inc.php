@@ -3,7 +3,7 @@
 namespace skill592
 {
 	////////// MODULE HEADER START ///////////////
-	$___MODULE_dependency = 'skillbase clubbase sys player cardbase attack logger';
+	$___MODULE_dependency = 'skillbase clubbase sys player cardbase attack logger skill_temp';
 	$___MODULE_dependency_optional = '';
 	$___MODULE_conflict = '';
 	$___MODULE_codelist = 'main.php';

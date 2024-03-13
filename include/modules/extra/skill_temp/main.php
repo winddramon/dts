@@ -89,10 +89,11 @@ namespace skill_temp
 	}
 	
 	//设置临时技能时间，时间单位为秒
-	function set_skill_temp_time($skillid, $temp_time, &$pa)
+	//注意本函数不会检查这个技能是否被角色拥有
+	function set_skill_temp_time($skillid, $temp_time, &$pa=NULL)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys'));
+		$now = get_var_in_module('now', 'sys');
 		$temp_time = (int)$temp_time;
 		if ($temp_time > 0) \skillbase\skill_setvalue($skillid, 'tsk_expire', $now + $temp_time, $pa);
 	}
