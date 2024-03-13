@@ -77,7 +77,7 @@ namespace skill_temp
 			}
 
 			//如果$buff_time非空，则设置持续时间；仅适用于非时效技能
-			if (!empty($buff_time)) \skillbase\skill_setvalue($skillid, 'tsk_expire', $now + $buff_time);
+			if (!empty($buff_time)) set_skill_temp_time($skillid, $buff_time, $sdata);
 			//如果$buff_lvl非空，则设置技能等级
 			if (!empty($buff_lvl)) \skillbase\skill_setvalue($skillid, 'lvl', $buff_lvl);
 		}
@@ -87,7 +87,16 @@ namespace skill_temp
 			return;
 		}
 	}
-
+	
+	//设置临时技能时间，时间单位为秒
+	function set_skill_temp_time($skillid, $temp_time, &$pa)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		$temp_time = (int)$temp_time;
+		if ($temp_time > 0) \skillbase\skill_setvalue($skillid, 'tsk_expire', $now + $temp_time);
+	}
+	
 	//技能图标显示。对应的$token标记为tsk，应该是第一个不是数字的$token
 	//暂时不支持按毫秒计算
 	function bufficons_check_buff_state($token, &$pa=NULL, $msec=0)

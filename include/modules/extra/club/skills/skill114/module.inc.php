@@ -1,9 +1,9 @@
 <?php
 
-namespace skill111
+namespace skill114
 {
 	////////// MODULE HEADER START ///////////////
-	$___MODULE_dependency = 'sys player skillbase clubbase rest skill107 skill_temp';
+	$___MODULE_dependency = 'sys player skillbase clubbase rage';
 	$___MODULE_dependency_optional = '';
 	$___MODULE_conflict = '';
 	$___MODULE_codelist = 'main.php';
