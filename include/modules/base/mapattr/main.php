@@ -18,8 +18,9 @@ namespace mapattr
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','player','mapattr','logger'));
 		//荣耀模式测试，先挂在这里
-		if(18 == $gametype) $pls_findman_obbs = $pls_findman_obbs_i8;
+		// if(18 == $gametype) $pls_findman_obbs = $pls_findman_obbs_i8;
 		//$log.= '先制率修正：'.$pls_findman_obbs[$pls].' ';
+		//2014.03.14 全模式适用此先制率影响调整
 		if (!isset($pls_findman_obbs[$pls])) $r=0; else $r=$pls_findman_obbs[$pls];
 		return $chprocess($edata)+$r;
 	}
@@ -34,33 +35,34 @@ namespace mapattr
 		return $chprocess($schmode)+$r;
 	}
 	
-	function get_att_multiplier(&$pa,&$pd,$active)
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','mapattr','logger'));
+	//2014.03.14取消
+	// function get_att_multiplier(&$pa,&$pd,$active)
+	// {
+		// if (eval(__MAGIC__)) return $___RET_VALUE;
+		// eval(import_module('sys','mapattr','logger'));
 		//荣耀模式测试，先挂在这里
 		//$log.= '攻击率修正：'.$pls_attack_modifier[$pa['pls']].' ';
-		$ret = $chprocess($pa,$pd,$active);
-		if (isset($pls_attack_modifier[$pa['pls']]) && 18 != $gametype) {
-			$var = 1+$pls_attack_modifier[$pa['pls']]/100;
-			array_unshift($ret, $var);
-		}
-		return $ret;
-	}
+		// $ret = $chprocess($pa,$pd,$active);
+		// if (isset($pls_attack_modifier[$pa['pls']]) && 18 != $gametype) {
+			// $var = 1+$pls_attack_modifier[$pa['pls']]/100;
+			// array_unshift($ret, $var);
+		// }
+		// return $ret;
+	// }
 	
-	function get_def_multiplier(&$pa,&$pd,$active)
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','mapattr','logger'));
+	// function get_def_multiplier(&$pa,&$pd,$active)
+	// {
+		// if (eval(__MAGIC__)) return $___RET_VALUE;
+		// eval(import_module('sys','mapattr','logger'));
 		//荣耀模式测试，先挂在这里
 		//$log.= '防御率修正：'.$pls_defend_modifier[$pa['pls']].' ';
-		$ret = $chprocess($pa,$pd,$active);
-		if (isset($pls_defend_modifier[$pd['pls']]) && 18 != $gametype) {
-			$var = 1+$pls_defend_modifier[$pd['pls']]/100;
-			array_unshift($ret, $var);
-		}
-		return $ret;
-	}
+		// $ret = $chprocess($pa,$pd,$active);
+		// if (isset($pls_defend_modifier[$pd['pls']]) && 18 != $gametype) {
+			// $var = 1+$pls_defend_modifier[$pd['pls']]/100;
+			// array_unshift($ret, $var);
+		// }
+		// return $ret;
+	// }
 	
 	function calculate_real_trap_obbs()
 	{
