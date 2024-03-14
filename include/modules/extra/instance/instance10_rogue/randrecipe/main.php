@@ -34,8 +34,8 @@ namespace randrecipe
 				include $randrecipe_file;
 				$ret = $ret + $randrecipe;
 			}
-			return $ret;
 		}
+		return $ret;
 	}
 	
 	function create_randrecipe_config($num = 50)

@@ -25,7 +25,7 @@ namespace skill113
 		return $pa['lvl']>=20;
 	}
 	
-	function skill113_get_rate(&$pa)
+	function skill113_get_skill_count(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$acquired_skills = \skillbase\get_acquired_skill_array($pa);
@@ -38,6 +38,13 @@ namespace skill113
 				if (isset($clubskillname[$skillid]) && (strpos(constant('MOD_SKILL'.$skillid.'_INFO'),'hidden;') === false)) $count += 1;
 			}
 		}
+		return $count;
+	}
+	
+	function skill113_get_rate(&$pa)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$count = skill113_get_skill_count($pa);
 		$r = 1 + 0.03 * $count;
 		return $r;
 	}
