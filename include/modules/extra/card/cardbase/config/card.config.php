@@ -6749,6 +6749,19 @@ $cards = array(
 			),
 		)
 	),
+	417 => array(
+		'name' => 'Chipi猫',
+		'rare' => 'B',
+		'pack' => 'Ranmen',
+		'desc' => '你为什么要七我的无线耳机',
+		'effect' => '每次行动后有概率随机唱一首歌',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'747' => '0',
+			),
+		)
+	),
 	
 	1000 => array(
 		'name'=>'萌新',
