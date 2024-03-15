@@ -157,6 +157,8 @@ namespace skill597
 			$corpse_items = array();
 			foreach (array('wep','arb','arh','ara','arf','art','itm0','itm1','itm2','itm3','itm4','itm5','itm6') as $val)
 			{
+				if ($val == 'wep' && $edata['wepk'] == 'WN') continue;
+				if ($val == 'arb' && $edata['arbk'] == 'DN') continue;
 				//感觉写得有点蠢
 				if (strlen($val) == 3) $k = $val.'s';
 				else $k = 'itms'.substr($val,3,1);

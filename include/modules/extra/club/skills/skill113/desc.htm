@@ -5,7 +5,8 @@ $clubskillname[$___TEMP_SKILL_ID]
 </span>
 {template MOD_CLUBBASE_SKILLDESC_MID1}
 <td class="skilldesc_left b3"><span class="skilldesc">
-你每有一个技能，物穿/属穿属性生效率增加<span class="yellow b">3%</span>，敌人的<br>减半防御属性、抹消属性和控伤属性的失效率增加<span class="yellow b">3%</span>
+<!--{eval $skill113_skill_count = \skill113\skill113_get_skill_count($who); $skill113_rate = (int)((\skill113\skill113_get_rate($who)-1)*100);}-->
+你每有一个技能，物穿/属穿属性生效率增加<span class="yellow b">3%</span>，敌人的<br>减半防御属性、抹消属性和控伤属性的失效率增加<span class="yellow b">3%</span><br>当前增加<span class="yellow b">$skill113_rate%</span>（共<span class="yellow b">$skill113_skill_count</span>个有效技能）
 </span></td>
 <td class="skilldesc_right b3">
 </td>

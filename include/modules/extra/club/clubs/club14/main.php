@@ -7,7 +7,7 @@ namespace club14
 		eval(import_module('clubbase'));
 		$clubinfo[14] = '肌肉兄贵';
 		$clublist[14] = Array(
-			'type' => 1,
+			'type' => 0,
 			'probability' => 100, 
 			'skills' => Array(
 				10,39,12,		//攻防成长增加

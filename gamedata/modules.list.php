@@ -624,6 +624,7 @@ skill88,extra/club/skills/skill88/,1
 skill91,extra/club/skills/skill91/,1
 skill92,extra/club/skills/skill92/,1
 skill739,extra/card/skills/skill739/,1
+skill747,extra/card/skills/skill747/,1
 instance11,extra/instance/instance11_observe/,1
 wepchange,extra/attr/wepchange/,1
 skill77,extra/club/skills/skill77/,1

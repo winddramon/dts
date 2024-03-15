@@ -47,6 +47,10 @@ namespace skill111
 				$log .= "你恢复了<span class=\"yellow b\">$sangain</span>点理智值。<br>";
 				\skillbase\skill_setvalue(107,'sanity',$sanity+$sangain,$sdata);
 			}
+			elseif ($sanity == 0)
+			{
+				$log .= "<span class=\"red b\">你的梦境充斥着混沌和黑暗……</span><br>";
+			}
 			//获得新技能判定
 			$get_newskill_rate = ceil($resttime * (9 - $sanity) / 10);
 			$newskillcount = floor($get_newskill_rate / 100);
