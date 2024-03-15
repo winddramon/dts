@@ -11,7 +11,7 @@ namespace skill559
 		array('class' => 'club2', 'stuff' => array('键盘侠之证','磨刀石'),'result' => array('勋章模样的磨刀石','Y',20,3,),),
 		array('class' => 'club2', 'stuff' => array('埃克法-玄铁','『王国之键』'),'result' => array('圣剑「格兰·圣丘里奥」','WK',200,'∞','c'),),
 		//鹰眼
-		array('class' => 'club3', 'stuff' => array('机枪子弹','★炸药★'),'result' => array('土制重弹','GBh',1,20,),),
+		array('class' => 'club3', 'stuff' => array('实体子弹','★炸药★'),'result' => array('土制重弹','GBh',1,20,),),
 		array('class' => 'club3', 'stuff' => array('原型装甲A','「W-弹射飞翼」 ★4','提示纸条P'),'result' => array('AWP大阻','WJ',120,1,),),
 		//灌篮
 		array('class' => 'club4', 'stuff' => array('棒球','轻质球棒'),'result' => array('「超级运动员 猛力打击手」 ★5','WC05',230,50,'Nj'),),
