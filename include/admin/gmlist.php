@@ -2,11 +2,18 @@
 if(!defined('IN_ADMIN')) {
 	exit('Access Denied');
 }
-//这个文件只能调本地管理员
-global $userdb_forced_local;
-$userdb_forced_local = 1;
-$gmdata = fetch_udata('uid,username,groupid', 'groupid > 1', 'groupid DESC', 2);
 $cmd_info = '';
+$gmdata = fetch_udata('uid,username,groupid', 'groupid > 1', 'groupid DESC', 2);
+$fddata = fetch_udata('uid,username,groupid', "username = '$gamefounder'", '', 2);
+if(!empty($fddata)) {
+	foreach($fddata as $fk => $fv) {
+		$fv['groupid'] = $fv['groupid'] > 10 ? $fv['groupid'] : 10;
+		$gmdata[$fk] = $fv;
+	}
+}else{
+	$cmd_info .= '创建者账号尚未被注册，请尽快注册！';
+}
+
 if($command == 'add') {
 	$addgroup = intval($addgroup);
 	if(!$addname) {
