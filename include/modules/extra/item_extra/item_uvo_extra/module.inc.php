@@ -3,7 +3,7 @@
 namespace item_uvo_extra
 {
 	////////// MODULE HEADER START ///////////////
-	$___MODULE_dependency = 'sys player cardbase skillbase logger item_uv';
+	$___MODULE_dependency = 'sys player cardbase skillbase logger item_uv attack';
 	$___MODULE_dependency_optional = '';
 	$___MODULE_conflict = '';
 	$___MODULE_codelist = 'main.php';
