@@ -6763,6 +6763,19 @@ $cards = array(
 			),
 		)
 	),
+	418 => array(
+		'name' => '解决麻烦的人',
+		'rare' => 'B',
+		'pack' => 'Way of Life',
+		'desc' => '如果不能解决问题',
+		'effect' => '对持有任务的玩家造成最终伤害+50%',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'748' => '0',
+			),
+		)
+	),
 	
 	1000 => array(
 		'name'=>'萌新',

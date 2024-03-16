@@ -715,6 +715,7 @@ skill709,extra/card/skills/skill709/,1
 skill722,extra/card/skills/skill722/,1
 skill737,extra/card/skills/skill737/,1
 instance10,extra/instance/instance10_rogue/,1
+skill748,extra/card/skills/skill748/,1
 skill714,extra/card/skills/skill714/,1
 ex_purity,extra/attr/ex_purity/,1
 skill26,extra/club/skills/skill26/,1
