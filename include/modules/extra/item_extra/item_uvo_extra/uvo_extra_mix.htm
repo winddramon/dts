@@ -16,7 +16,7 @@
 <br><span class="yellow b">你没有足够的卡片。</span><br><br>
 <!--{else}-->
 <!--{loop range(1,2) $i}-->
-<select name="card_choice$i" id="card_choice$i" style="width:240px">
+<select name="card_choice$i" id="card_choice$i" style="width:200px">
 	<!--{loop $cards_uvo $k $cid}-->
 	<option value="$cid" <!--{if $k==$i-1}-->selected<!--{/if}-->>【$cards[$cid]['name'] $cards[$cid]['rare']】</option>
 	<!--{/loop}-->
