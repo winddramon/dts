@@ -206,29 +206,12 @@ namespace item_uv
 						return;
 					}
 					
-					$is_new = '';
-					//$ext = '来自'.($room_prefix ? '房间' : '').'第'.$gamenum.'局的'.$itm.'。'; 
-					//小房间的编号未必是历史记录的编号，因此小房间就不显示房间号了
-					if($room_prefix) {
-						$ext = '来自'.$gtinfo[$gametype].'的'.$itm.'。';
-					}else{
-						$ext = '来自第'.$gamenum.'局的'.$itm.'。';
-					}
-					if($cards[$get_card_id]['rare'] == 'A') $ext.='运气不错！';
-					elseif($cards[$get_card_id]['rare'] == 'S') $ext.='一定是欧洲人吧！';
-					//计算卡片碎闪等级
-					$blink = \cardbase\get_card_calc_blink($get_card_id, $cudata);
-					//真正获得卡片
-					$is_new = \cardbase\get_card_message($get_card_id,$ext,$blink);
-					//if(!empty($is_new)) $is_new = "<span class=\"L5 b\">NEW!</span>";;
+					list($blink, $is_new) = item_uv_getcard($get_card_id, $cards[$get_card_id], $itm, $sdata);
+					
 					ob_clean();
 					include template('MOD_CARDBASE_CARDFLIP_RESULT');
 					$log .= ob_get_contents();
 					ob_clean();
-					
-					$log.='<span class="yellow b">你获得了卡片「'.$cards[$get_card_id]['name'].'」！请前往“站内邮件”查收。</span><br>';
-					
-					addnews ( 0, 'VOgetcard', $name, $itm, $cards[$get_card_id]['name'] );
 					
 					\itemmain\itms_reduce($theitem);
 					
@@ -310,6 +293,33 @@ namespace item_uv
 			return;
 		}
 		$chprocess($theitem);
+	}
+	
+	function item_uv_getcard($get_card_id, $get_cardinfo, $itm, &$pa)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','logger'));
+		$is_new = '';
+		//$ext = '来自'.($room_prefix ? '房间' : '').'第'.$gamenum.'局的'.$itm.'。'; 
+		//小房间的编号未必是历史记录的编号，因此小房间就不显示房间号了
+		if($room_prefix) {
+			$ext = '来自'.$gtinfo[$gametype].'的'.$itm.'。';
+		}else{
+			$ext = '来自第'.$gamenum.'局的'.$itm.'。';
+		}
+		if($get_cardinfo['rare'] == 'A') $ext.='运气不错！';
+		elseif($get_cardinfo['rare'] == 'S') $ext.='一定是欧洲人吧！';
+		//计算卡片碎闪等级
+		$blink = \cardbase\get_card_calc_blink($get_card_id, $pa);
+		//真正获得卡片
+		$is_new = \cardbase\get_card_message($get_card_id,$ext,$blink);
+		//if(!empty($is_new)) $is_new = "<span class=\"L5 b\">NEW!</span>";;
+		
+		$log.='<span class="yellow b">你获得了卡片「'.$get_cardinfo['name'].'」！请前往“站内邮件”查收。</span><br>';
+		
+		addnews ( 0, 'VOgetcard', $pa['name'], $itm, $get_cardinfo['name'] );
+		
+		return array($blink, $is_new);
 	}
 	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())

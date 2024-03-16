@@ -38,16 +38,19 @@ namespace skill747
 		if (\skillbase\skill_query(747, $sdata) && check_unlocked747($sdata) && $hp > 0 && empty($itms0) && empty($tdata))
 		{
 			$dice = rand(0,99);
-			if ($dice < 3)
+			if ($dice < 1)
 			{
 				eval(import_module('logger','song'));
 				$log .= '<br><br>';
 				$sid = array_rand($songlist);
-				\skillbase\skill_setvalue(747,'temp_sid',$sid,$sdata);
-				\song\ss_sing($songlist[$sid]['songname']);
-				\skillbase\skill_delvalue(747,'temp_sid',$sdata);
+				if ($sid != 13)
+				{
+					\skillbase\skill_setvalue(747,'temp_sid',$sid,$sdata);
+					\song\ss_sing($songlist[$sid]['songname']);
+					\skillbase\skill_delvalue(747,'temp_sid',$sdata);
+				}
 			}
-			elseif ($dice < 15)
+			elseif ($dice < 5)
 			{
 				eval(import_module('map'));
 				$lyric = '♪ Chipi chipi chapa chapa Dubi dubi daba daba ♪';

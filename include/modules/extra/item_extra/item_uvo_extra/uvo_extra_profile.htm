@@ -1,0 +1,4 @@
+<!--{eval eval(import_module('item_uvo_extra'));}-->
+<!--{if in_array($gametype, $allow_uvo_extra_gametype)}-->
+<input type="button" class="cmdbutton" id="sp_card" value="卡片列表" onclick="$('command').value='card';$('subcmd').name='card';postCmd('gamecmd','command.php');this.disabled=true;">
+<!--{/if}-->

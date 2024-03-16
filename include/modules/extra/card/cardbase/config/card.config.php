@@ -6799,6 +6799,44 @@ $cards = array(
 			)
 		)
 	),
+	1101 => array(
+		'name' => '通顶雪道',
+		'rare' => 'C',
+		'pack' => 'hidden',
+		'desc' => '我的卡片怎么变白板了？',
+		'effect' => '素材卡，能与任意卡片合成，<br>但合成产物固定为C卡',
+		'energy' => 0,
+		'valid' => array()
+	),
+	1102 => array(
+		'name' => 'BOMB!',
+		'rare' => 'B',
+		'pack' => 'hidden',
+		'desc' => '毫无疑问，这就是一个B',
+		'effect' => '素材卡，作为合成素材时视为B卡，<br>无特殊效果',
+		'energy' => 0,
+		'valid' => array()
+	),
+	1103 => array(
+		'name' => '升阶魔法-异热同心之力',
+		'rare' => 'A',
+		'pack' => 'hidden',
+		'desc' => '升阶XYZ变换！',
+		'effect' => '素材卡，作为合成素材时视为与另一张素材卡稀有度相同',
+		'energy' => 0,
+		'valid' => array(
+		)
+	),
+	1104 => array(
+		'name' => '命运之轮',
+		'rare' => 'A',
+		'pack' => 'hidden',
+		'desc' => '1d20=1',
+		'effect' => '素材卡，作为合成素材时视为A卡，<br>合成产物必为Ranmen卡片',
+		'energy' => 0,
+		'valid' => array()
+	),
+	
 );
 }
 ?>
