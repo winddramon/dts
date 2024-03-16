@@ -57,13 +57,13 @@ $___MOD_CONN_W_DB = 0;
 $___MOD_TMP_FILE_DIRECTORY = (defined('GAME_ROOT') ? GAME_ROOT : '').'./gamedata/tmp/response/';
 //daemon模式下驻留进程最小执行时间。如果服务器max_execution_time小于这个值，会以这个值为准；超过则以max_execution_time为准
 $___MOD_SRV_MIN_EXECUTION_TIME = 180;
-//daemon模式下驻留进程最大执行时间。
-$___MOD_SRV_MAX_EXECUTION_TIME = 1800;
+//daemon模式下驻留进程最大执行时间。某些环境下太长的时间会导致socket连接被杀掉，最好不要超过600
+$___MOD_SRV_MAX_EXECUTION_TIME = 300;
 //daemon模式下server无连接情况下的唤醒时间（秒），daemon的实际执行时间大约是服务器设置的max_execution_time减去这个值
 //不要超过服务器设置max_execution_time的五分之一，尽可能低一些，但不要低于5秒。WIN下应适当增加这个时间（POWERSHEL执行速度慢）
 $___MOD_SRV_WAKETIME = 30;
 //daemon模式下，如果一台非根daemon在主动退出前已经超过这个时间（秒）没有接到任何命令了，它将不会要求启动一台新daemon替代它
-$___MOD_VANISH_TIME = 300;
+$___MOD_VANISH_TIME = 180;
 //daemon模式下日志级别 
 //4=全部日志（极大量，仅供调试）, 3=仅重要日志、警告和错误, 2=仅警告和错误, 1=仅错误, 0=不记录任何日志
 $___MOD_LOG_LEVEL = 2;
