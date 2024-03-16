@@ -5,8 +5,8 @@ namespace item_uvo_extra
 	//允许卡牌包额外功能的模式，暂时仅有肉鸽模式
 	$allow_uvo_extra_gametype = array(20);
 	
-	//素材卡与效果
-	$material_cards = array();
+	//素材卡
+	$material_cards = array(1101,1102,1103,1104);
 	
 	function init()
 	{
@@ -133,6 +133,11 @@ namespace item_uvo_extra
 			return;
 		}
 		eval(import_module('cardbase'));
+		if (in_array($cardid, $material_cards))
+		{
+			$log .= '素材卡不能使用。<br>';
+			return;
+		}
 		//待完成
 		
 		remove_card_uvo_extra($cardid, $pa, 0);
@@ -159,28 +164,65 @@ namespace item_uvo_extra
 				return;
 			}
 		}
-		eval(import_module('cardbase'));
+		eval(import_module('cardbase','item_uvo_extra'));
 		$rare1 = $cards[$cardid1]['rare'];
 		$rare2 = $cards[$cardid2]['rare'];
-		//丑陋但有效
-		if ($rare1 == $rare2)
+		
+		//素材卡特判
+		$skip_flag = 0;
+		if (in_array($cardid1,$material_cards) && in_array($cardid2,$material_cards))
 		{
-			if ($rare1 == 'A') $rare = 'S';
-			elseif ($rare1 == 'B') $rare = 'A';
-			elseif ($rare1 == 'C') $rare = 'B';
-			elseif ($rare1 == 'M') $rare = 'S';
+			$log .= '一次只能使用一张素材卡。<br>';
+			return;
 		}
-		elseif ($rare1 == 'M') $rare = $rare2;
-		elseif ($rare2 == 'M') $rare = $rare1;
-		elseif (($rare1 == 'S' && $rare2 == 'A') || ($rare1 == 'A' && $rare2 == 'S')) $rare == 'S';
-		elseif (($rare1 == 'A' && $rare2 == 'B') || ($rare1 == 'B' && $rare2 == 'A')) $rare == 'A';
-		elseif (($rare1 == 'B' && $rare2 == 'C') || ($rare1 == 'C' && $rare2 == 'B')) $rare == 'B';
+		if (in_array($cardid1,$material_cards)) $mcardpos = 1;
+		elseif (in_array($cardid2,$material_cards)) $mcardpos = 2;
+		if (!empty($mcardpos))
+		{
+			$mcardid = ${'cardid'.$mcardpos};
+			if ($mcardid == 1101)
+			{
+				$rare = 'C';
+				$skip_flag = 1;
+			}
+			elseif ($mcardid == 1103)
+			{
+				if ($mcardpos == 1) $rare1 = $rare2;
+				else $rare2 = $rare1;
+			}
+			elseif ($mcardid == 1104)
+			{
+				$pack = 'Ranmen';
+			}
+		}
+		//丑陋但有效
+		if (!$skip_flag)
+		{
+			if ($rare1 == $rare2)
+			{
+				if ($rare1 == 'A') $rare = 'S';
+				elseif ($rare1 == 'B') $rare = 'A';
+				elseif ($rare1 == 'C') $rare = 'B';
+				elseif ($rare1 == 'M') $rare = 'S';
+			}
+			elseif ($rare1 == 'M') $rare = $rare2;
+			elseif ($rare2 == 'M') $rare = $rare1;
+			elseif (($rare1 == 'S' && $rare2 == 'A') || ($rare1 == 'A' && $rare2 == 'S')) $rare = 'S';
+			elseif (($rare1 == 'A' && $rare2 == 'B') || ($rare1 == 'B' && $rare2 == 'A')) $rare = 'A';
+			elseif (($rare1 == 'B' && $rare2 == 'C') || ($rare1 == 'C' && $rare2 == 'B')) $rare = 'B';
+		}
 		if (empty($rare))
 		{
 			$log .= '这两张卡不能合成。<br>';
 			return;
 		}
-		$get_card_id = array_randompick($cardindex[$rare]);
+		if (!empty($pack))
+		{
+			do{
+				$get_card_id = array_randompick($cardindex[$rare]);
+			}while($cards[$get_card_id]['pack'] !== $pack);
+		}
+		else $get_card_id = array_randompick($cardindex[$rare]);
 		
 		remove_card_uvo_extra($cardid1, $pa, 0);
 		remove_card_uvo_extra($cardid2, $pa, 0);
