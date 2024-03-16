@@ -305,6 +305,7 @@ club27,extra/club/clubs/club27/,1
 skill1013,extra/gmskills/skill1013/,1
 skill743,extra/card/skills/skill743/,1
 skill744,extra/card/skills/skill744/,1
+skill_temp,extra/skill_temp/,1
 wep_g,base/weapon/wep_g/,1
 wep_j,base/weapon/wep_j/,1
 skill273,extra/club/skills/skill273/,1
@@ -623,6 +624,7 @@ skill88,extra/club/skills/skill88/,1
 skill91,extra/club/skills/skill91/,1
 skill92,extra/club/skills/skill92/,1
 skill739,extra/card/skills/skill739/,1
+skill747,extra/card/skills/skill747/,1
 instance11,extra/instance/instance11_observe/,1
 wepchange,extra/attr/wepchange/,1
 skill77,extra/club/skills/skill77/,1

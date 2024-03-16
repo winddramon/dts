@@ -85,7 +85,6 @@ $mixinfo = array
 	array('class' => 'wp', 'stuff' => array('『祝福宝石』','『心灵激光鞭』'),'result' => array('萨卡兰姆神圣棍棒','WP',150,140,'Nwcy'),),
 	array('class' => 'wp', 'stuff' => array('悲叹之种','萨卡兰姆神圣棍棒'),'result' => array('妖邪必败','WP',1540,200,'Nfcy'),),
 	array('class' => 'wp', 'stuff' => array('『延展御柱』','驱云弹','弹幕符札'),'result' => array('御柱「Meteoric Onbashira」','WP',200,140,'NirZ'),),
-	array('class' => 'wp', 'stuff' => array('手机','手枪子弹'),'result' => array('『诺基亚』','WP',50,9999,'Nw'),),
 	array('class' => 'wp', 'stuff' => array('手机','实体子弹'),'result' => array('『诺基亚』','WP',50,9999,'Nw'),),
 	array('class' => 'wp', 'stuff' => array('『诺基亚』','曾经的荣光-巨盾','防弹背心','防弹背心','防弹背心','防弹背心'),'result' => array('『诺基亚3210』','WP',321,9999,'NAa^ac1Z'),),
 	array('class' => 'wp', 'stuff' => array('『诺基亚3210』[+4]','数据……碎片'),'result' => array('『曾经的荣光-诺基亚』','WP',1865,'∞','NAaR^ac1^alt_<:comp_itmsk:>{A}1Z'), 'tips' => '这是一把能当做饰品使用的武器。'),

@@ -230,11 +230,11 @@ namespace song
 						if(!\skillbase\skill_query($skv, $pdata)){
 							\skillbase\skill_acquire($skv, $pdata);
 							$ss_log[] = '获得了' . ($debuffflag ? '负面状态' : '技能') . '<span class="cyan b">「'.$clubskillname[$skv].'」</span>';
-							if ($timeflag)
+							if ($timeflag && defined('MOD_SKILL_TEMP'))
 							{
 								$tsk_time = round($effect['time'] * ss_factor($pdata));
 								$ss_log[] = "持续时间<span class=\"yellow b\">".$tsk_time."</span>秒";
-								\skillbase\skill_setvalue($skv, 'tsk_expire', $now + $tsk_time, $pdata);
+								\skill_temp\set_skill_temp_time($skv, $tsk_time, $pdata);
 							}
 						}
 					}

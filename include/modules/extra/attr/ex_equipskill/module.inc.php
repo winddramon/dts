@@ -3,7 +3,7 @@
 namespace ex_equipskill
 {
 	////////// MODULE HEADER START ///////////////
-	$___MODULE_dependency = 'sys player itemmain attrbase logger clubbase skillbase';
+	$___MODULE_dependency = 'sys player itemmain attrbase logger clubbase skillbase skill_temp';
 	$___MODULE_dependency_optional = 'armor armor_art weapon wep_b_extra_reloading item_ext_armor';
 	$___MODULE_conflict = '';
 	$___MODULE_codelist = 'main.php';

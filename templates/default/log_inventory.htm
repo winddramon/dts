@@ -68,7 +68,7 @@
 					<!--{if in_array($k, array(2,3,4))}-->
 					<select name="cardid" id="cardid">
 					<!--{loop $cardlist $cid}-->
-					<option value="$cid">$cards[$cid]['name']<br>
+					<option value="$cid" <!--{if $card == $cid}-->selected="selected"<!--{/if}-->>$cards[$cid]['name']</option>
 					<!--{/loop}-->
 					</select>
 					<br><br><input type="button" class="b_button" style="width:120" value="使用" onclick="$('itempara').value=$('cardid').value;document.inventory.submit();">
@@ -102,5 +102,7 @@
 </center>
 <br>
 </center>
+<script>
 
+</script>
 {template footer}

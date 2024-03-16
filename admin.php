@@ -7,6 +7,10 @@ define('IN_ADMIN', TRUE);
 require GAME_ROOT.'./gamedata/admincfg.php';
 require GAME_ROOT.'./include/admin/admin.lang.php';
 
+//注意：管理权限强行使用本地数据库，不使用远程数据
+global $userdb_forced_local;
+$userdb_forced_local = 1;
+
 $udata = udata_check();
 
 $admin_cmd_list = Array(

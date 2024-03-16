@@ -46,10 +46,11 @@ namespace bufficons
 	}
 	
 	//需要显示buff图标只需接管这个函数调用bufficon_show即可
-	function bufficons_list()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-	}
+	//本函数已经废弃
+	// function bufficons_list()
+	// {
+	// 	if (eval(__MAGIC__)) return $___RET_VALUE;
+	// }
 
 	//2024.02.26 原bufficons_list()函数大量重复实现太愚蠢了，改为每个技能或者效果只提供必要参数，在这里统一实现
 	function bufficons_display(&$pa=NULL)
@@ -68,47 +69,51 @@ namespace bufficons
 	//其中end_ts必须非0，cd_ts可以为0表示无CD
 	function bufficons_display_single($token, $config, &$pa=NULL) {
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$src = '';
+		eval(import_module('bufficons'));
+		
+		$msec = !empty($config['msec']) ? 1 : 0;
+		$buff_state = bufficons_check_buff_state($token, $pa, $msec);
+
+		if(!$buff_state) return Array('', Array());
+
+		$src = !empty($config['src']) ? $config['src'] : '';
+
 		if(is_numeric($token) && defined('MOD_SKILL'.$token) && \skillbase\skill_query($token, $pa)){
-			eval(import_module('bufficons'));
-			$msec = !empty($config['msec']) ? 1 : 0;
-			$buff_state = bufficons_check_buff_state($token, $pa, $msec);
 			//一些参数的自动识别，依赖于技能标签
-			if(!empty($buff_state)) {
-				$src = !empty($config['src']) ? $config['src'] : 'img/skill'.$token.'.gif';
-				if(!isset($config['disappear'])) {
-					$config['disappear'] = 1;
-					if(\skillbase\check_skill_info($token, 'upgrade;') || \skillbase\check_skill_info($token, 'battle;')) $config['disappear'] = 0;
-				}
-				if(!isset($config['clickable'])) {//这里先判定设定上是否需要激活
-					$config['clickable'] = 0;
-					if(\skillbase\check_skill_info($token, 'upgrade;')) $config['clickable'] = 1;
-				}
-				if(empty($config['onclick']) && !empty($config['clickable'])) {
-					$config['onclick'] = "$('mode').value='special';$('command').value='skill".$token."_special';$('subcmd').value='activate';postCmd('gamecmd','command.php',this);";
-				}
-				if(empty($config['hint'])){
-					eval(import_module('clubbase'));
-					if(!empty($clubskillname[$token])){
-						if(\skillbase\check_skill_info($token, 'battle;')) {
-							$config['hint'] = '战斗技「'.$clubskillname[$token].'」';
+			if(empty($src)) $src = 'img/skill'.$token.'.gif';
+			if(!isset($config['disappear'])) {
+				$config['disappear'] = 1;
+				if(\skillbase\check_skill_info($token, 'upgrade;') || \skillbase\check_skill_info($token, 'battle;')) $config['disappear'] = 0;
+			}
+			if(!isset($config['clickable'])) {//这里先判定设定上是否需要激活
+				$config['clickable'] = 0;
+				if(\skillbase\check_skill_info($token, 'upgrade;')) $config['clickable'] = 1;
+			}
+			if(empty($config['onclick']) && !empty($config['clickable'])) {
+				$config['onclick'] = "$('mode').value='special';$('command').value='skill".$token."_special';$('subcmd').value='activate';postCmd('gamecmd','command.php',this);";
+			}
+			if(empty($config['hint'])){
+				eval(import_module('clubbase'));
+				if(!empty($clubskillname[$token])){
+					if(\skillbase\check_skill_info($token, 'battle;')) {
+						$config['hint'] = '战斗技「'.$clubskillname[$token].'」';
+					}else{
+						$config['hint'] = '技能「'.$clubskillname[$token].'」';
+					}
+					if(empty($config['activate_hint'])) {
+						if(!empty($config['clickable'])) {
+							$config['activate_hint'] = '点击发动技能「'.$clubskillname[$token].'」';
 						}else{
-							$config['hint'] = '技能「'.$clubskillname[$token].'」';
-						}
-						if(empty($config['activate_hint'])) {
-							if(!empty($config['clickable'])) {
-								$config['activate_hint'] = '点击发动技能「'.$clubskillname[$token].'」';
+							if(\skillbase\check_skill_info($token, 'battle;')) {
+								$config['activate_hint'] = '战斗技「'.$clubskillname[$token].'」已就绪<br>在战斗界面可以发动';
 							}else{
-								if(\skillbase\check_skill_info($token, 'battle;')) {
-									$config['activate_hint'] = '战斗技「'.$clubskillname[$token].'」已就绪<br>在战斗界面可以发动';
-								}else{
-									$config['activate_hint'] = '技能「'.$clubskillname[$token].'」冷却完毕';
-								}
+								$config['activate_hint'] = '技能「'.$clubskillname[$token].'」冷却完毕';
 							}
 						}
 					}
 				}
 			}
+			
 			//stype、totsec和nowsec的自动识别
 			if(3 == $buff_state) {//冷却时间已结束
 				if(!empty($config['disappear']) && !empty(\skillbase\skill_getvalue($token,'cd_ts',$pa))) {
@@ -117,6 +122,12 @@ namespace bufficons
 				}else{
 					$config['style'] = 3;
 				}
+			}
+		}
+		
+		if(empty($config['style'])) {
+			if(3 == $buff_state) {//冷却时间已结束
+				$config['style'] = 3;
 			}elseif(2 == $buff_state) {//冷却中
 				$config['style'] = 2;
 				$config['totsec'] = $tmp_totsec;

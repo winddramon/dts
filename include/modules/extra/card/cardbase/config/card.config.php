@@ -6055,7 +6055,7 @@ $cards = array(
 	384 => array(
 		'name' => '野指针',
 		'rare' => 'B',
-		'pack' => 'EBalefire Rekindle',
+		'pack' => 'Balefire Rekindle',
 		'desc' => '警告：地址不合法',
 		'effect' => '没事，不是错误',
 		'desc_skills' => '你可以进入禁区并在禁区正常行动，但增加禁区时你并不会免疫死亡',
@@ -6746,6 +6746,20 @@ $cards = array(
 		'valid' => array(
 			'skills' => array(
 				'960' => array('taskarr' => '1002', 'taskprog' => '0'),
+			),
+		)
+	),
+	417 => array(
+		'name' => 'Chipi猫',
+		'rare' => 'B',
+		'pack' => '東埔寨Protoject',
+		'desc' => 'CHIPI CHIPI<br />CHAPA CHAPA<br />DUBI DUBI<br />DABA DABA',
+		'effect' => '“这些个流行的东西<br>真是影响我对橙的教育！”',
+		'desc_skills' => '每次行动后有概率随机唱一首歌',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'747' => '0',
 			),
 		)
 	),

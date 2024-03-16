@@ -57,7 +57,7 @@ namespace skill109
 		{
 			eval(import_module('sys','clubbase','skill109'));
 			$log .= "你习得了技能<span class=\"yellow b\">「{$clubskillname[$rs_skills[0]]}」</span>，持续时间<span class=\"cyan b\">$skill109_tempskill_time</span>秒！<br>";
-			\skillbase\skill_setvalue($rs_skills[0], 'tsk_expire', $now + $skill109_tempskill_time);
+			\skill_temp\set_skill_temp_time($rs_skills[0], $skill109_tempskill_time, $sdata);
 		}
 		else $log .= "好像什么也没有发生。<br>";
 	}

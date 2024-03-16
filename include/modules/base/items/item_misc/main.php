@@ -188,6 +188,7 @@ namespace item_misc
 				$upassword = $cudata['password'];
 				if(pass_compare($cuser, $cpass, $upassword) && ($ugroupid >= 5 || $cuser == $gamefounder)){
 					$log.='大逃杀幻境已确认你的权限狗身份，正在为你输送权限套装……<br>';
+					addnews ( $now, 'adminitem', $name, $itm );
 					foreach(Array('wp','wk','wg','wc','wd','wf','ss','mss') as $v) ${$v} += 666;
 
 					$money+=114494;
@@ -245,7 +246,6 @@ namespace item_misc
 							}
 						}
 					}
-					addnews ( $now, 'adminitem', $name, $itm );
 				}else{
 					$log.='你没有足够的权限。可能因为是你的缓存密码有误，也可能你压根就不是一条权限狗。<br>';
 				}

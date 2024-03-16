@@ -221,9 +221,11 @@ namespace extra_event
 						$extra_event_para['para1'] = ceil($extra_event_para['para1'] * $extra_event_para['para2'] / $o_val);
 					}
 
+					$extra_event_para['para4'] = rand(60, 90);//经验值减少值
+
 					//随机获得技能
 					do{
-						if(defined('MOD_ITEM_RANDSKILLS')) {
+						if(defined('MOD_ITEM_RANDSKILLS') && $exp >= $extra_event_para['para4']) {//现在如果经验值不够抵扣也只能获得六系特色
 							$get_skill_id = \item_randskills\choose_rand_clubskill($sdata, 1)[0];
 						}else{
 							$get_skill_id = array_randompick(Array(13, 14, 15, 16, 17, 18));
@@ -232,8 +234,6 @@ namespace extra_event
 					$extra_event_para['para3'] = $get_skill_id;
 					
 					$extra_event_para['para3_skillname'] = $clubskillname[$get_skill_id];
-
-					$extra_event_para['para4'] = rand(60, 90);//经验值减少值
 
 					$extra_event_para['para5'] = rand(1000, 3000);//金钱增加值
 

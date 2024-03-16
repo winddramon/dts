@@ -110,9 +110,10 @@ namespace clubbase
 		//排序，先一般，后特殊
 		$ret1 = $ret2 = Array();
 		foreach($ret as $v) {
+			$n = 2;
+			if(!$clublist[$v]['type']) $n = 1;
 			if(9 == $v) $v = 5.5;//排序时超能排在拆弹后面
-			if(!$clublist[$v]['type']) $ret1[] = $v;
-			else $ret2[] = $v;
+			${'ret'.$n}[] = $v;
 		}
 		sort($ret1); sort($ret2);
 		$ret = Array_merge(Array(0), $ret1, $ret2);
