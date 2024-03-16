@@ -17,7 +17,7 @@ namespace skill183
 	
 	function init()
 	{
-		define('MOD_SKILL181_INFO','club;hidden;');
+		define('MOD_SKILL183_INFO','club;hidden;');
 		eval(import_module('clubbase','skillbase'));
 		$clubskillname[183] = '伺机';
 		
