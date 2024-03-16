@@ -3,10 +3,6 @@ if(!defined('IN_ADMIN')) {
 	exit('Access Denied');
 }
 
-//这个文件只能调本地用户
-global $userdb_forced_local;
-$userdb_forced_local = 1;
-
 $recover_dir = GAME_ROOT.'./gamedata/cache/user_backup';
 $user_backup_list = array();
 $user_backup_date_list = array();
