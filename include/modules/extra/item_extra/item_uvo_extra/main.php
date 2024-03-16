@@ -188,12 +188,27 @@ namespace item_uvo_extra
 			$clubskills = $clublist[$card_valid_info['club']]['skills'];
 			foreach($card_valid_info['skills'] as $sk => $sv){
 				if (in_array($sk, array(10,11,12))) unset($card_valid_info['skills'][$sk]);
-				if (in_array($sk, array(51,106))) continue;//部分涉及多个绑定的技能
+				if (in_array($sk, array(51,106))) continue;//部分涉及多个技能绑定的技能，百出和虹光
 				if (in_array($sk, $clubskills) && !\skillbase\check_skill_info($sk,'feature'))
 				{
 					if (rand(0,99) < 70) unset($card_valid_info['skills'][$sk]);
 				}
 			}
+		}
+		//随机分支提前处理
+		if (isset($card_valid_info['rand_sets']))
+		{
+			$rand_v = array_randompick($card_valid_info['rand_sets']);
+			unset($card_valid_info['rand_sets']);
+			if (isset($rand_v['skills']))
+			{
+				foreach($rand_v['skills'] as $sk => $sv){
+					if (in_array($sk, array(10,11,12))) continue;
+					$skills[$sk] = $sv;
+				}
+				unset($rand_v['skills']);
+			}
+			$card_valid_info = array_merge($card_valid_info, $rand_v);
 		}
 		
 		foreach ($card_valid_info as $key => $value)
@@ -215,9 +230,6 @@ namespace item_uvo_extra
 						$skills[$rkeys[$i]] = $rv[$rkeys[$i]];
 					}
 				}
-				continue;
-			}elseif('rand_sets' == $key){
-				list($items, $skills) = use_card_uvo_process(array_randompick($value), $pa);
 				continue;
 			}elseif(in_array(substr($key,0,3), Array('wep','arb','arh','ara','arf','art','itm'))){
 				$itempos = substr($key,0,3);
@@ -246,7 +258,11 @@ namespace item_uvo_extra
 				}
 				if ($flag)
 				{
-					$items[] = array('itm'=>$card_valid_info[$keys[0]],'itmk'=>$card_valid_info[$keys[1]],'itme'=>$card_valid_info[$keys[2]],'itms'=>$card_valid_info[$keys[3]],'itmsk'=>$card_valid_info[$keys[4]]);
+					$item_new = array('itm'=>$card_valid_info[$keys[0]],'itmk'=>$card_valid_info[$keys[1]],'itme'=>$card_valid_info[$keys[2]],'itms'=>$card_valid_info[$keys[3]],'itmsk'=>$card_valid_info[$keys[4]]);
+					if(defined('MOD_ATTRBASE')) {
+						$item_new['itmsk'] = \attrbase\config_process_encode_comp_itmsk($item_new['itmsk']);
+					}
+					$items[] = $item_new;
 					$itempos_processed[] = $itempos;
 				}
 			}elseif(in_array($key, Array('hp','mhp','sp','msp','ss','mss','att','def','exp','money','rage','skillpoint','wp','wk','wc','wg','wf','wd'))){
@@ -393,7 +409,7 @@ namespace item_uvo_extra
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa,$pd,$active);
 		eval(import_module('sys','item_uvo_extra'));
-		if (in_array($gametype, $allow_uvo_extra_gametype))
+		if (in_array($gametype, $allow_uvo_extra_gametype) && $pd['hp'] <= 0)
 		{
 			$pd_cards = get_cards_uvo_extra($pd);
 			if (!empty($pd_cards))
