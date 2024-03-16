@@ -113,7 +113,9 @@ namespace item_uvo_extra
 					$log .= '参数不合法。<br>';
 				}
 			}
-			include template(MOD_ITEM_UVO_EXTRA_UVO_EXTRA_USE);
+			$subcmd = get_var_input('subcmd');
+			if ($subcmd == 'carduse') include template(MOD_ITEM_UVO_EXTRA_UVO_EXTRA_USE);
+			elseif ($subcmd == 'cardmix') include template(MOD_ITEM_UVO_EXTRA_UVO_EXTRA_MIX);
 			$cmd = ob_get_contents();
 			ob_clean();
 			return;
@@ -132,16 +134,134 @@ namespace item_uvo_extra
 			$log .= '输入卡片参数错误。<br>';
 			return;
 		}
-		eval(import_module('cardbase'));
+		eval(import_module('cardbase','item_uvo_extra'));
 		if (in_array($cardid, $material_cards))
 		{
 			$log .= '素材卡不能使用。<br>';
 			return;
 		}
-		//待完成
+		$cardid_o = $cardid;
+		if(!empty($cards[$cardid]['valid']['cardchange']))
+		{
+			$cardid = \cardbase\cardchange($cardid);
+			if(empty($cards[$cardid])) $cardid = 0;
+		}
 		
-		remove_card_uvo_extra($cardid, $pa, 0);
-		add_card_uvo_extra($cardid, $pa, 1);
+		$card_valid_info = $cards[$cardid]['valid'];
+		list($items, $skills) = use_card_uvo_process($card_valid_info, $pa);
+		
+		remove_card_uvo_extra($cardid_o, $pa, 0);
+		add_card_uvo_extra($cardid_o, $pa, 1);
+		
+		$log .= "<span class=\"yellow b\">卡片「{$cards[$cardid_o]['name']}」的力量融入了你的体内！</span><br>";
+		
+		//获得技能
+		$acquired_skills = \skillbase\get_acquired_skill_array($pa);
+		foreach ($skills as $key=>$value)
+		{
+			if (in_array($key, $acquired_skills)) continue;
+			\skillbase\skill_acquire($key,$pa);
+			if(is_array($value)){
+				foreach($value as $vk => $vv){
+					\skillbase\skill_setvalue($key,$vk,$vv,$pa);
+				}
+			}elseif ($value>0){
+				\skillbase\skill_setvalue($key,'lvl',$value,$pa);
+			}
+		}
+		
+		//获得道具
+		\skill1006\multi_itemget($items, $pa);
+	}
+	
+	//卡片效果处理
+	function use_card_uvo_process($card_valid_info, &$pa)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$itempos_processed = array();
+		$items = array();
+		$skills = array();
+		//针对称号卡片的调整，非称号特性的本称号技能只有30%获得
+		if (isset($card_valid_info['club']))
+		{
+			eval(import_module('clubbase'));
+			$clubskills = $clublist[$card_valid_info['club']]['skills'];
+			foreach($card_valid_info['skills'] as $sk => $sv){
+				if (in_array($sk, array(10,11,12))) unset($card_valid_info['skills'][$sk]);
+				if (in_array($sk, array(51,106))) continue;//部分涉及多个绑定的技能
+				if (in_array($sk, $clubskills) && !\skillbase\check_skill_info($sk,'feature'))
+				{
+					if (rand(0,99) < 70) unset($card_valid_info['skills'][$sk]);
+				}
+			}
+		}
+		
+		foreach ($card_valid_info as $key => $value)
+		{
+			if('skills' == $key) {
+				foreach($value as $sk => $sv){
+					if (in_array($sk, array(10,11,12))) continue;
+					$skills[$sk] = $sv;
+				}
+				continue;
+			}elseif('rand_skills' == $key){
+				foreach($value as $rk => $rv){
+					$rnum = 1;
+					if(!empty($rv['rnum'])) $rnum = $rv['rnum'];
+					unset($rv['rnum']);
+					$rkeys = array_keys($rv);
+					shuffle($rkeys);
+					for($i = 1;$i <= $rnum;$i++){
+						$skills[$rkeys[$i]] = $rv[$rkeys[$i]];
+					}
+				}
+				continue;
+			}elseif('rand_sets' == $key){
+				list($items, $skills) = use_card_uvo_process(array_randompick($value), $pa);
+				continue;
+			}elseif(in_array(substr($key,0,3), Array('wep','arb','arh','ara','arf','art','itm'))){
+				$itempos = substr($key,0,3);
+				if ($itempos == 'itm')
+				{
+					if (is_numeric($key[3])) $ik = $key[3];
+					else $ik = $key[-1];
+					$itempos .= $ik;
+					$keys = array('itm'.$ik,'itmk'.$ik,'itme'.$ik,'itms'.$ik,'itmsk'.$ik);
+				}
+				else $keys = array($itempos,$itempos.'k',$itempos.'e',$itempos.'s',$itempos.'sk');
+				
+				if (in_array($itempos,$itempos_processed)) continue;
+				
+				$flag = 1;
+				foreach($keys as $k)
+				{
+					if (!isset($card_valid_info[$k]))//只有是一个完整的道具的时候才会获得
+					{
+						$flag = 0;
+						break;
+					}
+					if (is_array($card_valid_info[$k])){
+						$card_valid_info[$k]= array_randompick($card_valid_info[$k]);
+					}
+				}
+				if ($flag)
+				{
+					$items[] = array('itm'=>$card_valid_info[$keys[0]],'itmk'=>$card_valid_info[$keys[1]],'itme'=>$card_valid_info[$keys[2]],'itms'=>$card_valid_info[$keys[3]],'itmsk'=>$card_valid_info[$keys[4]]);
+					$itempos_processed[] = $itempos;
+				}
+			}elseif(in_array($key, Array('hp','mhp','sp','msp','ss','mss','att','def','exp','money','rage','skillpoint','wp','wk','wc','wg','wf','wd'))){
+				$val1 = substr($value, 0, 1);
+				$val2 = substr($value, 1);
+				if(in_array($val1, Array('+','-','=')) && is_numeric($val2)){
+					if('+' == $val1) $pa[$key] += $val2;
+					elseif('-' == $val1) $pa[$key] -= $val2;
+					else $pa[$key] = $val2;
+				}else{
+					$pa[$key] = $value;
+				}
+			}
+		}
+		return array($items, $skills);
 	}
 	
 	//合成暂存的卡片
