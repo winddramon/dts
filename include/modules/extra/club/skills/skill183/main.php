@@ -80,12 +80,16 @@ namespace skill183
 			if (rand(0,3) == 0)
 			{
 				$result = $db->query("SELECT * FROM {$tablepre}maptrap WHERE itme>=600");
+				$traps = array();
 				while($traparr = $db->fetch_array($result)){
 					$traps[] = $traparr;
 				}
-				shuffle($traps);
-				$tips[] = "你梦见自己在<span class=\"yellow b\">{$plsinfo[$traps[0]['pls']]}</span>被<span class=\"yellow b\">{$traps[0]['itm']}</span>炸上了天。<br>……<br>";
-				$get_tips_count -= 1;
+				if (!empty($traps))
+				{
+					shuffle($traps);
+					$tips[] = "你梦见自己在<span class=\"yellow b\">{$plsinfo[$traps[0]['pls']]}</span>被<span class=\"yellow b\">{$traps[0]['itm']}</span>炸上了天。<br>……<br>";
+					$get_tips_count -= 1;
+				}
 			}
 			if ($get_tips_count > 0)
 			{
@@ -94,26 +98,25 @@ namespace skill183
 				$enemytip_count = rand(0, ceil($get_tips_count/2));
 				if ($enemytip_count > 0)
 				{
-					$tip_edata_arr = array();
 					$result = $db->query("SELECT name,type,pls FROM {$tablepre}players WHERE hp>0 AND type>0");
+					$tip_edata_arr = array();
 					while($r = $db->fetch_array($result)){
 						if (in_array((int)$r['type'], $tip_npctype)) $tip_edata_arr[] = $r;
 					}
 					if (count($tip_edata_arr) == 0) $enemytip_count = 0;
 					else
 					{
+						$enemytip_count = min($enemytip_count, count($tip_edata_arr));
 						$tip_edata = array_randompick($tip_edata_arr, $enemytip_count);
 						if (isset($tip_edata['name']))
 						{
 							$tips[] = "你梦见<span class=\"red b\">{$tip_edata['name']}</span>在<span class=\"yellow b\">{$plsinfo[$tip_edata['pls']]}</span>游荡。<br>……<br>";
-							$enemytip_count = 1;
 						}
 						else
 						{
 							foreach($tip_edata as $ed) {
 								$tips[] = "你梦见<span class=\"red b\">{$ed['name']}</span>在<span class=\"yellow b\">{$plsinfo[$ed['pls']]}</span>游荡。<br>……<br>";
 							}
-							$enemytip_count = count($tip_edata);
 						}
 					}
 				}
@@ -122,11 +125,13 @@ namespace skill183
 				if ($itemtip_count > 0)
 				{
 					$result = $db->query("SELECT itm,pls FROM {$tablepre}mapitem");
+					$tip_mipool = array();
 					while($r = $db->fetch_array($result)){
 						if (in_array($r['itm'], $tip_itemnamelist)) $tip_mipool[] = $r;
 					}
 					if (count($tip_mipool) > 0)
 					{
+						$itemtip_count = min($itemtip_count, count($tip_mipool));
 						$tip_mi = array_randompick($tip_mipool, $itemtip_count);
 						if (isset($tip_mi['itm']))
 						{
