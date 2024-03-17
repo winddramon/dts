@@ -181,17 +181,21 @@ namespace item_uvo_extra
 		$itempos_processed = array();
 		$items = array();
 		$skills = array();
-		//针对称号卡片的调整，非称号特性的本称号技能只有30%获得
+		
+		$skills_ignore = array(10,11,12,83);//不会获得尊严
+		$skills_pass = array(19,20,24,51,59,106,224,231);//部分涉及多个技能绑定的技能，如百出和虹光等
+		
+		//针对称号卡片的调整，非称号特性的本称号技能只有20%获得
 		if (isset($card_valid_info['club']))
 		{
 			eval(import_module('clubbase'));
 			$clubskills = $clublist[$card_valid_info['club']]['skills'];
 			foreach($card_valid_info['skills'] as $sk => $sv){
-				if (in_array($sk, array(10,11,12))) unset($card_valid_info['skills'][$sk]);
-				if (in_array($sk, array(51,106))) continue;//部分涉及多个技能绑定的技能，百出和虹光
+				if (in_array($sk, $skills_ignore)) unset($card_valid_info['skills'][$sk]);
+				if (in_array($sk, $skills_pass)) continue;
 				if (in_array($sk, $clubskills) && !\skillbase\check_skill_info($sk,'feature'))
 				{
-					if (rand(0,99) < 70) unset($card_valid_info['skills'][$sk]);
+					if (rand(0,99) < 80) unset($card_valid_info['skills'][$sk]);
 				}
 			}
 		}
@@ -203,7 +207,7 @@ namespace item_uvo_extra
 			if (isset($rand_v['skills']))
 			{
 				foreach($rand_v['skills'] as $sk => $sv){
-					if (in_array($sk, array(10,11,12))) continue;
+					if (in_array($sk, $skills_ignore)) continue;
 					$skills[$sk] = $sv;
 				}
 				unset($rand_v['skills']);
@@ -215,7 +219,7 @@ namespace item_uvo_extra
 		{
 			if('skills' == $key) {
 				foreach($value as $sk => $sv){
-					if (in_array($sk, array(10,11,12))) continue;
+					if (in_array($sk, $skills_ignore)) continue;
 					$skills[$sk] = $sv;
 				}
 				continue;
