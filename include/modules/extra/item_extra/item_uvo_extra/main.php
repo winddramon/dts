@@ -235,14 +235,14 @@ namespace item_uvo_extra
 				$itempos = substr($key,0,3);
 				if ($itempos == 'itm')
 				{
-					if (is_numeric($key[3])) $ik = $key[3];
-					else $ik = $key[-1];
+					$ik = $key[-1];
 					$itempos .= $ik;
 					$keys = array('itm'.$ik,'itmk'.$ik,'itme'.$ik,'itms'.$ik,'itmsk'.$ik);
 				}
 				else $keys = array($itempos,$itempos.'k',$itempos.'e',$itempos.'s',$itempos.'sk');
 				
 				if (in_array($itempos,$itempos_processed)) continue;
+				$itempos_processed[] = $itempos;
 				
 				$flag = 1;
 				foreach($keys as $k)
@@ -263,7 +263,6 @@ namespace item_uvo_extra
 						$item_new['itmsk'] = \attrbase\config_process_encode_comp_itmsk($item_new['itmsk']);
 					}
 					$items[] = $item_new;
-					$itempos_processed[] = $itempos;
 				}
 			}elseif(in_array($key, Array('hp','mhp','sp','msp','ss','mss','att','def','exp','money','rage','skillpoint','wp','wk','wc','wg','wf','wd'))){
 				$val1 = substr($value, 0, 1);
