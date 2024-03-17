@@ -269,6 +269,20 @@ namespace skill960
 				\cardbase\get_qiegao($v, $pa);
 				$log .= "你获得了<span class=\"yellow b\">{$v}</span>切糕。<br>";
 			}
+			elseif ($k === 'card')
+			{
+				if (defined('MOD_ITEM_UVO_EXTRA'))
+				{
+					eval(import_module('cardbase'));
+					\item_uvo_extra\add_card_uvo_extra($v, $pa, 0);
+					$log .= "你获得了卡片";
+					foreach ($v as $cid)
+					{
+						$log .= "<span class=\"{$card_rarecolor[$cards[$cid]['rare']]}\">【{$cards[$cid]['name']} {$cards[$cid]['rare']}】</span>";
+					}
+					$log .= "。<br>";
+				}
+			}
 		}
 	}
 	
@@ -392,7 +406,8 @@ namespace skill960
 		{
 			$task_tip .= "<span class=\"yellow b\">【{$tasks_info[$taskid]['name']}】</span>";
 		}
-		if (isset($tasks_info[$taskid]['taskreq']['num'])) $task_tip .= "（<span class=\"yellow b\">{$prog} / {$tasks_info[$taskid]['taskreq']['num']}</span>）";
+		$prog_show = min($prog, $tasks_info[$taskid]['taskreq']['num']);
+		if (isset($tasks_info[$taskid]['taskreq']['num'])) $task_tip .= "（<span class=\"yellow b\">{$prog_show} / {$tasks_info[$taskid]['taskreq']['num']}</span>）";
 		$task_tip .= '：<br>';
 		if ($tasks_info[$taskid]['tasktype'] === 'battle_kill')
 		{
@@ -482,6 +497,15 @@ namespace skill960
 				elseif ($k === 'qiegao')
 				{
 					$task_tip .= "切糕<span class=\"yellow b\">$v</span>";
+				}
+				elseif ($k === 'card')
+				{
+					eval(import_module('cardbase'));
+					$task_tip .= "卡片";
+					foreach ($v as $cid)
+					{
+						$task_tip .= "<span class=\"{$card_rarecolor[$cards[$cid]['rare']]}\">【{$cards[$cid]['name']} {$cards[$cid]['rare']}】</span>";
+					}
 				}
 			}
 		}
