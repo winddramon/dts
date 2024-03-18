@@ -20,7 +20,6 @@ namespace ammunition
 		'r' => array('GBss', 24),
 		'WG' => array('GBss', 6),
 	);
-	
 	//注意目前连击的气体和能源弹药的弹夹数会额外+2
 	
 	function init()

@@ -6837,8 +6837,7 @@ $cards = array(
 		'desc' => '升阶XYZ变换！',
 		'effect' => '素材卡，作为合成素材时视为与另一张素材卡稀有度相同',
 		'energy' => 0,
-		'valid' => array(
-		)
+		'valid' => array()
 	),
 	1104 => array(
 		'name' => '命运之轮',
@@ -6846,6 +6845,33 @@ $cards = array(
 		'pack' => 'hidden',
 		'desc' => '1d20=1',
 		'effect' => '素材卡，作为合成素材时视为A卡，<br>合成产物必为Ranmen卡片',
+		'energy' => 0,
+		'valid' => array()
+	),
+	1105 => array(
+		'name' => '全人类的非想天则',
+		'rare' => 'A',
+		'pack' => 'hidden',
+		'desc' => '难道求则不是国家大事吗？',
+		'effect' => '素材卡，作为合成素材时视为A卡，<br>合成产物必为東埔寨Protoject卡片',
+		'energy' => 0,
+		'valid' => array()
+	),
+	1106 => array(
+		'name' => '“血色深渊”',
+		'rare' => 'A',
+		'pack' => 'hidden',
+		'desc' => '仿佛鲜血凝结而成的酱汁闪烁着诡异的光芒，鬼魅般扭曲的触须缠绕在幽白的植物尸骸上……<br>……这是一碗章鱼盖饭。',
+		'effect' => '素材卡，作为合成素材时视为A卡，<br>合成产物必为Top Players卡片',
+		'energy' => 0,
+		'valid' => array()
+	),
+	1107 => array(
+		'name' => '刺激市场VIP卡',
+		'rare' => 'S',
+		'pack' => 'hidden',
+		'desc' => '一张五彩斑斓的黑卡。这真的是可以拥有的吗？',
+		'effect' => '素材卡，能与任意卡片合成，<br>合成产物固定为S卡',
 		'energy' => 0,
 		'valid' => array()
 	),

@@ -6,7 +6,7 @@ namespace item_uvo_extra
 	$allow_uvo_extra_gametype = array(20);
 	
 	//素材卡
-	$material_cards = array(1101,1102,1103,1104);
+	$material_cards = array(1101,1102,1103,1104,1105,1106,1107);
 	
 	function init()
 	{
@@ -145,6 +145,7 @@ namespace item_uvo_extra
 		{
 			$cardid = \cardbase\cardchange($cardid);
 			if(empty($cards[$cardid])) $cardid = 0;
+			$log .= "<span class=\"yellow b\">卡片「{$cards[$cardid_o]['name']}」变成了「{$cards[$cardid]['name']}」的样子！</span><br>";
 		}
 		
 		$card_valid_info = $cards[$cardid]['valid'];
@@ -333,6 +334,19 @@ namespace item_uvo_extra
 			{
 				$pack = 'Ranmen';
 			}
+			elseif ($mcardid == 1105)
+			{
+				$pack = '東埔寨Protoject';
+			}
+			elseif ($mcardid == 1106)
+			{
+				$pack = 'Top Players';
+			}
+			elseif ($mcardid == 1107)
+			{
+				$rare = 'S';
+				$skip_flag = 1;
+			}
 		}
 		//丑陋但有效
 		if (!$skip_flag)
@@ -357,9 +371,11 @@ namespace item_uvo_extra
 		}
 		if (!empty($pack))
 		{
+			$c = 0;
 			do{
 				$get_card_id = array_randompick($cardindex[$rare]);
-			}while($cards[$get_card_id]['pack'] !== $pack);
+				$c += 1;
+			}while($cards[$get_card_id]['pack'] !== $pack && $c < 99);//不会真有人写爆炸吧
 		}
 		else $get_card_id = array_randompick($cardindex[$rare]);
 		
