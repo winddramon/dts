@@ -395,6 +395,8 @@ function showData(sdata) {
 	}
 	//重载悬浮提示
 	floating_hint();
+	//#cmd窗体滚动条位置重置
+	if($('cmd_container')) $('cmd_container').scrollTo(0, 0);
 
 	//新界面自动切到对应的标签页和状态界面
 	if (jQuery('.cmd_tag').length > 0 && 'common' != now_tag) tag_display_init();
