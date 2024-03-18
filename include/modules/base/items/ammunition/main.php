@@ -2,15 +2,25 @@
 
 namespace ammunition
 {
+	// $ammukind = array(
+		// 'WJ' => array('GBh', 4),
+		// 'e' => array('GBe', 10),
+		// 'w' => array('GBe', 10),
+		// 'i' => array('GBi', 10),
+		// 'u' => array('GBi', 10),
+		// 'r' => array('GBr', 24),
+		// 'WG' => array('GB', 6),
+	// );
 	$ammukind = array(
 		'WJ' => array('GBh', 4),
-		'e' => array('GBe', 10),
-		'w' => array('GBe', 10),
-		'i' => array('GBi', 10),
-		'u' => array('GBi', 10),
-		'r' => array('GBr', 24),
-		'WG' => array('GB', 6),
+		'e' => array('GBee', 10),
+		'w' => array('GBee', 10),
+		'i' => array('GBee', 10),
+		'u' => array('GBee', 10),
+		'r' => array('GBss', 24),
+		'WG' => array('GBss', 6),
 	);
+	
 	//注意目前连击的气体和能源弹药的弹夹数会额外+2
 	
 	function init()
@@ -45,19 +55,7 @@ namespace ammunition
 	function check_ammukind($cwepk, $cwepsk){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','ammunition'));
-		$retk = 'GB'; $retn = 6;
-		if(18 == $gametype) {
-			$retk = 'GBss'; $retn = 6;
-			$ammukind = array(
-				'WJ' => array('GBh', 4),
-				'e' => array('GBee', 10),
-				'w' => array('GBee', 10),
-				'i' => array('GBee', 10),
-				'u' => array('GBee', 10),
-				'r' => array('GBss', 24),
-				'WG' => array('GBss', 6),
-			);
-		}
+		$retk = 'GBss'; $retn = 6;
 		foreach($ammukind as $ak => $av){
 			if((strpos($ak, 'W')===0 && strpos($cwepk, $ak) === 0) || (strpos($ak, 'W')!==0 && \itemmain\check_in_itmsk($ak, $cwepsk))){
 				$retk = $av[0]; $retn = $av[1];

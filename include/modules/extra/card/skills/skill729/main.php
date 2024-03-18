@@ -48,6 +48,7 @@ namespace skill729
 				{
 					foreach ($acquired_skills as $skillid)
 					{
+						if (in_array($skillid, array(952,960,961,962))) continue;
 						if (isset($clubskillname[$skillid]) && (strpos(constant('MOD_SKILL'.$skillid.'_INFO'),'hidden;') === false))
 						{
 							\skillbase\skill_lost($skillid, $sdata);
@@ -58,7 +59,7 @@ namespace skill729
 				//得到新的技能
 				if ($count > 0)
 				{
-					$clubskillcount = rand(floor($count/3),$count);
+					$clubskillcount = rand(ceil($count/3),$count);
 					\item_randskills\get_rand_clubskill($sdata, $clubskillcount);
 					$cardskillcount = $count - $clubskillcount;
 					if ($cardskillcount > 0)
