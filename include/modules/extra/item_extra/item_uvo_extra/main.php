@@ -28,13 +28,18 @@ namespace item_uvo_extra
 	function remove_card_uvo_extra($cardid, &$pa, $tmp = 0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if ($tmp) $k = 'cards_used';
+		else $k = 'cards_temp';
+		if ($cardid == 'all')
+		{
+			\skillbase\skill_setvalue(951, $k, '', $pa);
+			return;
+		}
 		$cards_uvo = get_cards_uvo_extra($pa, $tmp);
 		$key = array_search($cardid, $cards_uvo);
 		if ($key !== false)
 		{
 			unset($cards_uvo[$key]);
-			if ($tmp) $k = 'cards_used';
-			else $k = 'cards_temp';
 			\skillbase\skill_setvalue(951, $k, encode_uvo_extra($cards_uvo), $pa);
 		}
 	}
@@ -74,7 +79,7 @@ namespace item_uvo_extra
 		$blink = 0;
 		$is_new = 0;
 		
-		$log .= '<span class="yellow b">你获得了卡片「'.$get_cardinfo['name'].'」！获得的卡片可在卡片列表中查看。<br>所有暂存的和已使用的卡片会在游戏结束时获得。</span><br>';
+		$log .= '<span class="yellow b">你获得了卡片「'.$get_cardinfo['name'].'」！获得的卡片可在卡片列表中查看。<br>所有未使用的和已使用的卡片会在游戏结束时获得。</span><br>';
 		
 		addnews ( 0, 'VOgetcard', $pa['name'], $itm, $get_cardinfo['name'] );
 		
@@ -392,7 +397,7 @@ namespace item_uvo_extra
 		ob_clean();
 	}
 	
-	//游戏结束时获得暂存的和已使用的卡片
+	//游戏结束时获得未使用的和已使用的卡片
 	function gameover_set_credits()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -428,14 +433,24 @@ namespace item_uvo_extra
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa,$pd,$active);
 		eval(import_module('sys','item_uvo_extra'));
-		if (in_array($gametype, $allow_uvo_extra_gametype) && $pd['hp'] <= 0)
+		if (in_array($gametype, $allow_uvo_extra_gametype) && $pa['type'] == 0 && $pd['hp'] <= 0)
 		{
 			$pd_cards = get_cards_uvo_extra($pd);
 			if (!empty($pd_cards))
 			{
 				eval(import_module('logger'));
-				$log .= "<span class=\"yellow b\">物尽其用！你夺走了对方所有未使用的卡片。</span><br>";
+				if ($active)
+				{
+					$log .= "<br><span class=\"yellow b\">物尽其用！你夺走了对方所有未使用的卡片。</span><br>";
+					$pd['battlelog'] .= '<span class="red b">对方夺走了你所有未使用的卡片！</span>';
+				}
+				else
+				{
+					$log .= "<br><span class=\"red b\">你所有未使用的卡片被对方夺走了！</span><br>";
+					$pa['battlelog'] .= "<span class=\"yellow b\">你夺走了对方所有未使用的卡片！</span>";
+				}
 				add_card_uvo_extra($pd_cards, $pa);
+				remove_card_uvo_extra('all', $pd);
 			}
 		}
 	}
