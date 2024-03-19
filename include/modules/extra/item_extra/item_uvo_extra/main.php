@@ -6,7 +6,7 @@ namespace item_uvo_extra
 	$allow_uvo_extra_gametype = array(20);
 	
 	//素材卡
-	$material_cards = array(1101,1102,1103,1104,1105,1106,1107);
+	$material_cards = array(1101,1102,1103,1104,1105,1106,1107,1108,1109,1110,1111);
 	
 	function init()
 	{
@@ -312,6 +312,7 @@ namespace item_uvo_extra
 		eval(import_module('cardbase','item_uvo_extra'));
 		$rare1 = $cards[$cardid1]['rare'];
 		$rare2 = $cards[$cardid2]['rare'];
+		$pack = '';
 		
 		//素材卡特判
 		$skip_flag = 0;
@@ -352,37 +353,33 @@ namespace item_uvo_extra
 				$rare = 'S';
 				$skip_flag = 1;
 			}
-		}
-		//丑陋但有效
-		if (!$skip_flag)
-		{
-			if ($rare1 == $rare2)
+			elseif ($mcardid == 1108)
 			{
-				if ($rare1 == 'A') $rare = 'S';
-				elseif ($rare1 == 'B') $rare = 'A';
-				elseif ($rare1 == 'C') $rare = 'B';
-				elseif ($rare1 == 'M') $rare = 'S';
+				$pack = 'Standard Pack';
 			}
-			elseif ($rare1 == 'M') $rare = $rare2;
-			elseif ($rare2 == 'M') $rare = $rare1;
-			elseif (($rare1 == 'S' && $rare2 == 'A') || ($rare1 == 'A' && $rare2 == 'S')) $rare = 'S';
-			elseif (($rare1 == 'A' && $rare2 == 'B') || ($rare1 == 'B' && $rare2 == 'A')) $rare = 'A';
-			elseif (($rare1 == 'B' && $rare2 == 'C') || ($rare1 == 'C' && $rare2 == 'B')) $rare = 'B';
+			elseif ($mcardid == 1109)
+			{
+				$pack = 'Crimson Swear';
+			}
+			elseif ($mcardid == 1110)
+			{
+				$pack = 'Way of Life';
+			}
+			elseif ($mcardid == 1111)
+			{
+				$pack = 'Best DOTO';
+			}
 		}
-		if (empty($rare))
+		if (empty($get_card_id))
 		{
-			$log .= '这两张卡不能合成。<br>';
-			return;
+			if (empty($rare)) $rare = get_card_rare_uvo($rare1, $rare2);
+			if (empty($rare))
+			{
+				$log .= '这两张卡不能合成。<br>';
+				return;
+			}
+			$get_card_id = get_card_id_uvo($rare, $pack);
 		}
-		if (!empty($pack))
-		{
-			$c = 0;
-			do{
-				$get_card_id = array_randompick($cardindex[$rare]);
-				$c += 1;
-			}while($cards[$get_card_id]['pack'] !== $pack && $c < 99);//不会真有人写爆炸吧
-		}
-		else $get_card_id = array_randompick($cardindex[$rare]);
 		
 		remove_card_uvo_extra($cardid1, $pa, 0);
 		remove_card_uvo_extra($cardid2, $pa, 0);
@@ -395,6 +392,42 @@ namespace item_uvo_extra
 		include template('MOD_CARDBASE_CARDFLIP_RESULT');
 		$log .= ob_get_contents();
 		ob_clean();
+	}
+	
+	function get_card_rare_uvo($rare1, $rare2)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$rare = '';
+		//丑陋但有效
+		if ($rare1 == $rare2)
+		{
+			if ($rare1 == 'A') $rare = 'S';
+			elseif ($rare1 == 'B') $rare = 'A';
+			elseif ($rare1 == 'C') $rare = 'B';
+			elseif ($rare1 == 'M') $rare = 'S';
+		}
+		elseif ($rare1 == 'M') $rare = $rare2;
+		elseif ($rare2 == 'M') $rare = $rare1;
+		elseif (($rare1 == 'S' && $rare2 == 'A') || ($rare1 == 'A' && $rare2 == 'S')) $rare = 'S';
+		elseif (($rare1 == 'A' && $rare2 == 'B') || ($rare1 == 'B' && $rare2 == 'A')) $rare = 'A';
+		elseif (($rare1 == 'B' && $rare2 == 'C') || ($rare1 == 'C' && $rare2 == 'B')) $rare = 'B';
+		return $rare;
+	}
+	
+	function get_card_id_uvo($rare, $pack = NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('cardbase'));
+		if (!empty($pack))
+		{
+			$c = 0;
+			do{
+				$get_card_id = array_randompick($cardindex[$rare]);
+				$c += 1;
+			}while($cards[$get_card_id]['pack'] !== $pack && $c < 99);//不会真有人写爆炸吧
+		}
+		else $get_card_id = array_randompick($cardindex[$rare]);
+		return $get_card_id;
 	}
 	
 	//游戏结束时获得未使用的和已使用的卡片
