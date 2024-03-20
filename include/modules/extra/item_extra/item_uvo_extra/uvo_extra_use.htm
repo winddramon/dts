@@ -5,13 +5,14 @@
 <input type="hidden" name="card_choice1" id="card_choice1" value="0">
 <input type="hidden" name="card_choice2" id="card_choice2" value="-1">
 <span class="yellow b">卡片使用的规则如下：</span><br>
-1、使用卡片后会获得该卡片的物品、技能和数值变化；<br>
-2、使用部分卡片（如Standard Pack中固定内定称号的卡片）不会改变内定称号，并且只会获得一部分技能。<br>
+1、使用卡片后会获得该卡片的物品、技能和数值变化，当前卡名、内定称号不变；<br>
+2、使用部分卡片（如Standard Pack中固定内定称号的卡片）只会随机获得一部分技能；<br>
+3、击杀玩家可获得对方所有未使用的卡片，被玩家击杀时会失去所有未使用的卡片。<br>
 <span class="yellow b">另外可以在“卡片合成”中以获得的卡片为素材，合成得到新的卡片。</span><br><br>
 你在本局游戏中获得的卡片如下：<br>
 <!--{eval $cards_uvo = \item_uvo_extra\get_cards_uvo_extra($sdata);$cards_used = \item_uvo_extra\get_cards_uvo_extra($sdata,1);$showpack=1;$c=count($cards_uvo);}-->
 <!--{if empty($cards_uvo)}-->
-<br><span class="yellow b">你没有暂存的卡片。</span><br>
+<br><span class="yellow b">你没有未使用的卡片。</span><br>
 <!--{else}-->
 <!--{loop $cards_uvo $k $cid}-->
 <input type="button" style="width:60px" value="使用" onclick="$('card_choice1').value='$cid';postCmd('gamecmd','command.php');this.disabled=true;">
@@ -19,7 +20,7 @@
 &nbsp;<span class="$card_rarecolor[$cards[$cid]['rare']]" onmouseenter="$('$cardframe_id').style.display='block';" onmouseleave="$('$cardframe_id').style.display='none';">【$cards[$cid]['name'] $cards[$cid]['rare']】</span><br>
 <!--{if !empty($nowcard)}-->
 <div style="position:relative;">
-<div id="$cardframe_id" class="cardframe_show" style="display:none;position:absolute;z-index:30;left:5px;top:20px;">
+<div id="$cardframe_id" class="cardframe_show" style="display:none;position:absolute;z-index:30;left:35px;top:<!--{eval echo $k > 3 ? -335 : 0;}-->px;">
 	{template MOD_CARDBASE_CARD_FRAME}
 </div>
 </div>
@@ -40,7 +41,7 @@
 <span class="$card_rarecolor[$cards[$cid]['rare']]" onmouseenter="$('$cardframe_id').style.display='block';" onmouseleave="$('$cardframe_id').style.display='none';">【$cards[$cid]['name'] $cards[$cid]['rare']】</span><br>
 <!--{if !empty($nowcard)}-->
 <div style="position:relative;">
-<div id="$cardframe_id" class="cardframe_show" style="display:none;position:absolute;z-index:30;left:5px;top:20px;">
+<div id="$cardframe_id" class="cardframe_show" style="display:none;position:absolute;z-index:30;left:35px;top:<!--{eval echo $c+$k > 1 ? -335 : 0;}-->px;">
 	{template MOD_CARDBASE_CARD_FRAME}
 </div>
 </div>

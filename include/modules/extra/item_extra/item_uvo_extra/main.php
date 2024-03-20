@@ -6,7 +6,7 @@ namespace item_uvo_extra
 	$allow_uvo_extra_gametype = array(20);
 	
 	//素材卡
-	$material_cards = array(1101,1102,1103,1104);
+	$material_cards = array(1101,1102,1103,1104,1105,1106,1107,1108,1109,1110,1111);
 	
 	function init()
 	{
@@ -28,13 +28,18 @@ namespace item_uvo_extra
 	function remove_card_uvo_extra($cardid, &$pa, $tmp = 0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if ($tmp) $k = 'cards_used';
+		else $k = 'cards_temp';
+		if ($cardid == 'all')
+		{
+			\skillbase\skill_setvalue(951, $k, '', $pa);
+			return;
+		}
 		$cards_uvo = get_cards_uvo_extra($pa, $tmp);
 		$key = array_search($cardid, $cards_uvo);
 		if ($key !== false)
 		{
 			unset($cards_uvo[$key]);
-			if ($tmp) $k = 'cards_used';
-			else $k = 'cards_temp';
 			\skillbase\skill_setvalue(951, $k, encode_uvo_extra($cards_uvo), $pa);
 		}
 	}
@@ -74,7 +79,7 @@ namespace item_uvo_extra
 		$blink = 0;
 		$is_new = 0;
 		
-		$log .= '<span class="yellow b">你获得了卡片「'.$get_cardinfo['name'].'」！获得的卡片可在卡片列表中查看。<br>所有暂存的和已使用的卡片会在游戏结束时获得。</span><br>';
+		$log .= '<span class="yellow b">你获得了卡片「'.$get_cardinfo['name'].'」！获得的卡片可在卡片列表中查看。<br>所有未使用的和已使用的卡片会在游戏结束时获得。</span><br>';
 		
 		addnews ( 0, 'VOgetcard', $pa['name'], $itm, $get_cardinfo['name'] );
 		
@@ -145,6 +150,7 @@ namespace item_uvo_extra
 		{
 			$cardid = \cardbase\cardchange($cardid);
 			if(empty($cards[$cardid])) $cardid = 0;
+			$log .= "<span class=\"yellow b\">卡片「{$cards[$cardid_o]['name']}」变成了「{$cards[$cardid]['name']}」的样子！</span><br>";
 		}
 		
 		$card_valid_info = $cards[$cardid]['valid'];
@@ -306,6 +312,7 @@ namespace item_uvo_extra
 		eval(import_module('cardbase','item_uvo_extra'));
 		$rare1 = $cards[$cardid1]['rare'];
 		$rare2 = $cards[$cardid2]['rare'];
+		$pack = '';
 		
 		//素材卡特判
 		$skip_flag = 0;
@@ -333,35 +340,46 @@ namespace item_uvo_extra
 			{
 				$pack = 'Ranmen';
 			}
-		}
-		//丑陋但有效
-		if (!$skip_flag)
-		{
-			if ($rare1 == $rare2)
+			elseif ($mcardid == 1105)
 			{
-				if ($rare1 == 'A') $rare = 'S';
-				elseif ($rare1 == 'B') $rare = 'A';
-				elseif ($rare1 == 'C') $rare = 'B';
-				elseif ($rare1 == 'M') $rare = 'S';
+				$pack = '東埔寨Protoject';
 			}
-			elseif ($rare1 == 'M') $rare = $rare2;
-			elseif ($rare2 == 'M') $rare = $rare1;
-			elseif (($rare1 == 'S' && $rare2 == 'A') || ($rare1 == 'A' && $rare2 == 'S')) $rare = 'S';
-			elseif (($rare1 == 'A' && $rare2 == 'B') || ($rare1 == 'B' && $rare2 == 'A')) $rare = 'A';
-			elseif (($rare1 == 'B' && $rare2 == 'C') || ($rare1 == 'C' && $rare2 == 'B')) $rare = 'B';
+			elseif ($mcardid == 1106)
+			{
+				$pack = 'Top Players';
+			}
+			elseif ($mcardid == 1107)
+			{
+				$rare = 'S';
+				$skip_flag = 1;
+			}
+			elseif ($mcardid == 1108)
+			{
+				$pack = 'Standard Pack';
+			}
+			elseif ($mcardid == 1109)
+			{
+				$pack = 'Crimson Swear';
+			}
+			elseif ($mcardid == 1110)
+			{
+				$pack = 'Way of Life';
+			}
+			elseif ($mcardid == 1111)
+			{
+				$pack = 'Best DOTO';
+			}
 		}
-		if (empty($rare))
+		if (empty($get_card_id))
 		{
-			$log .= '这两张卡不能合成。<br>';
-			return;
+			if (empty($rare)) $rare = get_card_rare_uvo($rare1, $rare2);
+			if (empty($rare))
+			{
+				$log .= '这两张卡不能合成。<br>';
+				return;
+			}
+			$get_card_id = get_card_id_uvo($rare, $pack);
 		}
-		if (!empty($pack))
-		{
-			do{
-				$get_card_id = array_randompick($cardindex[$rare]);
-			}while($cards[$get_card_id]['pack'] !== $pack);
-		}
-		else $get_card_id = array_randompick($cardindex[$rare]);
 		
 		remove_card_uvo_extra($cardid1, $pa, 0);
 		remove_card_uvo_extra($cardid2, $pa, 0);
@@ -376,7 +394,43 @@ namespace item_uvo_extra
 		ob_clean();
 	}
 	
-	//游戏结束时获得暂存的和已使用的卡片
+	function get_card_rare_uvo($rare1, $rare2)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$rare = '';
+		//丑陋但有效
+		if ($rare1 == $rare2)
+		{
+			if ($rare1 == 'A') $rare = 'S';
+			elseif ($rare1 == 'B') $rare = 'A';
+			elseif ($rare1 == 'C') $rare = 'B';
+			elseif ($rare1 == 'M') $rare = 'S';
+		}
+		elseif ($rare1 == 'M') $rare = $rare2;
+		elseif ($rare2 == 'M') $rare = $rare1;
+		elseif (($rare1 == 'S' && $rare2 == 'A') || ($rare1 == 'A' && $rare2 == 'S')) $rare = 'S';
+		elseif (($rare1 == 'A' && $rare2 == 'B') || ($rare1 == 'B' && $rare2 == 'A')) $rare = 'A';
+		elseif (($rare1 == 'B' && $rare2 == 'C') || ($rare1 == 'C' && $rare2 == 'B')) $rare = 'B';
+		return $rare;
+	}
+	
+	function get_card_id_uvo($rare, $pack = NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('cardbase'));
+		if (!empty($pack))
+		{
+			$c = 0;
+			do{
+				$get_card_id = array_randompick($cardindex[$rare]);
+				$c += 1;
+			}while($cards[$get_card_id]['pack'] !== $pack && $c < 99);//不会真有人写爆炸吧
+		}
+		else $get_card_id = array_randompick($cardindex[$rare]);
+		return $get_card_id;
+	}
+	
+	//游戏结束时获得未使用的和已使用的卡片
 	function gameover_set_credits()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -412,14 +466,24 @@ namespace item_uvo_extra
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa,$pd,$active);
 		eval(import_module('sys','item_uvo_extra'));
-		if (in_array($gametype, $allow_uvo_extra_gametype) && $pd['hp'] <= 0)
+		if (in_array($gametype, $allow_uvo_extra_gametype) && $pa['type'] == 0 && $pd['hp'] <= 0)
 		{
 			$pd_cards = get_cards_uvo_extra($pd);
 			if (!empty($pd_cards))
 			{
 				eval(import_module('logger'));
-				$log .= "<span class=\"yellow b\">物尽其用！你夺走了对方所有未使用的卡片。</span><br>";
+				if ($active)
+				{
+					$log .= "<br><span class=\"yellow b\">物尽其用！你夺走了对方所有未使用的卡片。</span><br>";
+					$pd['battlelog'] .= '<span class="red b">对方夺走了你所有未使用的卡片！</span>';
+				}
+				else
+				{
+					$log .= "<br><span class=\"red b\">你所有未使用的卡片被对方夺走了！</span><br>";
+					$pa['battlelog'] .= "<span class=\"yellow b\">你夺走了对方所有未使用的卡片！</span>";
+				}
 				add_card_uvo_extra($pd_cards, $pa);
+				remove_card_uvo_extra('all', $pd);
 			}
 		}
 	}
