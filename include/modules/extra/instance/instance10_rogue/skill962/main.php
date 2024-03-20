@@ -145,7 +145,8 @@ namespace skill962
 		}
 		elseif ($st == 1)
 		{
-			$ret .= '<input type="button" class="cmdbutton" disabled="true" value="更换">';
+			$skill962_cost = get_skill962_cost($pa);
+			$ret .= '<input type="button" class="cmdbutton" disabled="true" value="更换" title="<span class=\'red b\'>需要支付'.$skill962_cost.'元</span>">';
 		}
 		return $ret;
 	}

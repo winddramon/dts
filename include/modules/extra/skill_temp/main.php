@@ -95,7 +95,18 @@ namespace skill_temp
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$now = get_var_in_module('now', 'sys');
 		$temp_time = (int)$temp_time;
-		if ($temp_time > 0) \skillbase\skill_setvalue($skillid, 'tsk_expire', $now + $temp_time, $pa);
+		if ($temp_time > 0) {
+			//在1003号技能记录开始时间
+			if(defined('MOD_SKILL1003')){
+				$tsk_start = \skillbase\skill_getvalue(1003, 'tsk_start', $pa);
+				if(empty($tsk_start) || 1 != bufficons_check_buff_state('tsk', $pa)) {
+					\skillbase\skill_setvalue(1003, 'tsk_start', $now, $pa);
+				}
+			}
+			//实际记录临时技能时间
+			\skillbase\skill_setvalue($skillid, 'tsk_expire', $now + $temp_time, $pa);
+			
+		}
 	}
 	
 	//技能图标显示。对应的$token标记为tsk，应该是第一个不是数字的$token
@@ -131,8 +142,16 @@ namespace skill_temp
 				{
 					$ret = 1;
 					//可能同时有多个时长不同的buff，icon仅提示有buff存在
-					$tmp_totsec = $buff_rmmax;
-					$tmp_nowsec = 0;
+					if(defined('MOD_SKILL1003')){
+						$tsk_start = \skillbase\skill_getvalue(1003, 'tsk_start', $pa);
+						if(empty($tsk_start)) {
+							$tmp_totsec = $buff_rmmax;
+							$tmp_nowsec = 0;
+						}else{
+							$tmp_totsec = $buff_tmax - $tsk_start;
+							$tmp_nowsec = $now - $tsk_start;
+						}
+					}
 					$tsk_hint = show_tsk_hint($tsk_idlist);
 				}
 				else

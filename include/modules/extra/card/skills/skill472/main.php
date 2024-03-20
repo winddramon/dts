@@ -5,6 +5,8 @@ namespace skill472
 	function init() 
 	{
 		define('MOD_SKILL472_INFO','card;upgrade;');
+		eval(import_module('clubbase'));
+		$clubskillname[472] = '窃取';
 	}
 	
 	function acquire472(&$pa)

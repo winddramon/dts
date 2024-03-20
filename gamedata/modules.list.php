@@ -398,6 +398,7 @@ npc_action,extra/npc_action/,1
 skill720,extra/card/skills/skill720/,1
 get_qiegao_in_battle,extra/misc/get_qiegao_in_battle/,1
 skill734,extra/card/skills/skill734/,1
+item_uvo_extra,extra/item_extra/item_uvo_extra/,1
 skill43,extra/club/skills/skill43/,1
 itemnumlist,extra/item_extra/itemnumlist/,1
 skill56,extra/club/skills/skill56/,1
@@ -714,6 +715,7 @@ skill709,extra/card/skills/skill709/,1
 skill722,extra/card/skills/skill722/,1
 skill737,extra/card/skills/skill737/,1
 instance10,extra/instance/instance10_rogue/,1
+skill748,extra/card/skills/skill748/,1
 skill714,extra/card/skills/skill714/,1
 ex_purity,extra/attr/ex_purity/,1
 skill26,extra/club/skills/skill26/,1

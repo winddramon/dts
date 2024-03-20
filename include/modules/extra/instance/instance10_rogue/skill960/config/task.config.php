@@ -25,7 +25,7 @@ namespace skill960
 	//'item_search'类型任务条件包括：'itm'：道具名称列表，'itm_match'：0(默认):严格匹配，1:包含，'itmk'：道具类别列表，'num'：需求提交道具数
 	//'item_use'类型任务条件包括：'itm'：道具名称列表，'itm_match'：0(默认):严格匹配，1:包含，'itmk'：道具类别列表，'num'：需求提交道具数
 	//'special'类型任务条件包括：'skillid'：任务技能编号，'lvl'：任务技能需求等级
-	//reward：任务奖励，'money'：金钱，'exp'：经验，'item'：道具，'invscore'：调查度
+	//reward：任务奖励，'money'：金钱，'exp'：经验，'item'：道具，'invscore'：调查度，'card'：卡片（需要模块item_uvo_extra）
 	$tasks_info = array
 	(
 		1 => array
