@@ -57,10 +57,10 @@ namespace skill952
 				if (rand(0,2)) skill952_sendin_core(array('itm'=>'蓝色的技能核心','itmk'=>'SCC2','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
 				else skill952_sendin_core(array('itm'=>'绿色的技能核心','itmk'=>'SCB2','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
 			}
-			//M卡：两次随机称号技能三选一，一个随机技能组A-S技能
+			//M卡：三次随机称号技能三选一，一个随机技能组A-S技能。目前入场固定S所以固定是这个
 			else
 			{
-				skill952_sendin_core(array('itm'=>'深紫色的技能核心','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>''), $pa);
+				skill952_sendin_core(array('itm'=>'深紫色的技能核心','itmk'=>'SC01','itme'=>1,'itms'=>3,'itmsk'=>''), $pa);
 				if (rand(0,2)) skill952_sendin_core(array('itm'=>'橙色的技能核心','itmk'=>'SCA2','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
 				else skill952_sendin_core(array('itm'=>'银色的技能核心','itmk'=>'SCS2','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
 			}

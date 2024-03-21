@@ -16,7 +16,7 @@ namespace instance10
 		eval(import_module('sys'));
 		$card = $chprocess($card);
 		if (20 == $gametype){
-			$card=1001;
+			$card=1002;
 		}
 		return $card;
 	}
@@ -30,7 +30,7 @@ namespace instance10
 		if (20 == $gametype)
 		{
 			foreach($card_ownlist as $cv){
-				if(1001 != $cv) $card_disabledlist[$cv][]='e3';
+				if(1002 != $cv) $card_disabledlist[$cv][]='e3';
 			}
 		}
 		return $card_disabledlist;
@@ -43,9 +43,9 @@ namespace instance10
 		list($cardChosen, $card_ownlist, $packlist, $hideDisableButton) = $chprocess($cardChosen, $card_ownlist, $packlist, $hideDisableButton);	
 		if (20 == $gametype)
 		{
-			$cardChosen = 1001;//自动选择肉鸽来客
-			$card_ownlist[] = 1001;
-			$cards[1001]['pack'] = 'Ranmen';
+			$cardChosen = 1002;//自动选择鸽勇者
+			$card_ownlist[] = 1002;
+			$packlist[] = $cards[1002]['pack'] = 'Pungeon';
 			$hideDisableButton = 0;
 		}
 		return array($cardChosen, $card_ownlist, $packlist, $hideDisableButton);
