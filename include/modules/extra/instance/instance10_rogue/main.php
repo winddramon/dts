@@ -288,16 +288,16 @@ namespace instance10
 				$log .= "你使用了{$itm}，却发现没有可以连接上的网络。怎么会这样？<br>";
 				return;
 			}
-			//每个人只能吃7个技能核心
-			elseif (strpos($itmk, 'SC') === 0)
-			{
-				$sc_count = (int)\skillbase\skill_getvalue(951,'sc_count',$sdata);
-				if ($sc_count >= 7)
-				{
-					$log .= "<span class=\"yellow b\">你已经使用过7个技能核心，无法再使用了。</span><br>";
-					return;
-				}
-			}
+			//每个人只能吃7个技能核心，已取消
+			// elseif (strpos($itmk, 'SC') === 0)
+			// {
+				// $sc_count = (int)\skillbase\skill_getvalue(951,'sc_count',$sdata);
+				// if ($sc_count >= 7)
+				// {
+					// $log .= "<span class=\"yellow b\">你已经使用过7个技能核心，无法再使用了。</span><br>";
+					// return;
+				// }
+			// }
 			//使用结局道具
 			elseif (strpos($itmk, 'Y') === 0 || strpos($itmk, 'Z') === 0)
 			{	

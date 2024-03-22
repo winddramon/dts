@@ -34,36 +34,40 @@ namespace skill952
 		$chprocess($pa);
 		if (\skillbase\skill_query(952, $pa))
 		{
-			eval(import_module('cardbase'));
+			//目前入场固定M卡，开局奖励三次随机称号技能三选一，以及一个随机技能组B级技能
+			skill952_sendin_core(array('itm'=>'深紫色的技能核心','itmk'=>'SC01','itme'=>1,'itms'=>3,'itmsk'=>''), $pa);
+			skill952_sendin_core(array('itm'=>'橙色的技能核心','itmk'=>'SCB2','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
+			
+			//eval(import_module('cardbase'));
 			//S卡：一个随机称号技能
-			if ($cards[$pa['card']]['rare'] == 'S')
-			{
-				skill952_sendin_core(array('itm'=>'淡紫色的技能核心','itmk'=>'SC02','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
-			}
+			// if ($cards[$pa['card']]['rare'] == 'S')
+			// {
+				// skill952_sendin_core(array('itm'=>'淡紫色的技能核心','itmk'=>'SC02','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
+			// }
 			//A卡：随机称号技能三选一
-			elseif ($cards[$pa['card']]['rare'] == 'A')
-			{
-				skill952_sendin_core(array('itm'=>'深紫色的技能核心','itmk'=>'SC01','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
-			}
+			// elseif ($cards[$pa['card']]['rare'] == 'A')
+			// {
+				// skill952_sendin_core(array('itm'=>'深紫色的技能核心','itmk'=>'SC01','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
+			// }
 			//B卡：两次随机称号技能三选一
-			elseif ($cards[$pa['card']]['rare'] == 'B')
-			{
-				skill952_sendin_core(array('itm'=>'深紫色的技能核心','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>''), $pa);
-			}
+			// elseif ($cards[$pa['card']]['rare'] == 'B')
+			// {
+				// skill952_sendin_core(array('itm'=>'深紫色的技能核心','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>''), $pa);
+			// }
 			//C卡：两次随机称号技能三选一，一个随机技能组C-B技能
-			elseif ($cards[$pa['card']]['rare'] == 'C')
-			{
-				skill952_sendin_core(array('itm'=>'深紫色的技能核心','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>''), $pa);
-				if (rand(0,2)) skill952_sendin_core(array('itm'=>'蓝色的技能核心','itmk'=>'SCC2','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
-				else skill952_sendin_core(array('itm'=>'绿色的技能核心','itmk'=>'SCB2','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
-			}
-			//M卡：三次随机称号技能三选一，一个随机技能组A-S技能。目前入场固定S所以固定是这个
-			else
-			{
-				skill952_sendin_core(array('itm'=>'深紫色的技能核心','itmk'=>'SC01','itme'=>1,'itms'=>3,'itmsk'=>''), $pa);
-				if (rand(0,2)) skill952_sendin_core(array('itm'=>'橙色的技能核心','itmk'=>'SCA2','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
-				else skill952_sendin_core(array('itm'=>'银色的技能核心','itmk'=>'SCS2','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
-			}
+			// elseif ($cards[$pa['card']]['rare'] == 'C')
+			// {
+				// skill952_sendin_core(array('itm'=>'深紫色的技能核心','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>''), $pa);
+				// if (rand(0,2)) skill952_sendin_core(array('itm'=>'蓝色的技能核心','itmk'=>'SCC2','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
+				// else skill952_sendin_core(array('itm'=>'绿色的技能核心','itmk'=>'SCB2','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
+			// }
+			//M卡：两次随机称号技能三选一，一个随机技能组A-S技能
+			// else
+			// {
+				// skill952_sendin_core(array('itm'=>'深紫色的技能核心','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>''), $pa);
+				// if (rand(0,2)) skill952_sendin_core(array('itm'=>'橙色的技能核心','itmk'=>'SCA2','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
+				// else skill952_sendin_core(array('itm'=>'银色的技能核心','itmk'=>'SCS2','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
+			// }
 		}
 	}
 	

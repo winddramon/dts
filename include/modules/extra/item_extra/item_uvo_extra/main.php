@@ -156,6 +156,19 @@ namespace item_uvo_extra
 		$card_valid_info = $cards[$cardid]['valid'];
 		list($items, $skills) = use_card_uvo_process($card_valid_info, $pa);
 		
+		if ($cardid_o == 344)//油库里
+		{
+			$skills = array();
+		}
+		elseif ($cardid_o == 381)//双料特工
+		{
+			$skills = array();
+			$items = array(
+				array('itm'=>'手榴弹','itmk'=>'WC','itme'=>40,'itms'=>1,'itmsk'=>''),
+				array('itm'=>'毒物说明书','itmk'=>'A','itme'=>1,'itms'=>1,'itmsk'=>'')
+				);
+		}
+		
 		remove_card_uvo_extra($cardid_o, $pa, 0);
 		add_card_uvo_extra($cardid_o, $pa, 1);
 		
