@@ -90,7 +90,7 @@ namespace bufficons
 				if(\skillbase\check_skill_info($token, 'upgrade;')) $config['clickable'] = 1;
 			}
 			if(empty($config['onclick']) && !empty($config['clickable'])) {
-				$config['onclick'] = "$('mode').value='special';$('command').value='skill".$token."_special';$('subcmd').value='activate';postCmd('gamecmd','command.php',this);";
+				$config['onclick'] = "if(!$('mode')||!$('command')||!$('subcmd'))return;$('mode').value='special';$('command').value='skill".$token."_special';$('subcmd').value='activate';postCmd('gamecmd','command.php',this);";
 			}
 			if(empty($config['hint'])){
 				eval(import_module('clubbase'));

@@ -11,7 +11,7 @@ namespace skill962
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[962] = '寻路';
 		$bufficons_list[962] = Array(
-			'onclick' => "$('mode').value='special';$('command').value='skill960_special';$('subcmd').value='show';postCmd('gamecmd','command.php');this.disabled=true;",
+			'onclick' => "if(!$('mode')||!$('command')||!$('subcmd'))return;$('mode').value='special';$('command').value='skill960_special';$('subcmd').value='show';postCmd('gamecmd','command.php',this);",
 			'activate_hint' => '打开任务界面以更换任务',
 		);
 	}
