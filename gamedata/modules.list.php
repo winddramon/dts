@@ -46,6 +46,7 @@ attack,base/attack/,1
 instance0,extra/instance/instance0/,1
 weapon,base/weapon/weapon/,1
 npcchat,base/npcchat/,1
+ex_vanish,extra/attr/ex_vanish/,1
 clubbase,extra/club/clubbase/,1
 wep_n,base/weapon/wep_n/,1
 wep_p,base/weapon/wep_p/,1
