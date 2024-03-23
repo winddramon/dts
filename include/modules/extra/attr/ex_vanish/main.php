@@ -5,7 +5,7 @@ namespace ex_vanish
 	function init() 
 	{
 		eval(import_module('itemmain'));
-		$itemspkinfo['X'] = '消失';
+		$itemspkinfo['X'] = '唯我';
 		$itemspkdesc['X'] = '这一道具会在持有角色死亡或玩家获得时消失';
 		$itemspkremark['X'] = '……';
 	}
