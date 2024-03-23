@@ -400,6 +400,7 @@ namespace item_uvo_extra
 		$blink = 0;
 		$is_new = 0;
 		$log .= '<span class="yellow b">你用「'.$cards[$cardid1]['name'].'」和「'.$cards[$cardid2]['name'].'」合成了卡片「'.$cards[$get_card_id]['name'].'」！</span><br>';
+		addnews(0, 'cardmix', $pa['name'], $cards[$cardid1]['name'], $cards[$cardid2]['name'], $cards[$get_card_id]['name']);
 		
 		ob_clean();
 		include template('MOD_CARDBASE_CARDFLIP_RESULT');
@@ -499,6 +500,18 @@ namespace item_uvo_extra
 				remove_card_uvo_extra('all', $pd);
 			}
 		}
+	}
+	
+	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		
+		eval(import_module('sys','player'));
+		
+		if ($news == 'cardmix')
+			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"yellow b\">{$a}用卡片“{$b}”和“{$c}”合成了卡片“{$d}”！</span></li>";
+		
+		return $chprocess($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr);
 	}
 	
 }

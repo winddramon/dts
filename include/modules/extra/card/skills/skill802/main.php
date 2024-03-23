@@ -32,7 +32,7 @@ namespace skill802
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa,$pd,$active);
 		//lvl为1则物品和金钱全部消失
-		if (\skillbase\skill_query(802,$pd) && \skillbase\skill_getvalue(802,'lvl',$pd))
+		if (\skillbase\skill_query(802,$pd) && \skillbase\skill_getvalue(802,'lvl',$pd) && $pd['hp'] <= 0)
 		{
 			$pd['weps']=0;$pd['arbs']=0;$pd['arhs']=0;$pd['aras']=0;$pd['arfs']=0;$pd['arts']=0;
 			$pd['itms0']=0;$pd['itms1']=0;$pd['itms2']=0;$pd['itms3']=0;$pd['itms4']=0;$pd['itms5']=0;$pd['itms6']=0;
