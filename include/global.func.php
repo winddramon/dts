@@ -695,7 +695,7 @@ function http_build_cookiedata($cookie_arr){
 	$cookiedata= '';
 	if(!empty($cookie_arr)){
 		foreach($cookie_arr as $k=> $v){
-			$cookiedata.= $k.'='.$v.'; ';//浏览器传cookie时;后有空格
+			$cookiedata.= $k.'='.urlencode($v).'; ';//浏览器传cookie时;后有空格
 		}
 		if(strlen($cookiedata)>0){
 			$cookiedata= substr($cookiedata, 0, -2);
