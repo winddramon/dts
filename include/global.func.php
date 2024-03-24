@@ -1176,7 +1176,7 @@ function fatenum_create($seed, $len = 9)
 	if(empty($fatenum_str)) {
 		$fatenum_str = hexdec(substr($hash, 0, 3));
 	}
-	if((int)$fatenum_str < 1997) $fatenum_str = (int)$fatenum_str * 999983;
+	if((int)$fatenum_str < 1997) $fatenum_str = $fatenum_str * 999983;
 	return (string)$fatenum_str;
 }
 

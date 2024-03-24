@@ -107,7 +107,7 @@ namespace itemmain
 		//v   ex_seckill 直死
 		//W   ex_dmg_def 隔音
 		//w   ex_dmg_att 音波
-		//X   ///////////////////////////
+		//X   ex_vanish 唯我
 		'x' => '奇迹',
 		//Y   ex_purity 纯粹
 		//y   ex_attr_pierce 属穿
