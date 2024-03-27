@@ -404,7 +404,8 @@ namespace skill960
 		$task_tip = '';
 		if (isset($tasks_info[$taskid]['name']))
 		{
-			$task_tip .= "<span class=\"yellow b\">【{$tasks_info[$taskid]['name']}】</span>";
+			if (!empty($tasks_info[$taskid]['elite'])) $task_tip .= "<span class=\"red b\">【{$tasks_info[$taskid]['name']}】（精英任务）</span>";
+			else $task_tip .= "<span class=\"yellow b\">【{$tasks_info[$taskid]['name']}】</span>";
 		}
 		$prog_show = min($prog, $tasks_info[$taskid]['taskreq']['num']);
 		if (isset($tasks_info[$taskid]['taskreq']['num'])) $task_tip .= "（<span class=\"yellow b\">{$prog_show} / {$tasks_info[$taskid]['taskreq']['num']}</span>）";
