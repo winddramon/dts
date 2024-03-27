@@ -105,7 +105,7 @@ namespace skill734
 		return $bonus;
 	}
 	
-	function skill734_play(&$pa, &$pd=null)
+	function skill734_play(&$pa, $pd=null)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','logger'));
@@ -114,8 +114,10 @@ namespace skill734
 		{
 			$pa_cards = skill734_deal();
 			\skillbase\skill_setvalue(734,'cards',gencode($pa_cards),$pa);
-			if (empty($pd))
+			if (empty($pd) || $pd == 'pc0' || $pd == 'pc1' || $pd == 'pc2')
 			{
+				if (empty($pd)) $pd = 'pc0';
+				\skillbase\skill_setvalue(734,'op',$pd,$pa);
 				$pd_cards = skill734_deal();
 				\skillbase\skill_setvalue(734,'cards_op',gencode($pd_cards),$pa);
 			}
@@ -155,20 +157,59 @@ namespace skill734
 					$pa_cards[$v]['open'] = 1;
 				}
 				\skillbase\skill_setvalue(734,'cards',gencode($pa_cards),$pa);
-				if (empty($pd))
+				
+				//对手出牌，暂时只考虑电脑对手
+				$pd = \skillbase\skill_getvalue(734,'op',$pa);
+				$pd_cards = gdecode(\skillbase\skill_getvalue(734,'cards_op',$pa), 1);
+				
+				if ($pd == 'pc0')
 				{
-					$pd_cards = gdecode(\skillbase\skill_getvalue(734,'cards_op',$pa), 1);
-					foreach (range(1,3) as $v)
-					{
-						$pd_cards[$v]['played'] = 1;
-					}
-					$pd_cards[1]['open'] = 1;
-					foreach (range(4,5) as $v)
-					{
-						$pd_cards[$v]['open'] = 1;
-					}
-					\skillbase\skill_setvalue(734,'cards_op',gencode($pd_cards),$pa);
+					$cards_played_op = range(1,3);
 				}
+				elseif ($pd == 'pc1' || $pd == 'pc2')
+				{
+					eval(import_module('cardbase'));
+					$strategy = array('S','A','B','C','M');
+					if ($pd == 'pc2')
+					{
+						foreach ($cards_played as $v)
+						{
+							if ($cards[$pa_cards[$v]['cid']]['rare'] == 'S')
+							{
+								$strategy = array('M','S','A','B','C');
+								break;
+							}
+						}
+					}
+					$cards_played_op = array();
+					$played_count = 0;
+					foreach ($strategy as $r)
+					{
+						foreach ($pd_cards as $k => $c)
+						{
+							if ($cards[$c['cid']]['rare'] == $r)
+							{
+								$cards_played_op[] = $k;
+								$played_count += 1;
+								if ($played_count == 3) break;
+							}
+						}
+						if ($played_count == 3) break;
+					}
+					shuffle($cards_played_op);
+				}
+				foreach ($cards_played_op as $v)
+				{
+					$pd_cards[$v]['played'] = 1;
+				}
+				$pd_cards[$cards_played_op[0]]['open'] = 1;
+				$arr = array_diff(range(1,5), $cards_played_op);
+				foreach ($arr as $v)
+				{
+					$pd_cards[$v]['open'] = 1;
+				}
+				\skillbase\skill_setvalue(734,'cards_op',gencode($pd_cards),$pa);
+				
 				\skillbase\skill_setvalue(734,'step',2,$pa);
 				ob_start();
 				include template(MOD_SKILL734_PLAYCARD);
@@ -177,10 +218,9 @@ namespace skill734
 			}
 			elseif ($pa_step == 2)
 			{
-				if (empty($pd))
-				{
-					$pd_cards = gdecode(\skillbase\skill_getvalue(734,'cards_op',$pa), 1);
-				}
+				$pd = \skillbase\skill_getvalue(734,'op',$pa);
+				$pd_cards = gdecode(\skillbase\skill_getvalue(734,'cards_op',$pa), 1);
+				
 				if (!isset($pa_cards[$card1]['played']) || !isset($pa_cards[$card2]['played']) || !isset($pa_cards[$card3]['played']))
 				{
 					$log .= '输入参数有误，或有未正常结束的牌局。';
@@ -191,7 +231,49 @@ namespace skill734
 					return;
 				}
 				$cards1 = array($pa_cards[$card1]['cid'], $pa_cards[$card2]['cid'], $pa_cards[$card3]['cid']);
-				$cards2 = array($pd_cards[1]['cid'], $pd_cards[2]['cid'], $pd_cards[3]['cid']);
+				if ($pd == 'pc0')
+				{
+					$cards2 = array($pd_cards[1]['cid'], $pd_cards[2]['cid'], $pd_cards[3]['cid']);
+				}
+				elseif ($pd == 'pc1' || $pd == 'pc2')
+				{
+					$cids_played_op = array();
+					foreach ($pd_cards as $c)
+					{
+						if (isset($c['played'])) $cids_played_op[] = $c['cid'];
+					}
+					if ($pd == 'pc1')
+					{
+						shuffle($cids_played_op);
+						$cards2 = $cids_played_op;
+					}
+					elseif ($pd == 'pc2')
+					{
+						$scores = array();
+						//丑陋但可行
+						$perms = array(array(0,1,2),array(0,2,1),array(1,0,2),array(1,2,0),array(2,0,1),array(2,1,0));
+						$flag = 0;
+						foreach ($perms as $perm)
+						{
+							$cards2 = array($cids_played_op[$perm[0]], $cids_played_op[$perm[1]], $cids_played_op[$perm[2]]);
+							$score = skill734_compare($cards1, $cards2);
+							$scoresum = array_sum($score);
+							if ($scoresum < 0)
+							{
+								$flag = 1;
+								break;
+							}
+							$scores[] = $scoresum;
+						}
+						if (!$flag)
+						{
+							$min_k = array_keys($scores, min($scores))[0];
+							$perm = $perms[$min_k];
+							$cards2 = array($cids_played_op[$perm[0]], $cids_played_op[$perm[1]], $cids_played_op[$perm[2]]);
+						}
+					}
+				}
+				
 				$score = skill734_compare($cards1, $cards2);
 				$scoresum = array_sum($score);
 				
@@ -239,7 +321,9 @@ namespace skill734
 					$playcard_result_words = "结果是平局";
 				}
 				\skillbase\skill_setvalue(734,'step',0,$pa);
-				if (empty($pd)) $name2 = '睿智机器人';
+				if ($pd == 'pc0') $name2 = '睿智机器人';
+				elseif ($pd == 'pc1') $name2 = '牛肉';
+				elseif ($pd == 'pc2') $name2 = '冴月麟MK-V';
 				addnews(0, 'playcard734', $pa['name'], $name2, $playcard_result_words);
 				return;
 			}
@@ -263,7 +347,9 @@ namespace skill734
 		$skill734_opid = (int)get_var_input('skill734_opid');
 		if (!empty($skill734_opid))
 		{
-			if ($skill734_opid == 1000) skill734_play($sdata);
+			if ($skill734_opid == 1000) skill734_play($sdata, 'pc0');
+			elseif ($skill734_opid == 1001) skill734_play($sdata, 'pc1');
+			elseif ($skill734_opid == 1002) skill734_play($sdata, 'pc2');
 			else //未完成
 			{
 				$log .= '输入参数有误。';

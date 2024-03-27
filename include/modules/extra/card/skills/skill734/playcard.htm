@@ -13,7 +13,7 @@
 	</th>
 	<th>
 	对手的卡片：<br>
-	<!--{eval if (empty($pd)) $pd_cards = gdecode(\skillbase\skill_getvalue(734,'cards_op',$sdata), 1);}-->
+	<!--{eval $pd_cards = gdecode(\skillbase\skill_getvalue(734,'cards_op',$sdata), 1);}-->
 	<!--{loop $pd_cards $v}-->
 	<!--{if isset($v['open'])}-->
 	<span class="$card_rarecolor[$cards[$v['cid']]['rare']]">【$cards[$v['cid']]['name'] $cards[$v['cid']]['rare']】</span><br>
