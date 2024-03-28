@@ -58,7 +58,7 @@ namespace skill96
 				$dmgdown = 30 + round(0.1 * $skill96_effect);
 				if ($active) $log .= "<span class=\"yellow b\">「魂音」使{$pd['name']}受到的伤害降低了{$dmgdown}%！</span><br>";
 				else $log .=" <span class=\"yellow b\">「魂音」使你受到的伤害降低了{$dmgdown}%！</span><br>";
-				$r[] = 1 - $dmggain / 100;
+				$r[] = 1 - $dmgdown / 100;
 			}
 		}
 		return array_merge($r,$chprocess($pa,$pd,$active));
