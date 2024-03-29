@@ -700,6 +700,7 @@ skill713,extra/card/skills/skill713/,1
 skill712,extra/card/skills/skill712/,1
 skill587,extra/card/skills/skill587/,1
 skill960,extra/instance/instance10_rogue/skill960/,1
+skill964,extra/instance/instance10_rogue/skill964/,1
 skill543,extra/card/skills/skill543/,1
 skill733,extra/card/skills/skill733/,1
 skill183,extra/club/skills/skill183/,1
