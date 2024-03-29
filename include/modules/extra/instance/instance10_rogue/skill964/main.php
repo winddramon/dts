@@ -25,7 +25,7 @@ namespace skill964
 		1 => array('name' => '红与蓝', 'cards' => array(39,40)),//红暮和蓝凝
 		2 => array('name' => '猫', 'cards' => array(165,289,342,351,386,392), 'count' => 3),//NIKO，拷贝猫，三花，阿燐，姬特，猫盒
 		3 => array('name' => '熊的力量', 'cards' => array(5,13,95,96), 'count' => 3),//虚子，熊本熊，冰炎
-		4 => array('name' => '挑战者', 'cards' => array(70,72,74,75,76,77,78,79,81,82,83,84,85.86,97,117,121,122,124,139,150,153,154,155,162,163,164,167,171,189,192,194,251,257,312,347,359,377,387,393,394,395,400,409), 'count' => 5),//卡名含有挑战者的卡
+		4 => array('name' => '挑战者', 'cards' => array(70,72,74,75,76,77,78,79,81,82,83,84,85,86,97,117,121,122,124,139,150,153,154,155,162,163,164,167,171,189,192,194,251,257,312,347,359,377,387,393,394,395,400,409), 'count' => 5),//卡名含有挑战者的卡
 		5 => array('name' => '永夜异变', 'cards' => array(268,358,352,158,186,277,350,273,290), 'count' => 4),//永夜抄
 		);
 	
@@ -183,7 +183,7 @@ namespace skill964
 		if (\skillbase\skill_query(964, $pa))
 		{
 			$dmggain = get_buffrate964(1, $pa);
-			if (in_array(4, get_combo964($pa))) $dmggain += 100;
+			if (in_array(4, get_combo964($pa))) $dmggain += 150;
 			if ($dmggain > 0)
 			{
 				eval(import_module('logger'));
@@ -326,7 +326,7 @@ namespace skill964
 				if ($c == 1) $w .= "视为具有<span class=\"yellow b\">火焰</span>、<span class=\"yellow b\">冻气</span>、<span class=\"yellow b\">灼焰</span>、<span class=\"yellow b\">冰华</span>、<span class=\"yellow b\">属穿</span>属性";
 				elseif ($c == 2) $w .= "回避率<span class=\"yellow b\">+95%</span>";
 				elseif ($c == 3) $w .= "获得技能“<span class=\"yellow b\">暴风</span>”和“<span class=\"yellow b\">直死4</span>”";
-				elseif ($c == 4) $w .= "造成物理伤害<span class=\"yellow b\">+100%</span>";
+				elseif ($c == 4) $w .= "造成物理伤害<span class=\"yellow b\">+150%</span>";
 				elseif ($c == 5) $w .= "受到伤害<span class=\"yellow b\">-90%</span><br>";
 			}
 		}
