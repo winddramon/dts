@@ -17,6 +17,19 @@ namespace skill606
 	function lost606(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$uip = & get_var_in_module('uip','sys');
+		$uip['effect']['class_changeto'] = Array('rotater_2', 'rotater');
+	}
+	
+	function parse_interface_gameinfo()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$chprocess();
+		if(\skillbase\skill_query(606))
+		{
+			$uip = & get_var_in_module('uip','sys');
+			$uip['effect']['class_changeto'] = Array('rotater', 'rotater_2');
+		}
 	}
 	
 }

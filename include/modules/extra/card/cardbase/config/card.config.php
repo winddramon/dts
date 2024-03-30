@@ -6780,7 +6780,7 @@ $cards = array(
 		)
 	),
 	419 => array(
-		'name' => '"Rulebreaker"',
+		'name' => '邪正人鬼',
 		'rare' => 'C',
 		'pack' => '東埔寨Protoject',
 		'desc' => '東埔寨掌管下克上的鬼人',
