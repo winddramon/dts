@@ -53,6 +53,7 @@ namespace bufficons
 	// }
 
 	//2024.02.26 原bufficons_list()函数大量重复实现太愚蠢了，改为每个技能或者效果只提供必要参数，在这里统一实现
+	//2024.03.30 似人不显示图标（改在profile.htm那里了）
 	function bufficons_display(&$pa=NULL)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
