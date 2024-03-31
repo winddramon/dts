@@ -63,6 +63,7 @@ $mixinfo = array
 	//array('class' => 'wk', 'stuff' => array('吼剑【地咬】','大型闹钟','GS【伪Hand_Sonic】','【逆转的女神】','触手的力量'),'result' => array('冲剑【虎啸】','WK',3170,250,'Nr^ac1',),),
 	array('class' => 'wk', 'stuff' => array('吼剑【地咬】','爪拳 Haab','破魔镰·断月','『雷米尔之冲击』','5.45mm 无声手枪','空想爆弹 ~ 出乎意料'),'result' => array('冲剑【虎啸】','WK',4320,250,'Nr^ac1',),),
 	array('class' => 'wk', 'stuff' => array('冲剑【虎啸】','世灭之愿','强袭之愿','CAVE社特典CD『胎慟』'),'result' => array('绝冲剑【虎王】','WK',7290,2350,'Nnrd^ac1'),),
+	array('class' => 'wk', 'stuff' => array('冲剑【虎啸】','GOTHIC的ID卡','头奖壶 777','『呜——上上下下左右左右BABA！』'),'result' => array('绝冲剑【虎王】','WK',7290,2350,'Nnrd^ac1'),),
 	array('class' => 'wk', 'stuff' => array('绝冲剑【虎王】','最终战术『剑海』'),'result' => array('绝冲大剑【神威】','WK',80000,'∞','ZNnyrdh^ac1'),),
 	
 	array('class' => 'hidden', 'stuff' => array('冰封的『Oathkeeper』','火把'),'result' => array('『Oathkeeper』','WK',300,10,'u'),),
@@ -101,6 +102,9 @@ $mixinfo = array
 	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·终堕天】','『410Gauge重型左轮』','【HP制御系统】'),'result' => array('【死神降临】','WP',6666,666,'nyNdrv'),),
 	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·终堕天】','格林多管激光炮','【HP制御系统】'),'result' => array('【死神降临】','WP',6666,666,'ByNdrv'),),
 	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·终堕天】','小型高威力试作性防身设备『绯蜂』','【HP制御系统】'),'result' => array('【死神降临】','WP',6666,666,'bBNdrv'),),
+	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·终堕天】','『染星之弓·斯黛拉』','【HP制御系统】'),'result' => array('【死神降临】','WP',6666,666,'nyNdrv'),),
+	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·终堕天】','真 爽 铳 V.J.A.','【HP制御系统】'),'result' => array('【死神降临】','WP',6666,666,'ByNdrv'),),
+	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·终堕天】','ACME牌·公开招标·自我防护套装','【HP制御系统】'),'result' => array('【死神降临】','WP',6666,666,'bBNdrv'),),
 	array('class' => 'wp_mrm', 'stuff' => array('【死神降临】','【死神降临】','【死神降临】'),'result' => array('【死神绝界】','WP',6666,666,'ZBbdrV'),),
 	
 	
@@ -275,6 +279,8 @@ $mixinfo = array
 	array('class' => 'wf', 'stuff' => array('霊符「夢想封印」','《东方灵异传》','☆★☆大打击☆★☆'),'result' => array('神技「八方龍殺陣」','WFD',320,'∞','crd'),),
 	array('class' => 'wf', 'stuff' => array('神技「八方鬼縛陣」','原型武器F','原型武器D','CAVE社特典CD『胎慟』'),'result' => array('神霊「夢想封印 瞬」','WFD',300,'∞','cnrdZ'),),
 	array('class' => 'wf', 'stuff' => array('神技「八方龍殺陣」','原型武器F','原型武器D','CAVE社特典CD『胎慟』'),'result' => array('神霊「夢想封印 瞬」','WFD',450,'∞','cnrdZ'),),
+	array('class' => 'wf', 'stuff' => array('神技「八方鬼縛陣」','原型武器F','原型武器D','『海丽丝』的追踪记录'),'result' => array('神霊「夢想封印 瞬」','WFD',300,'∞','cnrdZ'),),
+	array('class' => 'wf', 'stuff' => array('神技「八方龍殺陣」','原型武器F','原型武器D','『海丽丝』的追踪记录'),'result' => array('神霊「夢想封印 瞬」','WFD',450,'∞','cnrdZ'),),
 	array('class' => 'wf', 'stuff' => array('神霊「夢想封印 瞬」','最终战术『心火』'),'result' => array('「夢想天生」','WFD',32767,'∞','cnrtdZ'),),
 	array('class' => 'wf', 'stuff' => array('空白符卡','☆山蘑菇粉☆'),'result' => array('星符『星尘狂欢』','WF',60,'∞','u'),),
 	array('class' => 'wf', 'stuff' => array('空白符卡','黑色方块','白色方块'),'result' => array('迷你八卦炉','WFG',90,'∞','u'),),
@@ -284,6 +290,8 @@ $mixinfo = array
 	array('class' => 'wf', 'stuff' => array('恋符「极限火花」','《蘑菇种植指南》','《魔女的魔导书》'),'result' => array('光击「击月」','WFJ',480,'∞','cfd'),),
 	array('class' => 'wf', 'stuff' => array('光符「地球光」','原型武器F','原型武器G','CAVE社特典CD『胎慟』'),'result' => array('星符「龙陨星」','WFJ',400,'∞','cNfdZ'),),
 	array('class' => 'wf', 'stuff' => array('光击「击月」','原型武器F','原型武器G','CAVE社特典CD『胎慟』'),'result' => array('星符「龙陨星」','WFJ',600,'∞','cNfdZ'),),
+	array('class' => 'wf', 'stuff' => array('光符「地球光」','原型武器F','原型武器G','『海丽丝』的追踪记录'),'result' => array('星符「龙陨星」','WFJ',400,'∞','cNfdZ'),),
+	array('class' => 'wf', 'stuff' => array('光击「击月」','原型武器F','原型武器G','『海丽丝』的追踪记录'),'result' => array('星符「龙陨星」','WFJ',600,'∞','cNfdZ'),),
 	array('class' => 'wf', 'stuff' => array('星符「龙陨星」','最终战术『银花』'),'result' => array('魔炮「超究极火花」','WFJ',77000,'∞','cNyfdZ'),),
 	array('class' => 'wf', 'stuff' => array('星符「龙陨星」','最终战术『蝎尾』'),'result' => array('「掠日彗星」','WFP',89000,'∞','cNyfdZ'),),
 	array('class' => 'wf', 'stuff' => array('霊符「夢想妙珠」','御币','幻之使魔'),'result' => array('妖器「无慈悲御币」','WPF',200,180,'NLd^eqpsk37'),),
@@ -447,6 +455,7 @@ $mixinfo = array
 	array('class' => 'ocg', 'stuff' => array('宵星之机神 丁吉尔苏 ☆8 -仮','某种机械设备','钢琴线','☆八星认证☆'),'result' => array('宵星之机神 丁吉尔苏 ☆8','WC',260,'∞','dA^sa3Z^xyz8'),),
 	
 	array('class' => 'hidden', 'stuff' => array('歌词卡片【海洋】','歌词卡片【大地】','歌词卡片【星空】'),'result' => array('破灭之诗','Y',1,1,95),),
+	array('class' => 'hidden', 'stuff' => array('『随心所欲的虚拟笔』','『铭刻记忆的单词本』','『命定身体的契约书』'),'result' => array('破灭之诗','Y',1,1,95),),
 	array('class' => 'hidden', 'stuff' => array('矿泉水','面包','女生校服'),'result' => array('Untainted Glory','A',1,1,'Z'),),
 	array('class' => 'hidden', 'stuff' => array('矿泉水','面包','男生校服'),'result' => array('Untainted Glory','A',1,1,'Z'),),
 	array('class' => 'hidden', 'stuff' => array('「空想道具」','「空想道具」'),'result' => array('「空想道具」','X',1,1,'z'),),
