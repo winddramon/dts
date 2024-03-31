@@ -32,7 +32,7 @@ namespace item_misc
 				$ret .= '还不满足『幻境解离』的条件！使用后可以恢复成『C.H.A.O.S』';
 			}elseif ($n == '『G.A.M.E.O.V.E.R』') {
 				$ret .= '使用后达成『幻境解离』胜利';
-			}elseif ($n == '杏仁豆腐的ID卡') {
+			}elseif ($n == '杏仁豆腐的ID卡' || $n == '代码聚合体的ID卡') {
 				$ret .= '连斗后使用可以让全场NPC消失并进入『死斗阶段』';
 			}elseif (strpos($n,'水果刀')!==false) {
 				$ret .= '可以切水果，视你的斩系熟练度决定生成补给还是水果皮';
@@ -166,7 +166,7 @@ namespace item_misc
 				\player\player_save($sdata, 1);
 				$url = 'end.php';
 				\sys\gameover ( $now, 'end7', $name );
-			}elseif ($itm == '杏仁豆腐的ID卡') {
+			}elseif ($itm == '杏仁豆腐的ID卡' || $itm == '代码聚合体的ID卡') {
 				if ($gametype==2)
 				{
 					$log.='本模式下不可用。<br>';

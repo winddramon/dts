@@ -1,9 +1,12 @@
 <!--标准剧情：标准局、自选卡片、随机卡片、荣耀模式-->
-<!--{if 0==$gametype || 4==$gametype || 6==$gametype || 18==$gametype}-->
+<!--{if 0==$gametype || 4==$gametype || 6==$gametype}-->
 {template MOD_OPENING_STORYBOARD_GT0}
 <!--除错模式-->
 <!--{elseif 1==$gametype}-->
 {template MOD_OPENING_STORYBOARD_GT1}
+<!--荣耀模式-->
+<!--{elseif 18==$gametype}-->
+{template MOD_OPENING_STORYBOARD_GT18}
 <!--极速模式-->
 <!--{elseif 19==$gametype}-->
 {template MOD_OPENING_STORYBOARD_GT19}
