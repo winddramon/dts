@@ -11,7 +11,7 @@ namespace skill962
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[962] = '寻路';
 		$bufficons_list[962] = Array(
-			'onclick' => "$('mode').value='special';$('command').value='skill960_special';$('subcmd').value='show';postCmd('gamecmd','command.php');this.disabled=true;",
+			'onclick' => "if(!$('mode')||!$('command')||!$('subcmd'))return;$('mode').value='special';$('command').value='skill960_special';$('subcmd').value='show';postCmd('gamecmd','command.php',this);",
 			'activate_hint' => '打开任务界面以更换任务',
 		);
 	}
@@ -85,7 +85,7 @@ namespace skill962
 		
 		$taskid = get_var_input('taskid_submit');
 		$taskarr = \skill960\get_taskarr($sdata);
-		if (!isset($tasks_info[$taskid]) || (isset($tasks_info[$taskid]['rank']) && $tasks_info[$taskid]['rank'] > 10) || !in_array($taskid, $taskarr))
+		if (!isset($tasks_info[$taskid]) || (isset($tasks_info[$taskid]['rank']) && $tasks_info[$taskid]['rank'] > 10) || !empty($tasks_info[$taskid]['elite']) || !in_array($taskid, $taskarr))
 		{
 			$log .= '输入参数错误。<br>';
 			return;
@@ -129,15 +129,15 @@ namespace skill962
 		$st = check_skill962_state($pa);
 		eval(import_module('skill960'));
 		//特殊任务不能更换
-		if ($st > 0 && isset($tasks_info[$taskid]['rank']) && $tasks_info[$taskid]['rank'] > 10)
+		if ($st > 0 && ((isset($tasks_info[$taskid]['rank']) && $tasks_info[$taskid]['rank'] > 10) || !empty($tasks_info[$taskid]['elite'])))
 		{
-			$ret .= '<input type="button" class="cmdbutton"  title="<span class=\'yellow b\'>此任务无法更换</span>" disabled="true" value="更换">';
+			$ret .= '<input type="button" class="cmdbutton"  title="<span class=\'red b\'>此任务无法更换</span>" disabled="true" value="更换">';
 			return $ret;
 		}
 		if ($st == 2)
 		{
 			$skill962_cost = get_skill962_cost($pa);
-			$ret .= '<input type="button" class="cmdbutton" value="更换" title="<span class=\'red b\'>需要支付'.$skill962_cost.'元</span>" onclick="$(\'taskid_submit\').value=\''.$taskid.'\';$(\'command\').value=\'skill962_special\';postCmd(\'gamecmd\',\'command.php\');this.disabled=true;">';
+			$ret .= '<input type="button" class="cmdbutton" value="更换" title="<span class=\'yellow b\'>需要支付'.$skill962_cost.'元</span>" onclick="$(\'taskid_submit\').value=\''.$taskid.'\';$(\'command\').value=\'skill962_special\';postCmd(\'gamecmd\',\'command.php\');this.disabled=true;">';
 		}
 		elseif ($st == 3)
 		{

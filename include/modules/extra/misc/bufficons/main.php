@@ -53,6 +53,7 @@ namespace bufficons
 	// }
 
 	//2024.02.26 原bufficons_list()函数大量重复实现太愚蠢了，改为每个技能或者效果只提供必要参数，在这里统一实现
+	//2024.03.30 似人不显示图标（改在profile.htm那里了）
 	function bufficons_display(&$pa=NULL)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -90,7 +91,7 @@ namespace bufficons
 				if(\skillbase\check_skill_info($token, 'upgrade;')) $config['clickable'] = 1;
 			}
 			if(empty($config['onclick']) && !empty($config['clickable'])) {
-				$config['onclick'] = "$('mode').value='special';$('command').value='skill".$token."_special';$('subcmd').value='activate';postCmd('gamecmd','command.php',this);";
+				$config['onclick'] = "if(!$('mode')||!$('command')||!$('subcmd'))return;$('mode').value='special';$('command').value='skill".$token."_special';$('subcmd').value='activate';postCmd('gamecmd','command.php',this);";
 			}
 			if(empty($config['hint'])){
 				eval(import_module('clubbase'));

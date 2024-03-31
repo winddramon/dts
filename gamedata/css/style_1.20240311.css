@@ -596,6 +596,11 @@ div.battlecmd_desc{
 						transparent 83.3%,
 						transparent);
 }
+/*==========旋转==========*/
+.rotater_2 
+{
+	transform:rotate(180deg);
+}
 /*==========对话气泡==========*/
 .dialogue-bubble-container{ 
 	position: absolute;

@@ -7,7 +7,7 @@ namespace instance10
 		if(!isset($valid_skills[20])) {
 			$valid_skills[20] = array();
 		}
-		$valid_skills[20] += array(181,951,952,960,962);
+		$valid_skills[20] += array(181,951,952,960,962,964);
 	}
 	
 	//肉鸽模式自动选择肉鸽来客
@@ -16,7 +16,7 @@ namespace instance10
 		eval(import_module('sys'));
 		$card = $chprocess($card);
 		if (20 == $gametype){
-			$card=1001;
+			$card=1002;
 		}
 		return $card;
 	}
@@ -30,7 +30,7 @@ namespace instance10
 		if (20 == $gametype)
 		{
 			foreach($card_ownlist as $cv){
-				if(1001 != $cv) $card_disabledlist[$cv][]='e3';
+				if(1002 != $cv) $card_disabledlist[$cv][]='e3';
 			}
 		}
 		return $card_disabledlist;
@@ -43,9 +43,9 @@ namespace instance10
 		list($cardChosen, $card_ownlist, $packlist, $hideDisableButton) = $chprocess($cardChosen, $card_ownlist, $packlist, $hideDisableButton);	
 		if (20 == $gametype)
 		{
-			$cardChosen = 1001;//自动选择肉鸽来客
-			$card_ownlist[] = 1001;
-			$cards[1001]['pack'] = 'Ranmen';
+			$cardChosen = 1002;//自动选择鸽勇者
+			$card_ownlist[] = 1002;
+			$packlist[] = $cards[1002]['pack'] = 'Pungeon';
 			$hideDisableButton = 0;
 		}
 		return array($cardChosen, $card_ownlist, $packlist, $hideDisableButton);
@@ -288,16 +288,16 @@ namespace instance10
 				$log .= "你使用了{$itm}，却发现没有可以连接上的网络。怎么会这样？<br>";
 				return;
 			}
-			//每个人只能吃7个技能核心
-			elseif (strpos($itmk, 'SC') === 0)
-			{
-				$sc_count = (int)\skillbase\skill_getvalue(951,'sc_count',$sdata);
-				if ($sc_count >= 7)
-				{
-					$log .= "<span class=\"yellow b\">你已经使用过7个技能核心，无法再使用了。</span><br>";
-					return;
-				}
-			}
+			//每个人只能吃7个技能核心，已取消
+			// elseif (strpos($itmk, 'SC') === 0)
+			// {
+				// $sc_count = (int)\skillbase\skill_getvalue(951,'sc_count',$sdata);
+				// if ($sc_count >= 7)
+				// {
+					// $log .= "<span class=\"yellow b\">你已经使用过7个技能核心，无法再使用了。</span><br>";
+					// return;
+				// }
+			// }
 			//使用结局道具
 			elseif (strpos($itmk, 'Y') === 0 || strpos($itmk, 'Z') === 0)
 			{	

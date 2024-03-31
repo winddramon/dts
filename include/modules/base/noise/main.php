@@ -43,7 +43,7 @@ namespace noise
 		\sys\save_combatinfo();
 	}
 	
-	function load_gameinfo_post_work_core_extra(){
+	function load_gameinfo_post_work_extra(){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','noise'));
 		$chprocess();

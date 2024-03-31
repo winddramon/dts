@@ -110,8 +110,9 @@ namespace skill94
 		}
 		//消耗歌魂
 		if ($schoice1 == 1) $r = 100;
-		elseif ($schoice1 == 2) $r = floor($ss/2);
+		elseif ($schoice1 == 2) $r = ceil($ss/2);
 		else $r = $ss;
+		$r = max($r, 1);
 		if ($ss >= $r){
 			$ss -= $r;
 			$log .= "消耗<span class=\"yellow b\">{$r}</span>点歌魂，歌唱了<span class=\"yellow b\">「天籁」</span>。<br><br>";

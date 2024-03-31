@@ -137,7 +137,7 @@ namespace skill490
 		
 		list($itemklist, $itemsklist) = get_random_itmksklist490();
 		
-		$exception = array('TNc','TOc','VS','Y','Z');//不管怎样都不会出现奇迹雷、获得技能的技能书、特殊道具
+		$exception = array('TNc','TOc','VS','Y','Z','MB');//不管怎样都不会出现奇迹雷、获得技能的技能书、特殊道具、状态药物
 		if($ritms > 1) $exception[] = 'VO';//随出的耐久大于1时，阻止出现卡片礼物
 		if($ritms > 3) $exception = array_merge($exception, array('TN', 'TO'));//随出的耐久大于3时，阻止出现陷阱
 		if($ritms > 10) $exception = array_merge($exception, array('p', 'ygo', 'fy', 'kj3'));//随出的耐久大于10时，阻止出现各类礼品

@@ -10,7 +10,7 @@ namespace skill110
 		eval(import_module('clubbase','bufficons'));
 		$clubskillname[110] = '通才';
 		$bufficons_list[110] = Array(
-			'onclick' => "$('mode').value='special';$('command').value='skill110_special';$('subcmd').value='castsk110';postCmd('gamecmd','command.php',this);",
+			'onclick' => "if(!$('mode')||!$('command')||!$('subcmd'))return;$('mode').value='special';$('command').value='skill110_special';$('subcmd').value='castsk110';postCmd('gamecmd','command.php',this);",
 		);
 	}
 	

@@ -156,6 +156,19 @@ namespace item_uvo_extra
 		$card_valid_info = $cards[$cardid]['valid'];
 		list($items, $skills) = use_card_uvo_process($card_valid_info, $pa);
 		
+		if ($cardid_o == 344)//油库里
+		{
+			$skills = array();
+		}
+		elseif ($cardid_o == 381)//双料特工
+		{
+			$skills = array();
+			$items = array(
+				array('itm'=>'手榴弹','itmk'=>'WC','itme'=>40,'itms'=>1,'itmsk'=>''),
+				array('itm'=>'毒物说明书','itmk'=>'A','itme'=>1,'itms'=>1,'itmsk'=>'')
+				);
+		}
+		
 		remove_card_uvo_extra($cardid_o, $pa, 0);
 		add_card_uvo_extra($cardid_o, $pa, 1);
 		
@@ -387,6 +400,7 @@ namespace item_uvo_extra
 		$blink = 0;
 		$is_new = 0;
 		$log .= '<span class="yellow b">你用「'.$cards[$cardid1]['name'].'」和「'.$cards[$cardid2]['name'].'」合成了卡片「'.$cards[$get_card_id]['name'].'」！</span><br>';
+		addnews(0, 'cardmix', $pa['name'], $cards[$cardid1]['name'], $cards[$cardid2]['name'], $cards[$get_card_id]['name']);
 		
 		ob_clean();
 		include template('MOD_CARDBASE_CARDFLIP_RESULT');
@@ -486,6 +500,18 @@ namespace item_uvo_extra
 				remove_card_uvo_extra('all', $pd);
 			}
 		}
+	}
+	
+	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		
+		eval(import_module('sys','player'));
+		
+		if ($news == 'cardmix')
+			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"yellow b\">{$a}用卡片“{$b}”和“{$c}”合成了卡片“{$d}”！</span></li>";
+		
+		return $chprocess($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr);
 	}
 	
 }

@@ -46,6 +46,7 @@ attack,base/attack/,1
 instance0,extra/instance/instance0/,1
 weapon,base/weapon/weapon/,1
 npcchat,base/npcchat/,1
+ex_vanish,extra/attr/ex_vanish/,1
 clubbase,extra/club/clubbase/,1
 wep_n,base/weapon/wep_n/,1
 wep_p,base/weapon/wep_p/,1
@@ -306,6 +307,7 @@ skill1013,extra/gmskills/skill1013/,1
 skill743,extra/card/skills/skill743/,1
 skill744,extra/card/skills/skill744/,1
 skill_temp,extra/skill_temp/,1
+skill606,extra/club/skills/skill606/,1
 wep_g,base/weapon/wep_g/,1
 wep_j,base/weapon/wep_j/,1
 skill273,extra/club/skills/skill273/,1
@@ -398,6 +400,7 @@ npc_action,extra/npc_action/,1
 skill720,extra/card/skills/skill720/,1
 get_qiegao_in_battle,extra/misc/get_qiegao_in_battle/,1
 skill734,extra/card/skills/skill734/,1
+skill749,extra/card/skills/skill749/,1
 item_uvo_extra,extra/item_extra/item_uvo_extra/,1
 skill43,extra/club/skills/skill43/,1
 itemnumlist,extra/item_extra/itemnumlist/,1
@@ -699,6 +702,7 @@ skill713,extra/card/skills/skill713/,1
 skill712,extra/card/skills/skill712/,1
 skill587,extra/card/skills/skill587/,1
 skill960,extra/instance/instance10_rogue/skill960/,1
+skill964,extra/instance/instance10_rogue/skill964/,1
 skill543,extra/card/skills/skill543/,1
 skill733,extra/card/skills/skill733/,1
 skill183,extra/club/skills/skill183/,1
