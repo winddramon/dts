@@ -576,7 +576,7 @@ namespace logistics
 			$mode = 'command';
 			return;
 		}
-		elseif (strlen($itmsk > 1024))
+		elseif (strlen($itmsk) > 1024)
 		{
 			$log .= '记录仪试图记录这个道具，然而失败了。<br>';
 			$mode = 'command';
