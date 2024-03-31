@@ -55,7 +55,8 @@ namespace npc
 		8=>'死吧。',
 		9=>Array(
 		  //'蓝凝' => 'MISSION COMPLETE',
-		  '"FLEUR"' => 'WEEEEAK.'
+		  '"FLEUR"' => 'WEEEEAK.',
+		  '蓝凝 MUDDY' => '你也乱动了我的收藏，乱动我收藏者杀无赦！',
 		),
 		//10=>'在这个幻境，强就是强，弱就是弱。',
 		11=>'看看职人的力量！',
@@ -107,6 +108,7 @@ namespace npc
 	9 => Array(
 		'蓝凝' => 'Mission in jeopardy, Begin ALT_ROUTINE.',
 		'蓝凝 DUMMY' => '[DUMMY系统机能中止]',
+		'蓝凝 MUDDY' => '哦哦，手办的仇……',
 		'"FLEUR"' => 'RETREAT.'
 	),
 	10 => '这、这不可能，我竟败了？我李天明，败了？！',

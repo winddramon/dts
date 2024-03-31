@@ -31,6 +31,7 @@ namespace logistics
 		10 => array('粉色的Sophia手办',2,1333,'<span class="ltpurple b black-shadow">“今天的Sophia也是元气满满的哟！”</span>',0),
 		11 => array('黑熊手办',2,1888,'<span class="linen b black-shadow">“这个游戏不爆的咯！”</span>',0),
 		//12 13给红暮和蓝凝留个位置
+		14 => array('魔法芝士',2,1000,'<span class="yellow b">一块浸透了暗黑魔力的芝士，似乎有很多个侧面。</span>',0),
 		99 => array('冰精手办',2,999,'<span class="cyan b">“本小姐最强！”</span>',0),
 		114 => array('黄金青眼白龙手办',2,87000000,'<span class="lightblue b black-shadow">以高价格著称的传说之龙。任何竞拍者都将为之倾倒，其吸引力不可估量。</span>',0),
 		201 => array('沾满灰尘的大逃杀卡牌包',1,0,'从中可以获得一张<span class="white b">C</span>级卡片',1),
