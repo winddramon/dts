@@ -307,6 +307,7 @@ skill1013,extra/gmskills/skill1013/,1
 skill743,extra/card/skills/skill743/,1
 skill744,extra/card/skills/skill744/,1
 skill_temp,extra/skill_temp/,1
+skill606,extra/club/skills/skill606/,1
 wep_g,base/weapon/wep_g/,1
 wep_j,base/weapon/wep_j/,1
 skill273,extra/club/skills/skill273/,1
@@ -399,6 +400,7 @@ npc_action,extra/npc_action/,1
 skill720,extra/card/skills/skill720/,1
 get_qiegao_in_battle,extra/misc/get_qiegao_in_battle/,1
 skill734,extra/card/skills/skill734/,1
+skill749,extra/card/skills/skill749/,1
 item_uvo_extra,extra/item_extra/item_uvo_extra/,1
 skill43,extra/club/skills/skill43/,1
 itemnumlist,extra/item_extra/itemnumlist/,1
