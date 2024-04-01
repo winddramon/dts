@@ -443,7 +443,7 @@ namespace item_uvo_extra
 		$cardpool = $cardindex[$rare];
 		if (!empty($pack))
 		{
-			if ($pack == 'Balefire Rekindle' || $pack == 'Event Bonus') $cardpool = array_merge($cardpool, $cardindex['EB_'.$rare]);
+			if (in_array($pack, $pack_ignore_kuji)) $cardpool = array_merge($cardpool, $cardindex['EB_'.$rare]);
 			$c = 0;
 			do{
 				$get_card_id = array_randompick($cardpool);
@@ -454,7 +454,7 @@ namespace item_uvo_extra
 		return $get_card_id;
 	}
 	
-	//游戏结束时，所有未使用的和已使用的卡片根据稀有度变为卡牌包发放
+	//游戏结束时，所有未使用的和已使用的卡片，如果是BR或EB包发卡牌包，其他的发对应卡片
 	function gameover_set_credits()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -473,10 +473,10 @@ namespace item_uvo_extra
 				{
 					if (in_array($cards[$get_card_id]['pack'], $pack_ignore_kuji))
 					{
-						if($cards[$get_card_id]['rare'] == 'S') $prizepack_count[206] += 1;
-						elseif($cards[$get_card_id]['rare'] == 'A') $prizepack_count[204] += 1;
-						elseif($cards[$get_card_id]['rare'] == 'B') $prizepack_count[203] += 1;
-						else $packcount[202] += 1;
+						if($cards[$get_card_id]['rare'] == 'S') $prizepack_count[206] += 2;
+						elseif($cards[$get_card_id]['rare'] == 'A') $prizepack_count[204] += 2;
+						elseif($cards[$get_card_id]['rare'] == 'B') $prizepack_count[203] += 2;
+						else $packcount[202] += 2;
 						continue;
 					}
 					if($room_prefix) {
