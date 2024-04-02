@@ -98,6 +98,13 @@ namespace skill960
 	function remove_task(&$pa, $taskid)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if ($taskid == 'all')
+		{
+			\skillbase\skill_setvalue(960,'taskarr','',$pa);
+			\skillbase\skill_setvalue(960,'taskprog','',$pa);
+			return;
+		}
+		
 		$taskarr = get_taskarr($pa);
 		$taskprog = get_taskprog($pa);
 		

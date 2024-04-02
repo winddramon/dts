@@ -39,6 +39,7 @@ namespace logistics
 		203 => array('普通的大逃杀卡牌包',1,0,'从中有机会获得<span class="cyan b">A</span>/<span class="brickred b">B</span>/<span class="white b">C</span>级卡片',1),
 		204 => array('精致的大逃杀卡牌包',1,0,'从中有机会获得<span class="gold b">S</span>/<span class="cyan b">A</span>/<span class="brickred b">B</span>级卡片',1),
 		205 => array('★闪熠着光辉的大逃杀卡牌包★',1,0,'从中有机会获得特殊卡片“<span class="gold b">氪金战士</span>”，或一张<span class="gold b">S</span>级或<span class="cyan b">A</span>级的卡片',1),
+		206 => array('闪耀的大逃杀卡牌包',1,0,'从中有机会获得<span class="gold b">S</span>/<span class="cyan b">A</span>级卡片',1),
 	);
 	
 	//类别1表示可使用道具（消耗品），2表示装饰品

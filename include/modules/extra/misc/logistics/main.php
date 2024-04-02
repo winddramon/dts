@@ -329,6 +329,7 @@ namespace logistics
 			case 203:
 			case 204:
 			case 205:
+			case 206:
 				eval(import_module('cardbase'));
 				$get_card_id = 0;
 				if ($itemid == 205 && rand(1,100) <= 15)

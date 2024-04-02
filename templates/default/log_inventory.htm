@@ -42,7 +42,7 @@
 					<td style="text-align:center;">$logistics_itemtype[$lsitem[1]]。{$lsitem[3]}</td>
 					<td style="text-align:center;">$num</td>
 					<td><input type="button" class="b_button" style="width:120" value="使用" onclick="$('itemchoice').value='$k';
-					<!--{if in_array($k, array(2,3,4)) || $lsitem[1]==2}-->bubblebox_show('logitemuse{$k}');<!--{elseif in_array($k, array(201,202,203,204,205))}-->bubblebox_show('logcardflip{$k}');<!--{else}-->document.inventory.submit();<!--{/if}-->"></td>
+					<!--{if in_array($k, array(2,3,4)) || $lsitem[1]==2}-->bubblebox_show('logitemuse{$k}');<!--{elseif in_array($k, array(201,202,203,204,205,206))}-->bubblebox_show('logcardflip{$k}');<!--{else}-->document.inventory.submit();<!--{/if}-->"></td>
 				</tr>
 				<!--{if in_array($k, array(2,3,4)) || $lsitem[1]==2}-->
 					<!--{eval bubblebox_start('id:logitemuse'.$k.';height:150;width:600;cancellable:1;margin-top:20;margin-bottom:20;margin-left:20;margin-right:10;');}-->
@@ -77,7 +77,7 @@
 					</center>
 					</div>
 					<!--{eval bubblebox_end();}-->
-				<!--{elseif in_array($k, array(201,202,203,204,205))}-->
+				<!--{elseif in_array($k, array(201,202,203,204,205,206))}-->
 					<!--{eval bubblebox_start('id:logcardflip'.$k.';height:406;width:246;cancellable:1');}-->
 					<p>
 					你撕开了礼物包装，请点击翻开卡片。<br>
