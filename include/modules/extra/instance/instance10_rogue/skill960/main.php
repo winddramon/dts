@@ -423,8 +423,8 @@ namespace skill960
 			if (isset($tasks_info[$taskid]['taskreq']['num'])) $task_tip .= "<span class=\"yellow b\">{$tasks_info[$taskid]['taskreq']['num']}</span>个";			
 			if (isset($tasks_info[$taskid]['taskreq']['type']))
 			{
-				eval(import_module('npc'));
-				$task_tip .= "类别为<span class=\"yellow b\">{$npc_typeinfo[$tasks_info[$taskid]['taskreq']['type']]}</span>的";
+				$typeinfo = get_var_in_module('typeinfo', 'player');
+				$task_tip .= "类别为<span class=\"yellow b\">{$typeinfo[$tasks_info[$taskid]['taskreq']['type']]}</span>的";
 			}
 			if (isset($tasks_info[$taskid]['taskreq']['wepk']))
 			{
@@ -463,9 +463,9 @@ namespace skill960
 				}
 				$c = count($itmk_info_ls);
 				if ($c == 1) $task_tip .= $itmk_info_ls[0];
-				else $task_tip = implode('、', array_slice($itmk_info_ls, 0, $c-1)) . '或' . end($itmk_info_ls);
+				else $task_tip .= implode('、', array_slice($itmk_info_ls, 0, $c-1)) . '或' . end($itmk_info_ls);
 			}
-			else $task_tip .= "道具";
+			$task_tip .= "道具";
 			if (isset($tasks_info[$taskid]['taskreq']['num'])) $task_tip .= "<span class=\"yellow b\">{$tasks_info[$taskid]['taskreq']['num']}</span>次";
 		}
 		elseif ($tasks_info[$taskid]['tasktype'] === 'special')

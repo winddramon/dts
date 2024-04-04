@@ -70,6 +70,7 @@ namespace instance10
 		}else return $chprocess();
 	}
 	
+	//商店功能之后用事件替换
 	function get_shopconfig(){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
 		eval(import_module('sys','instance10'));
@@ -182,20 +183,21 @@ namespace instance10
 		$chprocess($atime);
 	}
 	
-	//商店除无月外，在随机4个地点生成
+	//商店功能之后用事件替换
 	function check_in_shop_area($p)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
 		if (20 == $gametype)
 		{
-			if (!isset($gamevars['instance10_shops']))
-			{
-				$gamevars['instance10_shops'] = array_randompick(range(1, 33), 4);
-				$gamevars['instance10_shops'][] = 0;
-			}
-			save_gameinfo();
-			return in_array($p, $gamevars['instance10_shops']);
+			// if (!isset($gamevars['instance10_shops']))
+			// {
+				// $gamevars['instance10_shops'] = array_randompick(range(1, 33), 4);
+				// $gamevars['instance10_shops'][] = 0;
+			// }
+			// save_gameinfo();
+			// return in_array($p, $gamevars['instance10_shops']);
+			return false;
 		}
 		else return $chprocess($p);
 	}
@@ -385,11 +387,16 @@ namespace instance10
 				$rank_old = $tasks_info[$taskid]['rank'];
 				$rank_new = get_newtask_rank($pa);
 				//如果没升层，只刷新完成的任务
-				if ($rank_old == $rank_new) \skill960\get_rand_task($pa, $rank_new, 1);
+				if ($rank_old == $rank_new)
+				{
+					if ($rank_new >= 7) return;
+					\skill960\get_rand_task($pa, $rank_new, 1);
+				}
 				else //如果升层，刷新全部任务
 				{
 					\skill960\remove_task($pa, 'all');
-					\skill960\get_rand_task($pa, $rank_new, 3);
+					if ($rank_new >= 7) \skill960\get_rand_task($pa, $rank_new, 2);
+					else \skill960\get_rand_task($pa, $rank_new, 3);
 				}
 			}
 		}
@@ -422,8 +429,8 @@ namespace instance10
 					$newstage = get_stage($invscore);
 					for ($i=$gamevars['instance10_stage']+1; $i<=$newstage; $i++)
 					{
-						\randnpc\add_randnpc(2*$i-2, 20, 0, 0, 0, 0);
 						\randnpc\add_randnpc(2*$i-1, 20, 0, 0, 0, 0);
+						\randnpc\add_randnpc(2*$i, 20, 0, 0, 0, 0);
 					}
 					$gamevars['instance10_stage'] = $newstage;
 					addnews($now, 'instance10_newstage', $pa['name']);
