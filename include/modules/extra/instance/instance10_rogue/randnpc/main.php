@@ -5,13 +5,13 @@ namespace randnpc
 	function init()
 	{
 		eval(import_module('player'));
-		$typeinfo[51] = '实验体I型';
-		$typeinfo[52] = '实验体II型';
-		$typeinfo[53] = '实验体III型';
-		$typeinfo[54] = '实验体IV型';
-		$typeinfo[55] = '实验体V型';
-		$typeinfo[56] = '实验体E型';
-		$typeinfo[57] = '实验体D型';
+		$typeinfo[51] = '实验体0型';
+		$typeinfo[52] = '实验体1型';
+		$typeinfo[53] = '实验体2型';
+		$typeinfo[54] = '实验体3型';
+		$typeinfo[55] = '实验体4型';
+		$typeinfo[56] = '实验体5型';
+		$typeinfo[57] = '实验体6型';
 		$typeinfo[58] = '实验体C型';
 		$typeinfo[59] = '实验体B型';
 		$typeinfo[60] = '实验体A型';
@@ -53,12 +53,12 @@ namespace randnpc
 			if (rand(0,1)) $npc['gd'] = 'f';
 			$var1 = pow(2, $rank);
 			$var2 = pow(1.5, $rank);
-			$npc['mhp'] = $var1 * 300;
+			$npc['mhp'] = $var1 * 120;
 			$npc['msp'] = $rank * 100;
-			$npc['att'] = $npc['def'] = round($var2 * 100);
-			$npc['skill'] = round($var2 * 40);
+			$npc['att'] = $npc['def'] = round($var2 * 70);
+			$npc['skill'] = round($var2 * 30);
 			$npc['lvl'] = $rank * 5;
-			$npc['money'] = array(20,40,60,80,120,160,220,300,420,560,720,900,1160,1500,1920,2440,3080,3840,4800,6000)[$rank-1];
+			$npc['money'] = array(20,40,60,80,120,160,220,300,420,560,720,900,1160,1500,1920,2440,3080,3840,4800,6000)[$rank-1] * 4;
 			//武器
 			if ($rank > 12) $npc['wepk'] = array_randompick(array('WP','WK','WC','WG','WF','WD','WB','WP','WK','WC','WG','WF','WD','WB','WJ'));
 			elseif ($rank > 8) $npc['wepk'] = array_randompick(array('WP','WK','WC','WG','WF','WD','WB'));

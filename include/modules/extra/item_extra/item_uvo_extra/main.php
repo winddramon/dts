@@ -204,7 +204,7 @@ namespace item_uvo_extra
 		$skills_ignore = array(10,11,12,83);//不会获得尊严
 		$skills_pass = array(19,20,24,51,59,106,224,231);//部分涉及多个技能绑定的技能，如百出和虹光等
 		
-		//针对称号卡片的调整，非称号特性的本称号技能只有20%获得
+		//针对称号卡片的调整，非称号特性的本称号技能只有40%获得
 		if (isset($card_valid_info['club']))
 		{
 			eval(import_module('clubbase'));
@@ -214,7 +214,7 @@ namespace item_uvo_extra
 				if (in_array($sk, $skills_pass)) continue;
 				if (in_array($sk, $clubskills) && !\skillbase\check_skill_info($sk,'feature'))
 				{
-					if (rand(0,99) < 80) unset($card_valid_info['skills'][$sk]);
+					if (rand(0,99) < 60) unset($card_valid_info['skills'][$sk]);
 				}
 			}
 		}

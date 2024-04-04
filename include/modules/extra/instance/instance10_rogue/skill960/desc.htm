@@ -12,13 +12,9 @@ $clubskillname[$___TEMP_SKILL_ID]
 当前的调查度为<span class="yellow b">$invscore</span>点。<br>
 <!--{/if}-->
 <!--{if empty($taskcount)}-->
-<span class="yellow b">你没有接取任务。</span><br><br>
+<span class="yellow b">你没有接取任务。</span>
 <!--{else}-->
-当前接取了<span class="yellow b">$taskcount</span>个任务：<br>
-<!--{loop $taskarr $i $taskid}-->
-<!--{eval $task_tip=\skill960\show_task_tip($taskid, $taskprog[$i]);}-->
-$task_tip
-<!--{/loop}-->
+当前接取了<span class="yellow b">$taskcount</span>个任务。
 <!--{/if}-->
 </span></td>
 <td class="skilldesc_right b3">
