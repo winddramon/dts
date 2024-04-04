@@ -232,10 +232,10 @@ namespace instance10
 		eval(import_module('sys','player'));
 		if (20 == $gametype)
 		{
-			if (in_array($itmk0[0], array('W','D','M','V','H','P')))
+			if (in_array($itmk0[0], array('W','D')))
 			{
-				$itme0 = max(round((80 + rand(0,40))/100 * $itme0), 1);
-				if ($itms0 != $nosta) $itms0 = max(round((80 + rand(0,40))/100 * $itms0), 1);
+				$itme0 = max(round((100 + rand(0,20))/100 * $itme0), 1);
+				if ($itms0 != $nosta) $itms0 = max(round((100 + rand(0,20))/100 * $itms0), 1);
 				if ($itmk0[0] == 'W')
 				{
 					$dice = rand(0,99);
