@@ -129,7 +129,7 @@ namespace instance10
 		$chprocess($time);
 	}
 	
-	//开局天气初始化；开局时，只有随机8个地点不为禁区
+	//开局天气初始化；开局时，只有随机6个地点不为禁区
 	function rs_game($xmode = 0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -140,7 +140,16 @@ namespace instance10
 			$weather = 1;
 			//添加禁区
 			$plsnum = sizeof($arealist);
-			$areanum += $plsnum - 8 + 1;
+			$areanum = $plsnum - 6;
+			//进行一次回避禁区……真丑陋！
+			$result = $db->query("SELECT pid FROM {$tablepre}players WHERE type=90");
+			$pls_available = \map\get_safe_plslist();
+			while($sub = $db->fetch_array($result))
+			{
+				$pid = $sub['pid'];
+				$sub['pls'] = array_randompick($pls_available);
+				$db->array_update("{$tablepre}players",$sub,"pid='$pid'");
+			}
 		}
 	}
 	
@@ -260,21 +269,21 @@ namespace instance10
 		$chprocess();
 	}
 	
-	//记录吃技能核心次数
-	function use_skcore_success(&$pa)
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys'));
-		if (20 == $gametype)
-		{
-			if (\skillbase\skill_query(951,$pa))
-			{
-				$sc_count = (int)\skillbase\skill_getvalue(951,'sc_count',$pa);
-				\skillbase\skill_setvalue(951,'sc_count',$sc_count+1,$pa);
-			}
-		}
-		$chprocess($pa);
-	}
+	//记录吃技能核心次数，已取消
+	// function use_skcore_success(&$pa)
+	// {
+		// if (eval(__MAGIC__)) return $___RET_VALUE;
+		// eval(import_module('sys'));
+		// if (20 == $gametype)
+		// {
+			// if (\skillbase\skill_query(951,$pa))
+			// {
+				// $sc_count = (int)\skillbase\skill_getvalue(951,'sc_count',$pa);
+				// \skillbase\skill_setvalue(951,'sc_count',$sc_count+1,$pa);
+			// }
+		// }
+		// $chprocess($pa);
+	// }
 	
 	function itemuse(&$theitem)
 	{
