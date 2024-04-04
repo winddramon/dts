@@ -98,13 +98,15 @@ $mixinfo = array
 	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·白恶魔】','触手的潜能','《东方灵异传》'),'result' => array('【人形降临·光魔】','WP',666,666,'trdj'),),
 	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·光魔】','简称为UCW的杏仁豆腐','悲叹之种'),'result' => array('【人形降临·神忌】','WP',6666,666,'tbrdj'),),
 	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·忌影】','深生态杏仁豆腐','悲叹之种'),'result' => array('【人形降临·皇祸】','WP',6666,666,'kBrdj'),),
+	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·光魔】','『红杀铁剑·淘沙』','悲叹之种'),'result' => array('【人形降临·神忌】','WP',6666,666,'tbrdj'),),
+	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·忌影】','幻符『幻破想械』','悲叹之种'),'result' => array('【人形降临·皇祸】','WP',6666,666,'kBrdj'),),
 	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·血鬼】','【全屏幕弹幕发射】','悲叹之种'),'result' => array('【人形降临·终堕天】','WP',6666,666,'fyrdj'),),
 	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·终堕天】','『410Gauge重型左轮』','【HP制御系统】'),'result' => array('【死神降临】','WP',6666,666,'nyNdrv'),),
 	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·终堕天】','格林多管激光炮','【HP制御系统】'),'result' => array('【死神降临】','WP',6666,666,'ByNdrv'),),
 	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·终堕天】','小型高威力试作性防身设备『绯蜂』','【HP制御系统】'),'result' => array('【死神降临】','WP',6666,666,'bBNdrv'),),
-	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·终堕天】','『染星之弓·斯黛拉』','【HP制御系统】'),'result' => array('【死神降临】','WP',6666,666,'nyNdrv'),),
-	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·终堕天】','真 爽 铳 V.J.A.','【HP制御系统】'),'result' => array('【死神降临】','WP',6666,666,'ByNdrv'),),
-	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·终堕天】','ACME牌·公开招标·自我防护套装','【HP制御系统】'),'result' => array('【死神降临】','WP',6666,666,'bBNdrv'),),
+	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·终堕天】','『染星之弓·斯黛拉』'),'result' => array('【死神降临】','WP',6666,666,'nyNdrv'),),
+	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·终堕天】','真 爽 铳 V.J.A.'),'result' => array('【死神降临】','WP',6666,666,'ByNdrv'),),
+	array('class' => 'wp_mrm', 'stuff' => array('【人形降临·终堕天】','ACME牌·公开招标·自我防护套装'),'result' => array('【死神降临】','WP',6666,666,'bBNdrv'),),
 	array('class' => 'wp_mrm', 'stuff' => array('【死神降临】','【死神降临】','【死神降临】'),'result' => array('【死神绝界】','WP',6666,666,'ZBbdrV'),),
 	
 	

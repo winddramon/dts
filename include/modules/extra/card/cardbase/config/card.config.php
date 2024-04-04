@@ -6945,6 +6945,24 @@ $cards = array(
 		'energy' => 0,
 		'valid' => array()
 	),
+	1112 => array(
+		'name' => '恋爱的埋火',
+		'rare' => 'A',
+		'pack' => 'Rare Stuff',
+		'desc' => '燃起来了.jpg',
+		'effect' => '素材卡，作为合成素材时视为A卡，<br>合成产物必为Balefire Rekindle卡片',
+		'energy' => 0,
+		'valid' => array()
+	),
+	1113 => array(
+		'name' => '战地记者',
+		'rare' => 'A',
+		'pack' => 'Rare Stuff',
+		'desc' => '早上好，虚拟幻境！<br>昨天的大乱斗，结果又是满打满算的整整180个! ',
+		'effect' => '素材卡，作为合成素材时视为A卡，<br>合成产物必为Event Bonus卡片',
+		'energy' => 0,
+		'valid' => array()
+	),
 	
 );
 }

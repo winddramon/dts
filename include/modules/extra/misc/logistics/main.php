@@ -329,6 +329,7 @@ namespace logistics
 			case 203:
 			case 204:
 			case 205:
+			case 206:
 				eval(import_module('cardbase'));
 				$get_card_id = 0;
 				if ($itemid == 205 && rand(1,100) <= 15)
@@ -576,7 +577,7 @@ namespace logistics
 			$mode = 'command';
 			return;
 		}
-		elseif (strlen($itmsk > 1024))
+		elseif (strlen($itmsk) > 1024)
 		{
 			$log .= '记录仪试图记录这个道具，然而失败了。<br>';
 			$mode = 'command';

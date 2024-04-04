@@ -6,7 +6,7 @@ namespace item_uvo_extra
 	$allow_uvo_extra_gametype = array(20);
 	
 	//素材卡
-	$material_cards = array(1101,1102,1103,1104,1105,1106,1107,1108,1109,1110,1111);
+	$material_cards = array(1101,1102,1103,1104,1105,1106,1107,1108,1109,1110,1111,1112,1113);
 	
 	function init()
 	{
@@ -79,7 +79,7 @@ namespace item_uvo_extra
 		$blink = 0;
 		$is_new = 0;
 		
-		$log .= '<span class="yellow b">你获得了卡片「'.$get_cardinfo['name'].'」！获得的卡片可在卡片列表中查看。<br>所有未使用的和已使用的卡片会在游戏结束时获得。</span><br>';
+		$log .= '<span class="yellow b">你获得了卡片「'.$get_cardinfo['name'].'」！获得的卡片可在卡片列表中查看。</span><br>';
 		
 		addnews ( 0, 'VOgetcard', $pa['name'], $itm, $get_cardinfo['name'] );
 		
@@ -382,6 +382,14 @@ namespace item_uvo_extra
 			{
 				$pack = 'Best DOTO';
 			}
+			elseif ($mcardid == 1112)
+			{
+				$pack = 'Balefire Rekindle';
+			}
+			elseif ($mcardid == 1113)
+			{
+				$pack = 'Event Bonus';
+			}
 		}
 		if (empty($get_card_id))
 		{
@@ -432,19 +440,21 @@ namespace item_uvo_extra
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('cardbase'));
+		$cardpool = $cardindex[$rare];
 		if (!empty($pack))
 		{
+			if (in_array($pack, $pack_ignore_kuji)) $cardpool = array_merge($cardpool, $cardindex['EB_'.$rare]);
 			$c = 0;
 			do{
-				$get_card_id = array_randompick($cardindex[$rare]);
+				$get_card_id = array_randompick($cardpool);
 				$c += 1;
 			}while($cards[$get_card_id]['pack'] !== $pack && $c < 99);//不会真有人写爆炸吧
 		}
-		else $get_card_id = array_randompick($cardindex[$rare]);
+		else $get_card_id = array_randompick($cardpool);
 		return $get_card_id;
 	}
 	
-	//游戏结束时获得未使用的和已使用的卡片
+	//游戏结束时，所有未使用的和已使用的卡片，如果是BR或EB包发卡牌包，其他的发对应卡片
 	function gameover_set_credits()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -452,14 +462,23 @@ namespace item_uvo_extra
 		eval(import_module('sys','item_uvo_extra'));
 		if(!in_array($gametype, $allow_uvo_extra_gametype)) return;
 		if(empty($gameover_plist)) return;
+		eval(import_module('cardbase'));
 		foreach($gameover_plist as $key => $pa)
 		{
 			$pa_cards = array_merge(get_cards_uvo_extra($pa), get_cards_uvo_extra($pa, 1));
 			if (!empty($pa_cards))
 			{
-				eval(import_module('cardbase'));
+				$prizepack_count = array(206=>0, 204=>0, 203=>0, 202=>0);
 				foreach ($pa_cards as $get_card_id)
 				{
+					if (in_array($cards[$get_card_id]['pack'], $pack_ignore_kuji))
+					{
+						if($cards[$get_card_id]['rare'] == 'S') $prizepack_count[206] += 2;
+						elseif($cards[$get_card_id]['rare'] == 'A') $prizepack_count[204] += 2;
+						elseif($cards[$get_card_id]['rare'] == 'B') $prizepack_count[203] += 2;
+						else $packcount[202] += 2;
+						continue;
+					}
 					if($room_prefix) {
 						$ext = '来自'.$gtinfo[$gametype].'的卡片奖励。';
 					}else{
@@ -469,6 +488,19 @@ namespace item_uvo_extra
 					elseif($cards[$get_card_id]['rare'] == 'S') $ext.='一定是欧洲人吧！';
 					$blink = \cardbase\get_card_calc_blink($get_card_id, $pa);
 					$is_new = \cardbase\get_card_message($get_card_id,$ext,$blink);
+				}
+				foreach ($prizepack_count as $k => $v)
+				{
+					if ($v > 0)
+					{
+						include_once './include/messages.func.php';
+						message_create(
+							$pa['name'],
+							$gtinfo[$gametype].'奖励',
+							'祝贺你在房间第'.$gamenum.'局中获得了卡牌包奖励！<br>',
+							'getlogitem_'.$k.';getlogitemnum_'.$v.';'
+						);
+					}
 				}
 			}
 		}

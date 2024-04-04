@@ -382,7 +382,15 @@ namespace instance10
 			eval(import_module('skill960'));
 			if (isset($tasks_info[$taskid]['rank']) && $tasks_info[$taskid]['rank'] <= 10)
 			{
-				\skill960\get_rand_task($pa, get_newtask_rank($pa), 1);
+				$rank_old = $tasks_info[$taskid]['rank'];
+				$rank_new = get_newtask_rank($pa);
+				//如果没升层，只刷新完成的任务
+				if ($rank_old == $rank_new) \skill960\get_rand_task($pa, $rank_new, 1);
+				else //如果升层，刷新全部任务
+				{
+					\skill960\remove_task($pa, 'all');
+					\skill960\get_rand_task($pa, $rank_new, 3);
+				}
 			}
 		}
 	}
