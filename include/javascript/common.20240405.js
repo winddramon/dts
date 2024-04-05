@@ -102,6 +102,12 @@ function updateTime_render(t, tm, fmt)
 	var tobj = new Date();
 	tobj.setTime(t);
 	var tstr = tobj.Format(fmt);
+	//如果倒计时大于60分钟且小于1天，且fmt为mm:ss，特殊判定
+	if('mm:ss' == fmt && t > 3600*1000 && t < 86400*1000) {
+		let [m, s] = tstr.split(':');
+		m = (parseInt(m) + parseInt(tobj.Format('hh'))*60).toString();
+		tstr = m + ':' + s;
+	}
 	if(0==tm && t < 10*1000) tstr = '<span class="red b">'+tstr+'</span>';
 	else if(0==tm && t < 60*1000) tstr = '<span class="yellow b">'+tstr+'</span>';
 	return tstr;
