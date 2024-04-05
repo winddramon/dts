@@ -86,7 +86,7 @@ namespace npc
 	
 	$npc_lwinfo = Array(
 	1 => Array(
-		'红暮' => '任务执行成功率下降，重新计算成功率。',
+		'红暮' => '任务执行的成功率越来越低了。',
 		'红暮 DUMMY' => '[DUMMY系统机能中止]',
 	),
 	2 => Array(
