@@ -70,19 +70,19 @@ namespace randrecipe
 		$r['result'][5] = array();
 		if ($itmk[0] == 'H')
 		{
-			$r['result'][2] = rand(50,140);
+			$r['result'][2] = rand(90,180);
 			$r['result'][3] = rand(20,40);
 		}
 		elseif ($itmk[0] == 'W')
 		{
-			$r['result'][2] = rand(70,220);
+			$r['result'][2] = rand(160,320);
 			$r['result'][3] = rand(30,60);
 			$skcount = rand(1,2);
 			if ($skcount == 1) $r['result'][4] = [array_randompick($randrecipe_itmsk_list['W'])];
 			elseif ($skcount > 1) $r['result'][4] = array_randompick($randrecipe_itmsk_list['W'], $skcount);
 			else
 			{
-				$r['result'][2] += rand(80,150);
+				$r['result'][2] += rand(120,240);
 				$r['result'][3] += rand(30,60);
 			}
 			//爆炸物大概率有爆炸
@@ -90,7 +90,7 @@ namespace randrecipe
 		}
 		elseif ($itmk[0] == 'D')
 		{
-			$r['result'][2] = rand(80,160);
+			$r['result'][2] = rand(160,320);
 			$r['result'][3] = rand(30,50);
 			$skcount = rand(0,2);
 			if ($skcount == 1) $r['result'][4] = [array_randompick($randrecipe_itmsk_list['D'])];

@@ -65,6 +65,8 @@ namespace randnpc
 			else $npc['wepk'] = array_randompick(array('WP','WK','WC','WG','WF','WD'));
 			list($npc['wep'], $npc['wepsk']) = generate_randnpc_item($npc['wepk'], 1);
 			$npc['wepe'] = max($rank*10, $var1) * 5; $npc['weps'] = $rank * 50;
+			if ($npc['wepk'] == 'WD') $npc['wepe'] = $npc['wepe'] * 1.2;
+			elseif ($npc['wepk'] != 'WF') $npc['wepe'] = $npc['wepe'] * 1.5;
 			//防具
 			$npc['arbk'] = 'DB'; $npc['arhk'] = 'DH'; $npc['arfk'] = 'DF'; $npc['arak'] = 'DA';
 			list($npc['arb'], $npc['arbsk']) = generate_randnpc_item('DB', 1);
