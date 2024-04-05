@@ -3,7 +3,7 @@
 namespace instance8
 {
 	function init() {
-		eval(import_module('skillbase', 'cardbase', 'sys', 'player'));
+		eval(import_module('skillbase', 'cardbase'));
 		if(!isset($valid_skills[18])) {
 			$valid_skills[18] = array();
 		}
@@ -11,7 +11,14 @@ namespace instance8
 		$card_force_different_gtype[] = 18;
 		$card_need_charge_gtype[] = 18;
 		$card_cooldown_discount_gtype[18] = 0.5;
-		if(18 == $gametype) {//临时修改
+	}
+
+	//临时修改，杏仁豆腐改代码聚合体
+	function load_gameinfo_post_work_extra(){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$chprocess();
+		if(18 == get_var_in_module('gametype','sys')) {//临时修改
+			$typeinfo = & get_var_in_module('typeinfo','player');
 			$typeinfo[5] = '代码聚合体';
 		}
 	}
