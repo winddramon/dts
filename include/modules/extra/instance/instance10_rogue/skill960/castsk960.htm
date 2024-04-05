@@ -1,5 +1,5 @@
-<!--{eval eval(import_module('sys','clubbase'));}-->
-<!--{eval $taskarr=\skill960\get_taskarr($who);$taskprog=\skill960\get_taskprog($who);$taskcount=sizeof($taskarr);}-->
+<!--{eval eval(import_module('sys','player','skill960'));}-->
+<!--{eval $taskarr=\skill960\get_taskarr($sdata);$taskprog=\skill960\get_taskprog($sdata);$taskcount=sizeof($taskarr);}-->
 <input type="hidden" name="mode" value="special">
 <input type="hidden" id="command" name="command" value="skill960_special">
 <input type="hidden" id="subcmd" name="subcmd" value="">
@@ -7,12 +7,20 @@
 <!--{if empty($taskcount)}-->
 <span class="yellow b">你没有接取任务。</span><br><br>
 <!--{else}-->
+<!--{if in_array($gametype, $invscore_available_mode)}-->
+<!--{eval $invscore=(int)\skillbase\skill_getvalue(960,'invscore',$sdata);}-->
+当前的调查度为<span class="yellow b">$invscore</span>点。<br>
+<!--{if $invscore < 70}-->
+<!--{eval $lvup_invscore=ceil(($invscore+1)/10)*10 - $invscore;}-->
+获得<span class="yellow b">$lvup_invscore</span>点调查度后升级，<span class="lime b">升级时刷新全部任务</span>。<br>
+<!--{/if}-->
+<!--{/if}-->
 当前接取了<span class="yellow b">$taskcount</span>个任务：<br><br>
 <!--{loop $taskarr $i $taskid}-->
 <!--{eval $task_tip=\skill960\show_task_tip($taskid, $taskprog[$i], 1);}-->
 $task_tip<br>
 <input type="button" class="cmdbutton" value="提交" onclick="$('taskid_submit').value='$taskid';postCmd('gamecmd','command.php');this.disabled=true;">
-<!--{eval echo \skill960\show_extra_task_cmds($who, $taskid);}-->
+<!--{eval echo \skill960\show_extra_task_cmds($sdata, $taskid);}-->
 <br><br>
 <!--{/loop}-->
 <!--{/if}-->

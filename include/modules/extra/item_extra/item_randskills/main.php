@@ -379,6 +379,25 @@ namespace item_randskills
 		}
 		return $ret;
 	}
+	
+	//显示技能介绍
+	function parse_skcore_skilldesc($skillid)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		ob_start();
+		include template(constant('MOD_SKILL'.$skillid.'_DESC'));
+		$str=ob_get_contents();
+		ob_end_clean();
+		//取得desc.htm中间的介绍部分
+		$i=strpos($str,'_____TEMP_SKLEARN_START_FLAG_____')+strlen('_____TEMP_SKLEARN_START_FLAG_____');
+		$j=strpos($str,'_____TEMP_SKLEARN_END_FLAG_____');
+		$str = trim(substr($str,$i,$j-$i));
+		//提取第一个td中间的部分，这里需要用到正则表达式
+		preg_match('|<td[^>]*?skilldesc_left.*?>(.*?)<\\/td>\s*<td[^>]*?skilldesc_right|s', $str, $matches);
+		if($matches) $str = $matches[1];
+		else $str = '';
+		return $str;
+	}
 
 }
 
