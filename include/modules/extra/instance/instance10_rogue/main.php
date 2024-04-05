@@ -10,7 +10,7 @@ namespace instance10
 		$valid_skills[20] += array(181,951,952,960,962,964);
 	}
 	
-	//肉鸽模式自动选择肉鸽来客
+	//肉鸽模式自动选择鸽勇者
 	function get_enter_battlefield_card($card){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
@@ -21,7 +21,7 @@ namespace instance10
 		return $card;
 	}
 	
-	//肉鸽模式自动选择肉鸽来客，禁止其他卡片
+	//肉鸽模式自动选择鸽勇者，禁止其他卡片
 	function card_validate_get_forbidden_cards($card_disabledlist, $card_ownlist){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
@@ -73,12 +73,23 @@ namespace instance10
 	//商店功能之后用事件替换
 	function get_shopconfig(){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
-		eval(import_module('sys','instance10'));
+		eval(import_module('sys'));
 		if (20 == $gametype){
 			$file = __DIR__.'/config/shopitem.config.php';
 			$l = openfile($file);
 			return $l;
 		}else return $chprocess();
+	}
+	
+	//网购可以正常访问商店，但商品较少
+	function get_shop_tag_list()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','instance10'));
+		if (20 == $gametype){
+			return $shop_tag_list10;
+		}
+		return $chprocess();
 	}
 	
 	function get_itemfilecont(){
@@ -211,19 +222,19 @@ namespace instance10
 		else return $chprocess($p);
 	}
 	
-	//肉鸽模式中，商店道具的禁区次数改用游戏阶段判定
-	function shopitem_row_data_process($data)
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$ret = $chprocess($data);
-		eval(import_module('sys'));
-		if (20 == $gametype)
-		{
-			if (!isset($gamevars['instance10_stage'])) return $ret;
-			if ((int)$ret[3] + 1 >= $gamevars['instance10_stage']) $ret[3] = 0;
-		}
-		return $ret;
-	}
+	//肉鸽模式中，商店道具的禁区次数改用游戏阶段判定，现取消
+	// function shopitem_row_data_process($data)
+	// {
+		// if (eval(__MAGIC__)) return $___RET_VALUE;
+		// $ret = $chprocess($data);
+		// eval(import_module('sys'));
+		// if (20 == $gametype)
+		// {
+			// if (!isset($gamevars['instance10_stage'])) return $ret;
+			// if ((int)$ret[3] + 1 >= $gamevars['instance10_stage']) $ret[3] = 0;
+		// }
+		// return $ret;
+	// }
 	
 	//合成产物的效果、耐久、属性可能发生变化
 	function itemmix_success()
@@ -232,10 +243,10 @@ namespace instance10
 		eval(import_module('sys','player'));
 		if (20 == $gametype)
 		{
-			if (in_array($itmk0[0], array('W','D')))
+			if (in_array($itmk0[0], array('W','D','M','V','H','P')))
 			{
-				$itme0 = max(round((100 + rand(0,20))/100 * $itme0), 1);
-				if ($itms0 != $nosta) $itms0 = max(round((100 + rand(0,20))/100 * $itms0), 1);
+				$itme0 = max(round((80 + rand(0,40))/100 * $itme0), 1);
+				if ($itms0 != $nosta) $itms0 = max(round((80 + rand(0,40))/100 * $itms0), 1);
 				if ($itmk0[0] == 'W')
 				{
 					$dice = rand(0,99);

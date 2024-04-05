@@ -253,6 +253,7 @@ namespace skill960
 				{
 					foreach ($v as $theitem)
 					{
+						if (!empty($theitem['itmsk'])) $theitem['itmsk'] = \attrbase\config_process_encode_comp_itmsk($theitem['itmsk']);
 						\skill952\skill952_sendin_core($theitem, $pa);
 						$log .= "你获得了<span class=\"yellow b\">{$theitem['itm']}</span>。<br>";
 					}
@@ -262,6 +263,7 @@ namespace skill960
 				{
 					foreach ($v as $theitem)
 					{
+						if (!empty($theitem['itmsk'])) $theitem['itmsk'] = \attrbase\config_process_encode_comp_itmsk($theitem['itmsk']);
 						$dropid = \itemmain\itemdrop_query($theitem['itm'], $theitem['itmk'], $theitem['itme'], $theitem['itms'], $theitem['itmsk'], $pa['pls']);
 						$amarr = array('iid' => $dropid, 'itm' => $theitem['itm'], 'pls' => $pa['pls'], 'unseen' => 0);
 						\skill1006\add_beacon($amarr, $pa);
