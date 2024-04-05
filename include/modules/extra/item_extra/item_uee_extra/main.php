@@ -3,7 +3,7 @@
 namespace item_uee_extra
 {
 	//允许解禁小游戏的模式，与该模式中解禁小游戏需要调多少个数值，可以是4,5,7,8
-	$allow_uee_extra_gametype_num = array(18 => 5, 20 => 8);
+	$allow_uee_extra_gametype_num = array(18 => 5, 20 => 4);
 	
 	//解禁小游戏中的显示用字符串
 	$uee_extra_words = array(

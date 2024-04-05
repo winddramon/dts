@@ -10,7 +10,7 @@ namespace instance10
 		$valid_skills[20] += array(181,951,952,960,962,964);
 	}
 	
-	//肉鸽模式自动选择肉鸽来客
+	//肉鸽模式自动选择鸽勇者
 	function get_enter_battlefield_card($card){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
@@ -21,7 +21,7 @@ namespace instance10
 		return $card;
 	}
 	
-	//肉鸽模式自动选择肉鸽来客，禁止其他卡片
+	//肉鸽模式自动选择鸽勇者，禁止其他卡片
 	function card_validate_get_forbidden_cards($card_disabledlist, $card_ownlist){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
@@ -70,14 +70,26 @@ namespace instance10
 		}else return $chprocess();
 	}
 	
+	//商店功能之后用事件替换
 	function get_shopconfig(){
 		if (eval(__MAGIC__)) return $___RET_VALUE; 
-		eval(import_module('sys','instance10'));
+		eval(import_module('sys'));
 		if (20 == $gametype){
 			$file = __DIR__.'/config/shopitem.config.php';
 			$l = openfile($file);
 			return $l;
 		}else return $chprocess();
+	}
+	
+	//网购可以正常访问商店，但商品较少
+	function get_shop_tag_list()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','instance10'));
+		if (20 == $gametype){
+			return $shop_tag_list10;
+		}
+		return $chprocess();
 	}
 	
 	function get_itemfilecont(){
@@ -128,7 +140,7 @@ namespace instance10
 		$chprocess($time);
 	}
 	
-	//开局天气初始化；开局时，只有随机8个地点不为禁区
+	//开局天气初始化；开局时，只有随机6个地点不为禁区
 	function rs_game($xmode = 0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -139,7 +151,16 @@ namespace instance10
 			$weather = 1;
 			//添加禁区
 			$plsnum = sizeof($arealist);
-			$areanum += $plsnum - 8 + 1;
+			$areanum = $plsnum - 6;
+			//进行一次回避禁区……真丑陋！
+			$result = $db->query("SELECT pid FROM {$tablepre}players WHERE type=90");
+			$pls_available = \map\get_safe_plslist();
+			while($sub = $db->fetch_array($result))
+			{
+				$pid = $sub['pid'];
+				$sub['pls'] = array_randompick($pls_available);
+				$db->array_update("{$tablepre}players",$sub,"pid='$pid'");
+			}
 		}
 	}
 	
@@ -182,37 +203,38 @@ namespace instance10
 		$chprocess($atime);
 	}
 	
-	//商店除无月外，在随机4个地点生成
+	//商店功能之后用事件替换
 	function check_in_shop_area($p)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
 		if (20 == $gametype)
 		{
-			if (!isset($gamevars['instance10_shops']))
-			{
-				$gamevars['instance10_shops'] = array_randompick(range(1, 33), 4);
-				$gamevars['instance10_shops'][] = 0;
-			}
-			save_gameinfo();
-			return in_array($p, $gamevars['instance10_shops']);
+			// if (!isset($gamevars['instance10_shops']))
+			// {
+				// $gamevars['instance10_shops'] = array_randompick(range(1, 33), 4);
+				// $gamevars['instance10_shops'][] = 0;
+			// }
+			// save_gameinfo();
+			// return in_array($p, $gamevars['instance10_shops']);
+			return false;
 		}
 		else return $chprocess($p);
 	}
 	
-	//肉鸽模式中，商店道具的禁区次数改用游戏阶段判定
-	function shopitem_row_data_process($data)
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$ret = $chprocess($data);
-		eval(import_module('sys'));
-		if (20 == $gametype)
-		{
-			if (!isset($gamevars['instance10_stage'])) return $ret;
-			if ((int)$ret[3] + 1 >= $gamevars['instance10_stage']) $ret[3] = 0;
-		}
-		return $ret;
-	}
+	//肉鸽模式中，商店道具的禁区次数改用游戏阶段判定，现取消
+	// function shopitem_row_data_process($data)
+	// {
+		// if (eval(__MAGIC__)) return $___RET_VALUE;
+		// $ret = $chprocess($data);
+		// eval(import_module('sys'));
+		// if (20 == $gametype)
+		// {
+			// if (!isset($gamevars['instance10_stage'])) return $ret;
+			// if ((int)$ret[3] + 1 >= $gamevars['instance10_stage']) $ret[3] = 0;
+		// }
+		// return $ret;
+	// }
 	
 	//合成产物的效果、耐久、属性可能发生变化
 	function itemmix_success()
@@ -221,10 +243,10 @@ namespace instance10
 		eval(import_module('sys','player'));
 		if (20 == $gametype)
 		{
-			if (in_array($itmk0[0], array('W','D','M','V','H','P')))
+			if (in_array($itmk0[0], array('W','D')))
 			{
-				$itme0 = max(round((80 + rand(0,40))/100 * $itme0), 1);
-				if ($itms0 != $nosta) $itms0 = max(round((80 + rand(0,40))/100 * $itms0), 1);
+				$itme0 = max(round((100 + rand(0,30))/100 * $itme0), 1);
+				if ($itms0 != $nosta) $itms0 = max(round((100 + rand(0,30))/100 * $itms0), 1);
 				if ($itmk0[0] == 'W')
 				{
 					$dice = rand(0,99);
@@ -258,21 +280,21 @@ namespace instance10
 		$chprocess();
 	}
 	
-	//记录吃技能核心次数
-	function use_skcore_success(&$pa)
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys'));
-		if (20 == $gametype)
-		{
-			if (\skillbase\skill_query(951,$pa))
-			{
-				$sc_count = (int)\skillbase\skill_getvalue(951,'sc_count',$pa);
-				\skillbase\skill_setvalue(951,'sc_count',$sc_count+1,$pa);
-			}
-		}
-		$chprocess($pa);
-	}
+	//记录吃技能核心次数，已取消
+	// function use_skcore_success(&$pa)
+	// {
+		// if (eval(__MAGIC__)) return $___RET_VALUE;
+		// eval(import_module('sys'));
+		// if (20 == $gametype)
+		// {
+			// if (\skillbase\skill_query(951,$pa))
+			// {
+				// $sc_count = (int)\skillbase\skill_getvalue(951,'sc_count',$pa);
+				// \skillbase\skill_setvalue(951,'sc_count',$sc_count+1,$pa);
+			// }
+		// }
+		// $chprocess($pa);
+	// }
 	
 	function itemuse(&$theitem)
 	{
@@ -300,8 +322,23 @@ namespace instance10
 			// }
 			//使用结局道具
 			elseif (strpos($itmk, 'Y') === 0 || strpos($itmk, 'Z') === 0)
-			{	
-				if ($itm == '测试用结局道具')
+			{
+				if ($itm == '测试用结局道具·幸存')
+				{
+					if ($alivenum > 1)
+					{
+						$log .= "<span class=\"red b\">还有其他存活的玩家。</span><br>";
+						return;
+					}
+					else
+					{
+						$winner_flag = 2;
+						\player\player_save($sdata, 1);
+						$url = 'end.php';
+						\sys\gameover($now, 'end2', $name);
+					}
+				}
+				elseif ($itm == '测试用结局道具·解离')
 				{
 					$ueen = $theitem['itmn'];
 					$uee_extra_pos = (int)get_var_input('uee_extra_pos');
@@ -323,10 +360,10 @@ namespace instance10
 						$ret = \item_uee_extra\itemuse_uee_extra($uee_extra_pos);
 						if ($ret)
 						{
-							$winner_flag = 3;
+							$winner_flag = 7;
 							\player\player_save($sdata, 1);
 							$url = 'end.php';
-							\sys\gameover($now, 'end3', $name);
+							\sys\gameover($now, 'end7', $name);
 						}
 						else
 						{
@@ -340,23 +377,6 @@ namespace instance10
 			}
 		}
 		$chprocess($theitem);
-	}
-	
-	//获取结局道具的小游戏需要调多少个数值，根据gamevars中记录过的是否使用过某些剧情道具的flag减少
-	function uee_extra_get_hack_num()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$ret = $chprocess();
-		eval(import_module('sys'));
-		if (20 == $gametype)
-		{
-			//判定未完成
-			if (1)
-			{
-				$ret -= 4;
-			}
-		}
-		return $ret;
 	}
 	
 	//进场后随机获得三个1级任务
@@ -385,11 +405,20 @@ namespace instance10
 				$rank_old = $tasks_info[$taskid]['rank'];
 				$rank_new = get_newtask_rank($pa);
 				//如果没升层，只刷新完成的任务
-				if ($rank_old == $rank_new) \skill960\get_rand_task($pa, $rank_new, 1);
+				if ($rank_old == $rank_new)
+				{
+					if ($rank_new >= 7) return;
+					\skill960\get_rand_task($pa, $rank_new, 1);
+				}
 				else //如果升层，刷新全部任务
 				{
 					\skill960\remove_task($pa, 'all');
-					\skill960\get_rand_task($pa, $rank_new, 3);
+					if ($rank_new >= 7) \skill960\get_rand_task($pa, $rank_new, 2);
+					else \skill960\get_rand_task($pa, $rank_new, 3);
+					//获得BOSS任务，在3,5,7层
+					if ($rank_new >= 7) \skill960\add_task($pa, 303);
+					elseif ($rank_new == 5) \skill960\add_task($pa, 302);
+					elseif ($rank_new == 3) \skill960\add_task($pa, 301);
 				}
 			}
 		}
@@ -422,8 +451,12 @@ namespace instance10
 					$newstage = get_stage($invscore);
 					for ($i=$gamevars['instance10_stage']+1; $i<=$newstage; $i++)
 					{
-						\randnpc\add_randnpc(2*$i-2, 20, 0, 0, 0, 0);
 						\randnpc\add_randnpc(2*$i-1, 20, 0, 0, 0, 0);
+						\randnpc\add_randnpc(2*$i, 20, 0, 0, 0, 0);
+						//刷新boss，未完成
+						if ($i == 3) {}
+						elseif ($i == 5) {}
+						elseif ($i == 7) {}
 					}
 					$gamevars['instance10_stage'] = $newstage;
 					addnews($now, 'instance10_newstage', $pa['name']);
