@@ -243,10 +243,10 @@ namespace instance10
 		eval(import_module('sys','player'));
 		if (20 == $gametype)
 		{
-			if (in_array($itmk0[0], array('W','D','M','V','H','P')))
+			if (in_array($itmk0[0], array('W','D')))
 			{
-				$itme0 = max(round((80 + rand(0,40))/100 * $itme0), 1);
-				if ($itms0 != $nosta) $itms0 = max(round((80 + rand(0,40))/100 * $itms0), 1);
+				$itme0 = max(round((100 + rand(0,30))/100 * $itme0), 1);
+				if ($itms0 != $nosta) $itms0 = max(round((100 + rand(0,30))/100 * $itms0), 1);
 				if ($itmk0[0] == 'W')
 				{
 					$dice = rand(0,99);
@@ -322,8 +322,23 @@ namespace instance10
 			// }
 			//使用结局道具
 			elseif (strpos($itmk, 'Y') === 0 || strpos($itmk, 'Z') === 0)
-			{	
-				if ($itm == '测试用结局道具')
+			{
+				if ($itm == '测试用结局道具·幸存')
+				{
+					if ($alivenum > 1)
+					{
+						$log .= "<span class=\"red b\">还有其他存活的玩家。</span><br>";
+						return;
+					}
+					else
+					{
+						$winner_flag = 2;
+						\player\player_save($sdata, 1);
+						$url = 'end.php';
+						\sys\gameover($now, 'end2', $name);
+					}
+				}
+				elseif ($itm == '测试用结局道具·解离')
 				{
 					$ueen = $theitem['itmn'];
 					$uee_extra_pos = (int)get_var_input('uee_extra_pos');
@@ -345,10 +360,10 @@ namespace instance10
 						$ret = \item_uee_extra\itemuse_uee_extra($uee_extra_pos);
 						if ($ret)
 						{
-							$winner_flag = 3;
+							$winner_flag = 7;
 							\player\player_save($sdata, 1);
 							$url = 'end.php';
-							\sys\gameover($now, 'end3', $name);
+							\sys\gameover($now, 'end7', $name);
 						}
 						else
 						{
@@ -362,23 +377,6 @@ namespace instance10
 			}
 		}
 		$chprocess($theitem);
-	}
-	
-	//获取结局道具的小游戏需要调多少个数值，根据gamevars中记录过的是否使用过某些剧情道具的flag减少
-	function uee_extra_get_hack_num()
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$ret = $chprocess();
-		eval(import_module('sys'));
-		if (20 == $gametype)
-		{
-			//判定未完成
-			if (1)
-			{
-				$ret -= 4;
-			}
-		}
-		return $ret;
 	}
 	
 	//进场后随机获得三个1级任务
@@ -417,6 +415,10 @@ namespace instance10
 					\skill960\remove_task($pa, 'all');
 					if ($rank_new >= 7) \skill960\get_rand_task($pa, $rank_new, 2);
 					else \skill960\get_rand_task($pa, $rank_new, 3);
+					//获得BOSS任务，在3,5,7层
+					if ($rank_new >= 7) \skill960\add_task($pa, 303);
+					elseif ($rank_new == 5) \skill960\add_task($pa, 302);
+					elseif ($rank_new == 3) \skill960\add_task($pa, 301);
 				}
 			}
 		}
@@ -451,6 +453,10 @@ namespace instance10
 					{
 						\randnpc\add_randnpc(2*$i-1, 20, 0, 0, 0, 0);
 						\randnpc\add_randnpc(2*$i, 20, 0, 0, 0, 0);
+						//刷新boss，未完成
+						if ($i == 3) {}
+						elseif ($i == 5) {}
+						elseif ($i == 7) {}
 					}
 					$gamevars['instance10_stage'] = $newstage;
 					addnews($now, 'instance10_newstage', $pa['name']);

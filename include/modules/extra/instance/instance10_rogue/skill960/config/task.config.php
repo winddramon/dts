@@ -780,6 +780,35 @@ namespace skill960
 			'taskreq' => array('itm'=>array('残存的礼品盒'),'num'=>1),
 			'reward' => array('money'=>5200,'card'=>array(403),'invscore'=>5),
 		),
+		//精英任务，肉鸽boss
+		//npc资源暂未完成
+		301 => array
+		(
+			'name' => 'BOSS任务1',
+			'rank' => 99,
+			'elite' => 1,
+			'tasktype' => 'battle_kill',
+			'taskreq' => array('type'=>90,'num'=>1),
+			'reward' => array('money'=>114514),
+		),
+		302 => array
+		(
+			'name' => 'BOSS任务2',
+			'rank' => 99,
+			'elite' => 1,
+			'tasktype' => 'battle_kill',
+			'taskreq' => array('type'=>90,'num'=>1),
+			'reward' => array('money'=>114514),
+		),
+		303 => array
+		(
+			'name' => 'BOSS任务3',
+			'rank' => 99,
+			'elite' => 1,
+			'tasktype' => 'battle_kill',
+			'taskreq' => array('type'=>90,'num'=>1),
+			'reward' => array('money'=>114514),
+		),
 		//1001号之后的任务为卡片任务
 		1001 => array
 		(
