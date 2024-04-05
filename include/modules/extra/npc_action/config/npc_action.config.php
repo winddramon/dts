@@ -274,7 +274,7 @@ namespace npc_action
 					//'rage_change_after_action' => 0,//执行后怒气变化量，可正可负
 					'addchat' => 1,//是否发送聊天记录
 					'addchat_txt' => Array(//发送特定的聊天记录，用<:para1:>和<:para2:>代表出发地和目的地
-						'<:para1:>不太有趣，去<:para2:>看看吧。',
+						'感觉<:para1:>不太有趣，我去<:para2:>看看吧。',
 						'准备前往下一关<:para2:>。'
 					),
 				),
