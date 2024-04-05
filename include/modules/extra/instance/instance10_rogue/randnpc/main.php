@@ -5,13 +5,13 @@ namespace randnpc
 	function init()
 	{
 		eval(import_module('player'));
-		$typeinfo[51] = '实验体I型';
-		$typeinfo[52] = '实验体II型';
-		$typeinfo[53] = '实验体III型';
-		$typeinfo[54] = '实验体IV型';
-		$typeinfo[55] = '实验体V型';
-		$typeinfo[56] = '实验体E型';
-		$typeinfo[57] = '实验体D型';
+		$typeinfo[51] = '实验体0型';
+		$typeinfo[52] = '实验体1型';
+		$typeinfo[53] = '实验体2型';
+		$typeinfo[54] = '实验体3型';
+		$typeinfo[55] = '实验体4型';
+		$typeinfo[56] = '实验体5型';
+		$typeinfo[57] = '实验体6型';
 		$typeinfo[58] = '实验体C型';
 		$typeinfo[59] = '实验体B型';
 		$typeinfo[60] = '实验体A型';
@@ -51,29 +51,31 @@ namespace randnpc
 			//生成名字，待修改
 			$npc['name'] = $rank.'级虚像';
 			if (rand(0,1)) $npc['gd'] = 'f';
-			$var1 = pow(2, $rank);
-			$var2 = pow(1.5, $rank);
-			$npc['mhp'] = $var1 * 300;
+			$var1 = pow(1.3, $rank);
+			$var2 = pow(1.25, $rank);
+			$npc['mhp'] = $var1 * 320;
 			$npc['msp'] = $rank * 100;
-			$npc['att'] = $npc['def'] = round($var2 * 100);
-			$npc['skill'] = round($var2 * 40);
+			$npc['att'] = $npc['def'] = round($var2 * 50);
+			$npc['skill'] = round($var2 * 25);
 			$npc['lvl'] = $rank * 5;
-			$npc['money'] = array(20,40,60,80,120,160,220,300,420,560,720,900,1160,1500,1920,2440,3080,3840,4800,6000)[$rank-1];
+			$npc['money'] = array(20,40,60,80,120,160,220,300,420,560,720,900,1160,1500,1920,2440,3080,3840,4800,6000)[$rank-1] * 4;
 			//武器
 			if ($rank > 12) $npc['wepk'] = array_randompick(array('WP','WK','WC','WG','WF','WD','WB','WP','WK','WC','WG','WF','WD','WB','WJ'));
 			elseif ($rank > 8) $npc['wepk'] = array_randompick(array('WP','WK','WC','WG','WF','WD','WB'));
 			else $npc['wepk'] = array_randompick(array('WP','WK','WC','WG','WF','WD'));
 			list($npc['wep'], $npc['wepsk']) = generate_randnpc_item($npc['wepk'], 1);
 			$npc['wepe'] = max($rank*10, $var1) * 5; $npc['weps'] = $rank * 50;
+			if ($npc['wepk'] == 'WD') $npc['wepe'] = $npc['wepe'] * 1.2;
+			elseif ($npc['wepk'] != 'WF') $npc['wepe'] = $npc['wepe'] * 1.5;
 			//防具
 			$npc['arbk'] = 'DB'; $npc['arhk'] = 'DH'; $npc['arfk'] = 'DF'; $npc['arak'] = 'DA';
 			list($npc['arb'], $npc['arbsk']) = generate_randnpc_item('DB', 1);
 			list($npc['arh'], $npc['arhsk']) = generate_randnpc_item('DH', 1);
 			list($npc['arf'], $npc['arfsk']) = generate_randnpc_item('DF', 1);
 			list($npc['ara'], $npc['arask']) = generate_randnpc_item('DA', 1);
-			$npc['arbe'] = round($var2 * 15);
-			$npc['arhe'] = $npc['arfe'] = $npc['arae'] = round($var2 * 10);
-			$npc['arbs'] = $npc['arhs'] = $npc['arfs'] = $npc['aras'] = $rank * 50;
+			$npc['arbe'] = round($var2 * 32);
+			$npc['arhe'] = $npc['arfe'] = $npc['arae'] = round($var2 * 32);
+			$npc['arbs'] = $npc['arhs'] = $npc['arfs'] = $npc['aras'] = $rank * 24;
 			//饰品
 			list($npc['art'], $npc['artsk']) = generate_randnpc_item('A', 1);
 			$npc['artk'] = 'A'; $npc['arte'] = 1; $npc['arts'] = 1;
@@ -89,7 +91,7 @@ namespace randnpc
 		if (rand(0,99) < $defens_tend) $npc['tactic'] = 2;
 		$npc['pls'] = 99;
 		$npc['skill'] = round($npc['skill'] * rand(80-$variety+$offens_tend,120+$variety+$offens_tend) / 100);
-		$npc['lvl'] = min($npc['lvl'] + rand(-5,5), 1);
+		$npc['lvl'] = max($npc['lvl'] + rand(-5,5), 1);
 		$npc['money'] = round($npc['money'] * rand(80-$variety,120+$variety) / 100);
 		//装备调整
 		if ($npc['club']==19) //铁拳
@@ -102,15 +104,18 @@ namespace randnpc
 		}
 		else
 		{
-			$npc['wepe'] = round($npc['wepe'] * rand(80-$variety+$offens_tend,120+$variety+$offens_tend) / 100);
-			$npc['weps'] = round($npc['weps'] * rand(80-$variety+$offens_tend,120+$variety+$offens_tend) / 100);
+			$npc['wepe'] = round($npc['wepe'] * rand(40-$variety+$offens_tend,160+$variety+$offens_tend) / 100);
+			$npc['weps'] = round($npc['weps'] * rand(40-$variety+$offens_tend,160+$variety+$offens_tend) / 100);
 			
 			//生成武器属性
 			$npc['wepsk'] = generate_randnpc_itmsk($rank, $npc['wepk'], $npc['wepsk']);
 		}
-		$npc['arbe'] = round($npc['arbe'] * rand(80-$variety+$offens_tend,120+$variety+$offens_tend) / 100);
-		$npc['arhe'] = $npc['arfe'] = $npc['arae'] = round($npc['arhe'] * rand(80-$variety+$offens_tend,120+$variety+$offens_tend) / 100);
-		$npc['arbs'] = $npc['arhs'] = $npc['arfs'] = $npc['aras'] = round($npc['arbs'] * rand(80-$variety+$offens_tend,120+$variety+$offens_tend) / 100);
+		$npc['arbe'] = round($npc['arbe'] * rand(70-$variety+$offens_tend,130+$variety+$offens_tend) / 100);
+		$npc['arhe'] = $npc['arfe'] = $npc['arae'] = round($npc['arhe'] * rand(70-$variety+$offens_tend,130+$variety+$offens_tend) / 100);
+		$npc['arbs'] = $npc['arhs'] = $npc['arfs'] = $npc['aras'] = round($npc['arbs'] * rand(70-$variety+$offens_tend,130+$variety+$offens_tend) / 100);
+		$bonus = rand(100,200);
+		$bonus_pos = array_randompick(array('arb','arh','arf','ara'));
+		$npc[$bonus_pos.'e'] = round($npc[$bonus_pos.'e'] * $bonus / 100);
 		
 		//生成防具属性
 		$npc['arbsk'] = generate_randnpc_itmsk($rank, 'DB', $npc['arbsk']);
@@ -169,10 +174,10 @@ namespace randnpc
 		}
 		$guarant_rate = 25 * floor(($rank - 1) / 5);
 		eval(import_module('randnpc'));
-		$r = ceil($rank / 5);
+		$r = min(ceil($rank / 5), 3);
 		
-		if ($r <= 1) $skpool = $randnpc_itmsk[$itmk[0]][1];
-		else $skpool = array_merge($randnpc_itmsk[$itmk[0]][$r], $randnpc_itmsk[$itmk[0]][$r-1]);
+		$skpool = array_merge($randnpc_itmsk[$itmk[0]][$r], $randnpc_itmsk[$itmk[0]][$r+1]);
+		
 		if (rand(0,99) < $guarant_rate) $itmsk_arr[] = array_randompick($randnpc_itmsk[$itmk[0]][$r]);
 		$sk_count = rand($min_itmsk_count, $max_itmsk_count);
 		if ($sk_count > 1) $itmsk_arr = array_merge($itmsk_arr, array_randompick($skpool, $sk_count));
