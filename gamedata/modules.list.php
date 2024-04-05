@@ -652,7 +652,6 @@ searchmemory,extra/searchmemory/,1
 skill738,extra/card/skills/skill738/,1
 skill87,extra/club/skills/skill87/,1
 skill94,extra/club/skills/skill94/,1
-skill68,extra/club/skills/skill68/,1
 instance_quit_button,extra/instance/instance_quit_button/,1
 skill497,extra/card/skills/skill497/,1
 skill503,extra/card/skills/skill503/,1
@@ -732,6 +731,7 @@ skill266,extra/club/skills/skill266/,1
 skill81,extra/club/skills/skill81/,1
 skill509,extra/card/skills/skill509/,1
 skill510,extra/card/skills/skill510/,1
+skill68,extra/club/skills/skill68/,1
 skill962,extra/instance/instance10_rogue/skill962/,1
 bubblebox,extra/misc/bubblebox/,0
 skill86,extra/club/skills/skill86/,0

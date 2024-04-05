@@ -358,7 +358,7 @@ namespace itemmain
 							else  $rmap = $imap;
 							list($iname_j, $ikind_j, $ieff_j, $ista_j, $iskind_j, $rmap) = mapitem_single_data_attr_process($iname, $ikind, $ieff, $ista, $iskind, $rmap, $count);
 							$count ++ ;
-							if(!empty($ista)) {
+							if(!empty($ista_j)) {
 								$iqry .= "('$iname_j', '$ikind_j','$ieff_j','$ista_j','$iskind_j','$rmap'),";
 							}
 						}

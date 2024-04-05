@@ -1,7 +1,7 @@
 <!--{eval eval(import_module('rest'));}-->
 <span style="position: relative;">
     <input type="button" class="cmdbutton" value="睡眠菜单" onmouseenter="$('restmenu').style.display='block';">
-    <div id="restmenu" class="hoveringBlock" style="position: absolute; display: none; width: 100px; height: 90px; left: -18px; top: -15px; text-align: center; padding: 10px;" onmouseleave="$('restmenu').style.display='none';">
+    <div id="restmenu" class="hoveringBlock" style="position: absolute; display: none; width: 90px; height: 85px; left: -10px; bottom: -12px; text-align: center; padding: 7px;" onmouseleave="$('restmenu').style.display='none';">
         <input type="button" class="cmdbutton" id="rest1" value="睡眠" onclick="$('command').value='rest1';postCmd('gamecmd','command.php',this);"><br />
         <input type="button" class="cmdbutton" id="rest2" value="治疗" onclick="$('command').value='rest2';postCmd('gamecmd','command.php',this);"><br />
         <!--{if in_array($pls,$rest_hospital_list)}--><input type="button" class="cmdbutton" id="rest3" value="静养" onclick="$('command').value='rest3';postCmd('gamecmd','command.php',this);"><!--{/if}-->
