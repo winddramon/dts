@@ -38,7 +38,7 @@ namespace npcchat
 			10 => '“判定目标在有效射程外，还有点运气啊……”',
 			11 => '“判定目标完全在射程外，敢面对面打么？”',
 			12 => '“你不可能让一个没有死的概念的存在感到恐惧！”',
-			13 => '“真可惜，如果不是因为我拿钱做事，我们可能是朋友。”',
+			13 => '“真可惜，如果不是这个『委托』，我们可能是朋友。”',
 			'color' => 'ltcrimson'
 		),
 		'红暮 DUMMY' => Array(
@@ -93,7 +93,43 @@ namespace npcchat
 			12 => '“ ♪ You have my little ponies ♪ ”',//critical
 			13 => '“ ♪ Do you know you\'re all my very best friends? ♪ ”',	
 			'color' => 'gold'
-		)
+		),
+		'芙蓉' => Array(
+			'meet' => array(
+				'“敢来这里踢馆，想必你已经做好心理准备了。”',
+			),
+			'attackfine' => array(
+				'“记得我教给过你的东西吗？忘了？”',
+			),
+			'attackhurt' => array(
+				'“有两下子，那么这一招又如何？”',
+			),
+			'retreat' => array(
+				'<span class="yellow">消逝中的幻影露出一丝笑容。</span>“果然我并没有看错人……后会有期。”',
+			),
+			'kill' => array(
+				'“回去再练练吧……如果你能活着回去的话。”',
+			),
+			'color' => 'ltvermilion',
+		),
+		'海丽丝' => Array(
+			'meet' => array(
+				'“我只是路过取个材的独立游戏制作者而已，不用在意我。”',
+			),
+			'attackfine' => array(
+				'“攻击是按哪个键来着？”',
+			),
+			'attackhurt' => array(
+				'“嗯……这玩意儿有点疼啊。',
+			),
+			'retreat' => array(
+				'“游戏业界已经发生了天翻地覆般的变化了吧……”',
+			),
+			'kill' => array(
+				'“全员都通关看来是不可能的。”',
+			),
+			'color' => 'ltpurple',
+		),
 	),
 	6 => Array(
 		'Acg_Xilin' => Array(
@@ -285,6 +321,191 @@ namespace npcchat
 			13 => '“反对巴特利安的力量都要被毁灭。”',
 			'color' => 'linen'
 		)
+	),
+	14 => Array(
+		'幻境接待员 GOTHIC' => Array(
+			'meet' => array(
+				'“您好，我是幻境接待员 GOTHIC……”（棒读）',
+			),
+			'attackfine' => array(
+				'“真的很不想干这个活啊……”',
+				'“我跟你说啊，其实这都是走个形式，你拿到了经验值，我拿到了工资，岂不美哉？”',
+			),
+			'defendhurt' => array(
+				'“唉，钱难赚，雪难吃。”',
+			),
+			'retreat' => array(
+				'GOTHIC露出苦涩的笑容：“……唉，正事偏偏这个时候来。”',
+			),
+			'kill' => array(
+				'“这个月的基本工资有着落了。”',
+			),
+			'color' => 'yellow',
+		),
+		'特技表演者 JACKPOT' => Array(
+			'meet' => array(
+				'JACKPOT向你招了招手！👋',
+			),
+			'attackfine' => array(
+				'JACKPOT向你招了招手！👋',
+			),
+			'defendfine' => array(
+				'JACKPOT静静地观察着你……👀',
+			),
+			'retreat' => array(
+				'<span class="yellow">JACKPOT向你鞠了个躬：</span>“请让我引领您进入表演的第二阶段吧。”',
+			),
+			'kill' => array(
+				'JACKPOT向你做出了一个非常滑稽的表情！😅👉🏻🤡',
+			),
+			'color' => 'red',
+		),
+		'自律维序者 SANMA' => Array(
+			'meet' => array(
+				'“这里是自律程序SANMA_TK，维序进程正常执行中。”',
+			),
+			'attackfine' => array(
+				'“检测到「异常」玩家，开始执行攻击。”',
+				'“进入接敌状态。”',
+			),
+			'retreat' => array(
+				'<span class="yellow">SANMA露出不属于自律程序的表情：</span>“竟然有人能跟上我的操作……？”',
+			),
+			'kill' => array(
+				'“「我愿以我身，化作盾与枪。」”自律程序吟唱着意味不明的歌谣……',
+			),
+			'color' => 'cyan',
+		),
+		'GA-43 GOTHIC' => Array(
+			'meet' => array(
+				'“我不装了，没错，我是来赚奖金的！”',
+				'“奖金不会自己进到锅里来，我要认真上了！”',
+			),
+			'attackfine' => array(
+				'“我劝你现在打H173哦，不然……（小声）你就得认真证明你的实力了。”',
+				'“我得选一种时间成本最低的方式来判定你的「价值」。”',
+			),
+			'attackhurt' => array(
+				'“金老板付给我工资和奖金，所以我总得做点事情。不过我也仍然是……你懂的。”',
+				'“看来需要稍微出点力了。”',
+			),
+			'counterfine' => array(
+				'“动作破绽百出。”',
+			),
+			'counterhurt' => array(
+				'“动作还不错，那么也让你看看我的。”',
+			),
+			'defendfine' => array(
+				'“你的攻击连这套防护服都打不穿吗？这可是最低价中标的东西。”',
+				'“你的肌肉记忆练得还不够啊。”',
+			),
+			'defendhurt' => array(
+				'“你确实在证明你的「价值」……”',
+				'“这个数据似乎还蛮不错的。”'
+			),
+			'retreat' => array(
+				'“噫！好！我的卖身契归你了！”GOTHIC压低声音，“……后面的麻烦事也就拜托你了。”'
+			),
+			'cannot_counter' => array(
+				'“我跟不上你的动作……？”',
+			),
+			'out_of_range' => array(
+				'“有点远，要么这次先摸了吧。”',
+			),
+			'kill' => array(
+				'“你的「价值」也就是「这样」吧。那么，请变成我的奖金吧。”',
+			),
+			'critical' => array(
+				'“这就是我赚钱的力量，我的叹息！”',
+			),
+			'color' => 'yellow',
+		),
+		'GA-77 JACKPOT' => Array(
+			'meet' => array(
+				'“女士们，先生们，欢迎来到争夺超级头奖的大擂台！”',
+				'“从我这里拿走「头奖」的幸运玩家，会是你吗？”',
+			),
+			'attackfine' => array(
+				'“问题环节：你杀到我面前的目的是什么？”',
+				'“问题环节：你为了对抗我准备了什么样的战术？”',
+			),
+			'attackhurt' => array(
+				'“问题环节：你的下一步行动是什么？”',
+				'“问题环节：你觉得「头奖」会是什么？”',
+			),
+			'counterfine' => array(
+				'“问题环节：面对我的攻击，你的感想是什么？”',
+			),
+			'counterhurt' => array(
+				'“问题环节：你打算如何应对这个？”',
+			),
+			'defendfine' => array(
+				'“问题环节：你为什么选择了这个武器？”',
+				'“问题环节：你在攻击的时候，心里想的是什么？”',
+			),
+			'defendhurt' => array(
+				'“问题环节：你为什么不采用更激进的战术？”'
+			),
+			'retreat' => array(
+				'“恭喜你，现在「头奖」是你的了。不过，还有最后一个问题留给你，”<span class="yellow">JACKPOT的身影逐渐模糊起来，</span>“……你杀死的是谁，而杀死我的你，又是谁？”'
+			),
+			'cannot_counter' => array(
+				'“我在等待你的回答。”',
+			),
+			'out_of_range' => array(
+				'“有机会的话，和我详细聊聊你的故事吧，我会好好利用你的数据的。”',
+			),
+			'kill' => array(
+				'“不是你呢。那么最后的质问：你·是·谁·呢？”',
+			),
+			'critical' => array(
+				'“那么，给大家展示一张滑稽小丑的画像！……啊对不起，这似乎是个镜子。”',
+			),
+			'color' => 'red',
+		),
+		'抹杀维序者 SANMA' => Array(
+			'meet' => array(
+				'“这里是Hy……S、SANMA！才不是什么高级人工智能哦！”',
+				'“变！身！第二形态！”',
+			),
+			'attackfine' => array(
+				'“虽然假装AI钓鱼非常有乐子，但果然还是作为玩家来战斗更爽啊！”',
+				'“我对我的游戏理解很有自信！你怎么样呢？”',
+			),
+			'attackhurt' => array(
+				'“上一任SANMA非常忠于职守，我可做不到她那样。”',
+				'“上一任SANMA设定好了所有的攻击方式，所以我现在只需要晃晃脑袋就可以了！”',
+			),
+			'counterfine' => array(
+				'“这样的话……反击，启动！”',
+			),
+			'counterhurt' => array(
+				'“难道要输了吗！”',
+			),
+			'defendfine' => array(
+				'“这个机体被设定成一门玻璃大炮，也就是说……你打得太菜啦！”',
+				'“这片幻境里聚集了很多超能力者，不过我呢，是如假包换的「一般玩家」。”',
+			),
+			'defendhurt' => array(
+				'“疼疼疼……这个界面是真的会疼的啊！”'
+			),
+			'retreat' => array(
+				'“输了啦！大逃杀还是你玩得好啊！”<span class="yellow">SANMA眯起一边眼睛，</span>“哦哦，差点玩忘了，记得拿走「这个」哦！”'
+			),
+			'cannot_counter' => array(
+				'“啊——奶昔真好喝！”',
+			),
+			'out_of_range' => array(
+				'“诶——没有合适的武器了吗？！”',
+			),
+			'kill' => array(
+				'“只有这个程度的话，有些东西你还是不要知道比较好哦！”',
+			),
+			'critical' => array(
+				'“那么，稍微来点真格的吧！虽然只是模拟的版本，但超能力可不只是都市传说哦？”',
+			),
+			'color' => 'cyan',
+		),
 	),
 	
 	15 => Array(
