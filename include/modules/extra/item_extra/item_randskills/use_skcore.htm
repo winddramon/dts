@@ -8,7 +8,7 @@
 	<!--{eval eval(import_module('clubbase'));}-->
 	你可以习得以下技能中的其中一个：<br><br>
 	<!--{loop $sclist $k $i}-->
-	<!--{eval $id = $k+1; $skilldesc_id='skilldesc_show_'.$id; $caller_id =1; }-->
+	<!--{eval $id = $k+1; $skilldesc_id='skilldesc_show_'.$id;}-->
 	<input type="button" class="cmdbutton" value="{$clubskillname[$i]}" onclick="$('skcore_choice').value='{$id}';postCmd('gamecmd','command.php');this.disabled=true;" onmouseenter="$('$skilldesc_id').style.display='block';" onmouseleave="$('$skilldesc_id').style.display='none';">	
 	<div style="position:relative;">
 		<div id="$skilldesc_id" class="skilldesc_show" style="display:none;position:absolute;background-color:#000000;">
