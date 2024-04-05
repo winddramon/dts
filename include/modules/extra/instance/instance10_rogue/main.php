@@ -169,7 +169,7 @@ namespace instance10
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
 		if(20 == $gametype){
-			return $starttime + 60*120;//1禁恒为120分钟
+			return $starttime + 60*60;//1禁恒为60分钟
 		}
 		return $chprocess();
 	}
