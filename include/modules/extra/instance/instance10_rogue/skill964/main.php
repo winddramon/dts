@@ -2,7 +2,7 @@
 
 namespace skill964
 {
-	$packcount_lvl = array(2,4,6,8,10,12);//每个卡包buff升级需要使用的卡片张数
+	$packcount_lvl = array(1,2,3,4,5,6);//每个卡包buff升级需要使用的卡片张数
 	$pack_idx = array(//卡包的编号
 		'Standard Pack'=>0,
 		'Crimson Swear'=>1,
@@ -24,9 +24,9 @@ namespace skill964
 	$card_combo = array(//特定卡片组合，和需要凑够其中几张，count不设置默认为需要全部凑齐
 		1 => array('name' => '红与蓝', 'cards' => array(39,40)),//红暮和蓝凝
 		2 => array('name' => '猫', 'cards' => array(165,289,342,351,386,392), 'count' => 3),//NIKO，拷贝猫，三花，阿燐，姬特，猫盒
-		3 => array('name' => '熊的力量', 'cards' => array(5,13,95,96), 'count' => 3),//虚子，熊本熊，冰炎
-		4 => array('name' => '挑战者', 'cards' => array(70,72,74,75,76,77,78,79,81,82,83,84,85,86,97,117,121,122,124,139,150,153,154,155,162,163,164,167,171,189,192,194,251,257,312,347,359,377,387,393,394,395,400,409), 'count' => 5),//卡名含有挑战者的卡
-		5 => array('name' => '永夜异变', 'cards' => array(268,358,352,158,186,277,350,273,290), 'count' => 4),//永夜抄
+		3 => array('name' => '熊的力量', 'cards' => array(5,13,95,96), 'count' => 2),//虚子，熊本熊，冰炎
+		4 => array('name' => '挑战者', 'cards' => array(70,72,74,75,76,77,78,79,81,82,83,84,85,86,97,117,121,122,124,139,150,153,154,155,162,163,164,167,171,189,192,194,251,257,312,347,359,377,387,393,394,395,400,409), 'count' => 4),//卡名含有挑战者的卡
+		5 => array('name' => '永夜异变', 'cards' => array(268,358,352,158,186,277,350,273,290), 'count' => 3),//永夜抄
 		);
 	
 	function init()
@@ -162,8 +162,6 @@ namespace skill964
 		$pcount964 = get_packcount964($pa);
 		if (empty($pcount964[$packid])) return 0;
 		eval(import_module('skill964'));
-		
-		$packcount_lvl = array(2,4,6,8,10,12);
 		foreach ($packcount_lvl as $k => $v)
 		{
 			if ($pcount964[$packid] < $v)
