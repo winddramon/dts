@@ -164,12 +164,12 @@ namespace instance10
 		}
 	}
 	
-	//开局2小时后禁区
+	//开局90分钟后禁区
 	function rs_areatime(){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
 		if(20 == $gametype){
-			return $starttime + 60*60;//1禁恒为60分钟
+			return $starttime + 60*90;//1禁恒为90分钟
 		}
 		return $chprocess();
 	}

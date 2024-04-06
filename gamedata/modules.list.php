@@ -60,6 +60,7 @@ wound,base/wound/,1
 skill2,base/skills/skill2/,1
 skill3,base/skills/skill3/,1
 item_uv,base/items/item_uv/,1
+item_empowers_extra,extra/item_extra/item_empowers_extra/,1
 skill21,extra/club/skills/skill21/,1
 skill533,extra/card/skills/skill533/,1
 skill11,extra/club/skills/skill11/,1
