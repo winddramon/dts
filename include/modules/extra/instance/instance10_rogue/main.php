@@ -461,6 +461,7 @@ namespace instance10
 				{
 					//此处刷新到当前层的地图
 					$pls_available = array_slice($arealist, max(0, 5 * $i - 10), 10);
+					$pls_available = array_diff($pls_available, array(0, 32, 34));
 					\randnpc\add_randnpc(2*$i-1, 20, 0, 0, 0, 0, $pls_available);
 					\randnpc\add_randnpc(2*$i, 20, 0, 0, 0, 0, $pls_available);
 					//刷新boss，未完成

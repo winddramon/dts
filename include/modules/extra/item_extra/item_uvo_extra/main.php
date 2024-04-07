@@ -156,16 +156,30 @@ namespace item_uvo_extra
 		$card_valid_info = $cards[$cardid]['valid'];
 		list($items, $skills) = use_card_uvo_process($card_valid_info, $pa);
 		
-		if ($cardid_o == 344)//油库里
+		if ($cardid == 344)//油库里
 		{
 			$skills = array();
 		}
-		elseif ($cardid_o == 381)//双料特工
+		elseif ($cardid == 381)//双料特工
 		{
 			$skills = array();
 			$items = array(
 				array('itm'=>'手榴弹','itmk'=>'WC','itme'=>40,'itms'=>1,'itmsk'=>''),
 				array('itm'=>'毒物说明书','itmk'=>'A','itme'=>1,'itms'=>1,'itmsk'=>'')
+				);
+		}
+		elseif ($cardid == 196)//低维生物
+		{
+			$skills = array();
+			$items = array(
+				array('itm'=>'界线『Curse of Dimensionality』','itmk'=>'WFD','itme'=>233,'itms'=>'∞','itmsk'=>'trend')
+				);
+		}
+		elseif ($cardid == 209)//林无月 
+		{
+			$skills = array();
+			$items = array(
+				array('itm'=>'银色盒子','itmk'=>'p','itme'=>1,'itms'=>55,'itmsk'=>'')
 				);
 		}
 		
