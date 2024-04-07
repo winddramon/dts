@@ -4,9 +4,6 @@
 <input type="hidden" id="command" name="command" value="skill960_special">
 <input type="hidden" id="subcmd" name="subcmd" value="">
 <input type="hidden" id="taskid_submit" name="taskid_submit" value="">
-<!--{if empty($taskcount)}-->
-<span class="yellow b">你没有接取任务。</span><br><br>
-<!--{else}-->
 <!--{if in_array($gametype, $invscore_available_mode)}-->
 <!--{eval $invscore=(int)\skillbase\skill_getvalue(960,'invscore',$sdata);}-->
 当前的调查度为<span class="yellow b">$invscore</span>点。<br>
@@ -19,7 +16,11 @@
 	你可以点击“前往下层”开启新的地图，<span class="lime b">同时刷新全部任务</span>。<br>
 	<!--{/if}-->
 <!--{/if}-->
+<br>
 <!--{/if}-->
+<!--{if empty($taskcount)}-->
+<span class="yellow b">你没有接取任务。</span><br><br>
+<!--{else}-->
 当前接取了<span class="yellow b">$taskcount</span>个任务：<br><br>
 <!--{loop $taskarr $i $taskid}-->
 <!--{eval $task_tip=\skill960\show_task_tip($taskid, $taskprog[$i], 1);}-->

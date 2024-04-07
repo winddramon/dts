@@ -14,7 +14,7 @@ $clubskillname[$___TEMP_SKILL_ID]
 	<!--{eval eval(import_module('instance10'));}-->
 	<!--{eval $stage=(int)\skillbase\skill_getvalue(951,'stage',$who);$lvup_invscore = $invscore_lvl[$stage] - $invscore;}-->
 	<!--{if $lvup_invscore > 0}-->
-	获得<span class="yellow b">$lvup_invscore</span>点调查度后可前往下一层，<span class="red b">但在前往下一层前仅能继续完成精英任务</span>。<br>
+	获得<span class="yellow b">$lvup_invscore</span>点调查度后可前往下一层，<br><span class="red b">但在前往下一层前仅能继续完成精英任务</span>。<br>
 	<!--{elseif $stage < 7}-->
 	你可以点击“前往下层”开启新的地图，<span class="lime b">同时刷新全部任务</span>。<br>
 	<!--{/if}-->

@@ -113,16 +113,16 @@ namespace skill960
 			eval(import_module('skill960'));
 			foreach ($taskarr as $k => $v)
 			{
-				if (!empty($tasks_info[$taskid]['elite']))
+				if (!empty($tasks_info[$v]['elite']))
 				{
 					$new_taskarr[] = $v;
 					$new_taskprog[] = $taskprog[$k];
-					$taskarr = implode('_',$new_taskarr);
-					\skillbase\skill_setvalue(960,'taskarr',$taskarr,$pa);
-					$taskprog = implode('_',$new_taskprog);
-					\skillbase\skill_setvalue(960,'taskprog',$taskprog,$pa);
 				}
 			}
+			$taskarr = implode('_',$new_taskarr);
+			\skillbase\skill_setvalue(960,'taskarr',$taskarr,$pa);
+			$taskprog = implode('_',$new_taskprog);
+			\skillbase\skill_setvalue(960,'taskprog',$taskprog,$pa);
 			return;
 		}
 		$i = array_search($taskid, $taskarr);

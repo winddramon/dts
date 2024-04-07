@@ -277,13 +277,14 @@ namespace randnpc
 		return $skills;
 	}
 	
-	function add_randnpc($rank, $num=1, $offens_tend=0, $defens_tend=0, $variety=0, $use_preset=1, $addnews=0) 
+	function add_randnpc($rank, $num=1, $offens_tend=0, $defens_tend=0, $variety=0, $use_preset=1, $pls_available=0, $addnews=0) 
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player','addnpc'));
+		// eval(import_module('sys','player','addnpc'));
+		eval(import_module('sys','player'));
 		$randnpcs = generate_randnpc($rank, $num, $offens_tend, $defens_tend, $variety, $use_preset);
 		if (empty($randnpcs)) return;
-		$pls_available = \map\get_safe_plslist();
+		if (empty($pls_available)) $pls_available = \map\get_safe_plslist();
 		$summon_ids = array();
 		for($i=0;$i<$num;$i++)
 		{
@@ -294,8 +295,12 @@ namespace randnpc
 			$npc = \player\player_format_with_db_structure($npc);
 			$db->array_insert("{$tablepre}players", $npc);
 			$summon_ids[] = $db->insert_id();
-			$newsname = $typeinfo[$npc['type']].' '.$npc['name'];
-			if ($addnews) addnews($now, 'addnpc', $newsname);
+			
+			if ($addnews)
+			{
+				$newsname = $typeinfo[$npc['type']].' '.$npc['name'];
+				addnews($now, 'addnpc', $newsname);
+			}
 		}
 		return $summon_ids;
 	}

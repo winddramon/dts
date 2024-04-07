@@ -117,7 +117,7 @@ namespace skill962
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skill962'));
 		$invscore = (int)\skillbase\skill_getvalue(960,'invscore',$pa);
-		$stage = \instance10\get_stage($invscore);
+		$stage = (int)\skillbase\skill_getvalue(951,'stage',$pa);
 		$skill962_cost = $skill962_base_cost * pow(2, $stage);
 		return $skill962_cost;
 	}

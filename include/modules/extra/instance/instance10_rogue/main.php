@@ -441,11 +441,11 @@ namespace instance10
 				return;
 			}
 			eval(import_module('logger'));
-			if ($stage > 1) $log .= "<span class=\"yellow b\">你发现了新的地点！</span><br>";
+			if ($stage > 1) $log .= "<span class=\"yellow b\">你开启了新的地区！</span><br>";
 			$stage_new = $stage + 1;
 			\skillbase\skill_setvalue(951,'stage',$stage_new,$sdata);
 			\skill960\remove_task($sdata, 'all');
-			if ($stage_new >= 7) \skill960\get_rand_task($pa, $stage_new, 2);
+			if ($stage_new >= 7) \skill960\get_rand_task($sdata, $stage_new, 2);
 			else \skill960\get_rand_task($sdata, $stage_new, 3);
 			//获得BOSS任务，在3,5,7层
 			if ($stage_new >= 7) \skill960\add_task($sdata, 303);
@@ -456,18 +456,19 @@ namespace instance10
 			if ($stage_new > $gamevars['instance10_stage'])
 			{
 				$log .= "<span class=\"yellow b\">新的敌人加入了战场……</span><br>";
-				$gamevars['instance10_stage'] = $stage_new;
 				addnews($now, 'instance10_newstage', $name);
 				for ($i=$gamevars['instance10_stage']+1; $i<=$stage_new; $i++)
 				{
-					//此处刷新到特定地图，待修改
-					\randnpc\add_randnpc(2*$i-1, 20, 0, 0, 0, 0);
-					\randnpc\add_randnpc(2*$i, 20, 0, 0, 0, 0);
+					//此处刷新到当前层的地图
+					$pls_available = array_slice($arealist, max(0, 5 * $i - 10), 10);
+					\randnpc\add_randnpc(2*$i-1, 20, 0, 0, 0, 0, $pls_available);
+					\randnpc\add_randnpc(2*$i, 20, 0, 0, 0, 0, $pls_available);
 					//刷新boss，未完成
 					if ($i == 3) {}
 					elseif ($i == 5) {}
 					elseif ($i == 7) {}
 				}
+				$gamevars['instance10_stage'] = $stage_new;
 				save_gameinfo();
 			}
 			return;
