@@ -5,7 +5,7 @@ namespace randnpc
 	function init()
 	{
 		eval(import_module('player'));
-		$typeinfo[51] = '实验体0型';
+		$typeinfo[51] = '杂鱼';
 		$typeinfo[52] = '实验体1型';
 		$typeinfo[53] = '实验体2型';
 		$typeinfo[54] = '实验体3型';
@@ -129,6 +129,74 @@ namespace randnpc
 		//添加技能
 		if (!isset($npc['skills'])) $npc['skills'] = array();
 		$npc['skills'] = generate_randnpc_skills($rank, $npc['skills']);
+		
+		//特殊奖励道具
+		$dice = rand(0,99);
+		if ($dice == 0)
+		{
+			$pos = array_randompick(array('arb','arh','arf','ara','art'));
+			$npc[$pos.'sk'] .= '^st1^vol'.rand(1,4);
+			$npc[$pos] = '空间之'.$npc[$pos];
+		}
+		elseif ($dice == 1)
+		{
+			$skillid = array_rand($npc['skills'], 1);
+			if ($npc['skills'][$skillid] == 0)
+			{
+				$pos = array_randompick(array('arb','arh','arf','ara','art'));
+				$npc[$pos.'sk'] .= '^eqpsk'.$skillid;
+				$npc[$pos] = '秘传之'.$npc[$pos];
+			}
+		}
+		elseif ($dice == 2)
+		{
+			$pos = array_randompick(array('arb','arh','arf','ara'));
+			$npc[$pos.'k'] .= 'S';
+			$npc[$pos] = '战甲之'.$npc[$pos];
+		}
+		elseif ($dice == 3)
+		{
+			$dice2 = rand(0,3);
+			if ($dice2 == 0)
+			{
+				$npc['itm1'] = '【神经强化剂】';
+				$npc['itmk1'] = 'ME';
+			}
+			elseif ($dice2 == 1)
+			{
+				$npc['itm1'] = '【超级战士药剂】';
+				$npc['itmk1'] = 'MV';
+			}
+			elseif ($dice2 == 2)
+			{
+				$npc['itm1'] = '【肉体强化剂】';
+				$npc['itmk1'] = 'MH';
+			}
+			else
+			{
+				$npc['itm1'] = '【线粒体强化剂】';
+				$npc['itmk1'] = 'MS';
+			}
+			$npc['itme1'] = 20;
+			$npc['itms1'] = rand(1,3);
+			$npc['itmsk1'] = '';
+		}
+		elseif ($dice < 7)
+		{
+			$npc['itm1'] = array_randompick(array('炸鸡','薯条','能量饮料'));
+			$npc['itmk1'] = array_randompick(array('HB','HH','HS','PB'));
+			$npc['itme1'] = rand(30,150);
+			$npc['itms1'] = rand(10,30);
+			$npc['itmsk1'] = '';
+		}
+		elseif ($dice < 10)
+		{
+			$npc['itm1'] = '紧急药剂';
+			$npc['itmk1'] = 'Ca';
+			$npc['itme1'] = 1;
+			$npc['itms1'] = rand(1,5);
+			$npc['itmsk1'] = '';
+		}
 		
 		return $npc;
 	}

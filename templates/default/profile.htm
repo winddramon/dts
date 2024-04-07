@@ -106,7 +106,9 @@
 						</tr>
 						<tr>
 							<td class="b3" style="width:73px;height:40px;text-align:center;vertical-align:middle">
-								<!--{if defined('MOD_INSTANCE_QUIT_BUTTON') && \instance_quit_button\check_instance_quit_available()}-->
+								<!--{if defined('MOD_INSTANCE10') && $gametype == 20 && $hp}-->
+								{template MOD_INSTANCE10_SHOWROGUESTAGE}
+								<!--{elseif defined('MOD_INSTANCE_QUIT_BUTTON') && \instance_quit_button\check_instance_quit_available()}-->
 								{template MOD_INSTANCE_QUIT_BUTTON_INSTANCE_QUIT_BUTTON}
 								<!--{elseif !$hp && defined('MOD_INSTANCE_CLOSE_BUTTON') && \instance_close_button\check_instance_close_available()}-->
 								{template MOD_INSTANCE_CLOSE_BUTTON_INSTANCE_CLOSE_BUTTON}
