@@ -464,9 +464,18 @@ namespace instance10
 					\randnpc\add_randnpc(2*$i-1, 20, 0, 0, 0, 0, $pls_available);
 					\randnpc\add_randnpc(2*$i, 20, 0, 0, 0, 0, $pls_available);
 					//刷新boss，未完成
-					if ($i == 3) {}
-					elseif ($i == 5) {}
-					elseif ($i == 7) {}
+					if ($i == 3)
+					{
+						\randnpc\add_randnpc(7, 1, 0, 0, 0, 1, $pls_available, 1);
+					}
+					elseif ($i == 5)
+					{
+						\randnpc\add_randnpc(11, 1, 0, 0, 0, 1, $pls_available, 1);
+					}
+					elseif ($i == 7)
+					{
+						\randnpc\add_randnpc(15, 1, 0, 0, 0, 1, $pls_available, 1);
+					}
 				}
 				$gamevars['instance10_stage'] = $stage_new;
 				save_gameinfo();

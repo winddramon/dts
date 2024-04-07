@@ -15,6 +15,9 @@ namespace randnpc
 		$typeinfo[58] = '实验体C型';
 		$typeinfo[59] = '实验体B型';
 		$typeinfo[60] = '实验体A型';
+		$typeinfo[62] = '镇守者1';
+		$typeinfo[63] = '镇守者2';
+		$typeinfo[64] = '镇守者3';
 	}
 	
 	//生成若干个标准格式的随机NPC
@@ -39,14 +42,14 @@ namespace randnpc
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		//生成npc基础属性
+		eval(import_module('npc'));
 		if ($use_preset)
 		{
 			eval(import_module('randnpc'));
-			$npc = array_randompick($randnpc_presets[$rank]);
+			$npc = array_merge($npcinit, array_randompick($randnpc_presets[$rank]));
 		}
 		else
 		{
-			eval(import_module('npc'));
 			$npc = $npcinit;
 			//生成名字，待修改
 			$npc['name'] = $rank.'级虚像';
@@ -130,7 +133,8 @@ namespace randnpc
 		if (!isset($npc['skills'])) $npc['skills'] = array();
 		$npc['skills'] = generate_randnpc_skills($rank, $npc['skills']);
 		
-		//特殊奖励道具
+		//不是BOSS概率出特殊奖励道具
+		if ($use_preset) return $npc;
 		$dice = rand(0,99);
 		if ($dice == 0)
 		{
@@ -280,7 +284,6 @@ namespace randnpc
 	function add_randnpc($rank, $num=1, $offens_tend=0, $defens_tend=0, $variety=0, $use_preset=1, $pls_available=0, $addnews=0) 
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		// eval(import_module('sys','player','addnpc'));
 		eval(import_module('sys','player'));
 		$randnpcs = generate_randnpc($rank, $num, $offens_tend, $defens_tend, $variety, $use_preset);
 		if (empty($randnpcs)) return;
@@ -289,7 +292,8 @@ namespace randnpc
 		for($i=0;$i<$num;$i++)
 		{
 			$npc = $randnpcs[$i];
-			$npc['type'] = 50 + ceil($rank / 2);
+			if ($use_preset == 0) $npc['type'] = 50 + ceil($rank / 2);
+			else $npc['type'] = 60 + ceil($rank / 4);
 			$npc['sNo'] = $i;
 			$npc = \npc\init_npcdata($npc,$pls_available);
 			$npc = \player\player_format_with_db_structure($npc);
@@ -299,7 +303,8 @@ namespace randnpc
 			if ($addnews)
 			{
 				$newsname = $typeinfo[$npc['type']].' '.$npc['name'];
-				addnews($now, 'addnpc', $newsname);
+				// addnews($now, 'addnpc', $newsname);
+				addnews($now, 'addnpc_pls', $newsname, '', $npc['pls']);
 			}
 		}
 		return $summon_ids;

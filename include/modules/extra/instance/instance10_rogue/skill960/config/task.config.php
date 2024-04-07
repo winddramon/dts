@@ -788,7 +788,7 @@ namespace skill960
 			'rank' => 99,
 			'elite' => 1,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>90,'num'=>1),
+			'taskreq' => array('type'=>62,'num'=>1),
 			'reward' => array('money'=>114514),
 		),
 		302 => array
@@ -797,7 +797,7 @@ namespace skill960
 			'rank' => 99,
 			'elite' => 1,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>90,'num'=>1),
+			'taskreq' => array('type'=>63,'num'=>1),
 			'reward' => array('money'=>114514),
 		),
 		303 => array
@@ -806,7 +806,7 @@ namespace skill960
 			'rank' => 99,
 			'elite' => 1,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>90,'num'=>1),
+			'taskreq' => array('type'=>64,'num'=>1),
 			'reward' => array('money'=>114514),
 		),
 		//1001号之后的任务为卡片任务
