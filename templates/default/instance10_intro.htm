@@ -20,14 +20,17 @@
 	</ul>
 	<p>地图与禁区：</p>
 	<ul>
-		<li>开局时，除了6个地图之外，其他地图都处于禁区状态。地图需要通过完成<span class="yellow b">任务</span>增加<span class="yellow b">调查度</span>以解锁。</li>
-		<li>地图上不会有商店，取而代之的是在特定地点可能刷新<span class="yellow b">商店事件</span>。在商店事件中，可以使用金钱、生命、经验值等属性以交换道具。</li>
+		<li>开局时，玩家处于第1层，仅有10个地点处于可前往的状态。35个地点按照随机顺序排序，第1-7层分别对应排序后的1-10、1-10、6-15、11-20、16-25、21-30、26-35号地点。无月之影、SCP研究设施和英灵殿会固定刷新在第7层的31-35号地点。通过完成<span class="yellow b">任务</span>增加<span class="yellow b">调查度</span>可以前往下一层，但前往下一层后，上一层的部分地点可能无法再次前往。</li>
+		<li>地图上不会有商店，取而代之的是在特定地点可能刷新<span class="yellow b">商店事件</span>。在商店事件中，可以使用金钱、生命上限、经验值等属性以交换道具。</li>
 	</ul>
 	<p>任务系统：</p>
 	<ul>
 		<li>开局时，每个玩家会获得三个1级任务。通过操作区右下的<span class="yellow b">“查看任务”</span>按钮可以查看当前的任务列表。每个任务有不同的奖励。任务包括击杀NPC、收集道具、使用道具等。</li>
-		<li>调查度：<span class="yellow b">调查度</span>代表着游戏的流程推进程度。完成任务会增加玩家的调查度，每个任务增加的调查度会显示在任务奖励中。每个玩家的调查度是独立的，随着玩家调查度的升高，可以接取到等级更高的任务。而游戏的流程由所有玩家的最高调查度决定，每当最高调查度达到特定值，战场中会有新的地区解锁，并且出现新的NPC角色。</li>
-		<li>如何获取新的任务：玩家每隔一段时间可以刷新一个任务，也可以支付金钱以无视冷却时间刷新一个任务。每当玩家完成一个任务后，会根据自己的调查度获得新的任务。当玩家可获得的任务等级上升后，会刷新所有任务变为新等级的任务。</li>
+		<li>调查度：<span class="yellow b">调查度</span>代表着游戏的流程推进程度，显示在左侧头像下以及任务界面中。完成任务会增加玩家的调查度，每个任务增加的调查度会显示在任务奖励中。每个玩家的调查度是独立的。当玩家的调查度达到前往下一层需要的调查度后，除精英任务外的当前层任务会全部失去，在当前层完成准备后，可以点击左侧<span class="yellow b">“前往下层”</span>按钮以前往下一层。	
+		前往下一层后，会立即接取到下一层的任务。游戏的流程由所有玩家的最高层数决定，当第一次有玩家到达某一层后，战场中会出现新的NPC角色。</li>
+		<li>在第一次有玩家到达第3、5、7层后，战场中会刷新BOSS角色，击倒BOSS角色后可获得与结局有关的特殊道具。所有角色到达第3、5、7层时都会获得击倒BOSS角色的精英任务。</li>
+		<li>精英任务：与剧情有关或特殊的任务。精英任务无法通过技能【寻路】刷新。</li>
+		<li>如何获取新的任务：玩家每隔一段时间可以发动技能【寻路】刷新一个任务，也可以支付金钱以无视冷却时间刷新一个任务。每当玩家完成一个任务后，会根据当前层数获得新的任务。当玩家前往下一层后，会刷新所有任务变为新等级的任务（如果当前层的精英任务未完成也会失去）。</li>
 	</ul>
 	<p>卡片系统：</p>
 	<ul>
@@ -37,6 +40,26 @@
 				<li>1、使用卡片后会获得该卡片的物品、技能和数值变化，当前卡名、内定称号不变；</li>
 				<li>2、使用部分卡片（如Standard Pack中固定内定称号的卡片）只会随机获得一部分技能；</li>
 				<li>3、击杀玩家可获得对方所有未使用的卡片，被玩家击杀时会失去所有未使用的卡片。</li>
+			</ul>
+		</li>
+		<li>根据已使用的同卡包卡片张数，玩家会获得额外的属性奖励，具体效果如下：
+			<ul>
+				<li>Standard Pack：使用<span class="lime b">1/2/3/4/5/6</span>张，受到伤害<span class="yellow b">-10/20/35/50/70/95%</span>；</li>
+				<li>Crimson Swear：使用<span class="lime b">1/2/3/4/5/6</span>张，造成物理伤害<span class="yellow b">+10/30/50/90/150/300%</span>；</li>
+				<li>Top Players：使用<span class="lime b">1/2/3/4/5/6</span>张，熟练度附加<span class="yellow b">50/110/180/300/700/3000</span>点；</li>
+				<li>Way of Life：使用<span class="lime b">1/2/3/4/5/6</span>张，战斗获得经验值<span class="yellow b">+2/6/12/18/30/50</span>；</li>
+				<li>Best DOTO：使用<span class="lime b">1/2/3/4/5/6</span>张，先攻率<span class="yellow b">+3/6/10/18/30/50%</span>；</li>
+				<li>東埔寨Protoject：使用<span class="lime b">1/2/3/4/5/6</span>张，使用灵系武器攻击时射程<span class="yellow b">+1/2/3/4/5/7</span>；</li>
+				<li>Ranmen：使用<span class="lime b">1/2/3/4/5/6</span>张，造成属性伤害<span class="yellow b">+10/30/50/90/150/300%</span>。</li>
+			</ul>
+		</li>
+		<li>使用部分卡片组合后，玩家会获得额外的属性奖励或技能效果，具体效果如下：
+			<ul>
+				<li>使用<span class="gold b">【『红暮』】</span>、<span class="gold b">【『蓝凝』】</span>后，视为具有<span class="yellow b">火焰</span>、<span class="yellow b">冻气</span>、<span class="yellow b">灼焰</span>、<span class="yellow b">冰华</span>、<span class="yellow b">属穿</span>属性"；</li>
+				<li>使用<span class="brickred b">【世界制御猫】</span>、<span class="brickred b">【拷贝猫】</span>、<span class="white b">【开门大吉猫咪】</span>、<span class="cyan b">【M18 “地狱猫”】</span>、<span class="cyan b">【铁兽战线·姬特】</span>、<span class="brickred b">【斯洛蒂的盒子】</span>中的任意<span class="yellow b">3</span>张后，回避率<span class="yellow b">+95%</span>；</li>
+				<li>使用<span class="gold b">【虚子】</span>、<span class="cyan b">【熊本熊】</span>、<span class="gold b">【『冰炎』】</span>、<span class="gold b">【"Rimefire"】</span>中的任意<span class="yellow b">2</span>张后，获得技能“<span class="yellow b">暴风</span>”和“<span class="yellow b">直死4</span>”；</li>
+				<li>使用<span class="yellow b">4</span>张卡名含有<span class="yellow b">挑战者</span>的卡后，造成物理伤害<span class="yellow b">+150%</span>；</li>
+				<li>使用<span class="white b">【G战队·闪光黑】</span>、<span class="brickred b">【烧烤与夜雀与夜色森林】</span>、<span class="cyan b">【上老师】</span>、<span class="gold b">【博丽灵梦】</span>、<span class="gold b">【超魔理沙】</span>、<span class="cyan b">【月战老兵】</span>、<span class="gold b">【八意制药™】</span>、<span class="gold b">【尼特姬】</span>、<span class="gold b">【狱火鸡】</span>中的任意<span class="yellow b">3</span>张后，受到伤害<span class="yellow b">-90%</span>。</li>
 			</ul>
 		</li>
 		<li>

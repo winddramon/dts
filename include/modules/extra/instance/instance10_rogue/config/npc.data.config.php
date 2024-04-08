@@ -1238,7 +1238,7 @@ namespace instance10
 		90 => array
 		(
 			'mode' => 2,
-			'num' => 80,
+			'num' => 50,
 			'pass' => 'bra',
 			'club' => 0,
 			'bid' => 0,

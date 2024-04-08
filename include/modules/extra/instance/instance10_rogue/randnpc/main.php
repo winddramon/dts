@@ -61,7 +61,7 @@ namespace randnpc
 			$npc['att'] = $npc['def'] = round($var2 * 50);
 			$npc['skill'] = round($var2 * 25);
 			$npc['lvl'] = $rank * 5;
-			$npc['money'] = array(20,40,60,80,120,160,220,300,420,560,720,900,1160,1500,1920,2440,3080,3840,4800,6000)[$rank-1] * 4;
+			$npc['money'] = array(140,180,240,260,280,300,320,340,360,380,400,420,440,460,480,500,520,540,560,580)[$rank-1];
 			//武器
 			if ($rank > 12) $npc['wepk'] = array_randompick(array('WP','WK','WC','WG','WF','WD','WB','WP','WK','WC','WG','WF','WD','WB','WJ'));
 			elseif ($rank > 8) $npc['wepk'] = array_randompick(array('WP','WK','WC','WG','WF','WD','WB'));
@@ -95,7 +95,7 @@ namespace randnpc
 		$npc['pls'] = 99;
 		$npc['skill'] = round($npc['skill'] * rand(80-$variety+$offens_tend,120+$variety+$offens_tend) / 100);
 		$npc['lvl'] = max($npc['lvl'] + rand(-5,5), 1);
-		$npc['money'] = round($npc['money'] * rand(80-$variety,120+$variety) / 100);
+		$npc['money'] = round($npc['money'] * rand(70-$variety,130+$variety) / 100);
 		//装备调整
 		if ($npc['club']==19) //铁拳
 		{
