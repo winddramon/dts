@@ -320,7 +320,7 @@ namespace instance10
 			{
 				if ($itm == '测试用结局道具·幸存')
 				{
-					if ($alivenum > 1)
+					if (\sys\check_alivelist_teamwin())
 					{
 						$log .= "<span class=\"red b\">还有其他存活的玩家。</span><br>";
 						return;
@@ -332,6 +332,13 @@ namespace instance10
 						$url = 'end.php';
 						\sys\gameover($now, 'end2', $name);
 					}
+				}
+				elseif ($itm == '测试用结局道具·解禁')
+				{
+					$winner_flag = 3;
+					\player\player_save($sdata, 1);
+					$url = 'end.php';
+					\sys\gameover($now, 'end3', $name);
 				}
 				elseif ($itm == '测试用结局道具·解离')
 				{

@@ -176,93 +176,99 @@ namespace sys
 		$validnum = count($gameover_plist);
 		$alivenum = count($gameover_alivelist);
 		
-		//在没提供游戏结束模式的情况下，自行判断模式
-		if((!$gmode)||(($gmode=='end2')&&(!$winname))) {
+		if ($gmode) $winmode = substr($gmode,3,1);
+		else //在没提供游戏结束模式的情况下，自行判断模式
+		{
 			if($validnum <= 0) {//无激活者情况下，无人参加
 				$alivenum = 0;
 				$winnum = 0;
 				$winmode = 4;
 				$winner = '';
-			} else {//判断谁是最后幸存者
-				if(!$alivenum) {//全部死亡
-					$winmode = 1;
-					$winnum = 0;
-					$winner = '';
-				} else {
-					if (!in_array($gametype,$teamwin_mode))//非团队模式
-					{
-						//判断是否最后幸存
-						if($alivenum == 1) {
-							$winmode = 2;
-							$winnum = 1;
-							foreach($gameover_alivelist as &$wdata){ break;}
-							$winner = $wdata['name'];
-							$wdata['winner_flag'] = $winmode;
-							\player\player_save($wdata);
-						} 
-						else
-						{	//不满足游戏结束条件，返回
-							save_gameinfo();
-							return;
-						}
-					}
-					else//团队模式
-					{
-						$flag=1; $first=1; $firstteamID = '';
-						foreach($gameover_alivelist as $ai => $data){
-							if($first) {
-								$first=0;
-								$firstteamID=$data['teamID'];
-							}elseif($firstteamID!=$data['teamID'] || !$data['teamID']){
-								//如果有超过一种teamID，或有超过一个人没有teamID，则游戏还未结束
-								$flag=0; break;
-							}
-						}
-						if ($flag && !$first)
-						{
-							if (!$firstteamID)	//单人胜利
-							{	
-								foreach($gameover_alivelist as &$wdata){ break;}
-								$wdata['winner_flag'] = 2;
-								\player\player_save($wdata);
-								$winnum = 1;
-								$winner = $wdata['name'];
-							}
-							else				//团队胜利，要记录已经死掉的玩家的名字，所以重新读1次玩家池
-							{
-								$teammatelist = array();
-								foreach($gameover_plist as &$wdata){
-									if($wdata['teamID'] == $firstteamID){
-										$wdata['winner_flag'] = 2; //把队伍里所有玩家的状态改为获胜，用于天梯积分等判定。
-										$teammatelist[] = $wdata['name'];//保存队友数据
-									}
-								}
-								$db->query("UPDATE {$tablepre}players SET winner_flag='2' WHERE type = 0 AND teamID = '$firstteamID'");
-								
-								$winnum=count($teammatelist);
-								if ($winnum == 1)
-								{
-									$winner = $teammatelist[0];
-								}elseif($winnum > 1){
-									$winner = $namelist = implode(',',$teammatelist);//注意，从这里开始，组队模式$winner会是一个用逗号分隔的字符串
-								}
-							}
-							
-						}
-						else
-						{	//不满足游戏结束条件，返回
-							save_gameinfo();
-							return;
-						}
-						$winmode = 2;
-					}
-				}
 			}
-		} else {//提供了游戏结束模式的情况下
-			$winmode = substr($gmode,3,1);
+			elseif(!$alivenum) {//全部死亡
+				$winmode = 1;
+				$winnum = 0;
+				$winner = '';
+			}
+			else $winmode = 2;
+		}
+		
+		if ($winname && !in_array($gametype,$teamwin_mode)) //如果有获胜者且非团队模式，则获胜者唯一
+		{
 			$winnum = 1;
 			$winner = $winname;
 		}
+		elseif ($winmode == 2 && !in_array($gametype,$teamwin_mode)) //非团队模式幸存
+		{
+			//判断是否最后幸存
+			if($alivenum == 1) {
+				$winnum = 1;
+				foreach($gameover_alivelist as &$wdata){ break;}
+				$winner = $wdata['name'];
+				$wdata['winner_flag'] = $winmode;
+				\player\player_save($wdata);
+			} 
+			else //不满足游戏结束条件，返回
+			{
+				$winmode = 0;
+				save_gameinfo();
+				return;
+			}
+		}
+		elseif (in_array($gametype,$teamwin_mode)) //团队模式
+		{
+			$teamwin = 0; //是否为团队胜利
+			if ($winmode == 2 && !$winname) //团队模式幸存
+			{
+				$firstteamID = check_alivelist_teamwin();//获取获胜队伍
+				if ($firstteamID === 0) //不满足游戏结束条件，返回
+				{
+					$winmode = 0;
+					save_gameinfo();
+					return;
+				}
+				elseif ($firstteamID === 1)	//单人胜利
+				{
+					foreach($gameover_alivelist as &$wdata){ break;}
+					$wdata['winner_flag'] = 2;
+					\player\player_save($wdata);
+					$winnum = 1;
+					$winner = $wdata['name'];
+				}
+				else $teamwin = 1;
+			}
+			elseif ($winname)
+			{
+				$firstteamID = $gameover_plist[$winname]['teamID'];
+				if (!empty($firstteamID)) $teamwin = 1;
+				else //单人胜利，获胜者无队伍
+				{
+					$winnum = 1;
+					$winner = $winname;
+				}
+			}
+			
+			if ($teamwin == 1) //团队胜利，要记录已经死掉的玩家的名字，所以重新读1次玩家池
+			{
+				$teammatelist = array();
+				foreach($gameover_plist as &$wdata){
+					if($wdata['teamID'] == $firstteamID){
+						$wdata['winner_flag'] = $winmode; //把队伍里所有玩家的状态改为获胜，用于天梯积分等判定。
+						$teammatelist[] = $wdata['name'];//保存队友数据
+					}
+				}
+				$db->query("UPDATE {$tablepre}players SET winner_flag='$winmode' WHERE type = 0 AND teamID = '$firstteamID'");
+				
+				$winnum=count($teammatelist);
+				if ($winnum == 1)
+				{
+					$winner = $teammatelist[0];
+				}elseif($winnum > 1){
+					$winner = $namelist = implode(',',$teammatelist);//注意，从这里开始，组队模式$winner会是一个用逗号分隔的字符串
+				}
+			}
+		}
+		
 		//2023.12.07 如果全灭，额外检查一次，把所有没有死的玩家设为死亡（视为禁死）。不过这会被当前玩家的刷新覆盖，在end.php界面需要单独处理
 		if(1==$winmode) {
 			$db->query("UPDATE {$tablepre}players SET hp=0 AND state=11 WHERE type=0 AND hp>0");
@@ -480,6 +486,32 @@ namespace sys
 		}
 		return $up;
 	}
+	
+	//判断组队胜利模式是否仅剩余一个队伍的函数
+	function check_alivelist_teamwin()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		$tidlist = array();
+		$result = $db->query("SELECT teamID FROM {$tablepre}players WHERE type=0 AND hp>0");
+		while($r = $db->fetch_array($result)){
+			$tidlist[] = $r['teamID'];
+		}
+		
+		$first=1; $firstteamID = '';
+		foreach($tidlist as $tid){
+			if($first) {
+				$first=0;
+				$firstteamID=$tid;
+			}elseif($firstteamID!=$tid || !$tid){
+				//如果有超过一种teamID，或有超过一个人没有teamID，则游戏还未结束
+				return 0;
+			}
+		}
+		if ($firstteamID) return $firstteamID;
+		return 1;
+	}
+	
 }
 
 ?>

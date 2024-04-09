@@ -134,47 +134,61 @@ namespace team
 			if(!$edata['type']) \logger\logsave($edata['pid'],$now,$x,'c');
 		}
 		
-		$itmn = substr($command, 4);
-		if (!${'itms'.$itmn}) {
-			$log .= '此道具不存在！';
+		if (strpos($command,'item') === 0)
+		{
+			$itmn = substr($command, 4);
+			if (!${'itms'.$itmn}) {
+				$log .= '此道具不存在！';
+				
+				$mode = 'command';
+				return;
+			}
+			$itm = & ${'itm'.$itmn};
+			$itmk = & ${'itmk'.$itmn};
+			$itme = & ${'itme'.$itmn};
+			$itms = & ${'itms'.$itmn};
+			$itmsk = & ${'itmsk'.$itmn};
 			
-			$mode = 'command';
-			return;
-		}
-		$itm = & ${'itm'.$itmn};
-		$itmk = & ${'itmk'.$itmn};
-		$itme = & ${'itme'.$itmn};
-		$itms = & ${'itms'.$itmn};
-		$itmsk = & ${'itmsk'.$itmn};
-		
-		$sendflag = 0;
-		for($i = 1;$i <= 6; $i++){
-			if(!$edata['itms'.$i]) {
-				$edata['itm'.$i] = $itm; $edata['itmk'.$i] = $itmk; 
-				$edata['itme'.$i] = $itme; $edata['itms'.$i] = $itms; $edata['itmsk'.$i] = $itmsk;
-				
-				$log .= "你将<span class=\"yellow b\">".$edata['itm'.$i]."</span>送给了<span class=\"yellow b\">{$edata['name']}</span>。<br>";
-				$x = "<span class=\"yellow b\">$name</span>将<span class=\"yellow b\">".$edata['itm'.$i]."</span>送给了你。";
-				
-				if(!$edata['type']) \logger\logsave($edata['pid'],$now,$x,'t');
-				addnews($now,'senditem',$name,$edata['name'],$itm);
-				\player\player_save($edata);
-				$itm = $itmk = $itmsk = '';
-				$itme = $itms = 0;
-				
-				$sendflag = 1;
-				break;
+			$sendflag = 0;
+			for($i = 1;$i <= 6; $i++){
+				if(!$edata['itms'.$i]) {
+					$edata['itm'.$i] = $itm; $edata['itmk'.$i] = $itmk; 
+					$edata['itme'.$i] = $itme; $edata['itms'.$i] = $itms; $edata['itmsk'.$i] = $itmsk;
+					
+					$log .= "你将<span class=\"yellow b\">".$edata['itm'.$i]."</span>送给了<span class=\"yellow b\">{$edata['name']}</span>。<br>";
+					$x = "<span class=\"yellow b\">$name</span>将<span class=\"yellow b\">".$edata['itm'.$i]."</span>送给了你。";
+					
+					if(!$edata['type']) \logger\logsave($edata['pid'],$now,$x,'t');
+					addnews($now,'senditem',$name,$edata['name'],$itm);
+					\player\player_save($edata);
+					$itm = $itmk = $itmsk = '';
+					$itme = $itms = 0;
+					
+					$sendflag = 1;
+					break;
+				}
+			}
+			
+			$sendflag = senditem_before_log_event($itmn, $sendflag, $edata);
+			
+			if(!$sendflag) {
+				$log .= "<span class=\"yellow b\">{$edata['name']}</span> 的包裹已经满了，不能赠送物品。<br>";
 			}
 		}
-		
-		$sendflag = senditem_before_log_event($itmn, $sendflag, $edata);
-		
-		if(!$sendflag) {
-			$log .= "<span class=\"yellow b\">{$edata['name']}</span> 的包裹已经满了，不能赠送物品。<br>";
+		else
+		{
+			$ret = senditem_extra($sdata, $edata);
+			if ($ret == 0) $log .= "输入参数不正确。<br>";
 		}
 		
 		$mode = 'command';
 		return;
+	}
+	
+	//赠送其他道具的接口
+	function senditem_extra($ldata, $edata) {
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return 0;
 	}
 	
 	//赠送物品后，确定赠送成功还是失败之前的事件

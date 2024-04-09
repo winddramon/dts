@@ -5,6 +5,9 @@ namespace item_uvo_extra
 	//允许卡牌包额外功能的模式，暂时仅有肉鸽模式
 	$allow_uvo_extra_gametype = array(20);
 	
+	//允许组队赠送卡片的模式，暂时仅有肉鸽模式
+	$allow_uvo_extra_cardsend_gametype = array(20);
+	
 	//素材卡
 	$material_cards = array(1101,1102,1103,1104,1105,1106,1107,1108,1109,1110,1111,1112,1113);
 	
@@ -548,6 +551,36 @@ namespace item_uvo_extra
 		}
 	}
 	
+	//组队送卡
+	function senditem_extra($ldata, $edata)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys','item_uvo_extra'));
+		if (in_array($gametype, $allow_uvo_extra_cardsend_gametype) && (strpos($command,'card') === 0))
+		{
+			eval(import_module('logger'));
+			$cardid = substr($command, 4);
+			$cards_uvo = get_cards_uvo_extra($ldata);
+			if (!in_array($cardid, $cards_uvo))
+			{
+				$log .= '你没有这张卡片。<br>';
+				return 0;
+			}
+			remove_card_uvo_extra($cardid, $ldata);
+			add_card_uvo_extra($cardid, $edata);
+			
+			eval(import_module('cardbase'));
+			$cardname = $cards[$cardid]['name'];
+			$log .= "你将卡片<span class=\"yellow b\">“{$cardname}”</span>送给了<span class=\"yellow b\">{$edata['name']}</span>。<br>";
+			$x = "<span class=\"yellow b\">{$ldata['name']}</span>将卡片<span class=\"yellow b\">“{$cardname}”</span>送给了你。";
+			if(!$edata['type']) \logger\logsave($edata['pid'],$now,$x,'t');
+			addnews($now,'sendcard',$ldata['name'],$edata['name'],$cardname);
+			\player\player_save($edata);
+			return 1;
+		}
+		return $chprocess($ldata, $edata);
+	}
+	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -556,6 +589,8 @@ namespace item_uvo_extra
 		
 		if ($news == 'cardmix')
 			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"yellow b\">{$a}用卡片“{$b}”和“{$c}”合成了卡片“{$d}”！</span></li>";
+		elseif ($news == 'sendcard') 
+			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"lime b\">{$a}将卡片<span class=\"yellow b\">“{$c}”</span>赠送给了{$b}</span></li>";
 		
 		return $chprocess($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr);
 	}

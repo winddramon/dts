@@ -21,3 +21,9 @@
 <!--{if $itms6}-->
 转让：<input type="button"  value="{$itm6}/{$itme6}/{$itms6}" onclick="$('command').value='item6';postCmd('gamecmd','command.php');this.disabled=true;"><br>
 <!--{/if}-->
+<!--{if defined('MOD_ITEM_UVO_EXTRA')}-->
+<!--{eval eval(import_module('item_uvo_extra'));}-->
+<!--{if in_array($gametype, $allow_uvo_extra_cardsend_gametype)}-->
+{template MOD_ITEM_UVO_EXTRA_UVO_EXTRA_CARDSEND}
+<!--{/if}-->
+<!--{/if}-->
