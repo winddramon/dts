@@ -320,7 +320,7 @@ namespace instance10
 			{
 				if ($itm == '测试用结局道具·幸存')
 				{
-					if (\sys\check_alivelist_teamwin())
+					if (!\sys\check_alivelist_teamwin())
 					{
 						$log .= "<span class=\"red b\">还有其他存活的玩家。</span><br>";
 						return;
