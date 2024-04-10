@@ -5,7 +5,7 @@ namespace randnpc
 	function init()
 	{
 		eval(import_module('player'));
-		$typeinfo[51] = '实验体0型';
+		$typeinfo[51] = '杂鱼';
 		$typeinfo[52] = '实验体1型';
 		$typeinfo[53] = '实验体2型';
 		$typeinfo[54] = '实验体3型';
@@ -15,6 +15,9 @@ namespace randnpc
 		$typeinfo[58] = '实验体C型';
 		$typeinfo[59] = '实验体B型';
 		$typeinfo[60] = '实验体A型';
+		$typeinfo[62] = '镇守者1';
+		$typeinfo[63] = '镇守者2';
+		$typeinfo[64] = '镇守者3';
 	}
 	
 	//生成若干个标准格式的随机NPC
@@ -39,14 +42,14 @@ namespace randnpc
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		//生成npc基础属性
+		eval(import_module('npc'));
 		if ($use_preset)
 		{
 			eval(import_module('randnpc'));
-			$npc = array_randompick($randnpc_presets[$rank]);
+			$npc = array_merge($npcinit, array_randompick($randnpc_presets[$rank]));
 		}
 		else
 		{
-			eval(import_module('npc'));
 			$npc = $npcinit;
 			//生成名字，待修改
 			$npc['name'] = $rank.'级虚像';
@@ -58,7 +61,7 @@ namespace randnpc
 			$npc['att'] = $npc['def'] = round($var2 * 50);
 			$npc['skill'] = round($var2 * 25);
 			$npc['lvl'] = $rank * 5;
-			$npc['money'] = array(20,40,60,80,120,160,220,300,420,560,720,900,1160,1500,1920,2440,3080,3840,4800,6000)[$rank-1] * 4;
+			$npc['money'] = array(140,180,240,260,280,300,320,340,360,380,400,420,440,460,480,500,520,540,560,580)[$rank-1];
 			//武器
 			if ($rank > 12) $npc['wepk'] = array_randompick(array('WP','WK','WC','WG','WF','WD','WB','WP','WK','WC','WG','WF','WD','WB','WJ'));
 			elseif ($rank > 8) $npc['wepk'] = array_randompick(array('WP','WK','WC','WG','WF','WD','WB'));
@@ -92,7 +95,7 @@ namespace randnpc
 		$npc['pls'] = 99;
 		$npc['skill'] = round($npc['skill'] * rand(80-$variety+$offens_tend,120+$variety+$offens_tend) / 100);
 		$npc['lvl'] = max($npc['lvl'] + rand(-5,5), 1);
-		$npc['money'] = round($npc['money'] * rand(80-$variety,120+$variety) / 100);
+		$npc['money'] = round($npc['money'] * rand(70-$variety,130+$variety) / 100);
 		//装备调整
 		if ($npc['club']==19) //铁拳
 		{
@@ -129,6 +132,75 @@ namespace randnpc
 		//添加技能
 		if (!isset($npc['skills'])) $npc['skills'] = array();
 		$npc['skills'] = generate_randnpc_skills($rank, $npc['skills']);
+		
+		//不是BOSS概率出特殊奖励道具
+		if ($use_preset) return $npc;
+		$dice = rand(0,99);
+		if ($dice == 0)
+		{
+			$pos = array_randompick(array('arb','arh','arf','ara','art'));
+			$npc[$pos.'sk'] .= '^st1^vol'.rand(1,4);
+			$npc[$pos] = '空间之'.$npc[$pos];
+		}
+		elseif ($dice == 1)
+		{
+			$skillid = array_rand($npc['skills'], 1);
+			if ($npc['skills'][$skillid] == 0)
+			{
+				$pos = array_randompick(array('arb','arh','arf','ara','art'));
+				$npc[$pos.'sk'] .= '^eqpsk'.$skillid;
+				$npc[$pos] = '秘传之'.$npc[$pos];
+			}
+		}
+		elseif ($dice == 2)
+		{
+			$pos = array_randompick(array('arb','arh','arf','ara'));
+			$npc[$pos.'k'] .= 'S';
+			$npc[$pos] = '战甲之'.$npc[$pos];
+		}
+		elseif ($dice == 3)
+		{
+			$dice2 = rand(0,3);
+			if ($dice2 == 0)
+			{
+				$npc['itm1'] = '【神经强化剂】';
+				$npc['itmk1'] = 'ME';
+			}
+			elseif ($dice2 == 1)
+			{
+				$npc['itm1'] = '【超级战士药剂】';
+				$npc['itmk1'] = 'MV';
+			}
+			elseif ($dice2 == 2)
+			{
+				$npc['itm1'] = '【肉体强化剂】';
+				$npc['itmk1'] = 'MH';
+			}
+			else
+			{
+				$npc['itm1'] = '【线粒体强化剂】';
+				$npc['itmk1'] = 'MS';
+			}
+			$npc['itme1'] = 20;
+			$npc['itms1'] = rand(1,3);
+			$npc['itmsk1'] = '';
+		}
+		elseif ($dice < 7)
+		{
+			$npc['itm1'] = array_randompick(array('炸鸡','薯条','能量饮料'));
+			$npc['itmk1'] = array_randompick(array('HB','HH','HS','PB'));
+			$npc['itme1'] = rand(30,150);
+			$npc['itms1'] = rand(10,30);
+			$npc['itmsk1'] = '';
+		}
+		elseif ($dice < 10)
+		{
+			$npc['itm1'] = '紧急药剂';
+			$npc['itmk1'] = 'Ca';
+			$npc['itme1'] = 1;
+			$npc['itms1'] = rand(1,5);
+			$npc['itmsk1'] = '';
+		}
 		
 		return $npc;
 	}
@@ -209,25 +281,31 @@ namespace randnpc
 		return $skills;
 	}
 	
-	function add_randnpc($rank, $num=1, $offens_tend=0, $defens_tend=0, $variety=0, $use_preset=1, $addnews=0) 
+	function add_randnpc($rank, $num=1, $offens_tend=0, $defens_tend=0, $variety=0, $use_preset=1, $pls_available=0, $addnews=0) 
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player','addnpc'));
+		eval(import_module('sys','player'));
 		$randnpcs = generate_randnpc($rank, $num, $offens_tend, $defens_tend, $variety, $use_preset);
 		if (empty($randnpcs)) return;
-		$pls_available = \map\get_safe_plslist();
+		if (empty($pls_available)) $pls_available = \map\get_safe_plslist();
 		$summon_ids = array();
 		for($i=0;$i<$num;$i++)
 		{
 			$npc = $randnpcs[$i];
-			$npc['type'] = 50 + ceil($rank / 2);
+			if ($use_preset == 0) $npc['type'] = 50 + ceil($rank / 2);
+			else $npc['type'] = 60 + ceil($rank / 4);
 			$npc['sNo'] = $i;
 			$npc = \npc\init_npcdata($npc,$pls_available);
 			$npc = \player\player_format_with_db_structure($npc);
 			$db->array_insert("{$tablepre}players", $npc);
 			$summon_ids[] = $db->insert_id();
-			$newsname = $typeinfo[$npc['type']].' '.$npc['name'];
-			if ($addnews) addnews($now, 'addnpc', $newsname);
+			
+			if ($addnews)
+			{
+				$newsname = $typeinfo[$npc['type']].' '.$npc['name'];
+				// addnews($now, 'addnpc', $newsname);
+				addnews($now, 'addnpc_pls', $newsname, '', $npc['pls']);
+			}
 		}
 		return $summon_ids;
 	}

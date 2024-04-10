@@ -104,10 +104,27 @@ namespace skill960
 			\skillbase\skill_setvalue(960,'taskprog','',$pa);
 			return;
 		}
-		
 		$taskarr = get_taskarr($pa);
 		$taskprog = get_taskprog($pa);
-		
+		if ($taskid == 'normal')
+		{
+			$new_taskarr = array();
+			$new_taskprog = array();
+			eval(import_module('skill960'));
+			foreach ($taskarr as $k => $v)
+			{
+				if (!empty($tasks_info[$v]['elite']))
+				{
+					$new_taskarr[] = $v;
+					$new_taskprog[] = $taskprog[$k];
+				}
+			}
+			$taskarr = implode('_',$new_taskarr);
+			\skillbase\skill_setvalue(960,'taskarr',$taskarr,$pa);
+			$taskprog = implode('_',$new_taskprog);
+			\skillbase\skill_setvalue(960,'taskprog',$taskprog,$pa);
+			return;
+		}
 		$i = array_search($taskid, $taskarr);
 		if ($i !== false)
 		{
@@ -379,8 +396,8 @@ namespace skill960
 					$flag = 1;
 					break;
 				}
-				if (!$flag) return false;
 			}
+			if (!$flag) return false;
 		}
 		return true;
 	}

@@ -244,7 +244,7 @@ namespace skill960
 			'name' => '测试任务2',
 			'rank' => 2,
 			'tasktype' => 'item_use',
-			'taskreq' => array('itmk'=>array('TN'),'num'=>5),
+			'taskreq' => array('itmk'=>array('T'),'num'=>5),
 			'reward' => array('item'=>array(array('itm'=>'密封的酒瓶','itmk'=>'X','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		44 => array
@@ -788,7 +788,7 @@ namespace skill960
 			'rank' => 99,
 			'elite' => 1,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>90,'num'=>1),
+			'taskreq' => array('type'=>62,'num'=>1),
 			'reward' => array('money'=>114514),
 		),
 		302 => array
@@ -797,7 +797,7 @@ namespace skill960
 			'rank' => 99,
 			'elite' => 1,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>90,'num'=>1),
+			'taskreq' => array('type'=>63,'num'=>1),
 			'reward' => array('money'=>114514),
 		),
 		303 => array
@@ -806,7 +806,7 @@ namespace skill960
 			'rank' => 99,
 			'elite' => 1,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>90,'num'=>1),
+			'taskreq' => array('type'=>64,'num'=>1),
 			'reward' => array('money'=>114514),
 		),
 		//1001号之后的任务为卡片任务

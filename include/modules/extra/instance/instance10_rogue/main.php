@@ -2,6 +2,8 @@
 
 namespace instance10
 {
+	$invscore_lvl = array(0,10,20,30,40,50,60,70);
+	
 	function init() {
 		eval(import_module('skillbase'));
 		if(!isset($valid_skills[20])) {
@@ -140,7 +142,7 @@ namespace instance10
 		$chprocess($time);
 	}
 	
-	//开局天气初始化；开局时，只有随机6个地点不为禁区
+	//开局天气和地图初始化
 	function rs_game($xmode = 0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -149,12 +151,15 @@ namespace instance10
 		if ((20 == $gametype)&&($xmode & 2)) 
 		{
 			$weather = 1;
-			//添加禁区
-			$plsnum = sizeof($arealist);
-			$areanum = $plsnum - 6;
+			//地图初始化
+			eval(import_module('map'));
+			$special_areas = array(0, 32, 34);
+			$arealist = array_diff($arealist, $special_areas);
+			$arealist = array_merge($arealist, $special_areas);
 			//进行一次回避禁区……真丑陋！
 			$result = $db->query("SELECT pid FROM {$tablepre}players WHERE type=90");
-			$pls_available = \map\get_safe_plslist();
+			//获取前10个地点
+			$pls_available = array_slice($arealist, 0, 10);
 			while($sub = $db->fetch_array($result))
 			{
 				$pid = $sub['pid'];
@@ -164,12 +169,12 @@ namespace instance10
 		}
 	}
 	
-	//开局2小时后禁区
+	//开局90分钟后禁区
 	function rs_areatime(){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
 		if(20 == $gametype){
-			return $starttime + 60*120;//1禁恒为120分钟
+			return $starttime + 60*90;//1禁恒为90分钟
 		}
 		return $chprocess();
 	}
@@ -310,22 +315,12 @@ namespace instance10
 				$log .= "你使用了{$itm}，却发现没有可以连接上的网络。怎么会这样？<br>";
 				return;
 			}
-			//每个人只能吃7个技能核心，已取消
-			// elseif (strpos($itmk, 'SC') === 0)
-			// {
-				// $sc_count = (int)\skillbase\skill_getvalue(951,'sc_count',$sdata);
-				// if ($sc_count >= 7)
-				// {
-					// $log .= "<span class=\"yellow b\">你已经使用过7个技能核心，无法再使用了。</span><br>";
-					// return;
-				// }
-			// }
 			//使用结局道具
 			elseif (strpos($itmk, 'Y') === 0 || strpos($itmk, 'Z') === 0)
 			{
 				if ($itm == '测试用结局道具·幸存')
 				{
-					if ($alivenum > 1)
+					if (!\sys\check_alivelist_teamwin())
 					{
 						$log .= "<span class=\"red b\">还有其他存活的玩家。</span><br>";
 						return;
@@ -337,6 +332,13 @@ namespace instance10
 						$url = 'end.php';
 						\sys\gameover($now, 'end2', $name);
 					}
+				}
+				elseif ($itm == '测试用结局道具·解禁')
+				{
+					$winner_flag = 3;
+					\player\player_save($sdata, 1);
+					$url = 'end.php';
+					\sys\gameover($now, 'end3', $name);
 				}
 				elseif ($itm == '测试用结局道具·解离')
 				{
@@ -387,6 +389,7 @@ namespace instance10
 		eval(import_module('sys'));
 		if (20 == $gametype)
 		{
+			\skillbase\skill_setvalue(951,'stage',1,$pa);
 			\skill960\get_rand_task($pa, 1, 3);
 		}
 	}
@@ -402,93 +405,107 @@ namespace instance10
 			eval(import_module('skill960'));
 			if (isset($tasks_info[$taskid]['rank']) && $tasks_info[$taskid]['rank'] <= 10)
 			{
-				$rank_old = $tasks_info[$taskid]['rank'];
-				$rank_new = get_newtask_rank($pa);
-				//如果没升层，只刷新完成的任务
-				if ($rank_old == $rank_new)
+				eval(import_module('instance10'));
+				$invscore = (int)\skillbase\skill_getvalue(960,'invscore',$pa);
+				$stage = (int)\skillbase\skill_getvalue(951,'stage',$pa);
+				if ($invscore < $invscore_lvl[$stage])
 				{
-					if ($rank_new >= 7) return;
-					\skill960\get_rand_task($pa, $rank_new, 1);
+					\skill960\get_rand_task($pa, $stage, 1);
 				}
-				else //如果升层，刷新全部任务
+				elseif ($stage < 7)
 				{
-					\skill960\remove_task($pa, 'all');
-					if ($rank_new >= 7) \skill960\get_rand_task($pa, $rank_new, 2);
-					else \skill960\get_rand_task($pa, $rank_new, 3);
-					//获得BOSS任务，在3,5,7层
-					if ($rank_new >= 7) \skill960\add_task($pa, 303);
-					elseif ($rank_new == 5) \skill960\add_task($pa, 302);
-					elseif ($rank_new == 3) \skill960\add_task($pa, 301);
+					eval(import_module('logger'));
+					\skill960\remove_task($pa, 'normal');
+					$log .= "<span class=\"yellow b\">你完成了本层的全部任务！请在准备完成后点击左侧的“前往下层”。</span><br>";
 				}
 			}
 		}
 	}
 	
-	//获取任务奖励约等于完成任务，在这里加禁区解锁的判定
-	function get_task_reward(&$pa, $taskid)
+	//前往下层，以及刷新NPC的判定
+	function act()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$chprocess($pa, $taskid);
+		eval(import_module('sys','logger'));
+		if ($mode == 'special' && $command == 'nextstage') 
+		{
+			if (20 != $gametype)
+			{
+				$log .= "输入参数错误。<br>";
+				return;
+			}
+			eval(import_module('player','instance10'));
+			$invscore = (int)\skillbase\skill_getvalue(960,'invscore',$sdata);
+			$stage = (int)\skillbase\skill_getvalue(951,'stage',$sdata);
+			if ($invscore < $invscore_lvl[$stage])
+			{
+				$log .= "你在本层的调查度不足。<br>";
+				return;
+			}
+			if ($stage >= 7)
+			{
+				$log .= "已经没有下一层给你冲了！<br>";
+				return;
+			}
+			eval(import_module('logger'));
+			if ($stage > 1) $log .= "<span class=\"yellow b\">你开启了新的地区！</span><br>";
+			$stage_new = $stage + 1;
+			\skillbase\skill_setvalue(951,'stage',$stage_new,$sdata);
+			\skill960\remove_task($sdata, 'all');
+			if ($stage_new >= 7) \skill960\get_rand_task($sdata, $stage_new, 2);
+			else \skill960\get_rand_task($sdata, $stage_new, 3);
+			//获得BOSS任务，在3,5,7层
+			if ($stage_new >= 7) \skill960\add_task($sdata, 303);
+			elseif ($stage_new == 5) \skill960\add_task($sdata, 302);
+			elseif ($stage_new == 3) \skill960\add_task($sdata, 301);
+			
+			if (!isset($gamevars['instance10_stage'])) $gamevars['instance10_stage'] = 1;
+			if ($stage_new > $gamevars['instance10_stage'])
+			{
+				$log .= "<span class=\"yellow b\">新的敌人加入了战场……</span><br>";
+				addnews($now, 'instance10_newstage', $name);
+				for ($i=$gamevars['instance10_stage']+1; $i<=$stage_new; $i++)
+				{
+					//此处刷新到当前层的地图
+					$pls_available = array_slice($arealist, max(0, 5 * $i - 10), 10);
+					$pls_available = array_diff($pls_available, array(0, 32, 34));
+					\randnpc\add_randnpc(2*$i-1, 20, 0, 0, 0, 0, $pls_available);
+					\randnpc\add_randnpc(2*$i, 20, 0, 0, 0, 0, $pls_available);
+					//刷新boss，未完成
+					if ($i == 3)
+					{
+						\randnpc\add_randnpc(7, 1, 0, 0, 0, 1, $pls_available, 1);
+					}
+					elseif ($i == 5)
+					{
+						\randnpc\add_randnpc(11, 1, 0, 0, 0, 1, $pls_available, 1);
+					}
+					elseif ($i == 7)
+					{
+						\randnpc\add_randnpc(15, 1, 0, 0, 0, 1, $pls_available, 1);
+					}
+				}
+				$gamevars['instance10_stage'] = $stage_new;
+				save_gameinfo();
+			}
+			return;
+		}
+		
+		$chprocess();
+	}
+	
+	//可前往地点
+	function check_can_enter($pno)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
 		if (20 == $gametype)
 		{
-			if (!isset($gamevars['instance10_topinv'])) $gamevars['instance10_topinv'] = 0;
-			if (!isset($gamevars['instance10_stage'])) $gamevars['instance10_stage'] = 1;
-			$invscore = (int)\skillbase\skill_getvalue(960,'invscore',$pa);
-			if ($invscore > $gamevars['instance10_topinv'])
-			{
-				//最高调查度每加10，推进游戏1个阶段，同时减少4个禁区
-				$map_unlock = floor($invscore/10) - floor($gamevars['instance10_topinv']/10);
-				if ($map_unlock > 0)
-				{
-					//解锁新地点
-					eval(import_module('map','logger'));
-					$log .= "<span class=\"yellow b\">你发现了新的地点！</span><br>";
-					$areanum -= 4 * $map_unlock;
-					$areanum = max($areanum, 0);
-					//增加新npc
-					$log .= "<span class=\"yellow b\">新的敌人加入了战场……</span><br>";
-					$newstage = get_stage($invscore);
-					for ($i=$gamevars['instance10_stage']+1; $i<=$newstage; $i++)
-					{
-						\randnpc\add_randnpc(2*$i-1, 20, 0, 0, 0, 0);
-						\randnpc\add_randnpc(2*$i, 20, 0, 0, 0, 0);
-						//刷新boss，未完成
-						if ($i == 3) {}
-						elseif ($i == 5) {}
-						elseif ($i == 7) {}
-					}
-					$gamevars['instance10_stage'] = $newstage;
-					addnews($now, 'instance10_newstage', $pa['name']);
-					//刷新商店
-					\sys\rs_game(32);
-				}
-				$gamevars['instance10_topinv'] = $invscore;
-			}
-			save_gameinfo();
+			$stage = (int)\skillbase\skill_getvalue(951,'stage');
+			$pls_available = array_slice($arealist, max(0, 5 * $stage - 10), 10);
+			return in_array($pno, $pls_available);
 		}
-	}
-	
-	//根据调查度决定新任务等级
-	function get_newtask_rank(&$pa)
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$invscore = (int)\skillbase\skill_getvalue(960,'invscore',$pa);
-		return get_stage($invscore);
-	}
-	
-	//根据调查度计算游戏阶段
-	function get_stage($invscore)
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		//以后可能需要细调，不写成算式了
-		if ($invscore < 10) return 1;
-		elseif ($invscore < 20) return 2;
-		elseif ($invscore < 30) return 3;
-		elseif ($invscore < 40) return 4;
-		elseif ($invscore < 50) return 5;
-		elseif ($invscore < 60) return 6;
-		else return 7;
+		return $chprocess($pno);
 	}
 	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())
@@ -497,7 +514,7 @@ namespace instance10
 		eval(import_module('sys','player'));
 		
 		if($news == 'instance10_newstage') 
-			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}完成了任务，解锁了新的地区！同时，新的敌人加入了战场！</span></li>";
+			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}开启了新的地区！同时，新的敌人加入了战场！</span></li>";
 		
 		return $chprocess($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr);
 	}

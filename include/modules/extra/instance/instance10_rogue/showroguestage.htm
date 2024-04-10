@@ -1,0 +1,11 @@
+<!--{eval eval(import_module('instance10'));}-->
+<!--{eval $invscore=(int)\skillbase\skill_getvalue(960,'invscore',$sdata);$stage=(int)\skillbase\skill_getvalue(951,'stage',$sdata);}-->
+<span>第<span class="orange b"> {$stage} </span>层</span>
+<br>
+<!--{if $invscore < $invscore_lvl[$stage]}-->
+<span class="lime b">$invscore / {$invscore_lvl[$stage]}</span>
+<!--{elseif $stage < 7}-->
+<input type="button" class="cmdbutton" id="instance10_nextstage" value="前往下层" onclick="$('mode').value='special';$('command').value='nextstage';postCmd('gamecmd','command.php');this.disabled=true;">
+<!--{else}-->
+<span class="lime b">$invscore / --</span>
+<!--{/if}-->

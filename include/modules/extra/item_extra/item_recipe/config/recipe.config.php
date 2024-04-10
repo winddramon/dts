@@ -313,49 +313,49 @@ namespace item_recipe
 		(
 			'stuff1' => array('itm'=>'星之碎片','itm_match'=>0),
 			'stuff2' => array('itm'=>'刀','itm_match'=>1,'extra'=>'weapon'),
-			'result' => array('星力之毒刃','WK',180,100,'upn'),
+			'result' => array('星力之毒刃','WK',320,100,'upn'),
 			'extra' => array('materials'=>2),
 		),
 		73 => array
 		(
 			'stuff1' => array('itm'=>'星之碎片','itm_match'=>0),
 			'stuff2' => array('itm'=>'棍棒','itm_match'=>1,'extra'=>'weapon'),
-			'result' => array('星力之棍棒','WP',180,90,'ueN'),
+			'result' => array('星力之棍棒','WP',320,90,'ueN'),
 			'extra' => array('materials'=>2),
 		),
 		74 => array
 		(
 			'stuff1' => array('itm'=>'星之碎片','itm_match'=>0),
 			'stuff2' => array('itm'=>'炸弹','itm_match'=>1,'extra'=>'weapon'),
-			'result' => array('星力之艺术','WD',180,60,'uwd'),
+			'result' => array('星力之艺术','WD',320,60,'uwd'),
 			'extra' => array('materials'=>2),
 		),
 		75 => array
 		(
 			'stuff1' => array('itm'=>'星之碎片','itm_match'=>0),
 			'stuff2' => array('itm'=>'球','itm_match'=>1,'extra'=>'weapon'),
-			'result' => array('星力之精准','WC',180,140,'uik'),
+			'result' => array('星力之精准','WC',320,140,'uik'),
 			'extra' => array('materials'=>2),
 		),
 		76 => array
 		(
 			'stuff1' => array('itm'=>'星之碎片','itm_match'=>0),
 			'stuff2' => array('itm'=>'枪','itm_match'=>1,'extra'=>'weapon'),
-			'result' => array('星力之扫荡','WG',180,50,'uf^ac1'),
+			'result' => array('星力之扫荡','WG',320,50,'uf^ac1'),
 			'extra' => array('materials'=>2),
 		),
 		77 => array
 		(
 			'stuff1' => array('itm'=>'星之碎片','itm_match'=>0),
 			'stuff2' => array('itm'=>'符','itm_match'=>1,'extra'=>'weapon'),
-			'result' => array('星力之意念','WF',180,70,'udM'),
+			'result' => array('星力之意念','WF',320,70,'udM'),
 			'extra' => array('materials'=>2),
 		),
 		78 => array
 		(
 			'stuff1' => array('itm'=>'星之碎片','itm_match'=>0),
 			'stuff2' => array('itmk'=>'WJ','itmk_match'=>1),
-			'result' => array('星力之决断','WJ',252,2,'ro'),
+			'result' => array('星力之决断','WJ',320,20,'ro'),
 			'extra' => array('materials'=>2),
 		),
 		79 => array
@@ -370,7 +370,7 @@ namespace item_recipe
 			'stuff1' => array('itm'=>'星之碎片','itm_match'=>0),
 			'stuff2' => array('itmk'=>'DB','itmk_match'=>1),
 			'stuff3' => array('itm'=>'『祝福宝石』','itm_match'=>0),
-			'result' => array('星力之庇佑','DB',240,90,'A'),
+			'result' => array('星力之庇佑','DB',480,60,'AR'),
 			'extra' => array('materials'=>3),
 		),
 		81 => array
@@ -378,7 +378,7 @@ namespace item_recipe
 			'stuff1' => array('itm'=>'星之碎片','itm_match'=>0),
 			'stuff2' => array('itmk'=>'DH','itmk_match'=>1),
 			'stuff3' => array('itmk'=>'V','itmk_match'=>1),
-			'result' => array('星力之才智','DH',120,180,'a'),
+			'result' => array('星力之才智','DH',480,60,'ac'),
 			'extra' => array('materials'=>3),
 		),
 		82 => array
@@ -386,7 +386,7 @@ namespace item_recipe
 			'stuff1' => array('itm'=>'星之碎片','itm_match'=>0),
 			'stuff2' => array('itm'=>'卡牌包','itm_match'=>1),
 			'stuff3' => array('itm'=>'闪光','itm_match'=>1),
-			'result' => array('星力之掌控','DA',480,10,'Hh'),
+			'result' => array('星力之掌控','DA',480,60,'Hh'),
 			'extra' => array('materials'=>3),
 		),
 		83 => array
@@ -394,14 +394,14 @@ namespace item_recipe
 			'stuff1' => array('itm'=>'星之碎片','itm_match'=>0),
 			'stuff2' => array('itmsk'=>'B','itmsk_match'=>1),
 			'stuff3' => array('itmsk'=>'b','itmsk_match'=>1),
-			'result' => array('星力之藐视','DF',360,30,'Bb'),
+			'result' => array('星力之藐视','DF',480,60,'Bb'),
 			'extra' => array('materials'=>3),
 		),
 		84 => array
 		(
 			'stuff1' => array('itm'=>'星之碎片','itm_match'=>0),
 			'stuffa' => array('itmk'=>'ss','itmk_match'=>0),
-			'result' => array('星力之穿云','A',1,1,'nL'),
+			'result' => array('星力之穿云','A',1,1,'nyL^wc1'),
 			'extra' => array('materials'=>5),
 		),
 		85 => array

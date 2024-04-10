@@ -74,7 +74,7 @@
 					<!--{/if}-->
 				</span>
 			</TD>
-			<TD class="b3"><span><!--{if $info['winnernum']>1}-->团队幸存<!--{else}-->$gwin[$info['wmode']]<!--{/if}--></span></TD>
+			<TD class="b3"><span><!--{if $info['winnernum']>1 && $info['wmode']==2}-->团队幸存<!--{else}-->$gwin[$info['wmode']]<!--{/if}--></span></TD>
 			<TD class="b3"><span>$info['date']</span><br><span>$info['time']</span></TD>
 			<TD class="b3"><span>$info['vnum']</span></TD>
 			<!--{if $info['winnernum']>1}-->

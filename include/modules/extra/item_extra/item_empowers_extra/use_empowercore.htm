@@ -1,0 +1,11 @@
+<!--{eval eval(import_module('item_empowers_extra'));}-->
+<input type="hidden" id="mode" name="mode" value="command">
+<input type="hidden" id="command" name="command" value="itm{$theitem['itmn']}">
+<input type="hidden" id="ec_choice" name="ec_choice" value="0">
+<!--{eval $ec_lvl = \item_empowers_extra\get_ec_lvl($itmsk);}-->
+你可以选择一项以强化你的武器：<br><br>
+<!--{loop range(1,3) $i}-->
+<input type="button" class="cmdbutton" value="{$ec_words[$ec_lvl][$i]}" style="width: 120px" onclick="$('ec_choice').value='{$i}';postCmd('gamecmd','command.php');this.disabled=true;"><br>
+<!--{/loop}-->
+<br>
+<input type="button" class="cmdbutton"  id="x" value="[X]返回" onclick="$('command').value='menu'; postCmd('gamecmd','command.php');this.disabled=true;">

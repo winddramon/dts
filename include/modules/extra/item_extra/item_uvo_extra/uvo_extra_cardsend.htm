@@ -1,0 +1,7 @@
+<!--{eval eval(import_module('cardbase'));}-->
+<!--{eval $cards_uvo = \item_uvo_extra\get_cards_uvo_extra($sdata);$showpack=1;}-->
+<!--{if !empty($cards_uvo)}-->
+<!--{loop $cards_uvo $cid}-->
+转让：<input type="button"  value="卡片【{$cards[$cid]['name']} {$cards[$cid]['rare']}】" onclick="$('command').value='card{$cid}';postCmd('gamecmd','command.php');this.disabled=true;"><br>
+<!--{/loop}-->
+<!--{/if}-->
