@@ -43,7 +43,7 @@ $packlist=array(
 	
 	'Stealth',
 	'hidden',
-	'Rare Stuff'
+	'Pungeon'
 );
 
 //卡包介绍
@@ -60,7 +60,7 @@ $packdesc = array(
 	'Ranmen' => '以随机性为特色的卡集。',
 	'Stealth' => '一些需要显示卡片介绍的隐藏卡',
 	'hidden' => '隐藏卡片，不会悬浮显示卡片介绍，如果你看到这句话请联系天然呆管理员',
-	'Rare Stuff' => '隐藏卡片，肉鸽模式的素材卡。',
+	'Pungeon' => '隐藏卡片，肉鸽模式的特殊卡片与素材卡。',
 );
 
 //不参与抽卡的卡包
@@ -72,7 +72,7 @@ $packstart = array(
 	//'東埔寨Protoject' => 4476654671,
 	'Stealth' => 4476654671,
 	'hidden' => 4476654671,
-	'Rare Stuff' => 4476654671,
+	'Pungeon' => 4476654671,
 );
 
 //卡包对应的图标，默认按Standard Pack的pack_default.png
@@ -6845,7 +6845,7 @@ $cards = array(
 	1002 => array(
 		'name'=>'鸽勇者',//肉鸽模式开局卡
 		'rare'=>'M',
-		'pack'=>'hidden',
+		'pack'=>'Pungeon',
 		'desc'=>'去吗 配吗 一落地就踩坑<br>战吗 战啊 接黑熊的暴风<br>致那三十层的挣扎与怒吼',
 		'effect'=>'抽光切糕的你就像个小丑',
 		'energy'=>0,
@@ -6862,7 +6862,7 @@ $cards = array(
 	1101 => array(
 		'name' => '通顶雪道',
 		'rare' => 'C',
-		'pack' => 'Rare Stuff',
+		'pack' => 'Pungeon',
 		'desc' => '我的卡片怎么变白板了？',
 		'effect' => '素材卡，能与任意卡片合成，<br>但合成产物固定为C卡',
 		'energy' => 0,
@@ -6871,7 +6871,7 @@ $cards = array(
 	1102 => array(
 		'name' => 'BOMB!',
 		'rare' => 'B',
-		'pack' => 'Rare Stuff',
+		'pack' => 'Pungeon',
 		'desc' => '毫无疑问，这就是一个B',
 		'effect' => '素材卡，作为合成素材时视为B卡，<br>无特殊效果',
 		'energy' => 0,
@@ -6880,7 +6880,7 @@ $cards = array(
 	1103 => array(
 		'name' => '升阶魔法-异热同心之力',
 		'rare' => 'A',
-		'pack' => 'Rare Stuff',
+		'pack' => 'Pungeon',
 		'desc' => '升阶XYZ变换！',
 		'effect' => '素材卡，作为合成素材时视为与另一张素材卡稀有度相同',
 		'energy' => 0,
@@ -6889,7 +6889,7 @@ $cards = array(
 	1104 => array(
 		'name' => '命运之轮',
 		'rare' => 'A',
-		'pack' => 'Rare Stuff',
+		'pack' => 'Pungeon',
 		'desc' => '1d20=1',
 		'effect' => '素材卡，作为合成素材时视为A卡，<br>合成产物必为Ranmen卡片',
 		'energy' => 0,
@@ -6898,7 +6898,7 @@ $cards = array(
 	1105 => array(
 		'name' => '全人类的非想天则',
 		'rare' => 'A',
-		'pack' => 'Rare Stuff',
+		'pack' => 'Pungeon',
 		'desc' => '难道求则不是国家大事吗？',
 		'effect' => '素材卡，作为合成素材时视为A卡，<br>合成产物必为東埔寨Protoject卡片',
 		'energy' => 0,
@@ -6907,7 +6907,7 @@ $cards = array(
 	1106 => array(
 		'name' => '“血色深渊”',
 		'rare' => 'A',
-		'pack' => 'Rare Stuff',
+		'pack' => 'Pungeon',
 		'desc' => '仿佛鲜血凝结而成的酱汁闪烁着诡异的光芒，鬼魅般扭曲的触须缠绕在幽白的植物尸骸上……<br>……这是一碗章鱼盖饭。',
 		'effect' => '素材卡，作为合成素材时视为A卡，<br>合成产物必为Top Players卡片',
 		'energy' => 0,
@@ -6916,7 +6916,7 @@ $cards = array(
 	1107 => array(
 		'name' => '刺激市场VIP卡',
 		'rare' => 'S',
-		'pack' => 'Rare Stuff',
+		'pack' => 'Pungeon',
 		'desc' => '一张五彩斑斓的黑卡。这真的是可以拥有的吗？',
 		'effect' => '素材卡，能与任意卡片合成，<br>合成产物固定为S卡',
 		'energy' => 0,
@@ -6925,7 +6925,7 @@ $cards = array(
 	1108 => array(
 		'name' => '动漫展门票',
 		'rare' => 'A',
-		'pack' => 'Rare Stuff',
+		'pack' => 'Pungeon',
 		'desc' => '“参展者就是参加会展的人。<br>你还记得自己是来参加动漫展的吧？”',
 		'effect' => '素材卡，作为合成素材时视为A卡，<br>合成产物必为Standard Pack卡片',
 		'energy' => 0,
@@ -6934,7 +6934,7 @@ $cards = array(
 	1109 => array(
 		'name' => '「红杀」之主的名片',
 		'rare' => 'A',
-		'pack' => 'Rare Stuff',
+		'pack' => 'Pungeon',
 		'desc' => '这张卡片代表你获得了她的认可。',//待修改
 		'effect' => '素材卡，作为合成素材时视为A卡，<br>合成产物必为Crimson Swear卡片',
 		'energy' => 0,
@@ -6943,7 +6943,7 @@ $cards = array(
 	1110 => array(
 		'name' => '《AC大逃杀远古攻略》',
 		'rare' => 'A',
-		'pack' => 'Rare Stuff',
+		'pack' => 'Pungeon',
 		'desc' => '我觉得2.98SP2版本是最好玩的大逃杀',
 		'effect' => '素材卡，作为合成素材时视为A卡，<br>合成产物必为Way of Life卡片',
 		'energy' => 0,
@@ -6952,7 +6952,7 @@ $cards = array(
 	1111 => array(
 		'name' => '……',//待修改
 		'rare' => 'A',
-		'pack' => 'Rare Stuff',
+		'pack' => 'Pungeon',
 		'desc' => '……',
 		'effect' => '素材卡，作为合成素材时视为A卡，<br>合成产物必为Best DOTO卡片',
 		'energy' => 0,
@@ -6961,7 +6961,7 @@ $cards = array(
 	1112 => array(
 		'name' => '恋爱的埋火',
 		'rare' => 'A',
-		'pack' => 'Rare Stuff',
+		'pack' => 'Pungeon',
 		'desc' => '燃起来了.jpg',
 		'effect' => '素材卡，作为合成素材时视为A卡，<br>合成产物必为Balefire Rekindle卡片',
 		'energy' => 0,
@@ -6970,7 +6970,7 @@ $cards = array(
 	1113 => array(
 		'name' => '战地记者',
 		'rare' => 'A',
-		'pack' => 'Rare Stuff',
+		'pack' => 'Pungeon',
 		'desc' => '早上好，虚拟幻境！<br>昨天的大乱斗，结果又是满打满算的整整180个! ',
 		'effect' => '素材卡，作为合成素材时视为A卡，<br>合成产物必为Event Bonus卡片',
 		'energy' => 0,
