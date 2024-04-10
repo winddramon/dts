@@ -6793,6 +6793,19 @@ $cards = array(
 			),
 		)
 	),
+	420 => array(
+		'name' => '肉鸽挑战者',
+		'rare' => 'A',
+		'pack' => 'Event Bonus',
+		'desc' => '好，天胡开局',
+		'effect' => '开局携带三个肉鸽模式的开局道具，<br>肉鸽模式中该卡片视为属于全部卡包',
+		'energy' => 77,
+		'valid' => array(
+			'skills' => array(
+				'750' => '0',
+			),
+		)
+	),
 	
 	1000 => array(
 		'name'=>'萌新',

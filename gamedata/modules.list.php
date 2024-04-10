@@ -734,6 +734,7 @@ skill509,extra/card/skills/skill509/,1
 skill510,extra/card/skills/skill510/,1
 skill68,extra/club/skills/skill68/,1
 skill962,extra/instance/instance10_rogue/skill962/,1
+skill750,extra/card/skills/skill750/,1
 bubblebox,extra/misc/bubblebox/,0
 skill86,extra/club/skills/skill86/,0
 gtype2,extra/instance/gtype2/main/,0
