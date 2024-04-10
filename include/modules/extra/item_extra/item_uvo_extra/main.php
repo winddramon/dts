@@ -510,7 +510,7 @@ namespace item_uvo_extra
 				$prizepack_count = array(206=>0, 204=>0, 203=>0, 202=>0);
 				foreach ($pa_cards as $get_card_id)
 				{
-					if (in_array($cards[$get_card_id]['pack'], $pack_ignore_kuji) && $get_card_id != 420)//特判肉鸽挑战者
+					if (in_array($cards[$get_card_id]['pack'], $pack_ignore_kuji) && !in_array($get_card_id, array(165,420)))//特判NIKO、肉鸽挑战者
 					{
 						if($cards[$get_card_id]['rare'] == 'S') $prizepack_count[206] += 2;
 						elseif($cards[$get_card_id]['rare'] == 'A') $prizepack_count[204] += 2;
@@ -526,7 +526,7 @@ namespace item_uvo_extra
 					if($cards[$get_card_id]['rare'] == 'A') $ext.='运气不错！';
 					elseif($cards[$get_card_id]['rare'] == 'S') $ext.='一定是欧洲人吧！';
 					$blink = \cardbase\get_card_calc_blink($get_card_id, $pa);
-					$is_new = \cardbase\get_card_message($get_card_id,$ext,$blink);
+					$is_new = \cardbase\get_card_message($get_card_id,$ext,$blink,$pa);
 				}
 				foreach ($prizepack_count as $k => $v)
 				{
