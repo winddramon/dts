@@ -185,6 +185,28 @@ namespace item_uvo_extra
 				array('itm'=>'银色盒子','itmk'=>'p','itme'=>1,'itms'=>55,'itmsk'=>'')
 				);
 		}
+		elseif ($cardid == 420)//肉鸽挑战者
+		{
+			$skills = array();
+			$items = array();
+			
+			$weplist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance10_rogue/config/stwep.config.php');
+			do {
+				$index = rand(1,count($weplist)-1);
+				$newitem = array();
+				list($newitem['itm'],$newitem['itmk'],$newitem['itme'],$newitem['itms'],$newitem['itmsk']) = \itemmain\startingitem_row_data_seperate($weplist[$index]);
+			} while(!$newitem['itms']);
+			$items[] = $newitem;
+			$stitemlist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance10_rogue/config/stitem.config.php');
+			for($i=1;$i<=2;$i++){
+				do {
+					$index = rand(1,count($stitemlist)-1);
+					$newitem = array();
+					list($newitem['itm'],$newitem['itmk'],$newitem['itme'],$newitem['itms'],$newitem['itmsk']) = \itemmain\startingitem_row_data_seperate($stitemlist[$index]);
+				} while(!$newitem['itms']);
+				$items[] = $newitem;
+			}
+		}
 		
 		remove_card_uvo_extra($cardid_o, $pa, 0);
 		add_card_uvo_extra($cardid_o, $pa, 1);
@@ -488,7 +510,7 @@ namespace item_uvo_extra
 				$prizepack_count = array(206=>0, 204=>0, 203=>0, 202=>0);
 				foreach ($pa_cards as $get_card_id)
 				{
-					if (in_array($cards[$get_card_id]['pack'], $pack_ignore_kuji))
+					if (in_array($cards[$get_card_id]['pack'], $pack_ignore_kuji) && $get_card_id != 420)//特判肉鸽挑战者
 					{
 						if($cards[$get_card_id]['rare'] == 'S') $prizepack_count[206] += 2;
 						elseif($cards[$get_card_id]['rare'] == 'A') $prizepack_count[204] += 2;

@@ -60,7 +60,14 @@ namespace skill964
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$pcount964 = get_packcount964($pa);
 		eval(import_module('skill964'));
-		if (isset($pack_idx[$cardpack])) $pcount964[$pack_idx[$cardpack]] += 1;
+		if ($cardpack == 'all')
+		{
+			foreach($pcount964 as $k => $v)
+			{
+				$pcount964[$k] = $v + 1;
+			}
+		}
+		elseif (isset($pack_idx[$cardpack])) $pcount964[$pack_idx[$cardpack]] += 1;
 		\skillbase\skill_setvalue(964, 'packcount', encode964($pcount964), $pa);
 	}
 	
@@ -144,14 +151,13 @@ namespace skill964
 		if ($tmp == 1)
 		{
 			eval(import_module('cardbase'));
-			if (is_array($get_cards))
+			if (!is_array($get_cards)) $get_cards = array($get_cards);
+			foreach ($get_cards as $cid)
 			{
-				foreach ($get_cards as $cid)
-				{
-					add_packcount964($cards[$cid]['pack'], $pa);
-				}
+				if ($cid == 420) $cardpack = 'all';
+				else $cardpack = $cards[$cid]['pack'];
+				add_packcount964($cardpack, $pa);
 			}
-			else add_packcount964($cards[$get_cards]['pack'], $pa);
 			check_combo964($pa);
 		}
 	}
