@@ -41,13 +41,13 @@ namespace instance10
 	//肉鸽模式选卡界面特殊显示
 	function card_validate_display($cardChosen, $card_ownlist, $packlist, $hideDisableButton){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','cardbase'));
-		list($cardChosen, $card_ownlist, $packlist, $hideDisableButton) = $chprocess($cardChosen, $card_ownlist, $packlist, $hideDisableButton);	
+		eval(import_module('sys'));
+		list($cardChosen, $card_ownlist, $packlist, $hideDisableButton) = $chprocess($cardChosen, $card_ownlist, $packlist, $hideDisableButton);
 		if (20 == $gametype)
 		{
 			$cardChosen = 1002;//自动选择鸽勇者
 			$card_ownlist[] = 1002;
-			$packlist[] = $cards[1002]['pack'] = 'Pungeon';
+			$packlist[] = 'Pungeon';
 			$hideDisableButton = 0;
 		}
 		return array($cardChosen, $card_ownlist, $packlist, $hideDisableButton);

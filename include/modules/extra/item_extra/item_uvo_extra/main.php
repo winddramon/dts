@@ -185,6 +185,34 @@ namespace item_uvo_extra
 				array('itm'=>'银色盒子','itmk'=>'p','itme'=>1,'itms'=>55,'itmsk'=>'')
 				);
 		}
+		elseif ($cardid == 420)//肉鸽挑战者
+		{
+			$skills = array();
+			$items = array();
+			
+			$weplist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance10_rogue/config/stwep.config.php');
+			do {
+				$index = rand(1,count($weplist)-1);
+				$newitem = array();
+				list($newitem['itm'],$newitem['itmk'],$newitem['itme'],$newitem['itms'],$newitem['itmsk']) = \itemmain\startingitem_row_data_seperate($weplist[$index]);
+				if(defined('MOD_ATTRBASE')) {
+					$newitem['itmsk'] = \attrbase\config_process_encode_comp_itmsk($newitem['itmsk']);
+				}
+			} while(!$newitem['itms']);
+			$items[] = $newitem;
+			$stitemlist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance10_rogue/config/stitem.config.php');
+			for($i=1;$i<=2;$i++){
+				do {
+					$index = rand(1,count($stitemlist)-1);
+					$newitem = array();
+					list($newitem['itm'],$newitem['itmk'],$newitem['itme'],$newitem['itms'],$newitem['itmsk']) = \itemmain\startingitem_row_data_seperate($stitemlist[$index]);
+					if(defined('MOD_ATTRBASE')) {
+						$newitem['itmsk'] = \attrbase\config_process_encode_comp_itmsk($newitem['itmsk']);
+					}
+				} while(!$newitem['itms']);
+				$items[] = $newitem;
+			}
+		}
 		
 		remove_card_uvo_extra($cardid_o, $pa, 0);
 		add_card_uvo_extra($cardid_o, $pa, 1);
@@ -488,7 +516,7 @@ namespace item_uvo_extra
 				$prizepack_count = array(206=>0, 204=>0, 203=>0, 202=>0);
 				foreach ($pa_cards as $get_card_id)
 				{
-					if (in_array($cards[$get_card_id]['pack'], $pack_ignore_kuji))
+					if (in_array($cards[$get_card_id]['pack'], $pack_ignore_kuji) && !in_array($get_card_id, array(165,420)))//特判NIKO、肉鸽挑战者
 					{
 						if($cards[$get_card_id]['rare'] == 'S') $prizepack_count[206] += 2;
 						elseif($cards[$get_card_id]['rare'] == 'A') $prizepack_count[204] += 2;
@@ -504,7 +532,7 @@ namespace item_uvo_extra
 					if($cards[$get_card_id]['rare'] == 'A') $ext.='运气不错！';
 					elseif($cards[$get_card_id]['rare'] == 'S') $ext.='一定是欧洲人吧！';
 					$blink = \cardbase\get_card_calc_blink($get_card_id, $pa);
-					$is_new = \cardbase\get_card_message($get_card_id,$ext,$blink);
+					$is_new = \cardbase\get_card_message($get_card_id,$ext,$blink,$pa);
 				}
 				foreach ($prizepack_count as $k => $v)
 				{
