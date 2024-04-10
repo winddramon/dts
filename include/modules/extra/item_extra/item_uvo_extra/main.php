@@ -195,6 +195,9 @@ namespace item_uvo_extra
 				$index = rand(1,count($weplist)-1);
 				$newitem = array();
 				list($newitem['itm'],$newitem['itmk'],$newitem['itme'],$newitem['itms'],$newitem['itmsk']) = \itemmain\startingitem_row_data_seperate($weplist[$index]);
+				if(defined('MOD_ATTRBASE')) {
+					$newitem['itmsk'] = \attrbase\config_process_encode_comp_itmsk($newitem['itmsk']);
+				}
 			} while(!$newitem['itms']);
 			$items[] = $newitem;
 			$stitemlist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance10_rogue/config/stitem.config.php');
@@ -203,6 +206,9 @@ namespace item_uvo_extra
 					$index = rand(1,count($stitemlist)-1);
 					$newitem = array();
 					list($newitem['itm'],$newitem['itmk'],$newitem['itme'],$newitem['itms'],$newitem['itmsk']) = \itemmain\startingitem_row_data_seperate($stitemlist[$index]);
+					if(defined('MOD_ATTRBASE')) {
+						$newitem['itmsk'] = \attrbase\config_process_encode_comp_itmsk($newitem['itmsk']);
+					}
 				} while(!$newitem['itms']);
 				$items[] = $newitem;
 			}

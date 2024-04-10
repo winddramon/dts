@@ -33,12 +33,18 @@ namespace skill750
 			do {
 				$index = rand(1,count($weplist)-1);
 				list($ebp['itm4'],$ebp['itmk4'],$ebp['itme4'],$ebp['itms4'],$ebp['itmsk4']) = \itemmain\startingitem_row_data_seperate($weplist[$index]);
+				if(defined('MOD_ATTRBASE')) {
+					$ebp['itmsk4'] = \attrbase\config_process_encode_comp_itmsk($ebp['itmsk4']);
+				}
 			} while(!$ebp['itms4']);
 			$stitemlist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance10_rogue/config/stitem.config.php');
 			for($i=5;$i<=6;$i++){
 				do {
 					$index = rand(1,count($stitemlist)-1);
 					list($ebp['itm'.$i],$ebp['itmk'.$i],$ebp['itme'.$i],$ebp['itms'.$i],$ebp['itmsk'.$i]) = \itemmain\startingitem_row_data_seperate($stitemlist[$index]);
+					if(defined('MOD_ATTRBASE')) {
+						$ebp['itmsk'.$i] = \attrbase\config_process_encode_comp_itmsk($ebp['itmsk'.$i]);
+					}
 				} while(!$ebp['itms'.$i]);
 			}
 		}
