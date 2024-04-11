@@ -721,24 +721,25 @@ namespace achievement_base
 				}
 			}
 			if(defined('MOD_LOGISTICS') && !empty($logitem_prize)) {
+				$lp = 0;
 				foreach($logitem_prize as $lv => $n){
-					if($lv <= $cn) {
+					if($lv == $cn) {
 						$lp = $n;
 					}
-					if($lp){
-						$logitem = (int)$lp;
-						eval(import_module('logistics'));
-						if (isset($logistics_shop_items[$logitem]))
-						{
-							$ret .= ' ';
-							$lsitem = $logistics_shop_items[$logitem];
-							$logitemname = $lsitem[0];
-							$logitemtips = $logistics_itemtype[$lsitem[1]].'。'.$lsitem[3];
-							$ret .= '<span class="evergreen b" title="'.$logitemtips.'">'.$logitemname.'</span>';
-							if(isset($logitem_prize_num) && isset($logitem_prize_num[$cn])) $logitemnum = (int)$logitem_prize_num[$cn];
-							else $logitemnum = 1;
-							$ret .= '<span class="yellow b">×'.$logitemnum.'</span>';
-						}
+				}
+				if($lp){
+					$logitem = (int)$lp;
+					eval(import_module('logistics'));
+					if (isset($logistics_shop_items[$logitem]))
+					{
+						$ret .= ' ';
+						$lsitem = $logistics_shop_items[$logitem];
+						$logitemname = $lsitem[0];
+						$logitemtips = $logistics_itemtype[$lsitem[1]].'。'.strip_tags($lsitem[3]);
+						$ret .= '<span class="evergreen b" title="'.$logitemtips.'">'.$logitemname.'</span>';
+						if(isset($logitem_prize_num) && isset($logitem_prize_num[$cn])) $logitemnum = (int)$logitem_prize_num[$cn];
+						else $logitemnum = 1;
+						$ret .= '<span class="yellow b">×'.$logitemnum.'</span>';
 					}
 				}
 			}

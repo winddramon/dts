@@ -611,6 +611,7 @@ skill375,extra/achievement/skills/skill375/,1
 skill382,extra/achievement/skills/skill382/,1
 skill351,extra/achievement/skills/skill351/,1
 skill352,extra/achievement/skills/skill352/,1
+skill383,extra/achievement/skills/skill383/,1
 skill504,extra/card/skills/skill504/,1
 user_settings,extra/misc/user_settings/,1
 skill740,extra/card/skills/skill740/,1
