@@ -43,6 +43,9 @@ namespace logistics
 		204 => array('精致的大逃杀卡牌包',1,0,'从中有机会获得<span class="gold b">S</span>/<span class="cyan b">A</span>/<span class="brickred b">B</span>级卡片',1),
 		205 => array('★闪熠着光辉的大逃杀卡牌包★',1,0,'从中有机会获得特殊卡片“<span class="gold b">氪金战士</span>”，或一张<span class="gold b">S</span>级或<span class="cyan b">A</span>级的卡片',1),
 		206 => array('闪耀的大逃杀卡牌包',1,0,'从中有机会获得<span class="gold b">S</span>/<span class="cyan b">A</span>级卡片',1),
+		//编号301开始为成就类装饰品
+		301 => array('温泉鸽子手办',2,0,'<span class="yellow b">“炖鸽汤，就是用鸽子炖成的汤……”</span>',1),
+		302 => array('水晶骰子组合',2,0,'<span class="gold b">九颗不同颜色的透明骰子，究竟是什么材料制成的？看起来很贵重的样子……</span>',1),
 	);
 	
 	//类别1表示可使用道具（消耗品），2表示装饰品
