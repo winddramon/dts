@@ -13,7 +13,7 @@ namespace skill960
 		3 => array(61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76),
 		4 => array(91,92,93,94,95,96,97,98,99,100,101,102,103),
 		5 => array(121,122,123,124,125,126,127,128,129,130,131,132,133),
-		6 => array(151,152,153,154,155,156,157,158,159,160,161,162),
+		6 => array(151,152,153,154,155,156,157,158,159,160,161,162,163),
 		7 => array(181,182,183,184,185,186,187,188,189,190,191)
 	);
 	
@@ -706,6 +706,14 @@ namespace skill960
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('【波纹疾走】'),'num'=>1),
 			'reward' => array('item'=>array(array('itm'=>'闪耀的大逃杀卡牌包','itmk'=>'VO4','itme'=>1,'itms'=>3,'itmsk'=>'1107')),'invscore'=>5),
+		),
+		163 => array
+		(
+			'name' => '酣畅淋漓',
+			'rank' => 6,
+			'tasktype' => 'item_search',
+			'taskreq' => array('itm'=>array('★全图唯一的野生巨大香蕉★'),'num'=>1),
+			'reward' => array('money'=>2333,'item'=>array(array('itm'=>'★艾哲的赤石★','itmk'=>'A','itme'=>1,'itms'=>1,'itmsk'=>'OB^sa20'))),
 		),
 		//7级任务
 		181 => array
