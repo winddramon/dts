@@ -64,7 +64,7 @@ $packdesc = array(
 );
 
 //不参与抽卡的卡包
-$pack_ignore_kuji = Array('Balefire Rekindle','Event Bonus');
+$pack_ignore_kuji = Array('Balefire Rekindle','Event Bonus','Pungeon');
 
 //卡包实装的时间戳，可以用来隐藏卡包
 $packstart = array(

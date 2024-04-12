@@ -34,8 +34,52 @@ namespace instance3
 			if($alvl > 10) {
 				$ret[1]['sub'][0]['name'] = '红暮 DUMMY';
 			}
+			if($alvl >= 20) { //不低于20（开局连斗）
+				foreach (array(1, 9) as $k)
+				{
+					$ret[$k]['money'] = 0;
+					foreach (array('wepsk','itmsk1','itmsk3') as $v)
+					{
+						if (empty($ret[$k]['sub'][0][$v])) $ret[$k]['sub'][0][$v] = 'X';
+						else $ret[$k]['sub'][0][$v] .= 'X';
+					}
+					foreach (array('arbsk','arhsk','arfsk','arask','artsk') as $v)
+					{
+						if (empty($ret[$k][$v])) $ret[$k][$v] = 'X';
+						else $ret[$k][$v] .= 'X';
+					}
+				}
+			}
 			return $ret;
 		}else return $chprocess();
+	}
+	
+	function evonpc_npcdata_process($enpc, $xtype, $xname)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess($enpc, $xtype, $xname);
+		eval(import_module('sys'));
+		if(13 == $gametype){
+			$alvl = (int)$roomvars['current_game_option']['lvl'];
+			if($alvl >= 20) { //不低于20（开局连斗）
+				if (in_array($ret['name'], array('战斗模式 梦美','本气（？） 叶留佳','守卫者 静流','幻境接待员 GOTHIC','特技表演者 JACKPOT','自律维序者 SANMA')))
+				{
+					$ret['money'] = 0;
+					foreach (array('wepsk','arbsk','arhsk','arfsk','arask','artsk') as $v)
+					{
+						if (empty($ret[$v])) $ret[$v] = 'X';
+						else $ret[$v] .= 'X';
+					}
+					foreach (range(0,6) as $v)
+					{
+						if (empty($ret['itm'.$v]) || in_array($ret['itm'.$v], array('歌词卡片【海洋】','歌词卡片【大地】','歌词卡片【星空】','『随心所欲的虚拟笔』','『铭刻记忆的单词本』','『命定身体的契约书』'))) continue;
+						if (empty($ret['itmsk'.$v])) $ret['itmsk'.$v] = 'X';
+						else $ret['itmsk'.$v] .= 'X';
+					}
+				}
+			}
+		}
+		return $ret;
 	}
 	
 	function checkcombo($time){

@@ -285,21 +285,21 @@ namespace instance10
 		$chprocess();
 	}
 	
-	//记录吃技能核心次数，已取消
-	// function use_skcore_success(&$pa)
-	// {
-		// if (eval(__MAGIC__)) return $___RET_VALUE;
-		// eval(import_module('sys'));
-		// if (20 == $gametype)
-		// {
-			// if (\skillbase\skill_query(951,$pa))
-			// {
-				// $sc_count = (int)\skillbase\skill_getvalue(951,'sc_count',$pa);
-				// \skillbase\skill_setvalue(951,'sc_count',$sc_count+1,$pa);
-			// }
-		// }
-		// $chprocess($pa);
-	// }
+	//记录吃技能核心次数
+	function use_skcore_success(&$pa)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		if (20 == $gametype)
+		{
+			if (\skillbase\skill_query(951,$pa))
+			{
+				$sc_count = (int)\skillbase\skill_getvalue(951,'sc_count',$pa);
+				\skillbase\skill_setvalue(951,'sc_count',$sc_count+1,$pa);
+			}
+		}
+		$chprocess($pa);
+	}
 	
 	function itemuse(&$theitem)
 	{
@@ -314,6 +314,16 @@ namespace instance10
 			{
 				$log .= "你使用了{$itm}，却发现没有可以连接上的网络。怎么会这样？<br>";
 				return;
+			}
+			//每个人只能吃9个技能核心
+			elseif (strpos($itmk, 'SC') === 0)
+			{
+				$sc_count = (int)\skillbase\skill_getvalue(951,'sc_count',$sdata);
+				if ($sc_count >= 9)
+				{
+					$log .= "<span class=\"yellow b\">你已经使用过9个技能核心，无法再使用了。</span><br>";
+					return;
+				}
 			}
 			//使用结局道具
 			elseif (strpos($itmk, 'Y') === 0 || strpos($itmk, 'Z') === 0)
@@ -506,6 +516,23 @@ namespace instance10
 			return in_array($pno, $pls_available);
 		}
 		return $chprocess($pno);
+	}
+	
+	//肉鸽模式特殊合成
+	function get_mixinfo()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess();
+		eval(import_module('sys'));
+		if (20 == $gametype)
+		{
+			$inst10_mixinfo = array
+			(
+				array('class' => 'wk', 'stuff' => array('大西瓜','魔王の剑'),'result' => array('『七杀剑』','WK',7777,'∞','reVOLtR'))
+			);
+			$ret = array_merge($ret, $inst10_mixinfo);
+		}
+		return $ret;
 	}
 	
 	function parse_news($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr = array())
