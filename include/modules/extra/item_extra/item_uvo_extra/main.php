@@ -159,16 +159,10 @@ namespace item_uvo_extra
 		$card_valid_info = $cards[$cardid]['valid'];
 		list($items, $skills) = use_card_uvo_process($card_valid_info, $pa);
 		
-		if ($cardid == 344)//油库里
+		if ($cardid == 168)//飞雪大大 
 		{
-			$skills = array();
-		}
-		elseif ($cardid == 381)//双料特工
-		{
-			$skills = array();
 			$items = array(
-				array('itm'=>'手榴弹','itmk'=>'WC','itme'=>40,'itms'=>1,'itmsk'=>''),
-				array('itm'=>'毒物说明书','itmk'=>'A','itme'=>1,'itms'=>1,'itmsk'=>'')
+				array('itm'=>'魔王の剑','itmk'=>'WK','itme'=>300,'itms'=>300,'itmsk'=>'u')
 				);
 		}
 		elseif ($cardid == 196)//低维生物
@@ -183,6 +177,18 @@ namespace item_uvo_extra
 			$skills = array();
 			$items = array(
 				array('itm'=>'银色盒子','itmk'=>'p','itme'=>1,'itms'=>55,'itmsk'=>'')
+				);
+		}
+		elseif ($cardid == 344)//油库里
+		{
+			$skills = array();
+		}
+		elseif ($cardid == 381)//双料特工
+		{
+			$skills = array();
+			$items = array(
+				array('itm'=>'手榴弹','itmk'=>'WC','itme'=>40,'itms'=>1,'itmsk'=>''),
+				array('itm'=>'毒物说明书','itmk'=>'A','itme'=>1,'itms'=>1,'itmsk'=>'')
 				);
 		}
 		elseif ($cardid == 420)//肉鸽挑战者
