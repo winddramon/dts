@@ -5,11 +5,12 @@ namespace instance10
 	$invscore_lvl = array(0,10,20,30,40,50,60,70);
 	
 	function init() {
-		eval(import_module('skillbase'));
+		eval(import_module('skillbase','player'));
 		if(!isset($valid_skills[20])) {
 			$valid_skills[20] = array();
 		}
 		$valid_skills[20] += array(181,951,952,960,962,964);
+		$typeinfo[71] = '行商';
 	}
 	
 	//肉鸽模式自动选择鸽勇者

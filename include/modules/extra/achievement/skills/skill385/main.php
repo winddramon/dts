@@ -49,7 +49,7 @@ namespace skill385
 		$ret = $chprocess($pa, $data, $achid);
 		if($achid == 385){
 			eval(import_module('sys'));
-			if(\sys\is_winner($pa['name'],$winner) && ($winnum > 1) && in_array($winmode, array(2,3,5,7))) {
+			if(\sys\is_winner($pa['name'],$winner) && (false !== strpos($winner, ',')) && in_array($winmode, array(2,3,5,7))) {
 				$ret += 1;
 			}
 		}
