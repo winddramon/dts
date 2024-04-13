@@ -713,7 +713,7 @@ namespace skill960
 			'rank' => 6,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('★全图唯一的野生巨大香蕉★'),'num'=>1),
-			'reward' => array('money'=>2333,'item'=>array(array('itm'=>'★艾哲的赤石★','itmk'=>'A','itme'=>1,'itms'=>1,'itmsk'=>'OB^sa20'))),
+			'reward' => array('money'=>2333,'item'=>array(array('itm'=>'★艾哲的赤石★','itmk'=>'A','itme'=>1,'itms'=>1,'itmsk'=>'OB^sa6^sa5^sa4^sa3^sa2^sa1'))),
 		),
 		//7级任务
 		181 => array
