@@ -5,11 +5,12 @@ namespace instance10
 	$invscore_lvl = array(0,10,20,30,40,50,60,70);
 	
 	function init() {
-		eval(import_module('skillbase'));
+		eval(import_module('skillbase','player'));
 		if(!isset($valid_skills[20])) {
 			$valid_skills[20] = array();
 		}
 		$valid_skills[20] += array(181,951,952,960,962,964);
+		$typeinfo[71] = '行商';
 	}
 	
 	//肉鸽模式自动选择鸽勇者
@@ -192,17 +193,8 @@ namespace instance10
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','map'));
 		if (20 == $gametype){
-			if($alivenum <= 0){//这个确定要这么判定吗？过禁时全灭就结束？
-				\sys\gameover($atime,'end1');
-			}
-			elseif (\map\get_area_wavenum() >= 1){//限时1禁
-				//胜利条件改为使用特定道具结束游戏
-				// $result = $db->query("SELECT * FROM {$tablepre}players WHERE hp>0 AND type=0 ORDER BY card LIMIT 1");
-				// $wdata = $db->fetch_array($result);
-				// $winner = $wdata;
-				// \sys\gameover($atime,'end8',$winner);
-				\sys\gameover($atime,'end1');
-			}
+			//进行一个全的灭
+			\sys\gameover($atime,'end1');
 			return;
 		}
 		$chprocess($atime);
