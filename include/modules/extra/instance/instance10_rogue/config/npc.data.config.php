@@ -1350,7 +1350,7 @@ namespace instance10
 			'pass' => 'bra',
 			'bid' => 0,
 			'inf' => '',
-			'rage' => 0,
+			'rage' => 30,
 			'pose'=> 1,
 			'tactic' => 2,
 			'killnum' => 0,

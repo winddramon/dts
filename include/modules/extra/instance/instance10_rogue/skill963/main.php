@@ -126,8 +126,21 @@ namespace skill963
 			}
 			elseif ($command == 'tip')
 			{
-				$tip = array_randompick(array('咕咕咕……','咕咕咕！','咕咕咕？','咕——'));//待完成，先咕着吧
+				$tip = generate_shopnpc_tip($edata);
 				$log .= "<span class=\"yellow b\">“{$tip}”</span><br><br>";
+				\metman\meetman_alternative($edata);
+				return;
+			}
+			elseif ($command == 'shopback')
+			{
+				\metman\meetman_alternative($edata);
+				return;
+			}
+			elseif (strpos($command, 'buy')===0)
+			{
+				$shopitemid = (int)substr($command, 3) - 1;
+				buy_shopnpc_shopitem($edata, $shopitemid);
+				$edata['shop_prepare'] = 1;
 				\metman\meetman_alternative($edata);
 				return;
 			}
@@ -218,6 +231,55 @@ namespace skill963
 		\player\player_save($pa);
 	}
 	
+	function buy_shopnpc_shopitem(&$pa, $shopitemid)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('player','logger'));
+		$shopnpc_shopitem = get_shopnpc_shopitem($pa);
+		if (!isset($shopnpc_shopitem[$shopitemid]))
+		{
+			$log .= '该商品不存在。<br>';
+			return;
+		}
+		$si = $shopnpc_shopitem[$shopitemid];
+		$cost = $si[5];
+		if (\skillbase\skill_query(69, $sdata))
+		{
+			$flag1 = 1;
+			$cost = max(1, round($cost*0.75));
+		}
+		if ((int)\skillbase\skill_getvalue(951, 'shopnpc_flag', $sdata) == 1)
+		{
+			$flag2 = 1;
+			$cost = max(1, round($cost*0.5));
+		}
+		if ($money < $cost)
+		{
+			$log .= '你的钱不够，不能购买此物品。<br>';
+			return;
+		}
+		if (!empty($flag1)) $log .= '你的富家子弟身份让对方给你打了七五折。<br>';
+		if (!empty($flag2))
+		{
+			$log .= '看在你上次给他帮了个小忙的份上，对方给你额外打了五折。<br>';
+			\skillbase\skill_setvalue(951, 'shopnpc_flag', 0, $sdata);
+		}
+		$log .= "购买成功，花费<span class='yellow b'>$cost</span>元。已购买的商品已加入你的奖励盒中。<br>";
+		$money -= $cost;
+		$theitem = array('itm'=>$si[0], 'itmk'=>$si[1], 'itme'=>$si[2], 'itms'=>$si[3], 'itmsk'=>$si[4]);
+		\skill952\skill952_sendin_core($theitem, $sdata);
+		unset($shopnpc_shopitem[$shopitemid]);
+		\skillbase\skill_setvalue(963,'itmarr',skill963_encode_itmarr($shopnpc_shopitem),$pa);
+		\player\player_save($pa);
+	}
+	
+	function generate_shopnpc_tip(&$pa)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$tip = array_randompick(array('咕咕咕……','咕咕咕！','咕咕咕？','咕——'));//待完成，先咕着吧
+		return $tip;
+	}
+	
 	function skill963_encode_itmarr($arr)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -241,14 +303,32 @@ namespace skill963
 		}
 	}
 	
-	//玩家击杀行商NPC敌对玩家后，添加打折标记
+	
 	function player_kill_enemy(&$pa,&$pd,$active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa,$pd,$active);
+		//玩家击杀行商NPC敌对玩家后，添加打折标记
 		if ($pd['hp'] <= 0 && ((int)\skillbase\skill_getvalue(951, 'shopnpc_flag', $pd) == -1) && ((int)\skillbase\skill_getvalue(951, 'shopnpc_flag', $pa) >= 0))
 		{
 			\skillbase\skill_setvalue(951, 'shopnpc_flag', 1, $pa);
+		}
+		//商人被击杀时掉落一部分商品
+		elseif ($pd['type'] > 0 && \skillbase\skill_query(963, $pd) && ($pd['hp'] <= 0))
+		{
+			$shopnpc_shopitem = get_shopnpc_shopitem($pd);
+			$prize_itm = array_randompick($shopnpc_shopitem, min(7, count($shopnpc_shopitem)));
+			if (!is_array($prize_itm)) $prize_itm = array($prize_itm);
+			$i = 0;
+			foreach ($prize_itm as $v)
+			{
+				$pd['itm'.$i] = $v[0];
+				$pd['itmk'.$i] = $v[1];
+				$pd['itme'.$i] = $v[2];
+				$pd['itms'.$i] = $v[3];
+				$pd['itmsk'.$i] = $v[4];
+				$i += 1;
+			}
 		}
 	}
 	
