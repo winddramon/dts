@@ -303,13 +303,13 @@ namespace instance10
 				$log .= "你使用了{$itm}，却发现没有可以连接上的网络。怎么会这样？<br>";
 				return;
 			}
-			//每个人只能吃9个技能核心
+			//每个人只能吃15个技能核心
 			elseif (strpos($itmk, 'SC') === 0)
 			{
 				$sc_count = (int)\skillbase\skill_getvalue(951,'sc_count',$sdata);
 				if ($sc_count >= 9)
 				{
-					$log .= "<span class=\"yellow b\">你已经使用过9个技能核心，无法再使用了。</span><br>";
+					$log .= "<span class=\"yellow b\">你已经使用过15个技能核心，无法再使用了。</span><br>";
 					return;
 				}
 			}

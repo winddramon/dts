@@ -342,7 +342,7 @@ namespace skill960
 			'rank' => 3,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('X方块','Y方块'),'num'=>2),
-			'reward' => array('item'=>array(array('itm'=>'A级技能核心','itmk'=>'SCA1','itme'=>1,'itms'=>2,'itmsk'=>'')),'invscore'=>5),
+			'reward' => array('item'=>array(array('itm'=>'A级技能核心·改','itmk'=>'SCA1','itme'=>1,'itms'=>2,'itmsk'=>'')),'invscore'=>5),
 		),
 		70 => array
 		(
@@ -697,7 +697,7 @@ namespace skill960
 			'rank' => 6,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('签名CD'),'itm_match'=>1,'num'=>3),
-			'reward' => array('item'=>array(array('itm'=>'A级技能核心·改','itmk'=>'SCA2','itme'=>1,'itms'=>4,'itmsk'=>'')),'invscore'=>5),
+			'reward' => array('item'=>array(array('itm'=>'A级技能核心·改','itmk'=>'SCA1','itme'=>1,'itms'=>4,'itmsk'=>'')),'invscore'=>5),
 		),
 		162 => array
 		(
@@ -813,7 +813,7 @@ namespace skill960
 			'elite' => 1,
 			'tasktype' => 'battle_kill',
 			'taskreq' => array('type'=>62,'num'=>1),
-			'reward' => array('item'=>array(array('itm'=>'A级技能核心·改','itmk'=>'SCA2','itme'=>1,'itms'=>1,'itmsk'=>'')),'money'=>3000),
+			'reward' => array('item'=>array(array('itm'=>'A级技能核心·改','itmk'=>'SCA1','itme'=>1,'itms'=>1,'itmsk'=>'')),'money'=>3000),
 		),
 		302 => array
 		(
@@ -822,7 +822,7 @@ namespace skill960
 			'elite' => 1,
 			'tasktype' => 'battle_kill',
 			'taskreq' => array('type'=>63,'num'=>1),
-			'reward' => array('item'=>array(array('itm'=>'S级技能核心·改','itmk'=>'SCS2','itme'=>1,'itms'=>1,'itmsk'=>'')),'money'=>6000),
+			'reward' => array('item'=>array(array('itm'=>'S级技能核心·改','itmk'=>'SCS1','itme'=>1,'itms'=>1,'itmsk'=>'')),'money'=>6000),
 		),
 		303 => array
 		(

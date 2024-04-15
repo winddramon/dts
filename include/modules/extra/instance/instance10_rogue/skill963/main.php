@@ -153,7 +153,7 @@ namespace skill963
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
 		$updtime = (int)\skillbase\skill_getvalue(963, 'updtime', $pa);
-		if (empty($updtime) || $now - $updtime > 360)
+		if (empty($updtime) || $now - $updtime > 240)
 		{
 			update_shopnpc_shopitem($pa);
 		}
