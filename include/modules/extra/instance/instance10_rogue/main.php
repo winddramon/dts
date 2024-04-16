@@ -307,7 +307,7 @@ namespace instance10
 			elseif (strpos($itmk, 'SC') === 0)
 			{
 				$sc_count = (int)\skillbase\skill_getvalue(951,'sc_count',$sdata);
-				if ($sc_count >= 9)
+				if ($sc_count >= 15)
 				{
 					$log .= "<span class=\"yellow b\">你已经使用过15个技能核心，无法再使用了。</span><br>";
 					return;
