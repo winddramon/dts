@@ -90,15 +90,15 @@ namespace randrecipe
 		}
 		elseif ($itmk[0] == 'D')
 		{
-			$r['result'][2] = rand(160,320);
+			$r['result'][2] = rand(200,360);
 			$r['result'][3] = rand(30,50);
-			$skcount = rand(0,2);
+			$skcount = rand(1,3);
 			if ($skcount == 1) $r['result'][4] = [array_randompick($randrecipe_itmsk_list['D'])];
 			elseif ($skcount > 1) $r['result'][4] = array_randompick($randrecipe_itmsk_list['D'], $skcount);
 			else
 			{
-				$r['result'][2] += rand(40,80);
-				$r['result'][3] += rand(15,30);
+				$r['result'][2] += rand(80,120);
+				$r['result'][3] += rand(20,40);
 			}
 		}
 		else

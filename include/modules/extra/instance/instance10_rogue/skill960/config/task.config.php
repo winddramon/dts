@@ -236,7 +236,7 @@ namespace skill960
 			'name' => '不如打牌',
 			'rank' => 2,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itm'=>array('超量素材'),'itm_match'=>1,'num'=>5),
+			'taskreq' => array('itm'=>array('游戏王'),'itm_match'=>1,'num'=>5),
 			'reward' => array('item'=>array(array('itm'=>'《现代游戏王》','itmk'=>'ygo2','itme'=>1,'itms'=>10,'itmsk'=>'')),'invscore'=>5),
 		),
 		43 => array
