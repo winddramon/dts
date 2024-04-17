@@ -90,15 +90,15 @@ namespace randrecipe
 		}
 		elseif ($itmk[0] == 'D')
 		{
-			$r['result'][2] = rand(200,360);
+			$r['result'][2] = rand(160,320);
 			$r['result'][3] = rand(30,50);
-			$skcount = rand(1,3);
+			$skcount = rand(0,2);
 			if ($skcount == 1) $r['result'][4] = [array_randompick($randrecipe_itmsk_list['D'])];
 			elseif ($skcount > 1) $r['result'][4] = array_randompick($randrecipe_itmsk_list['D'], $skcount);
 			else
 			{
-				$r['result'][2] += rand(80,120);
-				$r['result'][3] += rand(20,40);
+				$r['result'][2] += rand(40,80);
+				$r['result'][3] += rand(15,30);
 			}
 		}
 		else
@@ -109,7 +109,7 @@ namespace randrecipe
 			if ($skcount == 1) $r['result'][4] = [array_randompick($randrecipe_itmsk_list['A'])];
 			elseif ($skcount > 1) $r['result'][4] = array_randompick($randrecipe_itmsk_list['A'], $skcount);
 		}
-		$si = 1;
+		$si = 0;
 		//主要素材1-2个
 		$c = rand(1,2);
 		for ($i=0; $i<$c; $i++)
@@ -138,7 +138,7 @@ namespace randrecipe
 			$r['stuff'.$si] = generate_randrecipe_stuff($type, $itmk, $r['result']);
 			
 			$si += 1;
-			if ($si > 5) break;
+			if ($si >= 5) break;
 		}
 		$r['result'][2] = (int)$r['result'][2];
 		$r['result'][3] = (int)$r['result'][3];
@@ -155,6 +155,14 @@ namespace randrecipe
 		}
 		//效耐不均衡补正
 		if (($itmk[0] == 'D') && ($r['result'][2] > 10 * $r['result'][3])) $r['result'][3] = rand($r['result'][3], ceil($r['result'][2]/10));
+		//根据素材数适当强化数值
+		if ($si > 3)
+		{
+			if ($si == 4) $b = 1.2;
+			else $b = 1.5;
+			$r['result'][2] = round($b * $r['result'][2]);
+			$r['result'][3] = round($b * $r['result'][3]);
+		}
 		if (in_array('u', $r['result'][5]))
 		{
 			if ($itmk == 'WG')
@@ -185,7 +193,7 @@ namespace randrecipe
 			$bracket = array_randompick(array(array('☆','☆'),array('★','★'),array('〖','〗'),array('【','】'),array('『','』'),array('「','」')));
 			$r['result'][0]	= $bracket[0].$r['result'][0].$bracket[1];
 		}
-		$r['extra']['materials'] = $si - 1;
+		$r['extra']['materials'] = $si;
 		return $r;
 	}
 	
