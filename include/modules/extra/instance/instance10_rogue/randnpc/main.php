@@ -1,323 +1,328 @@
 <?php
 
-namespace randnpc
+namespace randrecipe
 {
+	//会生成随机配方的游戏模式
+	$randrecipe_allow_mode = array(20);
+	
 	function init()
 	{
-		eval(import_module('player'));
-		$typeinfo[51] = '杂鱼';
-		$typeinfo[52] = '实验体1型';
-		$typeinfo[53] = '实验体2型';
-		$typeinfo[54] = '实验体3型';
-		$typeinfo[55] = '实验体4型';
-		$typeinfo[56] = '实验体5型';
-		$typeinfo[57] = '实验体6型';
-		$typeinfo[58] = '实验体C型';
-		$typeinfo[59] = '实验体B型';
-		$typeinfo[60] = '实验体A型';
-		$typeinfo[62] = '镇守者1';
-		$typeinfo[63] = '镇守者2';
-		$typeinfo[64] = '镇守者3';
 	}
 	
-	//生成若干个标准格式的随机NPC
-	//rank：NPC的强度等级，为1-20
-	//num：生成数量
-	//offens_tend：攻击倾向（0-100整数），越高NPC越容易有高攻击力和熟练度，越容易出现强袭姿态和重视反击
-	//defens_tend：防御倾向（0-100整数），越高NPC越容易有高生命值和防御力，越容易出现作战姿态和重视防御
-	//variety：变化范围（0-50整数），越高则随机属性的变化范围越大
-	//use_preset：是否基于预设生成
-	function generate_randnpc($rank, $num=1, $offens_tend=0, $defens_tend=0, $variety=0, $use_preset=1)
+	function rs_game($xmode = 0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$randnpcs = array();
-		for ($i=0; $i<$num; $i++)
+		$chprocess($xmode);
+		eval(import_module('sys','randrecipe'));
+		if ((in_array($gametype, $randrecipe_allow_mode))&&($xmode & 2)) 
 		{
-			$randnpcs[] = generate_single_randnpc($rank, $offens_tend, $defens_tend, $variety, $use_preset);
+			//生成随机配方
+			\randrecipe\create_randrecipe_config(30);
 		}
-		return $randnpcs;
 	}
 	
-	function generate_single_randnpc($rank, $offens_tend=0, $defens_tend=0, $variety=0, $use_preset=1)
+	function get_recipe_mixinfo()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		//生成npc基础属性
-		eval(import_module('npc'));
-		if ($use_preset)
+		$ret = $chprocess();
+		eval(import_module('sys','randrecipe'));
+		if (in_array($gametype, $randrecipe_allow_mode))
 		{
-			eval(import_module('randnpc'));
-			$npc = array_merge($npcinit, array_randompick($randnpc_presets[$rank]));
-		}
-		else
-		{
-			$npc = $npcinit;
-			//生成名字，待修改
-			$npc['name'] = $rank.'级虚像';
-			if (rand(0,1)) $npc['gd'] = 'f';
-			$var1 = pow(1.35, $rank);
-			$var2 = pow(1.25, $rank);
-			$npc['mhp'] = $var1 * 320;
-			$npc['msp'] = $rank * 100;
-			$npc['att'] = $npc['def'] = round($var2 * 50);
-			$npc['skill'] = round($var2 * 25);
-			$npc['lvl'] = $rank * 5;
-			$npc['money'] = array(140,180,240,260,280,300,320,340,360,380,400,420,440,460,480,500,520,540,560,580)[$rank-1];
-			//武器
-			if ($rank > 12) $npc['wepk'] = array_randompick(array('WP','WK','WC','WG','WF','WD','WB','WP','WK','WC','WG','WF','WD','WB','WJ'));
-			elseif ($rank > 8) $npc['wepk'] = array_randompick(array('WP','WK','WC','WG','WF','WD','WB'));
-			else $npc['wepk'] = array_randompick(array('WP','WK','WC','WG','WF','WD'));
-			list($npc['wep'], $npc['wepsk']) = generate_randnpc_item($npc['wepk'], 1);
-			$npc['wepe'] = max($rank*10, $var1) * 5; $npc['weps'] = $rank * 50;
-			if ($npc['wepk'] == 'WD') $npc['wepe'] = $npc['wepe'] * 1.2;
-			elseif ($npc['wepk'] != 'WF') $npc['wepe'] = $npc['wepe'] * 1.5;
-			//防具
-			$npc['arbk'] = 'DB'; $npc['arhk'] = 'DH'; $npc['arfk'] = 'DF'; $npc['arak'] = 'DA';
-			list($npc['arb'], $npc['arbsk']) = generate_randnpc_item('DB', 1);
-			list($npc['arh'], $npc['arhsk']) = generate_randnpc_item('DH', 1);
-			list($npc['arf'], $npc['arfsk']) = generate_randnpc_item('DF', 1);
-			list($npc['ara'], $npc['arask']) = generate_randnpc_item('DA', 1);
-			$npc['arbe'] = round($var2 * 40);
-			$npc['arhe'] = $npc['arfe'] = $npc['arae'] = round($var2 * 30);
-			$npc['arbs'] = $npc['arhs'] = $npc['arfs'] = $npc['aras'] = $rank * 24;
-			//饰品
-			list($npc['art'], $npc['artsk']) = generate_randnpc_item('A', 1);
-			$npc['artk'] = 'A'; $npc['arte'] = 1; $npc['arts'] = 1;
-			
-			//非预设的属性调整
-			$npc['club'] = array_randompick(array(1,2,3,4,5,6,7,8,9,10,11,13,14,17,18,19,20,21,24));
-			$npc['pose'] = array_randompick(array(0,1,4));
-			if (rand(0,99) < $offens_tend + 3*$rank) $npc['pose'] = 2;
-			$npc['tactic'] = array_randompick(array(0,2,3,4));
-			if (rand(0,99) < $defens_tend) $npc['tactic'] = 2;
-			$npc['pls'] = 99;
-			$npc['skill'] = round($npc['skill'] * rand(80-$variety+$offens_tend,120+$variety+$offens_tend) / 100);
-			$npc['lvl'] = max($npc['lvl'] + rand(-5,5), 1);
-			$npc['money'] = round($npc['money'] * rand(70-$variety,130+$variety) / 100);
-			//装备调整
-			if ($npc['club']==19) //铁拳
+			$randrecipe_file = GAME_ROOT.'./gamedata/cache/randrecipe'.$room_id.'.php';
+			if(file_exists($randrecipe_file))
 			{
-				$npc['att'] += 2 * round($npc['wepe'] * rand(80-$variety+$offens_tend,120+$variety+$offens_tend) / 100);
-				$npc['wep'] = '拳头';
-				$npc['wepk'] = 'WN';
-				$npc['wepe'] = 0; $npc['weps'] = '∞';
-				$npc['wepsk'] = '';
+				include $randrecipe_file;
+				$ret = $ret + $randrecipe;
 			}
+		}
+		return $ret;
+	}
+	
+	function create_randrecipe_config($num = 50)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		$rl = array();
+		$stidx = 300;//随机配方从301号开始
+		for ($i=1; $i<=$num; $i++)
+		{
+			$rl[$stidx+$i] = generate_randrecipe();
+		}
+		//保存为config文件。每个房间一个文件，这个函数应该是仅在每局开始时执行的，如果因为某些原因覆盖了那就覆盖了罢
+		$file = GAME_ROOT.'./gamedata/cache/randrecipe'.$room_id.'.php';
+		$contents = str_replace('?>','',IN_GAME_CHECK_STR);//防窥屏字符串"<?php\r\nif(!defined('IN_GAME')) exit('Access Denied');\r\n";
+		$contents .= '$randrecipe = '.var_export($rl,1).';';
+		file_put_contents($file, $contents);
+	}
+	
+	//生成一个标准格式的随机配方
+	function generate_randrecipe($itmk = '')
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('randrecipe'));
+		$r = array('result' => array(),'extra' => array());
+		if (empty($itmk)) $itmk = array_randompick(array('WP','WK','WC','WG','WD','WF','WP','WK','WC','WG','WD','WF','DB','DH','DA','DF','A','HH','HS','HB'));
+		//初始化合成结果
+		$r['result'][0] = '';
+		$r['result'][1] = $itmk;
+		$r['result'][4] = array();
+		//记录特殊变化
+		$r['result'][5] = array();
+		if ($itmk[0] == 'H')
+		{
+			$r['result'][2] = rand(90,180);
+			$r['result'][3] = rand(20,40);
+		}
+		elseif ($itmk[0] == 'W')
+		{
+			$r['result'][2] = rand(160,320);
+			$r['result'][3] = rand(30,60);
+			$skcount = rand(1,2);
+			if ($skcount == 1) $r['result'][4] = [array_randompick($randrecipe_itmsk_list['W'])];
+			elseif ($skcount > 1) $r['result'][4] = array_randompick($randrecipe_itmsk_list['W'], $skcount);
 			else
 			{
-				$npc['wepe'] = round($npc['wepe'] * rand(40-$variety+$offens_tend,160+$variety+$offens_tend) / 100);
-				$npc['weps'] = round($npc['weps'] * rand(40-$variety+$offens_tend,160+$variety+$offens_tend) / 100);
-				//生成武器属性
-				$npc['wepsk'] = generate_randnpc_itmsk($rank, $npc['wepk'], $npc['wepsk']);
+				$r['result'][2] += rand(120,240);
+				$r['result'][3] += rand(30,60);
 			}
-			//生成防具和饰品属性
-			$npc['arbsk'] = generate_randnpc_itmsk($rank, 'DB', $npc['arbsk']);
-			$npc['arhsk'] = generate_randnpc_itmsk($rank, 'DH', $npc['arhsk']);
-			$npc['arfsk'] = generate_randnpc_itmsk($rank, 'DF', $npc['arfsk']);
-			$npc['arask'] = generate_randnpc_itmsk($rank, 'DA', $npc['arask']);
-			$npc['artsk'] = generate_randnpc_itmsk($rank, 'A', $npc['artsk']);
+			//爆炸物大概率有爆炸
+			if (($itmk == 'WD') && (rand(0,99) > 30)) $r['result'][4][] = 'd';
 		}
-		//通用属性调整
-		$npc['mhp'] = round($npc['mhp'] * rand(80-$variety+$defens_tend,120+$variety+$defens_tend) / 100);
-		$npc['arbe'] = round($npc['arbe'] * rand(70-$variety+$offens_tend,130+$variety+$offens_tend) / 100);
-		$npc['arhe'] = $npc['arfe'] = $npc['arae'] = round($npc['arhe'] * rand(70-$variety+$offens_tend,130+$variety+$offens_tend) / 100);
-		$npc['arbs'] = $npc['arhs'] = $npc['arfs'] = $npc['aras'] = round($npc['arbs'] * rand(70-$variety+$offens_tend,130+$variety+$offens_tend) / 100);
-		$bonus = rand(100,200);
-		$bonus_pos = array_randompick(array('arb','arh','arf','ara'));
-		$npc[$bonus_pos.'e'] = round($npc[$bonus_pos.'e'] * $bonus / 100);
-		
-		//添加技能
-		if (!isset($npc['skills'])) $npc['skills'] = array();
-		$npc['skills'] = generate_randnpc_skills($rank, $npc['skills']);
-		
-		//不是BOSS概率出特殊奖励道具
-		if ($use_preset) return $npc;
-		$dice = rand(0,99);
-		if ($dice == 0)
+		elseif ($itmk[0] == 'D')
 		{
-			$pos = array_randompick(array('arb','arh','arf','ara','art'));
-			$npc[$pos.'sk'] .= '^st1^vol'.rand(1,4);
-			$npc[$pos] = '空间之'.$npc[$pos];
-		}
-		elseif ($dice == 1)
-		{
-			$skillid = array_rand($npc['skills'], 1);
-			if ($npc['skills'][$skillid] == 0)
-			{
-				$pos = array_randompick(array('arb','arh','arf','ara','art'));
-				$npc[$pos.'sk'] .= '^eqpsk'.$skillid;
-				$npc[$pos] = '秘传之'.$npc[$pos];
-			}
-		}
-		elseif ($dice == 2)
-		{
-			$pos = array_randompick(array('arb','arh','arf','ara'));
-			$npc[$pos.'k'] .= 'S';
-			$npc[$pos] = '战甲之'.$npc[$pos];
-		}
-		elseif ($dice == 3)
-		{
-			$dice2 = rand(0,3);
-			if ($dice2 == 0)
-			{
-				$npc['itm1'] = '【神经强化剂】';
-				$npc['itmk1'] = 'ME';
-			}
-			elseif ($dice2 == 1)
-			{
-				$npc['itm1'] = '【超级战士药剂】';
-				$npc['itmk1'] = 'MV';
-			}
-			elseif ($dice2 == 2)
-			{
-				$npc['itm1'] = '【肉体强化剂】';
-				$npc['itmk1'] = 'MH';
-			}
+			$r['result'][2] = rand(160,320);
+			$r['result'][3] = rand(30,50);
+			$skcount = rand(0,2);
+			if ($skcount == 1) $r['result'][4] = [array_randompick($randrecipe_itmsk_list['D'])];
+			elseif ($skcount > 1) $r['result'][4] = array_randompick($randrecipe_itmsk_list['D'], $skcount);
 			else
 			{
-				$npc['itm1'] = '【线粒体强化剂】';
-				$npc['itmk1'] = 'MS';
+				$r['result'][2] += rand(40,80);
+				$r['result'][3] += rand(15,30);
 			}
-			$npc['itme1'] = 20;
-			$npc['itms1'] = rand(1,3);
-			$npc['itmsk1'] = '';
-		}
-		elseif ($dice < 7)
-		{
-			$npc['itm1'] = array_randompick(array('炸鸡','薯条','能量饮料'));
-			$npc['itmk1'] = array_randompick(array('HB','HH','HS','PB'));
-			$npc['itme1'] = rand(30,150);
-			$npc['itms1'] = rand(10,30);
-			$npc['itmsk1'] = '';
-		}
-		elseif ($dice < 10)
-		{
-			$npc['itm1'] = '紧急药剂';
-			$npc['itmk1'] = 'Ca';
-			$npc['itme1'] = 1;
-			$npc['itms1'] = rand(1,5);
-			$npc['itmsk1'] = '';
-		}
-		
-		return $npc;
-	}
-	
-	//生成随机道具，$randname为1则仅生成道具名但不生成属性，$randname为0则从随机道具池中挑选道具并带有相应的属性
-	function generate_randnpc_item($itmk, $randname=0)
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('randnpc'));
-		$itm = '';
-		$itmsk = '';
-		if ($randname)
-		{
-			if (isset($randnpc_item_randname[$itmk])) $itm = array_randompick($randnpc_item_randname['prefix']).array_randompick($randnpc_item_randname[$itmk]);
 		}
 		else
 		{
-			if (isset($randnpc_item[$itmk]))
+			$r['result'][2] = 1;
+			$r['result'][3] = 1;
+			$skcount = rand(1,2);
+			if ($skcount == 1) $r['result'][4] = [array_randompick($randrecipe_itmsk_list['A'])];
+			elseif ($skcount > 1) $r['result'][4] = array_randompick($randrecipe_itmsk_list['A'], $skcount);
+		}
+		$si = 0;
+		//主要素材1-2个
+		$c = rand(1,2);
+		for ($i=0; $i<$c; $i++)
+		{
+			$r['stuff'.$si] = generate_randrecipe_stuff('main', $itmk, $r['result']);
+			$si += 1;
+		}
+		if ($itmk[0] != 'A')
+		{
+			//副素材0-2个
+			$c = rand(0,2);
+			for ($i=0; $i<$c; $i++)
 			{
-				$r = array_randompick($randnpc_item[$itmk]);
-				if (isset($r[0])) $itm = $r[0];
-				if (isset($r[1])) $itmsk = $r[1];
+				$r['stuff'.$si] = generate_randrecipe_stuff('sub', $itmk, $r['result']);
+				$si += 1;
 			}
 		}
-		return [$itm, $itmsk];
-	}
-	
-	//生成随机道具的属性
-	function generate_randnpc_itmsk($rank, $itmk, $itmsk)
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		if (!empty($itmsk)) $itmsk_arr = \itemmain\get_itmsk_array($itmsk);
-		else $itmsk_arr = array();
-		if ($itmk[0] == 'W')
+		//额外素材0-2个，饰品则为1-3个，但总素材数不超过5个
+		if ($itmk[0] == 'A') $c = rand(1,3);
+		else $c = rand(0,2);
+		for ($i=0; $i<$c; $i++)
 		{
-			$min_itmsk_count = array(0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5, 6, 8)[$rank-1];
-			$max_itmsk_count = array(1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 7, 8, 10)[$rank-1];
-		}
-		else
-		{
-			$min_itmsk_count = array(0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4)[$rank-1];
-			$max_itmsk_count = array(1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 6)[$rank-1];
-		}
-		$guarant_rate = 25 * floor(($rank - 1) / 5);
-		eval(import_module('randnpc'));
-		$r = min(ceil($rank / 5), 3);
-		
-		$skpool = array_merge($randnpc_itmsk[$itmk[0]][$r], $randnpc_itmsk[$itmk[0]][$r+1]);
-		
-		if (rand(0,99) < $guarant_rate) $itmsk_arr[] = array_randompick($randnpc_itmsk[$itmk[0]][$r]);
-		$sk_count = rand($min_itmsk_count, $max_itmsk_count);
-		if ($sk_count > 1) $itmsk_arr = array_merge($itmsk_arr, array_randompick($skpool, $sk_count));
-		elseif ($sk_count == 1) $itmsk_arr[] = array_randompick($skpool);
-		$itmsk_arr = array_unique($itmsk_arr);
-		$itmsk = implode('', $itmsk_arr);
-		return $itmsk;
-	}
-	
-	//生成随机技能
-	function generate_randnpc_skills($rank, $skills)
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('randnpc'));
-		$min_skills_count = array(0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 6, 9)[$rank-1];
-		$max_skills_count = array(1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 7, 8, 9, 12)[$rank-1];
-		
-		$skills_count = rand($min_skills_count, $max_skills_count);
-		$r = max(ceil($rank / 3) - 1, 1);
-		$k = array_rand($randnpc_skills[$r]);
-		$skills[$k] = $randnpc_skills[$r][$k];
-		
-		for ($i=0;$i<$skills_count;$i++)
-		{
-			$skr = rand(max($r-2, 1), $r);
-			$k = array_rand($randnpc_skills[$skr]);
-			$skills[$k] = $randnpc_skills[$skr][$k];
-		}
-		return $skills;
-	}
-	
-	function add_randnpc($rank, $num=1, $offens_tend=0, $defens_tend=0, $variety=0, $use_preset=1, $pls_available=0, $addnews=0) 
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys','player'));
-		$randnpcs = generate_randnpc($rank, $num, $offens_tend, $defens_tend, $variety, $use_preset);
-		if (empty($randnpcs)) return;
-		if (empty($pls_available)) $pls_available = \map\get_safe_plslist();
-		$summon_ids = array();
-		for($i=0;$i<$num;$i++)
-		{
-			$npc = $randnpcs[$i];
-			if ($use_preset == 0) $npc['type'] = 50 + ceil($rank / 2);
-			else $npc['type'] = 60 + ceil($rank / 4);
-			$npc['sNo'] = $i;
-			$npc = \npc\init_npcdata($npc,$pls_available);
-			$npc = \player\player_format_with_db_structure($npc);
-			$db->array_insert("{$tablepre}players", $npc);
-			$summon_ids[] = $db->insert_id();
+			if ($itmk[0] == 'H') $type = array_randompick(array('itme','itms'));
+			elseif ($itmk[0] == 'A') $type = array_randompick(array('itmsk'));
+			else $type = array_randompick(array('itmsk','itme','itms'));
+			$r['stuff'.$si] = generate_randrecipe_stuff($type, $itmk, $r['result']);
 			
-			if ($addnews)
+			$si += 1;
+			if ($si >= 5) break;
+		}
+		$r['result'][2] = (int)$r['result'][2];
+		$r['result'][3] = (int)$r['result'][3];
+		if (isset($randrecipe_bonus_itmsk_list[$itmk[0]]))
+		{
+			foreach($randrecipe_bonus_itmsk_list[$itmk[0]] as $k => $v)
 			{
-				$newsname = $typeinfo[$npc['type']].' '.$npc['name'];
-				// addnews($now, 'addnpc', $newsname);
-				addnews($now, 'addnpc_pls', $newsname, '', $npc['pls']);
+				if ($r['result'][2] >= $k)
+				{
+					if (rand(0,99) > 30) $r['result'][4][] = array_randompick($v);
+					if (rand(0,99) > 70) $r['result'][4][] = array_randompick($v);
+				}
 			}
 		}
-		return $summon_ids;
+		//效耐不均衡补正
+		if (($itmk[0] == 'D') && ($r['result'][2] > 10 * $r['result'][3])) $r['result'][3] = rand($r['result'][3], ceil($r['result'][2]/10));
+		//根据素材数适当强化数值
+		if ($si > 3)
+		{
+			if ($si == 4) $b = 1.2;
+			else $b = 1.5;
+			$r['result'][2] = round($b * $r['result'][2]);
+			$r['result'][3] = round($b * $r['result'][3]);
+		}
+		if (in_array('u', $r['result'][5]))
+		{
+			if ($itmk == 'WG')
+			{
+				$r['result'][1] == 'WJ';
+				if ($r['result'][2] < 1000)
+				{
+					$r['result'][3] = rand(1,5);
+					$r['result'][4][] = 'o';
+				}
+			}
+			elseif ($itmk == 'WC') $r['result'][1] == 'WB';
+			unset($result[5]);
+		}
+		if (in_array('i', $r['result'][5])) $r['result'][3] = '∞';
+		if (!empty($r['result'][4])) $r['result'][4] = implode('', array_unique($r['result'][4]));
+		else $r['result'][4] = '';
+		//生成名称
+		$dice = rand(0,2);
+		if ($dice) $r['result'][0] .= array_randompick($randrecipe_resultname['rand_prefix']).$r['result'][0];
+		if ($itmk[0] == 'H') $r['result'][0] .= array_randompick($randrecipe_resultname['H_prefix']);
+		else $r['result'][0] .= array_randompick($randrecipe_resultname['E_prefix']);
+		if ($dice) $r['result'][0] .= array_randompick(array('','','之'));
+		else $r['result'][0] .= '的';
+		$r['result'][0] .= array_randompick($randrecipe_resultname[$itmk]);
+		if (($itmk[0] != 'H') && rand(0,2))
+		{
+			$bracket = array_randompick(array(array('☆','☆'),array('★','★'),array('〖','〗'),array('【','】'),array('『','』'),array('「','」')));
+			$r['result'][0]	= $bracket[0].$r['result'][0].$bracket[1];
+		}
+		$r['extra']['materials'] = $si;
+		return $r;
+	}
+	
+	//生成一个随机配方素材条件
+	function generate_randrecipe_stuff($type, $itmk, &$result)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('randrecipe'));
+		$s = array();
+		if ($type == 'itmsk')
+		{
+			$sk = array_randompick($randrecipe_stuff_itmsk_list[$itmk[0]]);
+			$k = array_rand($itmsk_stuff[$sk]);
+			$result[4][] = $sk;
+			$v = array_randompick($itmsk_stuff[$sk][$k]);
+		}
+		elseif (($type == 'itme') || ($type == 'itms'))
+		{
+			$r = array_merge_recursive(${$type.'_stuff'}[$itmk], ${$type.'_stuff'}['common']);
+			$k = array_rand($r);
+			$v = array_rand($r[$k]);
+			$change = $r[$k][$v];
+			if ($type == 'itme') $rk = 2;
+			else $rk = 3;
+			if (!empty($change))
+			{
+				if (($type == 'itme') && ($change == 'u')) $result[5][] = 'u';
+				elseif (($type == 'itms') && ($change == 'i')) $result[5][] = 'i';
+				else
+				{
+					$c = (float)substr($change, 1);
+					if ($change[0] == '+')
+					{
+						$result[$rk] = round($result[$rk] + $c);
+					}
+					elseif ($change[0] == '-')
+					{
+						$result[$rk] = min(round($result[$rk] - $c), 1);
+					}
+					elseif ($change[0] == '*')
+					{
+						$result[$rk] = round($result[$rk] * $c);
+					}
+				}
+			}
+		}
+		else
+		{
+			$k = array_rand(${$type.'_stuff'}[$itmk]);
+			$v = array_rand(${$type.'_stuff'}[$itmk][$k]);
+			$change = ${$type.'_stuff'}[$itmk][$k][$v];
+			if (!empty($change))
+			{
+				$c = (float)substr($change, 1);
+				if ($change[0] == '+')
+				{
+					$result[2] = round($result[2] + $c);
+					$result[3] = round($result[3] + $c);
+				}
+				elseif ($change[0] == '-')
+				{
+					$result[2] = min(round($result[2] - $c), 1);
+					$result[3] = min(round($result[3] - $c), 1);
+				}
+				elseif ($change[0] == '*')
+				{
+					$result[2] = round($result[2] * $c);
+					$result[3] = round($result[3] * $c);
+				}
+			}
+		}
+		$s[$k] = $v;
+		if ($k == 'itm') $s['itm_match'] = 1;
+		elseif ($k == 'itmk') $s['itmk_match'] = 1;
+		elseif ($k == 'itmsk') $s['itmsk_match'] = 1;
+		return $s;
 	}
 	
 	function itemuse(&$theitem)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		
 		eval(import_module('sys','player','logger'));
+		
 		$itm=&$theitem['itm']; $itmk=&$theitem['itmk'];
+		$itme=&$theitem['itme']; $itms=&$theitem['itms']; $itmsk=&$theitem['itmsk'];
+		
 		if (strpos ( $itmk, 'Y' ) === 0 || strpos ( $itmk, 'Z' ) === 0)
 		{	
-			if ($itm == '测试用NPC召唤器')
+			if ($itm == '测试配方config生成器')
 			{
 				$log .= "使用了<span class=\"yellow b\">$itm</span>。<br>";
-				$rank = rand(1,20);
-				add_randnpc($rank, 3, 0, 0, 0, 0);
+				create_randrecipe_config(12);
+				return;
+			}
+			elseif ($itm == '测试配方生成器')
+			{
+				$log .= "使用了<span class=\"yellow b\">$itm</span>。<br><br>";
+				$recipe = \randrecipe\generate_randrecipe();
+				$recipe_tip = '';
+				$flag = 0;
+				for ($i=1;$i<=5;$i++)
+				{
+					if (isset($recipe['stuff'.$i]))
+					{
+						$recipe_tip .= \item_recipe\generate_single_itemtip($recipe['stuff'.$i]).'<br>+ ';
+						$flag = 1;
+					}
+				}
+				if (1 === $flag) $recipe_tip = substr($recipe_tip,0,-2);
+				if (isset($recipe['stuffa']))
+				{
+					if (1 === $flag) $recipe_tip .= '其余';
+					$recipe_tip .= '素材为：'.\item_recipe\generate_single_itemtip($recipe['stuffa']).'<br>';
+				}
+				if (isset($recipe['extra']))
+				{
+					if (isset($recipe['extra']['link'])) $recipe_tip .= '连接'.$recipe['extra']['link'].'，';
+					if (isset($recipe['extra']['materials']))
+					{
+						$recipe_tip .= '素材数';
+						if (0 === strpos($recipe['extra']['materials'],'>')) $recipe_tip .= '不少于'.((int)substr($recipe['extra']['materials'],1)+1).'，';
+						else $recipe_tip .= '为'.$recipe['extra']['materials'].'，';
+					}
+					if (isset($recipe['extra']['allow_repeat']) && (false === $recipe['extra']['allow_repeat'])) $recipe_tip .= '素材不允许重复，';
+					if (isset($recipe['extra']['consume_recipe']) && (true === $recipe['extra']['consume_recipe'])) $recipe_tip .= '消耗配方，';
+				}
+				$recipe_tip .= '<br>合成结果：<br>'.\itemmix\parse_itemmix_resultshow($recipe['result']);
+				$log .= "你产生的配方公式：<br><span class=\"yellow b\">$recipe_tip</span><br>";
 				return;
 			}
 		}
