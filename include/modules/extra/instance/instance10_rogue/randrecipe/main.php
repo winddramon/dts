@@ -92,13 +92,13 @@ namespace randrecipe
 		{
 			$r['result'][2] = rand(160,320);
 			$r['result'][3] = rand(30,50);
-			$skcount = rand(0,2);
+			$skcount = rand(0,3);
 			if ($skcount == 1) $r['result'][4] = [array_randompick($randrecipe_itmsk_list['D'])];
 			elseif ($skcount > 1) $r['result'][4] = array_randompick($randrecipe_itmsk_list['D'], $skcount);
 			else
 			{
 				$r['result'][2] += rand(40,80);
-				$r['result'][3] += rand(15,30);
+				$r['result'][3] += rand(20,40);
 			}
 		}
 		else
@@ -109,7 +109,7 @@ namespace randrecipe
 			if ($skcount == 1) $r['result'][4] = [array_randompick($randrecipe_itmsk_list['A'])];
 			elseif ($skcount > 1) $r['result'][4] = array_randompick($randrecipe_itmsk_list['A'], $skcount);
 		}
-		$si = 0;
+		$si = 1;
 		//主要素材1-2个
 		$c = rand(1,2);
 		for ($i=0; $i<$c; $i++)
@@ -138,7 +138,7 @@ namespace randrecipe
 			$r['stuff'.$si] = generate_randrecipe_stuff($type, $itmk, $r['result']);
 			
 			$si += 1;
-			if ($si >= 5) break;
+			if ($si > 5) break;
 		}
 		$r['result'][2] = (int)$r['result'][2];
 		$r['result'][3] = (int)$r['result'][3];
@@ -155,6 +155,8 @@ namespace randrecipe
 		}
 		//效耐不均衡补正
 		if (($itmk[0] == 'D') && ($r['result'][2] > 10 * $r['result'][3])) $r['result'][3] = rand($r['result'][3], ceil($r['result'][2]/10));
+		//实际素材数
+		$si -= 1;
 		//根据素材数适当强化数值
 		if ($si > 3)
 		{
