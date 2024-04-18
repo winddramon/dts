@@ -1342,6 +1342,73 @@ namespace instance10
 				),
 			),
 		),//END OF TYPE 90
+		
+		71 => array
+			(
+			'mode' => 2,
+			'num' => 1,
+			'pass' => 'bra',
+			'bid' => 0,
+			'inf' => '',
+			'rage' => 30,
+			'pose'=> 1,
+			'tactic' => 2,
+			'killnum' => 0,
+			'teamID' => '',
+			'teamPass' => '',
+			'pls' => 99,
+			'mhp' => 66666,
+			'msp' => 666,
+			'mss' => 666,
+			'att' => 6666,
+			'def' => 6666,
+			'lvl' => 66,
+			'skill' => 666,
+			'money' => 6666,
+			'arb' => '行商斗篷',
+			'arbk' => 'DB',
+			'arbe' => 2333,
+			'arbs' => 333,
+			'arbsk' => 'BbX',
+			'arh' => '行商兜帽',
+			'arhk' => 'DH',
+			'arhe' => 2333,
+			'arhs' => 333,
+			'arhsk' => 'cLX',
+			'arf' => '行商皮靴',
+			'arfk' => 'DF',
+			'arfe' => 2333,
+			'arfs' => 333,
+			'arfsk' => 'MmX',
+			'ara' => '行商手套',
+			'arak' => 'DA',
+			'arae' => 2333,
+			'aras' => 333,
+			'arask' => 'HhX',
+			'art' => '电子账本',
+			'artk' => 'A',
+			'arte' => 1,
+			'arts' => 1,
+			'artsk' => 'H',
+			
+			'sub' => array
+			(
+				0 => array
+				(
+					'name' => '测试NPC',
+					'icon' => 25,
+					'gd' => 'r',
+					'club' => 27,
+					'skills'=>array('963'=>'0'),
+					'wep' => '『来自异次元的归还』',
+					'wepk' => 'WF',
+					'wepe' => 777,
+					'weps' => 777,
+					'wepsk' => 'VrainS',
+					'description' => '……',
+				),
+			),
+		),//END OF TYPE 71
 	);//END OF $npcinfo
 }
 ?>

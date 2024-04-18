@@ -13,6 +13,26 @@ namespace instance10
 		$typeinfo[71] = '行商';
 	}
 	
+	function parse_itmuse_desc($n, $k, $e, $s, $sk){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess($n, $k, $e, $s, $sk);
+		
+		if(strpos($k,'Y')===0 || strpos($k,'Z')===0){
+			if ($n == '测试用结局道具·幸存'){
+				$ret .= '使用后解除自己的地图限制，但无法再接取与完成任务；若没有其他玩家可达成『最后幸存』结局';
+			}elseif ($n == '测试用结局道具·解禁') {
+				$ret .= '使用后达成『锁定解除』胜利';
+			}elseif ($n == '测试用结局道具·解离') {
+				$ret .= '使用后可进行幻境系统破解，完成破解后达成『幻境解离』胜利';
+			}elseif ($n == '召唤道具1') {
+				$ret .= '使用后可召唤通往『幻境解离』结局的剧情NPC';
+			}elseif ($n == '召唤道具2') {
+				$ret .= '使用后可召唤通往『核弹引爆』结局的剧情NPC';
+			}
+		}
+		return $ret;
+	}
+	
 	//肉鸽模式自动选择鸽勇者
 	function get_enter_battlefield_card($card){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -200,38 +220,14 @@ namespace instance10
 		$chprocess($atime);
 	}
 	
-	//商店功能之后用事件替换
+	//商店功能替换为特殊的商店NPC
 	function check_in_shop_area($p)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
-		if (20 == $gametype)
-		{
-			// if (!isset($gamevars['instance10_shops']))
-			// {
-				// $gamevars['instance10_shops'] = array_randompick(range(1, 33), 4);
-				// $gamevars['instance10_shops'][] = 0;
-			// }
-			// save_gameinfo();
-			// return in_array($p, $gamevars['instance10_shops']);
-			return false;
-		}
-		else return $chprocess($p);
+		if (20 == $gametype) return false;
+		return $chprocess($p);
 	}
-	
-	//肉鸽模式中，商店道具的禁区次数改用游戏阶段判定，现取消
-	// function shopitem_row_data_process($data)
-	// {
-		// if (eval(__MAGIC__)) return $___RET_VALUE;
-		// $ret = $chprocess($data);
-		// eval(import_module('sys'));
-		// if (20 == $gametype)
-		// {
-			// if (!isset($gamevars['instance10_stage'])) return $ret;
-			// if ((int)$ret[3] + 1 >= $gamevars['instance10_stage']) $ret[3] = 0;
-		// }
-		// return $ret;
-	// }
 	
 	//合成产物的效果、耐久、属性可能发生变化
 	function itemmix_success()
@@ -307,13 +303,13 @@ namespace instance10
 				$log .= "你使用了{$itm}，却发现没有可以连接上的网络。怎么会这样？<br>";
 				return;
 			}
-			//每个人只能吃9个技能核心
+			//每个人只能吃15个技能核心
 			elseif (strpos($itmk, 'SC') === 0)
 			{
 				$sc_count = (int)\skillbase\skill_getvalue(951,'sc_count',$sdata);
-				if ($sc_count >= 9)
+				if ($sc_count >= 15)
 				{
-					$log .= "<span class=\"yellow b\">你已经使用过9个技能核心，无法再使用了。</span><br>";
+					$log .= "<span class=\"yellow b\">你已经使用过15个技能核心，无法再使用了。</span><br>";
 					return;
 				}
 			}
@@ -322,6 +318,14 @@ namespace instance10
 			{
 				if ($itm == '测试用结局道具·幸存')
 				{
+					$end2_flag = (int)\skillbase\skill_getvalue(951,'end2_flag',$sdata);
+					if (!$end2_flag)
+					{
+						\skillbase\skill_setvalue(951,'end2_flag',1,$sdata);
+						\skillbase\skill_lost(960,$sdata);
+						$log .= "<span class=\"red b\">你将自己与任务系统的连接断开了。现在你可以自由前往其他地点了。</span><br>在没有其他玩家存活后，你可以使用该道具完成『最后幸存』结局。<br>";
+						return;
+					}
 					if (!\sys\check_alivelist_teamwin())
 					{
 						$log .= "<span class=\"red b\">还有其他存活的玩家。</span><br>";
@@ -376,6 +380,25 @@ namespace instance10
 							ob_end_clean();
 						}
 					}
+					return;
+				}
+				elseif ($itm == '召唤道具1')
+				{
+					$log .= '新的敌人加入了战场……<br>';
+					\randnpc\add_randnpc(19, 1, 0, 0, 0, 1, array(0), 1);
+					\randnpc\add_randnpc(18, 3, 0, 0, 0, 1, array(0), 1);
+					addnews($now, 'instance10_addnpc_end7', $name, $itm);
+					$itm = $itmk = $itmsk = '';
+					$itme = $itms = 0;
+					return;
+				}
+				elseif ($itm == '召唤道具2')
+				{
+					$log .= '新的敌人加入了战场……<br>';
+					\randnpc\add_randnpc(20, 1, 0, 0, 0, 1, array(0), 1);
+					addnews($now, 'instance10_addnpc_end5', $name, $itm);
+					$itm = $itmk = $itmsk = '';
+					$itme = $itms = 0;
 					return;
 				}
 			}
@@ -504,7 +527,9 @@ namespace instance10
 		if (20 == $gametype)
 		{
 			$stage = (int)\skillbase\skill_getvalue(951,'stage');
-			$pls_available = array_slice($arealist, max(0, 5 * $stage - 10), 10);
+			$end2_flag = (int)\skillbase\skill_getvalue(951,'end2_flag');
+			if (!$end2_flag) $pls_available = array_slice($arealist, max(0, 5 * $stage - 10), 10);
+			else $pls_available = array_slice($arealist, 0, max(10, 5 * $stage));
 			return in_array($pno, $pls_available);
 		}
 		return $chprocess($pno);
@@ -520,7 +545,8 @@ namespace instance10
 		{
 			$inst10_mixinfo = array
 			(
-				array('class' => 'wk', 'stuff' => array('大西瓜','魔王の剑'),'result' => array('『七杀剑』','WK',7777,'∞','reVOLtR'))
+				array('class' => 'wk', 'stuff' => array('大西瓜','魔王の剑'),'result' => array('『七杀剑』','WK',7777,'∞','reVOLtR')),
+				array('class' => 'item', 'stuff' => array('剧情道具1','剧情道具2','剧情道具3'),'result' => array('召唤道具1','Z',1,1,''))
 			);
 			$ret = array_merge($ret, $inst10_mixinfo);
 		}
@@ -534,6 +560,10 @@ namespace instance10
 		
 		if($news == 'instance10_newstage') 
 			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}开启了新的地区！同时，新的敌人加入了战场！</span></li>";
+		elseif($news == 'instance10_addnpc_end7') 
+			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}使用了{$b}，让新的敌人加入了战场！</span></li>";
+		elseif($news == 'instance10_addnpc_end5') 
+			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}使用了{$b}，让新的敌人加入了战场！</span></li>";
 		
 		return $chprocess($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr);
 	}

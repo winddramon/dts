@@ -179,6 +179,15 @@ namespace item_uvo_extra
 				array('itm'=>'银色盒子','itmk'=>'p','itme'=>1,'itms'=>55,'itmsk'=>'')
 				);
 		}
+		elseif ($cardid == 292)//邪教徒 
+		{
+			if(defined('MOD_ATTRBASE')) {
+				$newitmsk = \attrbase\config_process_encode_comp_itmsk('^tlog_<:comp_itmsk:>{<span class="lightblue b">“咔咔！”</span>}1');
+				$items = array(
+					array('itm'=>'邪教徒头套','itmk'=>'DH','itme'=>6,'itms'=>66,'itmsk'=>$newitmsk)
+					);
+			}
+		}
 		elseif ($cardid == 344)//油库里
 		{
 			$skills = array();

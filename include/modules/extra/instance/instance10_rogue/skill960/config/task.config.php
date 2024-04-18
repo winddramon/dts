@@ -92,7 +92,7 @@ namespace skill960
 			'rank' => 1,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('方块'),'itm_match'=>1,'num'=>1),
-			'reward' => array('item'=>array(array('itm'=>'原型兵器『落星』','itmk'=>'WF','itme'=>180,'itms'=>120,'itmsk'=>'tc^alt_<:comp_itmsk:>{WP,WK,WC,WG,WD}1')),'invscore'=>5),
+			'reward' => array('item'=>array(array('itm'=>'原型兵器『落星』','itmk'=>'WF','itme'=>160,'itms'=>120,'itmsk'=>'tc^alt_<:comp_itmsk:>{WP,WK,WC,WG,WD}1')),'invscore'=>5),
 		),
 		9 => array
 		(
@@ -145,7 +145,7 @@ namespace skill960
 		//2级任务
 		31 => array
 		(
-			'name' => '测试任务2',
+			'name' => '战力测试1',
 			'rank' => 2,
 			'tasktype' => 'battle_kill',
 			'taskreq' => array('type'=>52,'num'=>9),
@@ -201,7 +201,7 @@ namespace skill960
 		),
 		38 => array
 		(
-			'name' => '测试任务2',
+			'name' => '三秒规则',
 			'rank' => 2,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('霜火雪糕','魔王咖喱','院长红酒','美味菜包','水果月饼','电子寿司','地雷酥糖','埃克索特三明治'),'num'=>3),
@@ -209,7 +209,7 @@ namespace skill960
 		),
 		39 => array
 		(
-			'name' => '测试任务2',
+			'name' => '化方为圆',
 			'rank' => 2,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('方块'),'itm_match'=>1,'num'=>3),
@@ -217,7 +217,7 @@ namespace skill960
 		),
 		40 => array
 		(
-			'name' => '测试任务2',
+			'name' => '宝石魔法',
 			'rank' => 2,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('方块'),'itm_match'=>1,'num'=>3),
@@ -225,7 +225,7 @@ namespace skill960
 		),
 		41 => array
 		(
-			'name' => '测试任务2',
+			'name' => '节奏大师',
 			'rank' => 2,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itmk'=>array('HM','HT'),'num'=>2),
@@ -233,15 +233,15 @@ namespace skill960
 		),
 		42 => array
 		(
-			'name' => '测试任务2',
+			'name' => '不如打牌',
 			'rank' => 2,
 			'tasktype' => 'item_search',
-			'taskreq' => array('itm'=>array('超量素材'),'itm_match'=>1,'num'=>5),
+			'taskreq' => array('itm'=>array('游戏王'),'itm_match'=>1,'num'=>5),
 			'reward' => array('item'=>array(array('itm'=>'《现代游戏王》','itmk'=>'ygo2','itme'=>1,'itms'=>10,'itmsk'=>'')),'invscore'=>5),
 		),
 		43 => array
 		(
-			'name' => '测试任务2',
+			'name' => '爆破技巧',
 			'rank' => 2,
 			'tasktype' => 'item_use',
 			'taskreq' => array('itmk'=>array('T'),'num'=>5),
@@ -249,7 +249,7 @@ namespace skill960
 		),
 		44 => array
 		(
-			'name' => '测试任务2',
+			'name' => '活学活用',
 			'rank' => 2,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('提示纸条'),'itm_match'=>1,'num'=>2),
@@ -257,7 +257,7 @@ namespace skill960
 		),
 		45 => array
 		(
-			'name' => '测试任务2',
+			'name' => '以毒攻毒',
 			'rank' => 2,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('桔黄色的果酱','浓厚粘稠果汁'),'num'=>10),
@@ -274,7 +274,7 @@ namespace skill960
 		//3级任务
 		61 => array
 		(
-			'name' => '测试任务3',
+			'name' => '战力测试2',
 			'rank' => 3,
 			'tasktype' => 'battle_kill',
 			'taskreq' => array('type'=>53,'num'=>9),
@@ -330,7 +330,7 @@ namespace skill960
 		),
 		68 => array
 		(
-			'name' => '测试任务3',
+			'name' => '情报交易',
 			'rank' => 3,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('提示纸条'),'itm_match'=>1,'num'=>3),
@@ -338,15 +338,15 @@ namespace skill960
 		),
 		69 => array
 		(
-			'name' => '测试任务3',
+			'name' => '突破极限',
 			'rank' => 3,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('X方块','Y方块'),'num'=>2),
-			'reward' => array('item'=>array(array('itm'=>'A级技能核心','itmk'=>'SCA1','itme'=>1,'itms'=>2,'itmsk'=>'')),'invscore'=>5),
+			'reward' => array('item'=>array(array('itm'=>'A级技能核心·改','itmk'=>'SCA1','itme'=>1,'itms'=>2,'itmsk'=>'')),'invscore'=>5),
 		),
 		70 => array
 		(
-			'name' => '测试任务2',
+			'name' => '有机肥料',
 			'rank' => 3,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('苹果皮','香蕉皮','西瓜皮'),'itm_match'=>1,'num'=>3),
@@ -354,7 +354,7 @@ namespace skill960
 		),
 		71 => array
 		(
-			'name' => '测试任务2',
+			'name' => '以力证道',
 			'rank' => 3,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('球'),'itm_match'=>1,'num'=>6),
@@ -362,7 +362,7 @@ namespace skill960
 		),
 		72 => array
 		(
-			'name' => '测试任务2',
+			'name' => '即兴料理',
 			'rank' => 3,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('更改菜谱后的不甜酱包'),'num'=>1),
@@ -370,7 +370,7 @@ namespace skill960
 		),
 		73 => array
 		(
-			'name' => '测试任务2',
+			'name' => '异端审判',
 			'rank' => 3,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('汽油','火把'),'num'=>2),
@@ -403,7 +403,7 @@ namespace skill960
 		//4级任务
 		91 => array
 		(
-			'name' => '测试任务4',
+			'name' => '战力测试3',
 			'rank' => 4,
 			'tasktype' => 'battle_kill',
 			'taskreq' => array('type'=>54,'num'=>9),
@@ -459,7 +459,7 @@ namespace skill960
 		),
 		98 => array
 		(
-			'name' => '测试任务4',
+			'name' => '歌姬计划',
 			'rank' => 4,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itmk'=>array('ss'),'num'=>1),
@@ -467,7 +467,7 @@ namespace skill960
 		),
 		99 => array
 		(
-			'name' => '测试任务4',
+			'name' => '棋开得胜',
 			'rank' => 4,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('像围棋子一样的饼干'),'num'=>1),
@@ -475,7 +475,7 @@ namespace skill960
 		),
 		100 => array
 		(
-			'name' => '测试任务4',
+			'name' => '雷霆之握',
 			'rank' => 4,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('增幅设备','某种电子零件','某种机械设备'),'num'=>3),
@@ -491,7 +491,7 @@ namespace skill960
 		),
 		102 => array
 		(
-			'name' => '测试任务4',
+			'name' => '幕后黑手',
 			'rank' => 4,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('毒药'),'num'=>4),
@@ -499,7 +499,7 @@ namespace skill960
 		),
 		103 => array
 		(
-			'name' => '测试任务4',
+			'name' => '赛博浪客',
 			'rank' => 4,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('电池','探测器'),'itm_match'=>1,'num'=>4),
@@ -508,7 +508,7 @@ namespace skill960
 		//5级任务
 		121 => array
 		(
-			'name' => '测试任务5',
+			'name' => '战力测试4',
 			'rank' => 5,
 			'tasktype' => 'battle_kill',
 			'taskreq' => array('type'=>55,'num'=>9),
@@ -564,7 +564,7 @@ namespace skill960
 		),
 		128 => array
 		(
-			'name' => '测试任务5',
+			'name' => '一枪穿云',
 			'rank' => 5,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('驱云弹'),'num'=>1),
@@ -572,7 +572,7 @@ namespace skill960
 		),
 		129 => array
 		(
-			'name' => '测试任务5',
+			'name' => '友谊魔法',
 			'rank' => 5,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itmk'=>array('WJ'),'num'=>1),
@@ -580,7 +580,7 @@ namespace skill960
 		),
 		130 => array
 		(
-			'name' => '测试任务5',
+			'name' => '原始回归',
 			'rank' => 5,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('MEGA宝石方块'),'num'=>1),
@@ -596,7 +596,7 @@ namespace skill960
 		),
 		132 => array
 		(
-			'name' => '测试任务5',
+			'name' => '旁门左道',
 			'rank' => 5,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('《BR大逃杀》','《枪械杂志》','《防身术图解》','《飞镖投掷法》','《剑道社教材》','《化学课本》','《太极拳指南》'),'num'=>2),
@@ -604,7 +604,7 @@ namespace skill960
 		),
 		133 => array
 		(
-			'name' => '虹彩魔法',
+			'name' => '虹彩魔术',
 			'rank' => 5,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('水晶方块'),'num'=>1),
@@ -613,7 +613,7 @@ namespace skill960
 		//6级任务
 		151 => array
 		(
-			'name' => '测试任务6',
+			'name' => '战力测试5',
 			'rank' => 6,
 			'tasktype' => 'battle_kill',
 			'taskreq' => array('type'=>56,'num'=>9),
@@ -669,7 +669,7 @@ namespace skill960
 		),
 		158 => array
 		(
-			'name' => '测试任务6',
+			'name' => '万能灵药',
 			'rank' => 6,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('大天使的气息','大夭使的气息'),'num'=>1),
@@ -677,7 +677,7 @@ namespace skill960
 		),
 		159 => array
 		(
-			'name' => '测试任务6',
+			'name' => '以笔为剑',
 			'rank' => 6,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itmk'=>array('HB铅笔','2H铅笔'),'num'=>1),
@@ -685,7 +685,7 @@ namespace skill960
 		),
 		160 => array
 		(
-			'name' => '测试任务6',
+			'name' => '第三只眼',
 			'rank' => 6,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('小五拖鞋'),'num'=>1),
@@ -693,15 +693,15 @@ namespace skill960
 		),
 		161 => array
 		(
-			'name' => '年年有鱼',
+			'name' => '假冒粉丝',
 			'rank' => 6,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('签名CD'),'itm_match'=>1,'num'=>3),
-			'reward' => array('item'=>array(array('itm'=>'A级技能核心·改','itmk'=>'SCA2','itme'=>1,'itms'=>4,'itmsk'=>'')),'invscore'=>5),
+			'reward' => array('item'=>array(array('itm'=>'A级技能核心·改','itmk'=>'SCA1','itme'=>1,'itms'=>4,'itmsk'=>'')),'invscore'=>5),
 		),
 		162 => array
 		(
-			'name' => '测试任务6',
+			'name' => '波纹呼吸',
 			'rank' => 6,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('【波纹疾走】'),'num'=>1),
@@ -718,7 +718,7 @@ namespace skill960
 		//7级任务
 		181 => array
 		(
-			'name' => '测试任务7',
+			'name' => '战力测试6',
 			'rank' => 7,
 			'tasktype' => 'battle_kill',
 			'taskreq' => array('type'=>57,'num'=>9),
@@ -774,7 +774,7 @@ namespace skill960
 		),
 		188 => array
 		(
-			'name' => '测试任务7',
+			'name' => '诡异的光',
 			'rank' => 7,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('仰望星空派'),'num'=>1),
@@ -782,7 +782,7 @@ namespace skill960
 		),
 		189 => array
 		(
-			'name' => '测试任务7',
+			'name' => '鸭力测试',
 			'rank' => 7,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('南京挂花鸭'),'num'=>1),
@@ -790,7 +790,7 @@ namespace skill960
 		),
 		190 => array
 		(
-			'name' => '测试任务7',
+			'name' => '钻石！',
 			'rank' => 7,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('钻石'),'num'=>1),
@@ -798,7 +798,7 @@ namespace skill960
 		),
 		191 => array
 		(
-			'name' => '测试任务7',
+			'name' => '深渊之盒',
 			'rank' => 7,
 			'tasktype' => 'item_search',
 			'taskreq' => array('itm'=>array('残存的礼品盒'),'num'=>1),
@@ -808,30 +808,30 @@ namespace skill960
 		//npc资源暂未完成
 		301 => array
 		(
-			'name' => 'BOSS任务1',
+			'name' => '挑战者I',
 			'rank' => 99,
 			'elite' => 1,
 			'tasktype' => 'battle_kill',
 			'taskreq' => array('type'=>62,'num'=>1),
-			'reward' => array('money'=>114514),
+			'reward' => array('item'=>array(array('itm'=>'A级技能核心·改','itmk'=>'SCA1','itme'=>1,'itms'=>1,'itmsk'=>'')),'money'=>3000),
 		),
 		302 => array
 		(
-			'name' => 'BOSS任务2',
+			'name' => '挑战者II',
 			'rank' => 99,
 			'elite' => 1,
 			'tasktype' => 'battle_kill',
 			'taskreq' => array('type'=>63,'num'=>1),
-			'reward' => array('money'=>114514),
+			'reward' => array('item'=>array(array('itm'=>'S级技能核心·改','itmk'=>'SCS1','itme'=>1,'itms'=>1,'itmsk'=>'')),'money'=>6000),
 		),
 		303 => array
 		(
-			'name' => 'BOSS任务3',
+			'name' => '挑战者III',
 			'rank' => 99,
 			'elite' => 1,
 			'tasktype' => 'battle_kill',
 			'taskreq' => array('type'=>64,'num'=>1),
-			'reward' => array('money'=>114514),
+			'reward' => array('item'=>array(array('itm'=>'测试用结局道具·解禁','itmk'=>'Z','itme'=>1,'itms'=>1,'itmsk'=>'')),'money'=>12000),
 		),
 		//1001号之后的任务为卡片任务
 		1001 => array

@@ -1,0 +1,7 @@
+现在想要做什么？<br><br>
+<input type="hidden" name="mode" value="shopnpc">
+<input type="hidden" id="command" name="command" value="back">
+<input type="button" class="cmdbutton" id="x" value="[X]返回" onclick="postCmd('gamecmd','command.php');this.disabled=true;"><br><br>
+<input type="button" class="cmdbutton" value="查看商品" onclick="$('command').value='shop';postCmd('gamecmd','command.php');this.disabled=true;"><br>
+<input type="button" class="cmdbutton" value="打听情报" onclick="$('command').value='tip';postCmd('gamecmd','command.php');this.disabled=true;"><br>
+<input type="button" class="cmdbutton" value="战斗" onclick="$('command').value='battle';postCmd('gamecmd','command.php');this.disabled=true;">

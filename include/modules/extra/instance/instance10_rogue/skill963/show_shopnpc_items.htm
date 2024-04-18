@@ -1,0 +1,22 @@
+<!--{eval eval(import_module('cardbase'));}-->
+<!--{eval $shopnpc_shopitem = \skill963\get_shopnpc_shopitem($edata);}-->
+<input type="hidden" name="mode" value="shopnpc">
+<input type="hidden" id="command" name="command" value="">
+你可以购买以下道具：<br><br>
+<!--{loop $shopnpc_shopitem $i $v}-->
+<!--{eval $k=$i+1;}-->
+<input type="button" style="width:40px" value="购买" onclick="$('command').value='buy{$k}';postCmd('gamecmd','command.php');this.disabled=true;">
+<!--{if $v[1] == 'R'}-->
+	<!--{eval $desc=\item_recipe\show_recipe($v[4]);}-->
+<!--{elseif strpos($v[1],'VO')===0}-->
+	<!--{eval $desc='装有卡牌「'.$cards[$v[4]]['name'].'」';}-->
+<!--{else}-->
+	<!--{eval $desc=\itemmain\parse_itmuse_desc($v[0], $v[1], $v[2], $v[3], $v[4]);}-->
+<!--{/if}-->
+<!--{eval $itmsk_words=\itemmain\parse_itmsk_words($v[4], 1);}-->
+<span <!--{if $desc}-->style="cursor:pointer;" title="$desc"<!--{/if}-->>
+$v[0]/<!--{eval echo \itemmain\parse_itmk_words($v[1]);}-->/$v[2]/$v[3]/<!--{eval echo $itmsk_words ? $itmsk_words.'/' : ''}-->价:$v[5]
+</span><br>
+<!--{/loop}-->
+<br>
+<input type="button" class="cmdbutton" id="x" value="[X]返回" onclick="$('command').value='shopback'; postCmd('gamecmd','command.php');this.disabled=true;">

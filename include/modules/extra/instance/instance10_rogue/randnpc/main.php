@@ -21,7 +21,7 @@ namespace randnpc
 	}
 	
 	//生成若干个标准格式的随机NPC
-	//rank：NPC的强度等级，为1-20，1级为杂兵，20级强于115
+	//rank：NPC的强度等级，为1-20
 	//num：生成数量
 	//offens_tend：攻击倾向（0-100整数），越高NPC越容易有高攻击力和熟练度，越容易出现强袭姿态和重视反击
 	//defens_tend：防御倾向（0-100整数），越高NPC越容易有高生命值和防御力，越容易出现作战姿态和重视防御
@@ -54,7 +54,7 @@ namespace randnpc
 			//生成名字，待修改
 			$npc['name'] = $rank.'级虚像';
 			if (rand(0,1)) $npc['gd'] = 'f';
-			$var1 = pow(1.3, $rank);
+			$var1 = pow(1.35, $rank);
 			$var2 = pow(1.25, $rank);
 			$npc['mhp'] = $var1 * 320;
 			$npc['msp'] = $rank * 100;
@@ -76,58 +76,54 @@ namespace randnpc
 			list($npc['arh'], $npc['arhsk']) = generate_randnpc_item('DH', 1);
 			list($npc['arf'], $npc['arfsk']) = generate_randnpc_item('DF', 1);
 			list($npc['ara'], $npc['arask']) = generate_randnpc_item('DA', 1);
-			$npc['arbe'] = round($var2 * 32);
-			$npc['arhe'] = $npc['arfe'] = $npc['arae'] = round($var2 * 32);
+			$npc['arbe'] = round($var2 * 40);
+			$npc['arhe'] = $npc['arfe'] = $npc['arae'] = round($var2 * 30);
 			$npc['arbs'] = $npc['arhs'] = $npc['arfs'] = $npc['aras'] = $rank * 24;
 			//饰品
 			list($npc['art'], $npc['artsk']) = generate_randnpc_item('A', 1);
 			$npc['artk'] = 'A'; $npc['arte'] = 1; $npc['arts'] = 1;
-		}
-		//属性调整
-		$npc['mhp'] = round($npc['mhp'] * rand(80-$variety+$defens_tend,120+$variety+$defens_tend) / 100);
-		$npc['msp'] = round($npc['msp'] * rand(80-$variety,120+$variety) / 100);
-		$npc['att'] = round($npc['att'] * rand(80-$variety+$offens_tend,120+$variety+$offens_tend) / 100);
-		$npc['club'] = array_randompick(array(1,2,3,4,5,6,7,8,9,10,11,13,14,17,18,19,20,21,24));
-		$npc['pose'] = array_randompick(array(0,1,4));
-		if (rand(0,99) < $offens_tend + 3*$rank) $npc['pose'] = 2;
-		$npc['tactic'] = array_randompick(array(0,2,3,4));
-		if (rand(0,99) < $defens_tend) $npc['tactic'] = 2;
-		$npc['pls'] = 99;
-		$npc['skill'] = round($npc['skill'] * rand(80-$variety+$offens_tend,120+$variety+$offens_tend) / 100);
-		$npc['lvl'] = max($npc['lvl'] + rand(-5,5), 1);
-		$npc['money'] = round($npc['money'] * rand(70-$variety,130+$variety) / 100);
-		//装备调整
-		if ($npc['club']==19) //铁拳
-		{
-			$npc['att'] += 2 * round($npc['wepe'] * rand(80-$variety+$offens_tend,120+$variety+$offens_tend) / 100);
-			$npc['wep'] = '拳头';
-			$npc['wepk'] = 'WN';
-			$npc['wepe'] = 0; $npc['weps'] = '∞';
-			$npc['wepsk'] = '';
-		}
-		else
-		{
-			$npc['wepe'] = round($npc['wepe'] * rand(40-$variety+$offens_tend,160+$variety+$offens_tend) / 100);
-			$npc['weps'] = round($npc['weps'] * rand(40-$variety+$offens_tend,160+$variety+$offens_tend) / 100);
 			
-			//生成武器属性
-			$npc['wepsk'] = generate_randnpc_itmsk($rank, $npc['wepk'], $npc['wepsk']);
+			//非预设的属性调整
+			$npc['club'] = array_randompick(array(1,2,3,4,5,6,7,8,9,10,11,13,14,17,18,19,20,21,24));
+			$npc['pose'] = array_randompick(array(0,1,4));
+			if (rand(0,99) < $offens_tend + 3*$rank) $npc['pose'] = 2;
+			$npc['tactic'] = array_randompick(array(0,2,3,4));
+			if (rand(0,99) < $defens_tend) $npc['tactic'] = 2;
+			$npc['pls'] = 99;
+			$npc['skill'] = round($npc['skill'] * rand(80-$variety+$offens_tend,120+$variety+$offens_tend) / 100);
+			$npc['lvl'] = max($npc['lvl'] + rand(-5,5), 1);
+			$npc['money'] = round($npc['money'] * rand(70-$variety,130+$variety) / 100);
+			//装备调整
+			if ($npc['club']==19) //铁拳
+			{
+				$npc['att'] += 2 * round($npc['wepe'] * rand(80-$variety+$offens_tend,120+$variety+$offens_tend) / 100);
+				$npc['wep'] = '拳头';
+				$npc['wepk'] = 'WN';
+				$npc['wepe'] = 0; $npc['weps'] = '∞';
+				$npc['wepsk'] = '';
+			}
+			else
+			{
+				$npc['wepe'] = round($npc['wepe'] * rand(40-$variety+$offens_tend,160+$variety+$offens_tend) / 100);
+				$npc['weps'] = round($npc['weps'] * rand(40-$variety+$offens_tend,160+$variety+$offens_tend) / 100);
+				//生成武器属性
+				$npc['wepsk'] = generate_randnpc_itmsk($rank, $npc['wepk'], $npc['wepsk']);
+			}
+			//生成防具和饰品属性
+			$npc['arbsk'] = generate_randnpc_itmsk($rank, 'DB', $npc['arbsk']);
+			$npc['arhsk'] = generate_randnpc_itmsk($rank, 'DH', $npc['arhsk']);
+			$npc['arfsk'] = generate_randnpc_itmsk($rank, 'DF', $npc['arfsk']);
+			$npc['arask'] = generate_randnpc_itmsk($rank, 'DA', $npc['arask']);
+			$npc['artsk'] = generate_randnpc_itmsk($rank, 'A', $npc['artsk']);
 		}
+		//通用属性调整
+		$npc['mhp'] = round($npc['mhp'] * rand(80-$variety+$defens_tend,120+$variety+$defens_tend) / 100);
 		$npc['arbe'] = round($npc['arbe'] * rand(70-$variety+$offens_tend,130+$variety+$offens_tend) / 100);
 		$npc['arhe'] = $npc['arfe'] = $npc['arae'] = round($npc['arhe'] * rand(70-$variety+$offens_tend,130+$variety+$offens_tend) / 100);
 		$npc['arbs'] = $npc['arhs'] = $npc['arfs'] = $npc['aras'] = round($npc['arbs'] * rand(70-$variety+$offens_tend,130+$variety+$offens_tend) / 100);
 		$bonus = rand(100,200);
 		$bonus_pos = array_randompick(array('arb','arh','arf','ara'));
 		$npc[$bonus_pos.'e'] = round($npc[$bonus_pos.'e'] * $bonus / 100);
-		
-		//生成防具属性
-		$npc['arbsk'] = generate_randnpc_itmsk($rank, 'DB', $npc['arbsk']);
-		$npc['arhsk'] = generate_randnpc_itmsk($rank, 'DH', $npc['arhsk']);
-		$npc['arfsk'] = generate_randnpc_itmsk($rank, 'DF', $npc['arfsk']);
-		$npc['arask'] = generate_randnpc_itmsk($rank, 'DA', $npc['arask']);
-		
-		//生成饰品属性
-		$npc['artsk'] = generate_randnpc_itmsk($rank, 'A', $npc['artsk']);
 		
 		//添加技能
 		if (!isset($npc['skills'])) $npc['skills'] = array();
