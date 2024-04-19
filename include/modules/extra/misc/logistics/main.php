@@ -51,6 +51,14 @@ namespace logistics
 		}
 		if ($cardshop_list[$b10]['rare'] != 'M') $cardshop_list[$b10]['blink'] = 10;
 		if (isset($b20)) $cardshop_list[$b20]['blink'] = 20;
+		//生成随机折扣
+		$d = (int)fmod($fatenum, 12) + 1;
+		if ($d <= 8) $cardshop_list[$d]['discount'] = 30;//表示-30%
+		else
+		{
+			$cardshop_list[$d-8]['discount'] = 50;
+			$cardshop_list[17-$d]['discount'] = 30;
+		}
 		return $cardshop_list;
 	}
 
@@ -165,6 +173,7 @@ namespace logistics
 		if (isset($cardtype_sellprice[$nowcard['rare']])) $price = $cardtype_sellprice[$nowcard['rare']];
 		else $price = 233;
 		if (isset($nowcard['blink']) && isset($card_sellprice_blink_rate[$nowcard['blink']])) $price *= $card_sellprice_blink_rate[$nowcard['blink']];
+		if (isset($nowcard['discount'])) $price = max(1, round($price*(100-$nowcard['discount'])/100));
 		return $price;
 	}
 	
