@@ -6807,6 +6807,20 @@ $cards = array(
 			),
 		)
 	),
+	421 => array(
+		'name' => '大雪原的搬运工',
+		'rare' => 'M',
+		'pack' => 'Balefire Rekindle',
+		'desc' => '你怎么又在往这里搬雪？',
+		'effect' => '你遭遇任何玩家均视为遇到队友',
+		'energy' => 0,
+		'valid' => array(
+			'skills' => array(
+				'751' => '0',
+			),
+		),
+		'ignore_global_ach' => 1,
+	),
 	
 	1000 => array(
 		'name'=>'萌新',
