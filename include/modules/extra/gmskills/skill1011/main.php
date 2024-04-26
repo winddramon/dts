@@ -42,7 +42,7 @@ namespace skill1011
 					'itmk' => $ival[4],
 					'itme' => $ival[5],
 					'itms' => $ival[6],
-					'itmsk' => $ival[7],
+					'itmsk' => \attrbase\config_process_encode_comp_itmsk($ival[7])
 				);
 			}
 		}elseif('mix' == $t){

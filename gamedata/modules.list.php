@@ -120,7 +120,6 @@ skill17,extra/club/skills/skill17/,1
 skill13,extra/club/skills/skill13/,1
 skill14,extra/club/skills/skill14/,1
 skill480,extra/card/skills/skill480/,1
-skill1011,extra/gmskills/skill1011/,1
 skill1010,extra/gmskills/skill1010/,1
 skill39,extra/club/skills/skill39/,1
 skill29,extra/club/skills/skill29/,1
@@ -309,6 +308,7 @@ skill743,extra/card/skills/skill743/,1
 skill744,extra/card/skills/skill744/,1
 skill_temp,extra/skill_temp/,1
 skill606,extra/club/skills/skill606/,1
+skill751,extra/card/skills/skill751/,1
 wep_g,base/weapon/wep_g/,1
 wep_j,base/weapon/wep_j/,1
 skill273,extra/club/skills/skill273/,1
@@ -402,7 +402,6 @@ skill720,extra/card/skills/skill720/,1
 get_qiegao_in_battle,extra/misc/get_qiegao_in_battle/,1
 skill734,extra/card/skills/skill734/,1
 skill749,extra/card/skills/skill749/,1
-skill963,extra/instance/instance10_rogue/skill963/,1
 skill43,extra/club/skills/skill43/,1
 itemnumlist,extra/item_extra/itemnumlist/,1
 skill56,extra/club/skills/skill56/,1
@@ -412,6 +411,7 @@ skill512,extra/card/skills/skill512/,1
 addnpc_event,extra/misc/addnpc_event/,1
 skill961,extra/instance/instance10_rogue/skill961/,1
 supplycrate_event,extra/misc/supplycrate_event/,1
+skill1011,extra/gmskills/skill1011/,1
 skill593,extra/card/skills/skill593/,1
 skill731,extra/card/skills/skill731/,1
 item_randskills,extra/item_extra/item_randskills/,1
@@ -454,6 +454,7 @@ randmix,extra/misc/randmix/,1
 gtype1,extra/instance/gtype1/main/,1
 skill57,extra/club/skills/skill57/,1
 skill436,extra/card/skills/skill436/,1
+skill963,extra/instance/instance10_rogue/skill963/,1
 skill729,extra/card/skills/skill729/,1
 skill107,extra/club/skills/skill107/,1
 dualwep,base/weapon/dualwep/,1

@@ -259,8 +259,6 @@ namespace song
 				}
 				if(strpos($ev,'=')===0) {//变化值
 					$change = substr($ev,1);
-					//如果变化量是数值，那么变化量乘以一个系数
-					if(is_numeric($change)) $change = round($ev * ss_factor($pdata));
 					$pdata[$ek] = $change;
 					$ss_log[] = $ss_tn.'<span class="yellow b">变成了'.$change.'</span>';
 				}elseif(is_numeric($ev) && is_numeric($pdata[$ek]) && ($pdata[$ek] > 0 || !ss_check_s($ek))) {//无限耐的统一忽略

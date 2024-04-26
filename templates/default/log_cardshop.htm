@@ -34,7 +34,7 @@
 			<div title="{$desc_skills}">
 			{template MOD_CARDBASE_CARD_FRAME}
 			</div>
-			<br><div style="height:20px;">价格：{$price}</div>
+			<br><div style="height:20px;">价格：{$price}<!--{if isset($nowcard['discount'])}--> <span class="L5 b">(-{$nowcard['discount']}%)</span><!--{/if}--></div>
 			<!--{if $o_blink>=$nowcard['blink']}-->
 				<input type="button" class="b_button" style="width:120" value="已持有" disabled />
 			<!--{elseif $cg<$price}-->
