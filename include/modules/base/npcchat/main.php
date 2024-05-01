@@ -4,7 +4,7 @@ namespace npcchat
 {
 	function init() {}
 	
-	//主函数，在各个地方调用这个函数并给出$situation，函数会选择合适的npc台词并返回。注意这里不会直接显示台词
+	//主函数，在各个地方调用这个函数并给出$situation，函数会选择合适的npc台词并返回。如果$print==0，不会直接显示台词
 	function npcchat(&$pa, &$pd, $active, $situation, $print = 1)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -204,6 +204,14 @@ namespace npcchat
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa, $pd, $active);
 		if ($pa['type'] || $pd['type']) npcchat($pa, $pd, $active, 'kill');
+	}
+
+	//如果定义了npcchat的台词，那么忽略同一个NPC在killmsg里设定的台词
+	function show_player_killwords(&$pa,&$pd,$active,$kilmsg)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if($pa['type'] && !empty(npcchat($pa, $pd, $active, 'kill', 0))) return;
+		$chprocess($pa, $pd, $active, $kilmsg);
 	}
 	
 	function get_player_killmsg(&$pdata)
