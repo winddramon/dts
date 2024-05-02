@@ -47,6 +47,15 @@ namespace skill740
 		return $ret;
 	}
 	
+	function npcchat_bubble_show($tp='enemy')
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		$ret = $chprocess($tp);
+		if (!empty($ret) && \skillbase\skill_query(740)) return '<span class="yellow b">>>已跳过对话</span>';
+		return $ret;
+	}
+	
 }
 
 ?>
