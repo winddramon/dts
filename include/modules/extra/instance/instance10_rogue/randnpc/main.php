@@ -6,18 +6,21 @@ namespace randnpc
 	{
 		eval(import_module('player'));
 		$typeinfo[51] = '杂鱼';
-		$typeinfo[52] = '实验体1型';
-		$typeinfo[53] = '实验体2型';
-		$typeinfo[54] = '实验体3型';
-		$typeinfo[55] = '实验体4型';
-		$typeinfo[56] = '实验体5型';
-		$typeinfo[57] = '实验体6型';
+		$typeinfo[52] = '妖幻碎片';//实际会用到的只有52-57
+		$typeinfo[53] = '妖幻碎片i';
+		$typeinfo[54] = '妖幻片段';
+		$typeinfo[55] = '妖幻片段i';
+		$typeinfo[56] = '妖幻倩影';
+		$typeinfo[57] = '妖幻倩影i';
 		$typeinfo[58] = '实验体C型';
 		$typeinfo[59] = '实验体B型';
 		$typeinfo[60] = '实验体A型';
-		$typeinfo[62] = '镇守者1';
-		$typeinfo[63] = '镇守者2';
-		$typeinfo[64] = '镇守者3';
+		$typeinfo[62] = '代码聚合体';
+		$typeinfo[63] = '数据碎片';
+		$typeinfo[64] = '红杀将军';
+		$typeinfo[65] = '幻境守卫';
+		$typeinfo[66] = '幻境卫队';
+		$typeinfo[67] = '武神？';
 	}
 	
 	//生成若干个标准格式的随机NPC
@@ -51,8 +54,43 @@ namespace randnpc
 		else
 		{
 			$npc = $npcinit;
-			//生成名字，待修改
-			$npc['name'] = $rank.'级虚像';
+			//生成名字和头像，待修改
+			if ($rank < 3 || $rank > 14) $npc['name'] = $rank.'级虚像';
+			elseif ($rank < 7)
+			{
+				$dice = rand(0,3);
+				if ($dice == 0) $npc['name'] = '攻击型人形';
+				elseif ($dice == 1) $npc['name'] = '防御型人形';
+				elseif ($dice == 2) $npc['name'] = '攻击型魔像';
+				else $npc['name'] = '防御型魔像';
+				$npc['icon'] = 420 + $dice;
+				if ($rank > 4) $npc['name'] .= ' LV2';
+			}
+			elseif ($rank < 11)
+			{
+				$dice = rand(0,5);
+				if ($dice == 0) $npc['name'] = '草妖精 米迦';
+				elseif ($dice == 1) $npc['name'] = '水妖精 苏';
+				elseif ($dice == 2) $npc['name'] = '太阳妖精 李';
+				elseif ($dice == 3) $npc['name'] = '月亮妖精 雅斯特';
+				elseif ($dice == 4) $npc['name'] = '火龙 锭蓝';
+				else $npc['name'] = '水龙 玫红';
+				$npc['icon'] = 424 + $dice;
+			}
+			else
+			{
+				$dice = rand(0,7);
+				if ($dice == 0) $npc['name'] = '影9643';//为什么是这些个数字？
+				elseif ($dice == 1) $npc['name'] = '影9580';
+				elseif ($dice == 2) $npc['name'] = '影9545';
+				elseif ($dice == 3) $npc['name'] = '影9501';
+				elseif ($dice == 4) $npc['name'] = '影9502';
+				elseif ($dice == 5) $npc['name'] = '影9496';
+				elseif ($dice == 6) $npc['name'] = '影9450';
+				else $npc['name'] = '影9543';
+				if ($dice < 4) $npc['icon'] = 430 + $dice;
+				else $npc['icon'] = 426 + $dice;
+			}
 			if (rand(0,1)) $npc['gd'] = 'f';
 			$var1 = pow(1.35, $rank);
 			$var2 = pow(1.25, $rank);
@@ -183,7 +221,7 @@ namespace randnpc
 		}
 		elseif ($dice < 7)
 		{
-			$npc['itm1'] = array_randompick(array('炸鸡','薯条','能量饮料'));
+			$npc['itm1'] = array_randompick(array('魔法布丁','魔法灵药','能量饮料'));
 			$npc['itmk1'] = array_randompick(array('HB','HH','HS','PB'));
 			$npc['itme1'] = rand(30,150);
 			$npc['itms1'] = rand(10,30);
@@ -289,7 +327,6 @@ namespace randnpc
 		{
 			$npc = $randnpcs[$i];
 			if ($use_preset == 0) $npc['type'] = 50 + ceil($rank / 2);
-			else $npc['type'] = 60 + ceil($rank / 4);
 			$npc['sNo'] = $i;
 			$npc = \npc\init_npcdata($npc,$pls_available);
 			$npc = \player\player_format_with_db_structure($npc);

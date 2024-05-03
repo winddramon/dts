@@ -831,7 +831,7 @@ namespace skill960
 			'elite' => 1,
 			'tasktype' => 'battle_kill',
 			'taskreq' => array('type'=>64,'num'=>1),
-			'reward' => array('item'=>array(array('itm'=>'测试用结局道具·解禁','itmk'=>'Z','itme'=>1,'itms'=>1,'itmsk'=>'')),'money'=>12000),
+			'reward' => array('item'=>array(array('itm'=>'蒙尘的游戏解除钥匙','itmk'=>'Z','itme'=>1,'itms'=>1,'itmsk'=>'')),'money'=>12000),
 		),
 		//1001号之后的任务为卡片任务
 		1001 => array
