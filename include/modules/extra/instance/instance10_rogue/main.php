@@ -387,7 +387,7 @@ namespace instance10
 					$log .= "你使用了<span class=\"yellow b\">$itm</span>。<br>新的敌人加入了战场！<br>";
 					\randnpc\add_randnpc(19, 1, 0, 0, 0, 1, array(0), 1);
 					\randnpc\add_randnpc(18, 3, 0, 0, 0, 1, array(0), 1);
-					addnews($now, 'instance10_addnpc_end7', $name, $itm);
+					addnews($now, 'instance10_end7npc', $name, $itm);
 					$itm = $itmk = $itmsk = '';
 					$itme = $itms = 0;
 					return;
@@ -396,7 +396,7 @@ namespace instance10
 				{
 					$log .= "你使用了<span class=\"yellow b\">$itm</span>。<br>新的敌人加入了战场！<br>";
 					\randnpc\add_randnpc(20, 1, 0, 0, 0, 1, array(0), 1);
-					addnews($now, 'instance10_addnpc_end5', $name, $itm);
+					addnews($now, 'instance10_end5npc', $name, $itm);
 					$itm = $itmk = $itmsk = '';
 					$itme = $itms = 0;
 					return;
@@ -560,9 +560,9 @@ namespace instance10
 		
 		if($news == 'instance10_newstage') 
 			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"yellow b\">{$a}进入了第{$b}层！同时，新的敌人加入了战场！</span></li>";
-		elseif($news == 'instance10_addnpc_end7') 
+		elseif($news == 'instance10_end7npc') 
 			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}使用了{$b}，让新的敌人加入了战场！</span></li>";
-		elseif($news == 'instance10_addnpc_end5') 
+		elseif($news == 'instance10_end5npc') 
 			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}使用了{$b}，让新的敌人加入了战场！</span></li>";
 		
 		return $chprocess($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr);

@@ -18,8 +18,8 @@ namespace randnpc
 		$typeinfo[62] = '代码聚合体';
 		$typeinfo[63] = '数据碎片';
 		$typeinfo[64] = '红杀将军';
-		$typeinfo[65] = '幻境守卫';
-		$typeinfo[66] = '幻境卫队';
+		$typeinfo[65] = '幻境卫队';
+		$typeinfo[66] = '幻境守卫';
 		$typeinfo[67] = '武神？';
 	}
 	
@@ -96,7 +96,8 @@ namespace randnpc
 			$var2 = pow(1.25, $rank);
 			$npc['mhp'] = $var1 * 320;
 			$npc['msp'] = $rank * 100;
-			$npc['att'] = $npc['def'] = round($var2 * 50);
+			$npc['att'] = round($var2 * 50);
+			$npc['def'] = round($var2 * 20);
 			$npc['skill'] = round($var2 * 25);
 			$npc['lvl'] = $rank * 5;
 			$npc['money'] = array(140,180,240,260,280,300,320,340,360,380,400,420,440,460,480,500,520,540,560,580)[$rank-1];
@@ -290,6 +291,8 @@ namespace randnpc
 		if ($sk_count > 1) $itmsk_arr = array_merge($itmsk_arr, array_randompick($skpool, $sk_count));
 		elseif ($sk_count == 1) $itmsk_arr[] = array_randompick($skpool);
 		$itmsk_arr = array_unique($itmsk_arr);
+		//灵系和重枪特判
+		if ($itmk == 'WF' || $itmk == 'WJ') $itmsk_arr = array_diff($itmsk_arr, array('r'));
 		$itmsk = implode('', $itmsk_arr);
 		return $itmsk;
 	}
