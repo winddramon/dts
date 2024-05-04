@@ -473,8 +473,8 @@ namespace instance10
 				return;
 			}
 			eval(import_module('logger'));
-			if ($stage > 1) $log .= "<span class=\"yellow b\">你开启了新的地区！</span><br>";
 			$stage_new = $stage + 1;
+			$log .= "<span class=\"yellow b\">你进入了第{$stage_new}层！</span><br>";
 			\skillbase\skill_setvalue(951,'stage',$stage_new,$sdata);
 			\skill960\remove_task($sdata, 'all');
 			if ($stage_new >= 7) \skill960\get_rand_task($sdata, $stage_new, 2);
@@ -488,7 +488,7 @@ namespace instance10
 			if ($stage_new > $gamevars['instance10_stage'])
 			{
 				$log .= "<span class=\"yellow b\">新的敌人加入了战场……</span><br>";
-				addnews($now, 'instance10_newstage', $name);
+				addnews($now, 'instance10_newstage', $name, $stage_new);
 				for ($i=$gamevars['instance10_stage']+1; $i<=$stage_new; $i++)
 				{
 					//此处刷新到当前层的地图
@@ -559,7 +559,7 @@ namespace instance10
 		eval(import_module('sys','player'));
 		
 		if($news == 'instance10_newstage') 
-			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}开启了新的地区！同时，新的敌人加入了战场！</span></li>";
+			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"yellow b\">{$a}进入了第{$b}层！同时，新的敌人加入了战场！</span></li>";
 		elseif($news == 'instance10_addnpc_end7') 
 			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}使用了{$b}，让新的敌人加入了战场！</span></li>";
 		elseif($news == 'instance10_addnpc_end5') 

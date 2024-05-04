@@ -313,7 +313,7 @@ namespace npc_action
 		),
 		//END OF 海丽丝
 				
-		'测试NPC' => Array(
+		'D.V.W.' => Array(
 			'intv' => 240,//行动间隔
 			'devi' => Array(-30, 30),//行动间隔偏差值，第一个数值为负偏差，第二个数值为正偏差，会在范围内随机取值
 			'actions' => Array(//会执行的行动及对应的概率。具体执行时先取满足条件的行动，然后根据比例来判定概率。可选项有move（随机移动）、chase（追杀）、evade（躲避）
@@ -335,7 +335,7 @@ namespace npc_action
 					// 'rage_change_after_action' => -3,//执行后怒气变化量，可正可负
 					'addchat' => 1,//是否发送聊天记录
 					'addchat_txt' => Array(//发送特定的聊天记录，用<:para1:>和<:para2:>代表出发地和目的地，用<:para3:>代表追踪目标
-						'前往<:para2:>。',
+						'正在前往<:para2:>。',
 					),
 				),
 				'ambush' => Array(//问候前允许偷袭一次！就算不是探索也有概率先制玩家，但需要在同一个地图
@@ -348,12 +348,12 @@ namespace npc_action
 					'action_if_fail' => 'guard',//偷袭失败后执行的动作
 					'addchat' => 1,//是否发送聊天记录
 					'addchat_txt' => Array(//发送特定的聊天记录，用<:para1:>和<:para2:>代表出发地和目的地，用<:para3:>代表追踪目标
-						'攻击<:para3:>。',
+						'<:para3:>活不了一点。',
 					),
 				),
 			),
 		),	
-		//END OF 测试NPC
+		//END OF 肉鸽行商
 		
 		'一一五 i' => Array(
 			'intv' => 90,//行动间隔

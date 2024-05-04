@@ -278,13 +278,14 @@ namespace randnpc
 			$min_itmsk_count = array(0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4)[$rank-1];
 			$max_itmsk_count = array(1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 6)[$rank-1];
 		}
-		$guarant_rate = 25 * floor(($rank - 1) / 5);
 		eval(import_module('randnpc'));
 		$r = min(ceil($rank / 5), 3);
 		
-		$skpool = array_merge($randnpc_itmsk[$itmk[0]][$r], $randnpc_itmsk[$itmk[0]][$r+1]);
+		$skpool = $randnpc_itmsk[$itmk[0]][$r];
+		if ($r > 1) $skpool = array_merge($skpool, $randnpc_itmsk[$itmk[0]][$r-1]);
 		
-		if (rand(0,99) < $guarant_rate) $itmsk_arr[] = array_randompick($randnpc_itmsk[$itmk[0]][$r]);
+		$guarant_rate = 5;
+		if (rand(0,99) < $guarant_rate) $itmsk_arr[] = array_randompick($randnpc_itmsk[$itmk[0]][$r+1]);
 		$sk_count = rand($min_itmsk_count, $max_itmsk_count);
 		if ($sk_count > 1) $itmsk_arr = array_merge($itmsk_arr, array_randompick($skpool, $sk_count));
 		elseif ($sk_count == 1) $itmsk_arr[] = array_randompick($skpool);
