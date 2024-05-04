@@ -285,7 +285,7 @@ namespace randnpc
 		$skpool = $randnpc_itmsk[$itmk[0]][$r];
 		if ($r > 1) $skpool = array_merge($skpool, $randnpc_itmsk[$itmk[0]][$r-1]);
 		
-		$guarant_rate = 5;
+		$guarant_rate = 3;
 		if (rand(0,99) < $guarant_rate) $itmsk_arr[] = array_randompick($randnpc_itmsk[$itmk[0]][$r+1]);
 		$sk_count = rand($min_itmsk_count, $max_itmsk_count);
 		if ($sk_count > 1) $itmsk_arr = array_merge($itmsk_arr, array_randompick($skpool, $sk_count));
@@ -302,17 +302,17 @@ namespace randnpc
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('randnpc'));
-		$min_skills_count = array(0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 6, 9)[$rank-1];
-		$max_skills_count = array(1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 7, 8, 9, 12)[$rank-1];
+		$min_skills_count = array(0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4)[$rank-1];
+		$max_skills_count = array(1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 7, 8)[$rank-1];
 		
 		$skills_count = rand($min_skills_count, $max_skills_count);
-		$r = max(ceil($rank / 3) - 1, 1);
+		$r = max(ceil(($rank - 1) / 3) - 1, 1);
 		$k = array_rand($randnpc_skills[$r]);
 		$skills[$k] = $randnpc_skills[$r][$k];
 		
 		for ($i=0;$i<$skills_count;$i++)
 		{
-			$skr = rand(max($r-2, 1), $r);
+			$skr = rand(max($r-3, 1), $r);
 			$k = array_rand($randnpc_skills[$skr]);
 			$skills[$k] = $randnpc_skills[$skr][$k];
 		}
