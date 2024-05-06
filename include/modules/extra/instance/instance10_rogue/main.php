@@ -18,15 +18,15 @@ namespace instance10
 		$ret = $chprocess($n, $k, $e, $s, $sk);
 		
 		if(strpos($k,'Y')===0 || strpos($k,'Z')===0){
-			if ($n == '测试用结局道具·幸存'){
+			if ($n == '任务脱离程序') {
 				$ret .= '使用后解除自己的地图限制，但无法再接取与完成任务；若没有其他玩家可达成『最后幸存』结局';
-			}elseif ($n == '测试用结局道具·解禁') {
+			}elseif ($n == '蒙尘的游戏解除钥匙') {
 				$ret .= '使用后达成『锁定解除』胜利';
-			}elseif ($n == '测试用结局道具·解离') {
+			}elseif ($n == '幻境破解程序') {
 				$ret .= '使用后可进行幻境系统破解，完成破解后达成『幻境解离』胜利';
-			}elseif ($n == '召唤道具1') {
+			}elseif ($n == '挑战者之证') {
 				$ret .= '使用后可召唤通往『幻境解离』结局的剧情NPC';
-			}elseif ($n == '召唤道具2') {
+			}elseif ($n == '最后的钥匙') {
 				$ret .= '使用后可召唤通往『核弹引爆』结局的剧情NPC';
 			}
 		}
@@ -316,7 +316,7 @@ namespace instance10
 			//使用结局道具
 			elseif (strpos($itmk, 'Y') === 0 || strpos($itmk, 'Z') === 0)
 			{
-				if ($itm == '测试用结局道具·幸存')
+				if ($itm == '任务脱离程序')
 				{
 					$end2_flag = (int)\skillbase\skill_getvalue(951,'end2_flag',$sdata);
 					if (!$end2_flag)
@@ -339,14 +339,14 @@ namespace instance10
 						\sys\gameover($now, 'end2', $name);
 					}
 				}
-				elseif ($itm == '测试用结局道具·解禁')
+				elseif ($itm == '蒙尘的游戏解除钥匙')
 				{
 					$winner_flag = 3;
 					\player\player_save($sdata, 1);
 					$url = 'end.php';
 					\sys\gameover($now, 'end3', $name);
 				}
-				elseif ($itm == '测试用结局道具·解离')
+				elseif ($itm == '幻境破解程序')
 				{
 					$ueen = $theitem['itmn'];
 					$uee_extra_pos = (int)get_var_input('uee_extra_pos');
@@ -382,21 +382,21 @@ namespace instance10
 					}
 					return;
 				}
-				elseif ($itm == '召唤道具1')
+				elseif ($itm == '挑战者之证')
 				{
-					$log .= '新的敌人加入了战场……<br>';
+					$log .= "你使用了<span class=\"yellow b\">$itm</span>。<br>新的敌人加入了战场！<br>";
 					\randnpc\add_randnpc(19, 1, 0, 0, 0, 1, array(0), 1);
 					\randnpc\add_randnpc(18, 3, 0, 0, 0, 1, array(0), 1);
-					addnews($now, 'instance10_addnpc_end7', $name, $itm);
+					addnews($now, 'instance10_end7npc', $name, $itm);
 					$itm = $itmk = $itmsk = '';
 					$itme = $itms = 0;
 					return;
 				}
-				elseif ($itm == '召唤道具2')
+				elseif ($itm == '最后的钥匙')
 				{
-					$log .= '新的敌人加入了战场……<br>';
+					$log .= "你使用了<span class=\"yellow b\">$itm</span>。<br>新的敌人加入了战场！<br>";
 					\randnpc\add_randnpc(20, 1, 0, 0, 0, 1, array(0), 1);
-					addnews($now, 'instance10_addnpc_end5', $name, $itm);
+					addnews($now, 'instance10_end5npc', $name, $itm);
 					$itm = $itmk = $itmsk = '';
 					$itme = $itms = 0;
 					return;
@@ -473,8 +473,8 @@ namespace instance10
 				return;
 			}
 			eval(import_module('logger'));
-			if ($stage > 1) $log .= "<span class=\"yellow b\">你开启了新的地区！</span><br>";
 			$stage_new = $stage + 1;
+			$log .= "<span class=\"yellow b\">你进入了第{$stage_new}层！</span><br>";
 			\skillbase\skill_setvalue(951,'stage',$stage_new,$sdata);
 			\skill960\remove_task($sdata, 'all');
 			if ($stage_new >= 7) \skill960\get_rand_task($sdata, $stage_new, 2);
@@ -488,7 +488,7 @@ namespace instance10
 			if ($stage_new > $gamevars['instance10_stage'])
 			{
 				$log .= "<span class=\"yellow b\">新的敌人加入了战场……</span><br>";
-				addnews($now, 'instance10_newstage', $name);
+				addnews($now, 'instance10_newstage', $name, $stage_new);
 				for ($i=$gamevars['instance10_stage']+1; $i<=$stage_new; $i++)
 				{
 					//此处刷新到当前层的地图
@@ -496,7 +496,7 @@ namespace instance10
 					$pls_available = array_diff($pls_available, array(0, 32, 34));
 					\randnpc\add_randnpc(2*$i-1, 20, 0, 0, 0, 0, $pls_available);
 					\randnpc\add_randnpc(2*$i, 20, 0, 0, 0, 0, $pls_available);
-					//刷新boss，未完成
+					//刷新boss
 					if ($i == 3)
 					{
 						\randnpc\add_randnpc(7, 1, 0, 0, 0, 1, $pls_available, 1);
@@ -546,7 +546,7 @@ namespace instance10
 			$inst10_mixinfo = array
 			(
 				array('class' => 'wk', 'stuff' => array('大西瓜','魔王の剑'),'result' => array('『七杀剑』','WK',7777,'∞','reVOLtR')),
-				array('class' => 'item', 'stuff' => array('剧情道具1','剧情道具2','剧情道具3'),'result' => array('召唤道具1','Z',1,1,''))
+				array('class' => 'item', 'stuff' => array('代码聚合体的ID卡','数据碎片的ID卡','红杀的ID卡'),'result' => array('挑战者之证','Z',1,1,''))
 			);
 			$ret = array_merge($ret, $inst10_mixinfo);
 		}
@@ -559,10 +559,10 @@ namespace instance10
 		eval(import_module('sys','player'));
 		
 		if($news == 'instance10_newstage') 
-			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}开启了新的地区！同时，新的敌人加入了战场！</span></li>";
-		elseif($news == 'instance10_addnpc_end7') 
+			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"yellow b\">{$a}进入了第{$b}层！同时，新的敌人加入了战场！</span></li>";
+		elseif($news == 'instance10_end7npc') 
 			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}使用了{$b}，让新的敌人加入了战场！</span></li>";
-		elseif($news == 'instance10_addnpc_end5') 
+		elseif($news == 'instance10_end5npc') 
 			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}使用了{$b}，让新的敌人加入了战场！</span></li>";
 		
 		return $chprocess($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr);

@@ -148,7 +148,7 @@ namespace skill960
 			'name' => '战力测试1',
 			'rank' => 2,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>52,'num'=>9),
+			'taskreq' => array('type'=>52,'num'=>6),
 			'reward' => array('item'=>array(array('itm'=>'普通的大逃杀卡牌包','itmk'=>'VO2','itme'=>1,'itms'=>4,'itmsk'=>'')),'invscore'=>5),
 		),
 		32 => array
@@ -156,7 +156,7 @@ namespace skill960
 			'name' => '战斗训练1·殴',
 			'rank' => 2,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>52,'wepk'=>'WP','num'=>3),
+			'taskreq' => array('type'=>52,'wepk'=>'WP','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'N型技能核心·改','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>'')),'invscore'=>5),
 		),
 		33 => array
@@ -164,7 +164,7 @@ namespace skill960
 			'name' => '战斗训练1·斩',
 			'rank' => 2,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>52,'wepk'=>'WK','num'=>3),
+			'taskreq' => array('type'=>52,'wepk'=>'WK','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'N型技能核心·改','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>'')),'invscore'=>5),
 		),
 		34 => array
@@ -172,7 +172,7 @@ namespace skill960
 			'name' => '战斗训练1·投',
 			'rank' => 2,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>52,'wepk'=>'WC','num'=>3),
+			'taskreq' => array('type'=>52,'wepk'=>'WC','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'N型技能核心·改','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>'')),'invscore'=>5),
 		),
 		35 => array
@@ -180,7 +180,7 @@ namespace skill960
 			'name' => '战斗训练1·射',
 			'rank' => 2,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>52,'wepk'=>'WG','num'=>3),
+			'taskreq' => array('type'=>52,'wepk'=>'WG','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'N型技能核心·改','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>'')),'invscore'=>5),
 		),
 		36 => array
@@ -188,7 +188,7 @@ namespace skill960
 			'name' => '战斗训练1·灵',
 			'rank' => 2,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>52,'wepk'=>'WF','num'=>3),
+			'taskreq' => array('type'=>52,'wepk'=>'WF','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'N型技能核心·改','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>'')),'invscore'=>5),
 		),
 		37 => array
@@ -196,7 +196,7 @@ namespace skill960
 			'name' => '战斗训练1·爆',
 			'rank' => 2,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>52,'wepk'=>'WD','num'=>3),
+			'taskreq' => array('type'=>52,'wepk'=>'WD','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'N型技能核心·改','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>'')),'invscore'=>5),
 		),
 		38 => array
@@ -277,7 +277,7 @@ namespace skill960
 			'name' => '战力测试2',
 			'rank' => 3,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>53,'num'=>9),
+			'taskreq' => array('type'=>53,'num'=>6),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>3,'itmsk'=>'')),'invscore'=>5),
 		),
 		62 => array
@@ -285,7 +285,7 @@ namespace skill960
 			'name' => '战斗训练2·殴',
 			'rank' => 3,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>53,'wepk'=>'WP','num'=>3),
+			'taskreq' => array('type'=>53,'wepk'=>'WP','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'N型技能核心·改','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'B级技能核心·改','itmk'=>'SCB1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		63 => array
@@ -293,7 +293,7 @@ namespace skill960
 			'name' => '战斗训练2·斩',
 			'rank' => 3,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>53,'wepk'=>'WK','num'=>3),
+			'taskreq' => array('type'=>53,'wepk'=>'WK','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'N型技能核心·改','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'B级技能核心·改','itmk'=>'SCB1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		64 => array
@@ -301,7 +301,7 @@ namespace skill960
 			'name' => '战斗训练2·投',
 			'rank' => 3,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>53,'wepk'=>'WC','num'=>3),
+			'taskreq' => array('type'=>53,'wepk'=>'WC','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'N型技能核心·改','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'B级技能核心·改','itmk'=>'SCB1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		65 => array
@@ -309,7 +309,7 @@ namespace skill960
 			'name' => '战斗训练2·射',
 			'rank' => 3,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>53,'wepk'=>'WG','num'=>3),
+			'taskreq' => array('type'=>53,'wepk'=>'WG','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'N型技能核心·改','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'B级技能核心·改','itmk'=>'SCB1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		66 => array
@@ -317,7 +317,7 @@ namespace skill960
 			'name' => '战斗训练2·灵',
 			'rank' => 3,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>53,'wepk'=>'WF','num'=>3),
+			'taskreq' => array('type'=>53,'wepk'=>'WF','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'N型技能核心·改','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'B级技能核心·改','itmk'=>'SCB1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		67 => array
@@ -325,7 +325,7 @@ namespace skill960
 			'name' => '战斗训练2·爆',
 			'rank' => 3,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>53,'wepk'=>'WD','num'=>3),
+			'taskreq' => array('type'=>53,'wepk'=>'WD','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'N型技能核心·改','itmk'=>'SC01','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'B级技能核心·改','itmk'=>'SCB1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		68 => array
@@ -406,7 +406,7 @@ namespace skill960
 			'name' => '战力测试3',
 			'rank' => 4,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>54,'num'=>9),
+			'taskreq' => array('type'=>54,'num'=>6),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'B级技能核心','itmk'=>'SCB2','itme'=>1,'itms'=>2,'itmsk'=>'')),'invscore'=>5),
 		),
 		92 => array
@@ -414,7 +414,7 @@ namespace skill960
 			'name' => '战斗训练3·殴',
 			'rank' => 4,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>54,'wepk'=>'WP','num'=>3),
+			'taskreq' => array('type'=>54,'wepk'=>'WP','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'B级技能核心·改','itmk'=>'SCB1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		93 => array
@@ -422,7 +422,7 @@ namespace skill960
 			'name' => '战斗训练3·斩',
 			'rank' => 4,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>54,'wepk'=>'WK','num'=>3),
+			'taskreq' => array('type'=>54,'wepk'=>'WK','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'B级技能核心·改','itmk'=>'SCB1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		94 => array
@@ -430,7 +430,7 @@ namespace skill960
 			'name' => '战斗训练3·投',
 			'rank' => 4,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>54,'wepk'=>'WC','num'=>3),
+			'taskreq' => array('type'=>54,'wepk'=>'WC','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'B级技能核心·改','itmk'=>'SCB1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		95 => array
@@ -438,7 +438,7 @@ namespace skill960
 			'name' => '战斗训练3·射',
 			'rank' => 4,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>54,'wepk'=>'WG','num'=>3),
+			'taskreq' => array('type'=>54,'wepk'=>'WG','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'B级技能核心·改','itmk'=>'SCB1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		96 => array
@@ -446,7 +446,7 @@ namespace skill960
 			'name' => '战斗训练3·灵',
 			'rank' => 4,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>54,'wepk'=>'WF','num'=>3),
+			'taskreq' => array('type'=>54,'wepk'=>'WF','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'B级技能核心·改','itmk'=>'SCB1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		97 => array
@@ -454,7 +454,7 @@ namespace skill960
 			'name' => '战斗训练3·爆',
 			'rank' => 4,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>54,'wepk'=>'WD','num'=>3),
+			'taskreq' => array('type'=>54,'wepk'=>'WD','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'B级技能核心·改','itmk'=>'SCB1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		98 => array
@@ -511,7 +511,7 @@ namespace skill960
 			'name' => '战力测试4',
 			'rank' => 5,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>55,'num'=>9),
+			'taskreq' => array('type'=>55,'num'=>6),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>3,'itmsk'=>''),array('itm'=>'A级技能核心','itmk'=>'SCA2','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		122 => array
@@ -519,7 +519,7 @@ namespace skill960
 			'name' => '战斗训练4·殴',
 			'rank' => 5,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>55,'wepk'=>'WP','num'=>3),
+			'taskreq' => array('type'=>55,'wepk'=>'WP','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'A级技能核心·改','itmk'=>'SCA1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		123 => array
@@ -527,7 +527,7 @@ namespace skill960
 			'name' => '战斗训练4·斩',
 			'rank' => 5,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>55,'wepk'=>'WK','num'=>3),
+			'taskreq' => array('type'=>55,'wepk'=>'WK','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'A级技能核心·改','itmk'=>'SCA1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		124 => array
@@ -535,7 +535,7 @@ namespace skill960
 			'name' => '战斗训练4·投',
 			'rank' => 5,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>55,'wepk'=>'WC','num'=>3),
+			'taskreq' => array('type'=>55,'wepk'=>'WC','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'A级技能核心·改','itmk'=>'SCA1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		125 => array
@@ -543,7 +543,7 @@ namespace skill960
 			'name' => '战斗训练4·射',
 			'rank' => 5,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>55,'wepk'=>'WG','num'=>3),
+			'taskreq' => array('type'=>55,'wepk'=>'WG','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'A级技能核心·改','itmk'=>'SCA1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		126 => array
@@ -551,7 +551,7 @@ namespace skill960
 			'name' => '战斗训练4·灵',
 			'rank' => 5,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>55,'wepk'=>'WF','num'=>3),
+			'taskreq' => array('type'=>55,'wepk'=>'WF','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'A级技能核心·改','itmk'=>'SCA1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		127 => array
@@ -559,7 +559,7 @@ namespace skill960
 			'name' => '战斗训练4·爆',
 			'rank' => 5,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>55,'wepk'=>'WD','num'=>3),
+			'taskreq' => array('type'=>55,'wepk'=>'WD','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'A级技能核心·改','itmk'=>'SCA1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		128 => array
@@ -616,7 +616,7 @@ namespace skill960
 			'name' => '战力测试5',
 			'rank' => 6,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>56,'num'=>9),
+			'taskreq' => array('type'=>56,'num'=>6),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>3,'itmsk'=>''),array('itm'=>'S级技能核心','itmk'=>'SCS2','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		152 => array
@@ -624,7 +624,7 @@ namespace skill960
 			'name' => '战斗训练5·殴',
 			'rank' => 6,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>56,'wepk'=>'WP','num'=>3),
+			'taskreq' => array('type'=>56,'wepk'=>'WP','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'S级技能核心·改','itmk'=>'SCS1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		153 => array
@@ -632,7 +632,7 @@ namespace skill960
 			'name' => '战斗训练5·斩',
 			'rank' => 6,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>56,'wepk'=>'WK','num'=>3),
+			'taskreq' => array('type'=>56,'wepk'=>'WK','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'S级技能核心·改','itmk'=>'SCS1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		154 => array
@@ -640,7 +640,7 @@ namespace skill960
 			'name' => '战斗训练5·投',
 			'rank' => 6,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>56,'wepk'=>'WC','num'=>3),
+			'taskreq' => array('type'=>56,'wepk'=>'WC','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'S级技能核心·改','itmk'=>'SCS1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		155 => array
@@ -648,7 +648,7 @@ namespace skill960
 			'name' => '战斗训练5·射',
 			'rank' => 6,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>56,'wepk'=>'WG','num'=>3),
+			'taskreq' => array('type'=>56,'wepk'=>'WG','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'S级技能核心·改','itmk'=>'SCS1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		156 => array
@@ -656,7 +656,7 @@ namespace skill960
 			'name' => '战斗训练5·灵',
 			'rank' => 6,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>56,'wepk'=>'WF','num'=>3),
+			'taskreq' => array('type'=>56,'wepk'=>'WF','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'S级技能核心·改','itmk'=>'SCS1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		157 => array
@@ -664,7 +664,7 @@ namespace skill960
 			'name' => '战斗训练5·爆',
 			'rank' => 6,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>56,'wepk'=>'WD','num'=>3),
+			'taskreq' => array('type'=>56,'wepk'=>'WD','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>2,'itmsk'=>''),array('itm'=>'S级技能核心·改','itmk'=>'SCS1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		158 => array
@@ -721,7 +721,7 @@ namespace skill960
 			'name' => '战力测试6',
 			'rank' => 7,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>57,'num'=>9),
+			'taskreq' => array('type'=>57,'num'=>6),
 			'reward' => array('item'=>array(array('itm'=>'闪耀的大逃杀卡牌包','itmk'=>'VO4','itme'=>1,'itms'=>3,'itmsk'=>'1113'),array('itm'=>'S级技能核心','itmk'=>'SCS2','itme'=>1,'itms'=>2,'itmsk'=>'')),'invscore'=>5),
 		),
 		182 => array
@@ -729,7 +729,7 @@ namespace skill960
 			'name' => '战斗训练6·殴',
 			'rank' => 7,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>57,'wepk'=>'WP','num'=>3),
+			'taskreq' => array('type'=>57,'wepk'=>'WP','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'闪耀的大逃杀卡牌包','itmk'=>'VO4','itme'=>1,'itms'=>3,'itmsk'=>'1108'),array('itm'=>'S级技能核心·改','itmk'=>'SCS1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		183 => array
@@ -737,7 +737,7 @@ namespace skill960
 			'name' => '战斗训练6·斩',
 			'rank' => 7,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>57,'wepk'=>'WK','num'=>3),
+			'taskreq' => array('type'=>57,'wepk'=>'WK','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'闪耀的大逃杀卡牌包','itmk'=>'VO4','itme'=>1,'itms'=>3,'itmsk'=>'1106'),array('itm'=>'S级技能核心·改','itmk'=>'SCS1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		184 => array
@@ -745,7 +745,7 @@ namespace skill960
 			'name' => '战斗训练6·投',
 			'rank' => 7,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>57,'wepk'=>'WC','num'=>3),
+			'taskreq' => array('type'=>57,'wepk'=>'WC','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'闪耀的大逃杀卡牌包','itmk'=>'VO4','itme'=>1,'itms'=>3,'itmsk'=>'1110'),array('itm'=>'S级技能核心·改','itmk'=>'SCS1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		185 => array
@@ -753,7 +753,7 @@ namespace skill960
 			'name' => '战斗训练6·射',
 			'rank' => 7,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>57,'wepk'=>'WG','num'=>3),
+			'taskreq' => array('type'=>57,'wepk'=>'WG','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'闪耀的大逃杀卡牌包','itmk'=>'VO4','itme'=>1,'itms'=>3,'itmsk'=>'1109'),array('itm'=>'S级技能核心·改','itmk'=>'SCS1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		186 => array
@@ -761,7 +761,7 @@ namespace skill960
 			'name' => '战斗训练6·灵',
 			'rank' => 7,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>57,'wepk'=>'WF','num'=>3),
+			'taskreq' => array('type'=>57,'wepk'=>'WF','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'闪耀的大逃杀卡牌包','itmk'=>'VO4','itme'=>1,'itms'=>3,'itmsk'=>'1105'),array('itm'=>'S级技能核心·改','itmk'=>'SCS1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		187 => array
@@ -769,7 +769,7 @@ namespace skill960
 			'name' => '战斗训练6·爆',
 			'rank' => 7,
 			'tasktype' => 'battle_kill',
-			'taskreq' => array('type'=>57,'wepk'=>'WD','num'=>3),
+			'taskreq' => array('type'=>57,'wepk'=>'WD','num'=>2),
 			'reward' => array('item'=>array(array('itm'=>'闪耀的大逃杀卡牌包','itmk'=>'VO4','itme'=>1,'itms'=>3,'itmsk'=>'1104'),array('itm'=>'S级技能核心·改','itmk'=>'SCS1','itme'=>1,'itms'=>1,'itmsk'=>'')),'invscore'=>5),
 		),
 		188 => array
@@ -831,7 +831,7 @@ namespace skill960
 			'elite' => 1,
 			'tasktype' => 'battle_kill',
 			'taskreq' => array('type'=>64,'num'=>1),
-			'reward' => array('item'=>array(array('itm'=>'测试用结局道具·解禁','itmk'=>'Z','itme'=>1,'itms'=>1,'itmsk'=>'')),'money'=>12000),
+			'reward' => array('item'=>array(array('itm'=>'蒙尘的游戏解除钥匙','itmk'=>'Z','itme'=>1,'itms'=>1,'itmsk'=>'')),'money'=>12000),
 		),
 		//1001号之后的任务为卡片任务
 		1001 => array

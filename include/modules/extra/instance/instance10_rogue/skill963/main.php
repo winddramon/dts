@@ -276,7 +276,7 @@ namespace skill963
 	function generate_shopnpc_tip(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$tip = array_randompick(array('咕咕咕……','咕咕咕！','咕咕咕？','咕——'));//待完成，先咕着吧
+		$tip = array_randompick(array('……','……','……','……'));//待完成，先咕着吧
 		return $tip;
 	}
 	

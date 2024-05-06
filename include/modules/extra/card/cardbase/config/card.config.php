@@ -6965,10 +6965,10 @@ $cards = array(
 		'valid' => array()
 	),
 	1111 => array(
-		'name' => '……',//待修改
+		'name' => '荣耀之盾',//待修改
 		'rare' => 'A',
 		'pack' => 'Pungeon',
-		'desc' => '……',
+		'desc' => '因为你才是职业选手',
 		'effect' => '素材卡，作为合成素材时视为A卡，<br>合成产物必为Best DOTO卡片',
 		'energy' => 0,
 		'valid' => array()
