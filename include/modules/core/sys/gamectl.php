@@ -176,21 +176,26 @@ namespace sys
 		$validnum = count($gameover_plist);
 		$alivenum = count($gameover_alivelist);
 		
-		if ($gmode) $winmode = substr($gmode,3,1);
+		if ($gmode) {
+			$winmode = substr($gmode,3,1);
+		}
 		else //在没提供游戏结束模式的情况下，自行判断模式
 		{
 			if($validnum <= 0) {//无激活者情况下，无人参加
 				$alivenum = 0;
-				$winnum = 0;
 				$winmode = 4;
-				$winner = '';
 			}
 			elseif(!$alivenum) {//全部死亡
 				$winmode = 1;
-				$winnum = 0;
-				$winner = '';
 			}
-			else $winmode = 2;
+			else {
+				$winmode = 2;
+			}
+		}
+
+		if(1 == $winmode || 4 == $winmode || 6 == $winmode) {//全部死亡、无人参加、GM中止，不设置获胜者
+			$winnum = 0;
+			$winner = '';
 		}
 		
 		if ($winname && !in_array($gametype,$teamwin_mode)) //如果有获胜者且非团队模式，则获胜者唯一
@@ -299,8 +304,8 @@ namespace sys
 			$winnerdata['hdp'] = $hplayer;
 			$result = $db->query("SELECT name,killnum FROM {$tablepre}players WHERE type=0 order by killnum desc, lvl desc limit 1");
 			$hk = $db->fetch_array($result);
-			$winnerdata['hkill'] = $hk['killnum'];
-			$winnerdata['hkp'] = $hk['name'];
+			$winnerdata['hkill'] = $hk['killnum'] ? $hk['killnum'] : 0;
+			$winnerdata['hkp'] = $hk['name'] ? $hk['name'] : '';
 			$winnerdata['validlist'] = gencode($gameover_plist);
 		}
 		if(!in_array($winmode, array(0, 1, 4, 6))){//非全部死亡/GM中止，需要记录优胜者
