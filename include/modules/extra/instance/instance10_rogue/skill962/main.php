@@ -137,7 +137,7 @@ namespace skill962
 		if ($st == 2)
 		{
 			$skill962_cost = get_skill962_cost($pa);
-			$ret .= '<input type="button" class="cmdbutton" value="更换" title="<span class=\'yellow b\'>需要支付'.$skill962_cost.'元</span>" onclick="$(\'taskid_submit\').value=\''.$taskid.'\';$(\'command\').value=\'skill962_special\';postCmd(\'gamecmd\',\'command.php\');this.disabled=true;">';
+			$ret .= '<input type="button" class="cmdbutton" value="花钱更换" title="<span class=\'yellow b\'>需要支付'.$skill962_cost.'元</span>" onclick="$(\'taskid_submit\').value=\''.$taskid.'\';$(\'command\').value=\'skill962_special\';postCmd(\'gamecmd\',\'command.php\');this.disabled=true;">';
 		}
 		elseif ($st == 3)
 		{
