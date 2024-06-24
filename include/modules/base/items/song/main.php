@@ -97,6 +97,9 @@ namespace song
 				case '夜雀之歌':
 					$ret .= '歌唱：使除你之外的同地区玩家获得暂时的「夜盲」负面状态';
 					break;
+				case '春日影':
+					$ret .= '歌唱：使你和同地区玩家最大生命上升10，并获得技能「重力」';
+					break;
 				default :
 					$ret .= '好像不存在这样一首歌呢……';
 					break;
@@ -133,6 +136,7 @@ namespace song
 			$noiseinfo['ss_NG']='《Never Gonna Give You Up》';
 			$noiseinfo['ss_ys']='『勇者』';
 			$noiseinfo['ss_nightbird']='一段难以被称之为音乐的、嘈杂的鸟叫声';
+			$noiseinfo['ss_hhk']='《春日影》';
 		}
 	}
 	

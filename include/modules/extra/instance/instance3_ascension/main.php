@@ -82,6 +82,25 @@ namespace instance3
 		return $ret;
 	}
 	
+	function get_addnpclist(){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		$ret = $chprocess();
+		if(13 == $gametype){
+			$alvl = (int)$roomvars['current_game_option']['lvl'];
+			if ($alvl >= 20) { //不低于20（开局连斗）
+				$ret[4]['money'] = 0;
+				foreach (array('arbsk','arhsk','arfsk','arask','artsk') as $v)
+				{
+					if (empty($ret[4][$v])) $ret[4][$v] = 'X';
+					else $ret[4][$v] .= 'X';
+				}
+				$ret[4]['sub'][0]['wepsk'] .= 'X';
+			}
+		}
+		return $ret;
+	}
+	
 	function checkcombo($time){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','map','gameflow_combo'));
