@@ -403,6 +403,7 @@ skill720,extra/card/skills/skill720/,1
 get_qiegao_in_battle,extra/misc/get_qiegao_in_battle/,1
 skill734,extra/card/skills/skill734/,1
 skill749,extra/card/skills/skill749/,1
+instance12,extra/instance/instance12_dream/,1
 skill43,extra/club/skills/skill43/,1
 itemnumlist,extra/item_extra/itemnumlist/,1
 skill56,extra/club/skills/skill56/,1
