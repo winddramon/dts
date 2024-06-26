@@ -7,7 +7,7 @@ namespace instance12
 		if(!isset($valid_skills[22])) {
 			$valid_skills[22] = array();
 		}
-		$valid_skills[22] += array(181,951,952,964,981);
+		$valid_skills[22] += array(68,181,951,952,964,981);
 		//地图显示的配置组
 		$map_display_group[2] = Array(
 			'x' => 10,
@@ -89,8 +89,21 @@ namespace instance12
 		}else return $chprocess();
 	}
 	
+	function mapitem_row_data_process($data, $no = -1){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess($data, $no);
+		eval(import_module('sys'));
+		if (22 == $gametype)
+		{
+			$coef = ($ret[1] == 99) ? 30 : 5;
+			$ret[2] = floor($ret[2] / $coef) + (rand(1, $coef) <= $ret[2] % $coef ? 1 : 0);
+			if ($ret[1] != 34) $ret[1] = 201;
+		}
+		return $ret;
+	}
+	
 	function get_startingitemfilecont(){
-		if (eval(__MAGIC__)) return $___RET_VALUE; 
+		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
 		if (22 == $gametype){
 			$file = __DIR__.'/config/stitem.config.php';
