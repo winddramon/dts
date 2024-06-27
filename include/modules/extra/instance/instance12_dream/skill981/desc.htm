@@ -1,0 +1,29 @@
+<!--{eval $___TEMP_SKILL_ID=981;}-->
+<!--{eval $stage = (int)\skillbase\skill_getvalue(981,'stage',$who);$rm = (int)\skillbase\skill_getvalue(981,'rm',$who);}-->
+{template MOD_CLUBBASE_SKILLDESC_START}
+<span>
+$clubskillname[$___TEMP_SKILL_ID]
+</span>
+{template MOD_CLUBBASE_SKILLDESC_MID1}
+<td class="skilldesc_left b3"><span class="skilldesc">
+<!--{if $stage > 0}-->
+<!--{if $rm > 0}-->
+正在挑战第<span class="yellow b">$stage</span>波次，剩余敌人<span class="yellow b">$rm</span>名。
+<!--{else}-->
+已完成第<span class="yellow b">$stage</span>波次挑战。
+<!--{/if}-->
+<!--{else}-->
+<span class="yellow b">尚未开始挑战。</span>
+<!--{/if}-->
+</span></td>
+<td class="skilldesc_right b3">
+<!--{if $rm == 0}-->
+<input type="button" class="cmdbutton" id="sp_castsk981" value="<!--{eval echo $stage > 0 ? '下一波次' : '开始挑战';}-->" onclick="$('mode').value='special';$('command').value='skill981_special';postCmd('gamecmd','command.php');this.disabled=true;">
+<!--{/if}-->
+</td>
+{template MOD_CLUBBASE_SKILLDESC_MID2}
+<!--{if empty($___TEMP_THIS_SKILL_ACQUIRED)}-->
+<span class="yellow b">
+</span>
+<!--{/if}-->
+{template MOD_CLUBBASE_SKILLDESC_END}
