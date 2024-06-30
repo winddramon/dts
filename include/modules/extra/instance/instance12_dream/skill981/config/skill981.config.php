@@ -24,7 +24,6 @@ namespace skill981
 	//特殊的道具属性：rdsk_S、rdsk_A、rdsk_B、rdsk_C表示对应等级的一个随机技能；card_S、card_A、card_B、card_C表示对应等级的一张随机卡片，在生成奖励时确定
 	$skill981_prizeitems = array(
 		1 => array(
-			//熟练书，武器，卡牌包，技能书，卡片，补给，改造道具，某些线路的道具，合成素材
 			//未完成
 			array('食堂的盒饭','HR',50,1,'',3),
 			array('矿泉水','HS',100,1,'',10),
