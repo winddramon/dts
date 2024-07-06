@@ -268,7 +268,6 @@ $mixinfo = array
 	array('class' => 'cube', 'stuff' => array('黄鸡方块','黄鸡方块','黄鸡方块'),'result' => array('★黄鸡风暴★','WK',90,35,'rpd'),),
 	array('class' => 'cube', 'stuff' => array('★黄鸡风暴★','★黄鸡风暴★','★黄鸡风暴★'),'result' => array('★黄鸡经世★','WP',88888,8888,'rpdBb'),),
 	
-	
 	array('class' => 'wf', 'stuff' => array('空白符卡','夜雀歌谱'),'result' => array('声符『枭的夜鸣声』','WF',30,'∞','w'),),
 	array('class' => 'wf', 'stuff' => array('声符『枭的夜鸣声』','《灵系指南》'),'result' => array('夜盲『夜雀之歌』','WF',30,'∞','w^alt_<:comp_itmsk:>{ss}1'),),
 	array('class' => 'wf', 'stuff' => array('空白符卡','雏人形'),'result' => array('疵符『破裂的护身符』','WF',30,'∞','p'),),
