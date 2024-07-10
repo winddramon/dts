@@ -74,7 +74,7 @@ namespace skill753
 						$pa['weps'] = $v[3];
 						$pa['wepsk'] = $v[4];
 						$log .= "<span class=\"cyan b\">追加攻击！</span><br>";
-						if($weps_o != $nosta && $pa['weps'] == $nosta) $pa['wep_kind'] = \weapon\get_attack_method($pa);
+						$pa['wep_kind'] = \weapon\get_attack_method($pa);
 						$chprocess($pa,$pd,$active);
 					}
 					$pa['wep'] = $wep_o;
@@ -95,7 +95,7 @@ namespace skill753
 					{
 						\skill81\swapitem81($pa, 'wep', $v);
 						$log .= "<span class=\"cyan b\">追加攻击！</span><br>";
-						\weapon\get_attack_method($pa);
+						$pa['wep_kind'] = \weapon\get_attack_method($pa);
 						$chprocess($pa,$pd,$active);
 					}
 				}
