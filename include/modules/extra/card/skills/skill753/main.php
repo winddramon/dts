@@ -12,13 +12,13 @@ namespace skill753
 	function acquire753(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		\skillbase\skill_setvalue(54, 'lvl', '0', $pa);
+		\skillbase\skill_setvalue(753, 'lvl', '0', $pa);
 	}
 	
 	function lost753(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		\skillbase\skill_delvalue(54, 'lvl', $pa);
+		\skillbase\skill_delvalue(753, 'lvl', $pa);
 	}
 	
 	function check_unlocked753(&$pa)
@@ -73,7 +73,7 @@ namespace skill753
 						$pa['wepe'] = $v[2];
 						$pa['weps'] = $v[3];
 						$pa['wepsk'] = $v[4];
-						$log.="<span class=\"cyan b\">追加攻击！</span><br>";
+						$log .= "<span class=\"cyan b\">追加攻击！</span><br>";
 						if($weps_o != $nosta && $pa['weps'] == $nosta) $pa['wep_kind'] = \weapon\get_attack_method($pa);
 						$chprocess($pa,$pd,$active);
 					}
@@ -89,12 +89,12 @@ namespace skill753
 				$skill753_arr = \skill81\check_swapable_items81($pa, 'W');
 				if (!empty($skill753_arr))
 				{
-					eval(import_module('logger','weapon'));
+					eval(import_module('logger'));
 					$pa['skill753_flag'] = 1;
 					foreach ($skill753_arr as $v)
 					{
 						\skill81\swapitem81($pa, 'wep', $v);
-						$log.="<span class=\"cyan b\">追加攻击！</span><br>";
+						$log .= "<span class=\"cyan b\">追加攻击！</span><br>";
 						\weapon\get_attack_method($pa);
 						$chprocess($pa,$pd,$active);
 					}
@@ -109,7 +109,7 @@ namespace skill753
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('logger'));
 		$temp_log = $log;
-        $chprocess($pa, $pd, $active);
+		$chprocess($pa, $pd, $active);
 		if (isset($pa['skill753_flag'])) $log = $temp_log;
 	}
 
