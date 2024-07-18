@@ -24,14 +24,19 @@ function hotkey(evt) {
 	}
 }
 
+//快捷键执行主函数。实现方式是点击id为对应快捷键的对象
 function hotkey_click(hkid) {
-	var hk = $(hkid);
+	//先按完整的hkid判定
+	var hk = hotkey_seek(hkid);
 	if (hk) hk.click();
+	//如果没有命中，但是有zx，则判定zx。这个暂时还只用id来判定，毕竟zx这个思路很绿皮
 	else if ((hkid == 'zz' || hkid == 'z' || hkid == 'x') && $('zx')) $('zx').click();
+	//如果都没有，取hkid的第一个字母再行一次判定
 	else if (hkid.length > 1) {
-		hk = $(hkid.substr(0, 1));
+		hk = hotkey_seek(hkid.substr(0, 1));
 		if (hk) hk.click();
 	}
+	//半废弃的2号界面代码
 	var jobj = jQuery('#hotkey2_' + hkid.substr(0, 1));
 	if (jobj.length > 0) {
 		jobj.attr("disabled", true);
@@ -39,6 +44,16 @@ function hotkey_click(hkid) {
 			jobj.parent().addClass('grey');
 		}
 	}
+}
+
+//返回快捷键对象。识别规则为先找自定义属性为hotkey=xx的对象，如果没有，则找id为xx的对象
+function hotkey_seek(hkid) {
+	if(jQuery('[hotkey=' + hkid + ']').length > 0){
+		var hk = jQuery('[hotkey="' + hkid + '"]');
+	}else{
+		var hk = $(hkid);
+	}
+	return hk;
 }
 
 ////////////////////////////////////////////////////////////////////////
