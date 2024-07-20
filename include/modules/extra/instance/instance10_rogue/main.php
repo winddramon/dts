@@ -406,7 +406,7 @@ namespace instance10
 		$chprocess($theitem);
 	}
 	
-	//进场后随机获得三个1级任务
+	//进场后随机获得三个1级任务；开局位于随机一个存在的地图
 	function post_enterbattlefield_events(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -416,6 +416,7 @@ namespace instance10
 		{
 			\skillbase\skill_setvalue(951,'stage',1,$pa);
 			\skill960\get_rand_task($pa, 1, 3);
+			$pa['pls'] = array_randompick(instance10_get_pa_pls_available($pa));
 		}
 	}
 	
@@ -492,8 +493,7 @@ namespace instance10
 				for ($i=$gamevars['instance10_stage']+1; $i<=$stage_new; $i++)
 				{
 					//此处刷新到当前层的地图
-					$pls_available = array_slice($arealist, max(0, 5 * $i - 10), 10);
-					$pls_available = array_diff($pls_available, array(0, 32, 34));
+					$pls_available = array_diff(instance10_get_pa_pls_available_core($i), array(0, 32, 34));
 					\randnpc\add_randnpc(2*$i-1, 20, 0, 0, 0, 0, $pls_available);
 					\randnpc\add_randnpc(2*$i, 20, 0, 0, 0, 0, $pls_available);
 					//刷新boss
@@ -526,13 +526,27 @@ namespace instance10
 		eval(import_module('sys'));
 		if (20 == $gametype)
 		{
-			$stage = (int)\skillbase\skill_getvalue(951,'stage');
-			$end2_flag = (int)\skillbase\skill_getvalue(951,'end2_flag');
-			if (!$end2_flag) $pls_available = array_slice($arealist, max(0, 5 * $stage - 10), 10);
-			else $pls_available = array_slice($arealist, 0, max(10, 5 * $stage));
-			return in_array($pno, $pls_available);
+			return in_array($pno, instance10_get_pa_pls_available());
 		}
 		return $chprocess($pno);
+	}
+
+	//获取可前往地点，目前的规则是截取禁区顺序列表中间的一段，不同层数的段不同
+	function instance10_get_pa_pls_available(&$pa = NULL)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$stage = (int)\skillbase\skill_getvalue(951,'stage',$pa);
+		$end2_flag = (int)\skillbase\skill_getvalue(951,'end2_flag',$pa);		
+		return instance10_get_pa_pls_available_core($stage, $end2_flag);
+	}
+
+	//获取可前往地点的核心代码，与玩家无关
+	function instance10_get_pa_pls_available_core($stage, $end2_flag = 0)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$arealist = get_var_in_module('arealist','sys');
+		if (!$end2_flag) return array_slice($arealist, max(0, 5 * $stage - 10), 10);
+		else return array_slice($arealist, 0, max(10, 5 * $stage));
 	}
 	
 	//肉鸽模式特殊合成
