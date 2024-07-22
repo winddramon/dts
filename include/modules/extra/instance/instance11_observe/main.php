@@ -37,6 +37,17 @@ namespace instance11
 		);
 	}
 
+	//蹲站房地区名必定为绿色
+	function map_display_get_pls_color($p)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$gametype = get_var_in_module('gametype','sys');
+		if(21 == $gametype) {
+			return 'mapspanlime';
+		}
+		return $chprocess($p);
+	}
+
 	//蹲站模式禁用林无月和卡片男
 	function card_validate_get_forbidden_cards($card_disabledlist, $card_ownlist){
 		if (eval(__MAGIC__)) return $___RET_VALUE;

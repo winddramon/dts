@@ -24,15 +24,11 @@
 								<!--{eval $now_xycoor = $now_ycoor.'-'.$x;}-->
 								<!--{if !empty($map_display_config['xyinfo'][$now_xycoor])}-->
 									<!--{eval $now_plsno = $map_display_config['xyinfo'][$now_xycoor];}-->
-									<span class="
-										<!--{if $hack || !\map\check_in_forbidden_area($now_plsno, 1)}-->
-											mapspanlime
-										<!--{elseif \map\check_in_forbidden_area($now_plsno)}-->
-											mapspanred
-										<!--{else}-->
-											mapspanyellow
-										<!--{/if}-->
-									">$plsinfo[$now_plsno]</span>									
+									<!--{if \map_display\map_display_check_pls_available($now_plsno)}-->
+										<span class="
+										<!--{eval echo \map_display\map_display_get_pls_color($now_plsno);}-->
+									">$plsinfo[$now_plsno]</span>	
+									<!--{/if}-->																	
 								<!--{/if}-->
 							</div>
 						<!--{/if}-->

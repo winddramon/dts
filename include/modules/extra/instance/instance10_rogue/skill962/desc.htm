@@ -7,7 +7,7 @@ $clubskillname[$___TEMP_SKILL_ID]
 {template MOD_CLUBBASE_SKILLDESC_MID1}
 <td class="skilldesc_left b3"><span class="skilldesc">
 <!--{eval $st = \skill962\check_skill962_state($who);$rm=$tmp_totsec-$tmp_nowsec;$skill962_cost=\skill962\get_skill962_cost($who);}-->
-更换一个选择的任务，冷却时间<span class="cyan b">$skill962_cd</span>秒<br>
+更换一个选择的任务，冷却时间<span class="cyan b">$skill962_cd</span>秒，也可以花钱强行更换。<br>
 <!--{if $st > 0}-->
 	<!--{if 3 != $st}-->
 	<span class="cyan b">技能冷却中，冷却时间还剩<span>$rm</span>秒。</span><br>

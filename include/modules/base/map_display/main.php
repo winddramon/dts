@@ -31,6 +31,22 @@ namespace map_display
 		}
 		return $ret;
 	}
+
+	//决定是否显示单个地区名的函数，本模块为必定显示
+	function map_display_check_pls_available($p)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return true;
+	}
+
+	//颜色显示规则，本模块为按禁区红色、下次禁区黄色、其他绿色来显示
+	function map_display_get_pls_color($p)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if (get_var_in_module('hack','sys') || !\map\check_in_forbidden_area($p, 1)) return 'mapspanlime';
+		elseif (\map\check_in_forbidden_area($p)) return 'mapspanred';
+		else return 'mapspanyellow';
+	}
 }
 
 ?>

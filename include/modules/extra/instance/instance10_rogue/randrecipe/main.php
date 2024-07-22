@@ -214,6 +214,7 @@ namespace randrecipe
 		}
 		elseif (($type == 'itme') || ($type == 'itms'))
 		{
+			//这里有个问题，同一个房间立刻开局的时候，array_merge_recursive()会导致重复的合并，从而在第230行substr这里变成对数组处理而出现问题
 			$r = array_merge_recursive(${$type.'_stuff'}[$itmk], ${$type.'_stuff'}['common']);
 			$k = array_rand($r);
 			$v = array_rand($r[$k]);

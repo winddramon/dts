@@ -219,6 +219,28 @@ namespace instance10
 		}
 		$chprocess($atime);
 	}
+
+	//不显示未解锁的地区名
+	function map_display_check_pls_available($p)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$gametype = get_var_in_module('gametype','sys');
+		if(20 == $gametype && !in_array($p, instance10_get_pa_pls_available())) {
+			return false;
+		}
+		return $chprocess($p);
+	}
+
+	//地区名必定为绿色
+	function map_display_get_pls_color($p)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$gametype = get_var_in_module('gametype','sys');
+		if(20 == $gametype) {
+			return 'mapspanlime';
+		}
+		return $chprocess($p);
+	}
 	
 	//商店功能替换为特殊的商店NPC
 	function check_in_shop_area($p)
