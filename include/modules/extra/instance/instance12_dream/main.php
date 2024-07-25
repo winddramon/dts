@@ -7,7 +7,7 @@ namespace instance12
 		if(!isset($valid_skills[22])) {
 			$valid_skills[22] = array();
 		}
-		$valid_skills[22] += array(68,181,951,952,964,981);
+		$valid_skills[22] += array(68,181,710,951,952,964,981);
 		//地图显示的配置组
 		$map_display_group[2] = Array(
 			'x' => 10,
@@ -36,6 +36,21 @@ namespace instance12
 		return $card;
 	}
 	
+	//禁止其他卡片
+	function card_validate_get_forbidden_cards($card_disabledlist, $card_ownlist){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		
+		$card_disabledlist = $chprocess($card_disabledlist, $card_ownlist);
+		if (22 == $gametype)
+		{
+			foreach($card_ownlist as $cv){
+				if(129 != $cv) $card_disabledlist[$cv][]='e3';
+			}
+		}
+		return $card_disabledlist;
+	}
+	
 	//梦境演练特殊地图数目。仅在$use_config == 1时触发
 	function get_plsnum($use_config = 0) {
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -59,6 +74,27 @@ namespace instance12
 			$ebp['itm5'] = '全恢复药剂'; $ebp['itmk5'] = 'Ca'; $ebp['itme5'] = 1; $ebp['itms5'] = 3;$ebp['itmsk5'] = '';
 		}
 		return $ebp;
+	}
+	
+	//梦境演练入场属性强化
+	function enter_battlefield_cardproc($ebp, $card)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		$ret = $chprocess($ebp, $card);
+		if (22 == $gametype){
+			$ret[0]['mhp'] += 200;
+			$ret[0]['hp'] += 200;
+			$ret[0]['att'] += 300;
+			$ret[0]['def'] += 300;
+			$ret[0]['wp'] += 120;
+			$ret[0]['wk'] += 120;
+			$ret[0]['wg'] += 120;
+			$ret[0]['wc'] += 120;
+			$ret[0]['wf'] += 120;
+			$ret[0]['wd'] += 120;
+		}
+		return $ret;
 	}
 	
 	function get_npclist(){

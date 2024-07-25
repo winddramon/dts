@@ -155,8 +155,8 @@ namespace skill981
 				$pi = $skill981_prizeitems[$itme][(int)$v];
 				$newitem = array('itm'=>$pi[0],'itmk'=>$pi[1],'itme'=>$pi[2],'itms'=>$pi[3],'itmsk'=>$pi[4]);
 			}
-			elseif (strpos($itmk, 's') === 0) $newitem = array('itm'=>'技能芯片','itmk'=>'VS','itme'=>1,'itms'=>1,'itmsk'=>substr($v,1));
-			elseif (strpos($itmk, 'c') === 0) $newitem = array('itm'=>'卡片福袋','itmk'=>'VO1','itme'=>1,'itms'=>1,'itmsk'=>substr($v,1));
+			elseif (strpos($v, 's') === 0) $newitem = array('itm'=>'技能芯片','itmk'=>'VS','itme'=>1,'itms'=>1,'itmsk'=>substr($v,1));
+			elseif (strpos($v, 'c') === 0) $newitem = array('itm'=>'卡片福袋','itmk'=>'VO1','itme'=>1,'itms'=>1,'itmsk'=>substr($v,1));
 			$pbx_itemlist[] = $newitem;
 		}
 		return $pbx_itemlist;
