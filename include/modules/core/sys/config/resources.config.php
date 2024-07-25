@@ -45,6 +45,7 @@ namespace sys
 		19=>'<font class="red">极速模式</font>',
 		20=>'<font class="gold">肉鸽模式</font>',
 		21=>'<font class="ltazure">蹲站模式</font>',
+		22=>'<font class="lime">梦境演练</font>',
 	);
 	$gtdesc=array(
 		0=>'不能使用卡片',

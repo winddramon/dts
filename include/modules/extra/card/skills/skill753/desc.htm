@@ -1,0 +1,22 @@
+<!--{eval $___TEMP_SKILL_ID=753;}-->
+{template MOD_CLUBBASE_SKILLDESC_START}
+<span>
+$clubskillname[$___TEMP_SKILL_ID]
+</span>
+{template MOD_CLUBBASE_SKILLDESC_MID1}
+<td class="skilldesc_left b3"><span class="skilldesc">
+<!--{eval $clv=(int)\skillbase\skill_getvalue(753, 'lvl', $who);}-->
+<!--{if $clv==0}-->
+使用具有<span class="yellow b">多重</span>属性的武器攻击后，<br>会使用该武器的所有其他形态各进行一次追加攻击<br>（对部分形态无效）
+<!--{else}-->
+攻击后，会使用包裹中的所有武器各进行一次追加攻击
+<!--{/if}-->
+</span></td>
+<td class="skilldesc_right b3">
+</td>
+{template MOD_CLUBBASE_SKILLDESC_MID2}
+<!--{if empty($___TEMP_THIS_SKILL_ACQUIRED)}-->
+<span class="yellow b">
+</span>
+<!--{/if}-->
+{template MOD_CLUBBASE_SKILLDESC_END}

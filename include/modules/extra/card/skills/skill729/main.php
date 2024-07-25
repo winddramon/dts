@@ -48,7 +48,7 @@ namespace skill729
 				{
 					foreach ($acquired_skills as $skillid)
 					{
-						if (in_array($skillid, array(952,960,961,962,964))) continue;
+						if (in_array($skillid, array(952,960,961,962,964,981))) continue;
 						if (isset($clubskillname[$skillid]) && (strpos(constant('MOD_SKILL'.$skillid.'_INFO'),'hidden;') === false))
 						{
 							\skillbase\skill_lost($skillid, $sdata);
