@@ -190,6 +190,26 @@ namespace instance12
 		$chprocess($atime);
 	}
 	
+	//道具发现率降低
+	function calculate_itemfind_obbs()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		$r = 0;
+		if (22 == $gametype) $r = -15;
+		return $chprocess()+$r;
+	}
+	
+	//敌人发现率增加
+	function calculate_findman_obbs(&$edata)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		$r = 0;
+		if (22 == $gametype) $r = 30;
+		return $chprocess($edata)+$r;
+	}
+	
 }
 
 ?>

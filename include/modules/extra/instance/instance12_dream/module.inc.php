@@ -3,7 +3,7 @@
 namespace instance12
 {
 	////////// MODULE HEADER START ///////////////
-	$___MODULE_dependency = 'sys player itemmain itemshop trap gameflow_combo npc skillbase cardbase map map_display';
+	$___MODULE_dependency = 'sys player itemmain itemshop trap gameflow_combo npc skillbase cardbase map map_display metman';
 	$___MODULE_dependency_optional = '';
 	$___MODULE_conflict = '';
 	$___MODULE_codelist = 'main.php config/plsinfo.config.php config/npc.data.config.php';
