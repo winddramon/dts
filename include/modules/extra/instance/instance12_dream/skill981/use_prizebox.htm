@@ -16,7 +16,7 @@
 <!--{/if}-->
 <!--{eval $itmsk_words=\itemmain\parse_itmsk_words($v['itmsk'], 1);}-->
 <span <!--{if $desc}-->style="cursor:pointer;" title="$desc"<!--{/if}-->>
-$v['itm']/<!--{eval echo \itemmain\parse_itmk_words($v['itmk']);}-->/$v['itme']/$v['itms']/<!--{eval echo $itmsk_words ? $itmsk_words.'/' : ''}-->
+$v['itm']/<!--{eval echo \itemmain\parse_itmk_words($v['itmk']);}-->/$v['itme']/$v['itms']<!--{eval echo $itmsk_words ? '/'.$itmsk_words : ''}-->
 </span><br>
 <!--{/loop}-->
 <br>

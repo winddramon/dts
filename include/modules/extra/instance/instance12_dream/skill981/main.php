@@ -154,6 +154,7 @@ namespace skill981
 			{
 				$pi = $skill981_prizeitems[$itme][(int)$v];
 				$newitem = array('itm'=>$pi[0],'itmk'=>$pi[1],'itme'=>$pi[2],'itms'=>$pi[3],'itmsk'=>$pi[4]);
+				if (!empty($newitem['itmsk'])) $newitem['itmsk'] = \attrbase\config_process_encode_comp_itmsk($newitem['itmsk']);
 			}
 			elseif (strpos($v, 's') === 0) $newitem = array('itm'=>'技能芯片','itmk'=>'VS','itme'=>1,'itms'=>1,'itmsk'=>substr($v,1));
 			elseif (strpos($v, 'c') === 0) $newitem = array('itm'=>'卡片福袋','itmk'=>'VO1','itme'=>1,'itms'=>1,'itmsk'=>substr($v,1));
@@ -168,7 +169,7 @@ namespace skill981
 		eval(import_module('skill981'));
 		$pbx_pool = $skill981_prizeitems[$itme];
 		$pbx_arr = [];
-		for ($i = 0; $i < min(count($pbx_pool), 4); $i++)
+		for ($i = 0; $i < min(count($pbx_pool), 6); $i++)
 		{
 			if (empty($pbx_pool)) break;
 			$pbx_arr[] = get_prizeitem($pbx_pool);
