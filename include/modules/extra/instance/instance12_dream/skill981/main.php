@@ -37,9 +37,9 @@ namespace skill981
 			$rm = (int)\skillbase\skill_getvalue(981,'rm',$pa);
 			if ($rm == 1)
 			{
-				eval(import_module('logger'));
+				eval(import_module('logger','skill981'));
 				$stage = (int)\skillbase\skill_getvalue(981,'stage');
-				$theitem = array('itm'=>'梦境礼盒','itmk'=>'Y','itme'=>$stage,'itms'=>3,'itmsk'=>'');
+				$theitem = array('itm'=>'梦境礼盒','itmk'=>'Y','itme'=>$stage,'itms'=>$skill981_prizebox_num[$stage],'itmsk'=>'');
 				\skill952\skill952_sendin_core($theitem, $pa);
 				$log .= "<span class=\"lime b\">奖励道具被送到了你的奖励箱中。</span><br>";
 			}

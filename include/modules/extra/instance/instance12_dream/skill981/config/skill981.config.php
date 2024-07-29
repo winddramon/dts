@@ -33,7 +33,7 @@ namespace skill981
 		11 => 1
 	);
 	
-	//所有等级的奖励道具列表，共20级
+	//所有等级的奖励道具列表，共11级
 	//道具的数值依次为：名称、类别、效果值、耐久值、属性、权重
 	//特殊的道具属性：rdsk_S、rdsk_A、rdsk_B、rdsk_C表示对应等级的一个随机技能；card_S、card_A、card_B、card_C表示对应等级的一张随机卡片，在生成奖励时确定
 	$skill981_prizeitems = array(
