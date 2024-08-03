@@ -600,7 +600,7 @@ $roomtypelist = Array(
 		'name' => '<font class="gold b">肉鸽模式</font>',
 		'gtype' => 20, //对应的游戏模式编号
 		'available' => true,
-		// 'available-start' => 4200000000, //如果设置并大于零，表明时间戳迟于此时才显示和开放
+		'available-start' => 4200000000, //如果设置并大于零，表明时间戳迟于此时才显示和开放
 		// 'available-end' => 0,//如果设置并大于零，表明时间戳早于此时才显示和开放
 		'soleroom' => false,//唯一房间，只有不存在时才会新建房间。
 		'without-ready' => true,//是否不需要点击“准备”就直接进入房间。
