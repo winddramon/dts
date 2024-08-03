@@ -350,6 +350,7 @@ skill261,extra/club/skills/skill261/,1
 skill274,extra/club/skills/skill274/,1
 skill511,extra/card/skills/skill511/,1
 skill545,extra/card/skills/skill545/,1
+skill981,extra/instance/instance12_dream/skill981/,1
 skill403,extra/card/skills/skill403/,1
 skill203,extra/club/skills/skill203/,1
 ammunition,base/items/ammunition/,1
@@ -403,6 +404,7 @@ skill720,extra/card/skills/skill720/,1
 get_qiegao_in_battle,extra/misc/get_qiegao_in_battle/,1
 skill734,extra/card/skills/skill734/,1
 skill749,extra/card/skills/skill749/,1
+instance12,extra/instance/instance12_dream/,1
 skill43,extra/club/skills/skill43/,1
 itemnumlist,extra/item_extra/itemnumlist/,1
 skill56,extra/club/skills/skill56/,1
@@ -660,6 +662,7 @@ skill738,extra/card/skills/skill738/,1
 skill87,extra/club/skills/skill87/,1
 skill94,extra/club/skills/skill94/,1
 instance_quit_button,extra/instance/instance_quit_button/,1
+skill753,extra/card/skills/skill753/,1
 skill497,extra/card/skills/skill497/,1
 skill503,extra/card/skills/skill503/,1
 skill559,extra/card/skills/skill559/,1

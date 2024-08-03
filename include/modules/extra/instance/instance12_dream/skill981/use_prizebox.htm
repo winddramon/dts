@@ -1,0 +1,23 @@
+<!--{eval eval(import_module('cardbase'));}-->
+<input type="hidden" id="mode" name="mode" value="command">
+<input type="hidden" id="command" name="command" value="itm{$theitem['itmn']}">
+<input type="hidden" id="pbx_choice" name="pbx_choice" value="0">
+<!--{eval $pbx_itemlist = \skill981\get_prizebox_itemlist($theitem['itme'], $theitem['itmsk']);}-->
+你可以选择并获得以下道具中的一个：<br><br>
+<!--{loop $pbx_itemlist $k $v}-->
+<!--{eval $id = $k+1; $skilldesc_id='skilldesc_show_'.$id;}-->
+<input type="button" class="cmdbutton" style="min-width:50px;height:28px;" value="获得" onclick="$('pbx_choice').value='$id';postCmd('gamecmd','command.php');this.disabled=true;"> 
+<!--{if $v['itmk'] == 'R'}-->
+	<!--{eval $desc=\item_recipe\show_recipe($v['itmsk']);}-->
+<!--{elseif strpos($v['itmk'],'VO1')===0 && isset($cards[$v['itmsk']])}-->
+	<!--{eval $desc='装有卡牌「'.$cards[$v['itmsk']]['name'].'」';}-->
+<!--{else}-->
+	<!--{eval $desc=\itemmain\parse_itmuse_desc($v['itm'], $v['itmk'], $v['itme'], $v['itms'], $v['itmsk']);}-->
+<!--{/if}-->
+<!--{eval $itmsk_words=\itemmain\parse_itmsk_words($v['itmsk'], 1);}-->
+<span <!--{if $desc}-->style="cursor:pointer;" title="$desc"<!--{/if}-->>
+$v['itm']/<!--{eval echo \itemmain\parse_itmk_words($v['itmk']);}-->/$v['itme']/$v['itms']<!--{eval echo $itmsk_words ? '/'.$itmsk_words : ''}-->
+</span><br>
+<!--{/loop}-->
+<br>
+<input type="button" class="cmdbutton"  id="x" value="[X]返回" onclick="$('command').value='menu'; postCmd('gamecmd','command.php');this.disabled=true;">
