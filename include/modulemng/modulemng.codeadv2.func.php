@@ -944,6 +944,7 @@ function merge_replace_return($ret_varname, $subject){
 
 //用特定的函数内容替换模板文件里的同名函数内容，并写为目标文件
 //理论上应该改成同样用token_get_all_adv()比较漂亮，但是今天真的累了
+//好像累了好几年都没有填这个坑，不管了。如果你看到了这行注释，记住这里一直能跑，等哪天需要重构了再一起改掉吧
 function merge_contents_write($modid, $tplfile, $objfile){
 	global $___TEMP_final_func_contents;
 	$contents=file_get_contents($tplfile);
@@ -954,45 +955,45 @@ function merge_contents_write($modid, $tplfile, $objfile){
 	$brace_nest = 0;
 	$temp_brace_nest = 0;
 	$writing_contents = '';
-  foreach($tokens as $token) {
-  	$token_str = is_array($token) ? $token[1] : $token;
+	foreach($tokens as $token) {
+		$token_str = is_array($token) ? $token[1] : $token;
 		$token_type = is_array($token) ? $token[0] : NULL;
 		//函数花括号外部或者$___TEMP_final_func_contents里没有这个函数则正常记录
 		if( 3 != $func_state || !$func_name || empty($___TEMP_final_func_contents[$modid][$func_name])) {
 			$writing_contents .= $token_str;
 		}
 		//否则大括号内部不记录
-  
-  	if(T_FUNCTION == $token_type && 0===$func_state){//闭包请退群
-  		$func_state = 1;
-  		$temp_brace_nest = $brace_nest;
-  	}elseif(T_STRING == $token_type){
-  		if(1 == $func_state){//前面有function语句的情况下，提取函数名
-  			$func_name = strtolower($token_str);
-  		}
-  	}elseif('(' == $token_str && NULL === $token_type){
-  		if(1 == $func_state)
-  			$func_state = 2;
-  	}elseif(')' == $token_str && NULL === $token_type){
-  		if(2 == $func_state){
-  			$func_state = 1;
-  		}
-  	}elseif(left_brace_check($token_str, $token_type)){
-  		$brace_nest ++;
-  		if(1 == $func_state){
-  			$func_state = 3;
-  		}
-  	}elseif('}' == $token_str && NULL === $token_type){
-  		$brace_nest --;
-  		if($brace_nest == $temp_brace_nest && 3 == $func_state){
-  			if(!empty($___TEMP_final_func_contents[$modid][$func_name])){
-	  			$writing_contents .= $___TEMP_final_func_contents[$modid][$func_name]."\r\n\t}";
-	  		}
-  			$func_name = '';
-  			$func_state = 0;
-  		}
-  	}
-  }
+	
+		if(T_FUNCTION == $token_type && 0===$func_state){//闭包请退群
+			$func_state = 1;
+			$temp_brace_nest = $brace_nest;
+		}elseif(T_STRING == $token_type){
+			if(1 == $func_state){//前面有function语句的情况下，提取函数名
+				$func_name = strtolower($token_str);
+			}
+		}elseif('(' == $token_str && NULL === $token_type){
+			if(1 == $func_state)
+				$func_state = 2;
+		}elseif(')' == $token_str && NULL === $token_type){
+			if(2 == $func_state){
+				$func_state = 1;
+			}
+		}elseif(left_brace_check($token_str, $token_type)){
+			$brace_nest ++;
+			if(1 == $func_state){
+				$func_state = 3;
+			}
+		}elseif('}' == $token_str && NULL === $token_type){
+			$brace_nest --;
+			if($brace_nest == $temp_brace_nest && 3 == $func_state){
+				if(!empty($___TEMP_final_func_contents[$modid][$func_name])){
+					$writing_contents .= $___TEMP_final_func_contents[$modid][$func_name]."\r\n\t}";
+				}
+				$func_name = '';
+				$func_state = 0;
+			}
+		}
+	}
 	writeover($objfile, $writing_contents);
 }
 
