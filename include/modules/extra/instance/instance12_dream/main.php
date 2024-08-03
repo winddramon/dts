@@ -87,12 +87,12 @@ namespace instance12
 			$ret[0]['hp'] += 200;
 			$ret[0]['att'] += 300;
 			$ret[0]['def'] += 300;
-			$ret[0]['wp'] += 120;
-			$ret[0]['wk'] += 120;
-			$ret[0]['wg'] += 120;
-			$ret[0]['wc'] += 120;
-			$ret[0]['wf'] += 120;
-			$ret[0]['wd'] += 120;
+			$ret[0]['wp'] += 100;
+			$ret[0]['wk'] += 100;
+			$ret[0]['wg'] += 100;
+			$ret[0]['wc'] += 100;
+			$ret[0]['wf'] += 100;
+			$ret[0]['wd'] += 100;
 		}
 		return $ret;
 	}
@@ -189,7 +189,7 @@ namespace instance12
 		if ((22 == $gametype)&&($xmode & 2)) 
 		{
 			$weather = 1;
-			$areatime = $starttime + 1800;
+			$areatime = $starttime + 3600;
 			$gamevars['map_display_group'] = 2;
 			$gamevars['plsinfo'] = $plsinfo12;
 		}
@@ -232,7 +232,7 @@ namespace instance12
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
 		$r = 0;
-		if (22 == $gametype) $r = -15;
+		if (22 == $gametype) $r = -30;
 		return $chprocess()+$r;
 	}
 	
@@ -242,8 +242,31 @@ namespace instance12
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
 		$r = 0;
-		if (22 == $gametype) $r = 30;
+		if (22 == $gametype) $r = 60;
 		return $chprocess($edata)+$r;
+	}
+	
+	//切糕奖励
+	function post_winnercheck_events($winner)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$chprocess($winner);
+		eval(import_module('sys'));
+		if ($winmode == 3 && $gametype == 22)
+		{
+			$pa = \player\fetch_playerdata($winner);
+			$qiegao_prize = 1337;
+			if ($qiegao_prize)
+			{
+				include_once './include/messages.func.php';
+				message_create(
+					$pa['name'],
+					'梦境演练奖励',
+					'祝贺你在房间第'.$gamenum.'局梦境演练获得了奖励！<br>',
+					'getqiegao_'.$qiegao_prize
+				);
+			}
+		}
 	}
 	
 }
