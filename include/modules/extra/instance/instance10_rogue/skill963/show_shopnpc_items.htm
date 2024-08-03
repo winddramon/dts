@@ -8,8 +8,8 @@
 <input type="button" style="width:40px" value="购买" onclick="$('command').value='buy{$k}';postCmd('gamecmd','command.php');this.disabled=true;">
 <!--{if $v[1] == 'R'}-->
 	<!--{eval $desc=\item_recipe\show_recipe($v[4]);}-->
-<!--{elseif strpos($v[1],'VO1')===0 && isset($cards[$v['itmsk']])}-->
-	<!--{eval $cn = str_replace('"','&quot;',$cards[$v['itmsk']]['name']); $desc='装有卡牌「'.$cn.'」';}-->
+<!--{elseif strpos($v[1],'VO1')===0 && isset($cards[$v[4]])}-->
+	<!--{eval $cn = str_replace('"','&quot;',$cards[$v[4]]['name']); $desc='装有卡牌「'.$cn.'」';}-->
 <!--{else}-->
 	<!--{eval $desc=\itemmain\parse_itmuse_desc($v[0], $v[1], $v[2], $v[3], $v[4]);}-->
 <!--{/if}-->
