@@ -10,7 +10,7 @@
 <!--{if $v['itmk'] == 'R'}-->
 	<!--{eval $desc=\item_recipe\show_recipe($v['itmsk']);}-->
 <!--{elseif strpos($v['itmk'],'VO1')===0 && isset($cards[$v['itmsk']])}-->
-	<!--{eval $desc='装有卡牌「'.$cards[$v['itmsk']]['name'].'」';}-->
+	<!--{eval $cn = str_replace('"','&quot;',$cards[$v['itmsk']]['name']); $desc='装有卡牌「'.$cn.'」';}-->
 <!--{else}-->
 	<!--{eval $desc=\itemmain\parse_itmuse_desc($v['itm'], $v['itmk'], $v['itme'], $v['itms'], $v['itmsk']);}-->
 <!--{/if}-->

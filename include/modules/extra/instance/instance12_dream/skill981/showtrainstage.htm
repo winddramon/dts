@@ -5,6 +5,8 @@
 <!--{/if}-->
 <!--{if $rm > 0}-->
 剩余敌人 <span class="red b">$rm</span>
-<!--{else}-->
+<!--{elseif $stage < 11}-->
 <input type="button" class="cmdbutton Pulse" id="sp_castsk981" value="<!--{eval echo $stage > 0 ? '下一波次' : '开始挑战';}-->" onclick="$('mode').value='special';$('command').value='skill981_special';postCmd('gamecmd','command.php');this.disabled=true;">
+<!--{else}-->
+<span class="lime b">已完成</span>
 <!--{/if}-->
