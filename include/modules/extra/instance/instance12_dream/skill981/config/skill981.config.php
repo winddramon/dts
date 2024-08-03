@@ -38,7 +38,7 @@ namespace skill981
 	//特殊的道具属性：rdsk_S、rdsk_A、rdsk_B、rdsk_C表示对应等级的一个随机技能；card_S、card_A、card_B、card_C表示对应等级的一张随机卡片，在生成奖励时确定
 	$skill981_prizeitems = array(
 		1 => array(
-			array('德国BOY的键盘','WP',150,∞,'er',5),
+			array('德国BOY的键盘','WP',150,'∞','er',5),
 			array('【红杀铁剑·流火】','WK',280,100,'uc',5),
 			array('☆主体思想的光芒☆','WD',166,66,'dN',3),
 			array('☆天降伟人的指示☆','WD',166,66,'dc',3),
