@@ -168,11 +168,11 @@ namespace instance12
 		}else return $chprocess();
 	}
 	
-	//不会连斗
+	//只要玩家没死就不会连斗
 	function checkcombo($time){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
-		if(22 == $gametype) return;
+		if(22 == $gametype && $alivenum > 0) return;
 		$chprocess($time);
 	}
 	
