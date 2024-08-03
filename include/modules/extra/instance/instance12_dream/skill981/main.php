@@ -29,7 +29,7 @@ namespace skill981
 		return 1;
 	}
 	
-	function player_kill_enemy(&$pa,&$pd,$active)
+	function assault_finish(&$pa,&$pd,$active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;	
 		if (\skillbase\skill_query(981,$pa) && check_unlocked981($pa) && $pd['hp'] <= 0)
