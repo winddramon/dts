@@ -350,7 +350,6 @@ skill261,extra/club/skills/skill261/,1
 skill274,extra/club/skills/skill274/,1
 skill511,extra/card/skills/skill511/,1
 skill545,extra/card/skills/skill545/,1
-skill981,extra/instance/instance12_dream/skill981/,1
 skill403,extra/card/skills/skill403/,1
 skill203,extra/club/skills/skill203/,1
 ammunition,base/items/ammunition/,1
@@ -557,6 +556,7 @@ skill112,extra/club/skills/skill112/,1
 tutorial,extra/instance/instance7_tutorial/tutorial/,1
 skill51,extra/club/skills/skill51/,1
 skill493,extra/card/skills/skill493/,1
+skill981,extra/instance/instance12_dream/skill981/,1
 randrecipe,extra/instance/instance10_rogue/randrecipe/,1
 skill100,extra/club/skills/skill100/,1
 skill101,extra/club/skills/skill101/,1
@@ -623,7 +623,6 @@ skill504,extra/card/skills/skill504/,1
 user_settings,extra/misc/user_settings/,1
 skill740,extra/card/skills/skill740/,1
 instance3,extra/instance/instance3_ascension/,1
-ex_alternative,extra/attr/ex_alternative/,1
 skill182,extra/club/skills/skill182/,1
 cooldown,base/cooldown/,1
 skill458,extra/card/skills/skill458/,1
@@ -662,7 +661,6 @@ skill738,extra/card/skills/skill738/,1
 skill87,extra/club/skills/skill87/,1
 skill94,extra/club/skills/skill94/,1
 instance_quit_button,extra/instance/instance_quit_button/,1
-skill753,extra/card/skills/skill753/,1
 skill497,extra/card/skills/skill497/,1
 skill503,extra/card/skills/skill503/,1
 skill559,extra/card/skills/skill559/,1
@@ -718,6 +716,7 @@ skill604,extra/club/skills/skill604/,1
 ex_gender_attr,extra/attr/ex_gender_attr/,1
 ex_attr_pierce,extra/attr/ex_attr_pierce/,1
 skill903,extra/instance/instance3_ascension/skill903/,1
+ex_alternative,extra/attr/ex_alternative/,1
 skill730,extra/card/skills/skill730/,1
 skill746,extra/card/skills/skill746/,1
 skill505,extra/card/skills/skill505/,1
@@ -744,6 +743,7 @@ skill510,extra/card/skills/skill510/,1
 skill68,extra/club/skills/skill68/,1
 skill962,extra/instance/instance10_rogue/skill962/,1
 skill750,extra/card/skills/skill750/,1
+skill753,extra/card/skills/skill753/,1
 bubblebox,extra/misc/bubblebox/,0
 skill86,extra/club/skills/skill86/,0
 gtype2,extra/instance/gtype2/main/,0

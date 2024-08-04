@@ -32,20 +32,29 @@ namespace skill981
 	function assault_finish(&$pa,&$pd,$active)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;	
+		//玩家主动攻击打死NPC
 		if (\skillbase\skill_query(981,$pa) && check_unlocked981($pa) && $pd['hp'] <= 0)
 		{
-			$rm = (int)\skillbase\skill_getvalue(981,'rm',$pa);
+			$theplayer = & $pa;
+		}
+		//一般是NPC先制玩家被打死
+		elseif (\skillbase\skill_query(981,$pd) && check_unlocked981($pd) && $pa['hp'] <= 0) {
+			$theplayer = & $pd;
+		}
+		if(!empty($theplayer)) {
+			$rm = (int)\skillbase\skill_getvalue(981,'rm',$theplayer);
 			if ($rm == 1)
 			{
 				eval(import_module('logger','skill981'));
-				$stage = (int)\skillbase\skill_getvalue(981,'stage');
+				$stage = (int)\skillbase\skill_getvalue(981,'stage',$theplayer);
 				$theitem = array('itm'=>'梦境礼盒','itmk'=>'Y','itme'=>$stage,'itms'=>$skill981_prizebox_num[$stage],'itmsk'=>'');
-				\skill952\skill952_sendin_core($theitem, $pa);
+				\skill952\skill952_sendin_core($theitem, $theplayer);
 				$log .= "<span class=\"lime b\">奖励道具被送到了你的奖励箱中。</span><br>";
 			}
 			$rm = max($rm - 1, 0);
-			\skillbase\skill_setvalue(981,'rm',$rm,$pa);
+			\skillbase\skill_setvalue(981,'rm',$rm,$theplayer);
 		}
+		
 		$chprocess($pa,$pd,$active);
 	}
 	
