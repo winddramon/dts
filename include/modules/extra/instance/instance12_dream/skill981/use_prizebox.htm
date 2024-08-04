@@ -17,7 +17,17 @@
 <!--{eval $itmsk_words=\itemmain\parse_itmsk_words($v['itmsk'], 1);}-->
 <span <!--{if $desc}-->style="cursor:pointer;" title="$desc"<!--{/if}-->>
 $v['itm']/<!--{eval echo \itemmain\parse_itmk_words($v['itmk']);}-->/$v['itme']/$v['itms']<!--{eval echo $itmsk_words ? '/'.$itmsk_words : ''}-->
-</span><br>
+</span>
+<!--{if $v['itmk'] == 'VS'}-->  
+<input type="button" class="cmdbutton" style="min-width:50px;" value="查看" onmouseenter="$('$skilldesc_id').style.display='block';" onmouseleave="$('$skilldesc_id').style.display='none';">
+<div style="position:relative;">
+	<div id="$skilldesc_id" class="skilldesc_show" style="display:none;position:absolute;background-color:#000000;">
+	<!--{eval echo \item_randskills\parse_skcore_skilldesc($v['itmsk']);}-->
+	</div>
+</div>
+<br>
+<!--{/if}-->
+<br>
 <!--{/loop}-->
 <br>
 <input type="button" class="cmdbutton"  id="x" value="[X]返回" onclick="$('command').value='menu'; postCmd('gamecmd','command.php');this.disabled=true;">
