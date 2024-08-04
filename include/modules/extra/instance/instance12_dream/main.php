@@ -226,6 +226,14 @@ namespace instance12
 		$chprocess($atime);
 	}
 	
+	//英灵殿无事件
+	function event_available(){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys', 'player'));
+		if(22 == $gametype && $pls == 34) return false;
+		return $chprocess();
+	}
+	
 	//道具发现率降低
 	function calculate_itemfind_obbs()
 	{
@@ -252,19 +260,23 @@ namespace instance12
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($winner);
 		eval(import_module('sys'));
-		if ($winmode == 3 && $gametype == 22)
+		if ($gametype == 22)
 		{
-			$pa = \player\fetch_playerdata($winner);
-			$qiegao_prize = 1337;
-			if ($qiegao_prize)
+			$inst12_qiegao = array(3 => 1337, 7 => 5120);
+			if (isset($inst12_qiegao[$winmode]))
 			{
-				include_once './include/messages.func.php';
-				message_create(
-					$pa['name'],
-					'梦境演练奖励',
-					'祝贺你在房间第'.$gamenum.'局梦境演练获得了奖励！<br>',
-					'getqiegao_'.$qiegao_prize
-				);
+				$pa = \player\fetch_playerdata($winner);
+				$qiegao_prize = $inst12_qiegao[$winmode];
+				if ($qiegao_prize)
+				{
+					include_once './include/messages.func.php';
+					message_create(
+						$pa['name'],
+						'梦境演练奖励',
+						'祝贺你在房间第'.$gamenum.'局梦境演练获得了奖励！<br>',
+						'getqiegao_'.$qiegao_prize
+					);
+				}
 			}
 		}
 	}

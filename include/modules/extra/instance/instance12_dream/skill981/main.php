@@ -186,7 +186,8 @@ namespace skill981
 		eval(import_module('skill981'));
 		$pbx_pool = $skill981_prizeitems[$itme];
 		$pbx_arr = [];
-		for ($i = 0; $i < min(count($pbx_pool), 6); $i++)
+		$c_count = min(count($pbx_pool), 6);
+		for ($i = 0; $i < $c_count; $i++)
 		{
 			if (empty($pbx_pool)) break;
 			$pbx_arr[] = get_prizeitem($pbx_pool);
