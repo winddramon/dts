@@ -2,7 +2,7 @@
 
 namespace skill715
 {
-	$skill715_act_time = 600;
+	$skill715_act_time = 300;
 	
 	function init() 
 	{
