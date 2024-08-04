@@ -7,7 +7,7 @@ namespace instance12
 		if(!isset($valid_skills[22])) {
 			$valid_skills[22] = array();
 		}
-		$valid_skills[22] += array(68,181,710,951,952,964,981);
+		$valid_skills[22] += array(68,181,951,952,964,981);
 		//地图显示的配置组
 		$map_display_group[2] = Array(
 			'x' => 10,
@@ -25,18 +25,7 @@ namespace instance12
 		);
 	}
 	
-	//梦境演练自动选择吉祥物
-	function get_enter_battlefield_card($card){
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys'));
-		$card = $chprocess($card);
-		if (22 == $gametype){
-			$card = 129;
-		}
-		return $card;
-	}
-	
-	//禁止其他卡片
+	//禁止难度卡外的其他卡片
 	function card_validate_get_forbidden_cards($card_disabledlist, $card_ownlist){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys'));
@@ -45,10 +34,25 @@ namespace instance12
 		if (22 == $gametype)
 		{
 			foreach($card_ownlist as $cv){
-				if(129 != $cv) $card_disabledlist[$cv][]='e3';
+				if(!in_array($cv, array(1201, 1202, 1203, 1204))) $card_disabledlist[$cv][]='e3';
 			}
 		}
 		return $card_disabledlist;
+	}
+	
+	//梦境演练选卡界面特殊显示
+	function card_validate_display($cardChosen, $card_ownlist, $packlist, $hideDisableButton){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		list($cardChosen, $card_ownlist, $packlist, $hideDisableButton) = $chprocess($cardChosen, $card_ownlist, $packlist, $hideDisableButton);
+		if (22 == $gametype)
+		{
+			$cardChosen = 1201;
+			$card_ownlist[] = array_merge($card_ownlist, array(1201, 1202, 1203, 1204));
+			$packlist[] = 'Pungeon';
+			$hideDisableButton = 0;
+		}
+		return array($cardChosen, $card_ownlist, $packlist, $hideDisableButton);
 	}
 	
 	//梦境演练特殊地图数目。仅在$use_config == 1时触发
@@ -74,27 +78,6 @@ namespace instance12
 			$ebp['itm5'] = '全恢复药剂'; $ebp['itmk5'] = 'Ca'; $ebp['itme5'] = 1; $ebp['itms5'] = 3;$ebp['itmsk5'] = '';
 		}
 		return $ebp;
-	}
-	
-	//梦境演练入场属性强化
-	function enter_battlefield_cardproc($ebp, $card)
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('sys'));
-		$ret = $chprocess($ebp, $card);
-		if (22 == $gametype){
-			$ret[0]['mhp'] += 200;
-			$ret[0]['hp'] += 200;
-			$ret[0]['att'] += 300;
-			$ret[0]['def'] += 300;
-			$ret[0]['wp'] += 100;
-			$ret[0]['wk'] += 100;
-			$ret[0]['wg'] += 100;
-			$ret[0]['wc'] += 100;
-			$ret[0]['wf'] += 100;
-			$ret[0]['wd'] += 100;
-		}
-		return $ret;
 	}
 	
 	function get_npclist(){
