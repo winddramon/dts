@@ -128,8 +128,16 @@ namespace skill981
 					return;
 				}
 				$prizeitem = $pbx_itemlist[$pbx_choice-1];
-				\skill952\skill952_sendin_core($prizeitem, $pa);
-				$log .= "<span class=\"yellow b\">{$prizeitem['itm']}</span>被送到了你的奖励箱中。<br>";
+				if ($prizeitem['itmk'] == 'YY')
+				{
+					$money += $prizeitem['itme'];
+					$log .= "你获得了<span class=\"yellow b\">{$prizeitem['itme']}</span>元金钱。<br>";
+				}
+				else
+				{
+					\skill952\skill952_sendin_core($prizeitem, $pa);
+					$log .= "<span class=\"yellow b\">{$prizeitem['itm']}</span>被送到了你的奖励箱中。<br>";
+				}
 				\itemmain\itms_reduce($theitem);
 				$itmsk = '';
 			}
