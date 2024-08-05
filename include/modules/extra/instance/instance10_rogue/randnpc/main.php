@@ -29,7 +29,7 @@ namespace randnpc
 	//offens_tend：攻击倾向（0-100整数），越高NPC越容易有高攻击力和熟练度，越容易出现强袭姿态和重视反击
 	//defens_tend：防御倾向（0-100整数），越高NPC越容易有高生命值和防御力，越容易出现作战姿态和重视防御
 	//variety：变化范围（0-50整数），越高则随机属性的变化范围越大
-	//use_preset：是否基于预设生成
+	//use_preset：是否基于预设生成，若为数组，表示基于数组中元素的npc类别生成，若为1，则基于本模块中的预设生成，若为0，则不按预设生成
 	function generate_randnpc($rank, $num=1, $offens_tend=0, $defens_tend=0, $variety=0, $use_preset=1)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -46,16 +46,32 @@ namespace randnpc
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		//生成npc基础属性
 		eval(import_module('npc'));
-		if ($use_preset)
+		if ($use_preset == 1)
 		{
 			eval(import_module('randnpc'));
 			$npc = array_merge($npcinit, array_randompick($randnpc_presets[$rank]));
+		}
+		elseif (is_array($use_preset))
+		{
+			$ntype = array_randompick($use_preset);
+			$ninfo = $npcinfo;//这里是标准局的NPC列表
+			if (!isset($ninfo[$ntype])) $ntype = 90;
+			$npcs = $ninfo[$ntype];
+			$tmp_sub = $npcs['sub'];
+			unset($npcs['sub']);
+			$npc = array_merge($npcinit, $npcs);
+			if(!empty($tmp_sub) && is_array($tmp_sub))
+			{
+				$npc = array_merge($npc, array_randompick($tmp_sub));
+			}
+			$npc['type'] = $ntype;
+			$npc['pls'] = 99;
 		}
 		else
 		{
 			$npc = $npcinit;
 			//生成名字和头像，待修改
-			if ($rank < 3 || $rank > 14) $npc['name'] = $rank.'级虚像';
+			if ($rank < 3) $npc['name'] = $rank.'级虚像';
 			elseif ($rank < 7)
 			{
 				$dice = rand(0,3);
@@ -157,9 +173,9 @@ namespace randnpc
 		}
 		//通用属性调整
 		$npc['mhp'] = round($npc['mhp'] * rand(80-$variety+$defens_tend,120+$variety+$defens_tend) / 100);
-		$npc['arbe'] = round($npc['arbe'] * rand(70-$variety+$offens_tend,130+$variety+$offens_tend) / 100);
-		$npc['arhe'] = $npc['arfe'] = $npc['arae'] = round($npc['arhe'] * rand(70-$variety+$offens_tend,130+$variety+$offens_tend) / 100);
-		$npc['arbs'] = $npc['arhs'] = $npc['arfs'] = $npc['aras'] = round($npc['arbs'] * rand(70-$variety+$offens_tend,130+$variety+$offens_tend) / 100);
+		$npc['arbe'] = round($npc['arbe'] * rand(70-$variety+$defens_tend,130+$variety+$defens_tend) / 100);
+		$npc['arhe'] = $npc['arfe'] = $npc['arae'] = round($npc['arhe'] * rand(70-$variety+$defens_tend,130+$variety+$defens_tend) / 100);
+		$npc['arbs'] = $npc['arhs'] = $npc['arfs'] = $npc['aras'] = round($npc['arbs'] * rand(70-$variety+$defens_tend,130+$variety+$defens_tend) / 100);
 		$bonus = rand(100,200);
 		$bonus_pos = array_randompick(array('arb','arh','arf','ara'));
 		$npc[$bonus_pos.'e'] = round($npc[$bonus_pos.'e'] * $bonus / 100);
@@ -330,7 +346,7 @@ namespace randnpc
 		for($i=0;$i<$num;$i++)
 		{
 			$npc = $randnpcs[$i];
-			if ($use_preset == 0) $npc['type'] = 50 + ceil($rank / 2);
+			if ($use_preset == 0) $npc['type'] = 50 + min(ceil($rank / 2), 7);
 			$npc['sNo'] = $i;
 			$npc = \npc\init_npcdata($npc,$pls_available);
 			$npc = \player\player_format_with_db_structure($npc);

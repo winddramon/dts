@@ -172,7 +172,7 @@ namespace instance12
 		if ((22 == $gametype)&&($xmode & 2)) 
 		{
 			$weather = 1;
-			$areatime = $starttime + 3600;
+			$areatime = $starttime + 7200;
 			$gamevars['map_display_group'] = 2;
 			$gamevars['plsinfo'] = $plsinfo12;
 		}
@@ -235,6 +235,13 @@ namespace instance12
 		$r = 0;
 		if (22 == $gametype) $r = 60;
 		return $chprocess($edata)+$r;
+	}
+	
+	//结算分数
+	function inst12_get_score(&$pa)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return 1337;//待完成
 	}
 	
 	//切糕奖励

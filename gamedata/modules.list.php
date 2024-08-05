@@ -350,6 +350,7 @@ skill261,extra/club/skills/skill261/,1
 skill274,extra/club/skills/skill274/,1
 skill511,extra/card/skills/skill511/,1
 skill545,extra/card/skills/skill545/,1
+skill982,extra/instance/instance12_dream/skill982/,1
 skill403,extra/card/skills/skill403/,1
 skill203,extra/club/skills/skill203/,1
 ammunition,base/items/ammunition/,1
