@@ -30,6 +30,24 @@ namespace skill981
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		return 1;
 	}
+		
+	function parse_itmuse_desc($n, $k, $e, $s, $sk){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess($n, $k, $e, $s, $sk);
+		if ($n == '3秒死机的AIPC')
+		{
+			$ret = '可用于解除禁区，进入英灵殿。<br><span class=&quot;yellow b&quot;>“我打黑熊……？诶……真的假的？”</span>';
+		}
+		elseif ($n == '梦境的前路')
+		{
+			$ret = '可用于开启第12-16波次，以达成『幻境解离』胜利';
+		}
+		elseif ($n == '深暗幻想')
+		{
+			$ret = '可用于开启无尽波次的挑战，使用后将会面对<span class=&quot;red b&quot;>极其强大</span>的敌人</span>';
+		}
+		return $ret;
+	}
 	
 	function assault_finish(&$pa,&$pd,$active)
 	{

@@ -241,33 +241,38 @@ namespace instance12
 	function inst12_get_score(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		return 1337;//待完成
+		$stage = (int)\skillbase\skill_getvalue(981,'stage',$pa);
+		$rm = (int)\skillbase\skill_getvalue(981,'rm',$pa);
+		if ($rm > 0) $stage -= 1;
+		$inst12_difficulty = array(1201 => 1, 1202 => 2, 1203 => 4, 1204 => 8);
+		$r = 0;
+		if (isset($inst12_difficulty[$pa['card']])) $r = $inst12_difficulty[$pa['card']];
+		$score = max($r * $stage, 0);
+		return $score;
 	}
 	
 	//切糕奖励
-	function post_winnercheck_events($winner)
+	function gameover_set_credits()
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$chprocess($winner);
+		$chprocess();
 		eval(import_module('sys'));
-		if ($gametype == 22)
+		if ($gametype != 22) return;
+		if (empty($gameover_plist)) return;
+		$pa = array_values($gameover_plist)[0];//单人模式
+		$qiegao_prize = inst12_get_score($pa) * 50;
+		//结局奖励
+		$inst12_qiegao = array(3 => 500, 7 => 1200);
+		if (isset($inst12_qiegao[$winmode])) $qiegao_prize += $inst12_qiegao[$winmode];
+		if ($qiegao_prize)
 		{
-			$inst12_qiegao = array(3 => 1337, 7 => 5120);
-			if (isset($inst12_qiegao[$winmode]))
-			{
-				$pa = \player\fetch_playerdata($winner);
-				$qiegao_prize = $inst12_qiegao[$winmode];
-				if ($qiegao_prize)
-				{
-					include_once './include/messages.func.php';
-					message_create(
-						$pa['name'],
-						'梦境演练奖励',
-						'祝贺你在房间第'.$gamenum.'局梦境演练获得了奖励！<br>',
-						'getqiegao_'.$qiegao_prize
-					);
-				}
-			}
+			include_once './include/messages.func.php';
+			message_create(
+				$pa['name'],
+				'梦境演练奖励',
+				'祝贺你在房间第'.$gamenum.'局梦境演练获得了奖励！<br>',
+				'getqiegao_'.$qiegao_prize
+			);
 		}
 	}
 	

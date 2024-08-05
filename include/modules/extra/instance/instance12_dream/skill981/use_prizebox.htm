@@ -11,8 +11,6 @@
 	<!--{eval $desc=\item_recipe\show_recipe($v['itmsk']);}-->
 <!--{elseif strpos($v['itmk'],'VO1')===0 && isset($cards[$v['itmsk']])}-->
 	<!--{eval $cn = str_replace('"','&quot;',$cards[$v['itmsk']]['name']); $desc='装有卡牌「'.$cn.'」';}-->
-<!--{elseif $v['itmk'] == 'EE'}-->
-	<!--{eval $desc='可用于解除禁区，进入英灵殿。<br><span class=&quot;yellow b&quot;>“我打黑熊……？诶……真的假的？”</span>';}-->
 <!--{else}-->
 	<!--{eval $desc=\itemmain\parse_itmuse_desc($v['itm'], $v['itmk'], $v['itme'], $v['itms'], $v['itmsk']);}-->
 <!--{/if}-->
