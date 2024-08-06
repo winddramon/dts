@@ -260,17 +260,23 @@ namespace instance12
 		if ($gametype != 22) return;
 		if (empty($gameover_plist)) return;
 		$pa = array_values($gameover_plist)[0];//单人模式
-		$qiegao_prize = inst12_get_score($pa) * 50;
+		$score = inst12_get_score($pa);
+		$qiegao_prize = $score * 50;
+		$score_text = '得分'.$score.'分，计'.$qiegao_prize.'切糕';
 		//结局奖励
 		$inst12_qiegao = array(3 => 500, 7 => 1200);
-		if (isset($inst12_qiegao[$winmode])) $qiegao_prize += $inst12_qiegao[$winmode];
+		if (isset($inst12_qiegao[$winmode]))
+		{
+			$qiegao_prize += $inst12_qiegao[$winmode];
+			$score_text .= '，结局额外奖励'.$inst12_qiegao[$winmode].'切糕';
+		}
 		if ($qiegao_prize)
 		{
 			include_once './include/messages.func.php';
 			message_create(
 				$pa['name'],
 				'梦境演练奖励',
-				'祝贺你在房间第'.$gamenum.'局梦境演练获得了奖励！<br>',
+				'你在房间第'.$gamenum.'局梦境演练中'.$score_text.'。<br>',
 				'getqiegao_'.$qiegao_prize
 			);
 		}
