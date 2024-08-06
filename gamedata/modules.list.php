@@ -310,6 +310,7 @@ skill_temp,extra/skill_temp/,1
 skill606,extra/club/skills/skill606/,1
 skill751,extra/card/skills/skill751/,1
 skill752,extra/card/skills/skill752/,1
+skill754,extra/card/skills/skill754/,1
 wep_g,base/weapon/wep_g/,1
 wep_j,base/weapon/wep_j/,1
 skill273,extra/club/skills/skill273/,1
