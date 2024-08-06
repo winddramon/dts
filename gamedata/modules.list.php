@@ -310,6 +310,7 @@ skill_temp,extra/skill_temp/,1
 skill606,extra/club/skills/skill606/,1
 skill751,extra/card/skills/skill751/,1
 skill752,extra/card/skills/skill752/,1
+skill754,extra/card/skills/skill754/,1
 wep_g,base/weapon/wep_g/,1
 wep_j,base/weapon/wep_j/,1
 skill273,extra/club/skills/skill273/,1
@@ -350,6 +351,7 @@ skill261,extra/club/skills/skill261/,1
 skill274,extra/club/skills/skill274/,1
 skill511,extra/card/skills/skill511/,1
 skill545,extra/card/skills/skill545/,1
+skill982,extra/instance/instance12_dream/skill982/,1
 skill403,extra/card/skills/skill403/,1
 skill203,extra/club/skills/skill203/,1
 ammunition,base/items/ammunition/,1
@@ -619,6 +621,8 @@ skill352,extra/achievement/skills/skill352/,1
 skill383,extra/achievement/skills/skill383/,1
 skill384,extra/achievement/skills/skill384/,1
 skill385,extra/achievement/skills/skill385/,1
+skill386,extra/achievement/skills/skill386/,1
+skill387,extra/achievement/skills/skill387/,1
 skill504,extra/card/skills/skill504/,1
 user_settings,extra/misc/user_settings/,1
 skill740,extra/card/skills/skill740/,1

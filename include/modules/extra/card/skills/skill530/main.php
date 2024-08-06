@@ -54,7 +54,7 @@ namespace skill530
 		$result = $db->query("SELECT groomid,gametype FROM {$gtablepre}game WHERE groomid != '$room_id' AND groomstatus>=40 AND gamestate >= 20 AND starttime <= '$starttime_threshold'");
 		$gamepool = Array();
 		while($rarr = $db->fetch_array($result)){
-			if(!in_array($rarr['gametype'], Array(1, 13, 15, 17, 21))) {//不会空降到除错、试炼、伐木、教程、蹲站房
+			if(!in_array($rarr['gametype'], Array(1, 13, 15, 17, 21, 22))) {//不会空降到除错、试炼、伐木、教程、蹲站、梦演房
 				
 				//判定一下该房间有没有同名玩家
 				$tmp_prefix = room_id2prefix($rarr['groomid']);

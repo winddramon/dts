@@ -165,6 +165,10 @@ namespace item_uvo_extra
 				array('itm'=>'魔王の剑','itmk'=>'WK','itme'=>300,'itms'=>300,'itmsk'=>'u')
 				);
 		}
+		elseif ($cardid == 174)//东方地雷殿
+		{
+			$skills['518']['rmtime'] = 2;
+		}
 		elseif ($cardid == 196)//低维生物
 		{
 			$skills = array();

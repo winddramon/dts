@@ -109,7 +109,7 @@ namespace instance12
 					'itme3' => 153,
 					'itms3' => 1,
 					'itmsk3' => 'Z',
-					'itm4' => '这个是什么按钮',
+					'itm4' => '『G.A.M.E.O.V.E.R』',
 					'itmk4' => 'Y',
 					'itme4' => 1,
 					'itms4' => 1,

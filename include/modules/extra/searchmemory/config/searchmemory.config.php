@@ -17,8 +17,8 @@ namespace searchmemory
 	//从尸体上剥物品的冷却时间，单位毫秒
 	$searchmemorycoldtime = 1500;
 	
-	$gametype_keep_enemy_in_searchmemory = Array(19);//极速模式下离开战场时保留敌人视野格子
-	$gametype_keep_corpse_in_searchmemory = Array(19);//极速模式下离开战场时保留尸体视野格子。PVE和伐木房需要在房间选项那里开启
+	$gametype_keep_enemy_in_searchmemory = Array(19, 22);//极速和梦演模式下离开战场时保留敌人视野格子
+	$gametype_keep_corpse_in_searchmemory = Array(19, 22);//极速和梦演模式下离开战场时保留尸体视野格子。PVE和伐木房需要在房间选项那里开启
 }
 
 ?>

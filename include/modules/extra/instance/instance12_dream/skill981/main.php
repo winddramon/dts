@@ -14,6 +14,7 @@ namespace skill981
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		\skillbase\skill_setvalue(981,'stage','0',$pa);
 		\skillbase\skill_setvalue(981,'rm','0',$pa);
+		\skillbase\skill_setvalue(981,'maxstage','11',$pa);
 	}
 	
 	function lost981(&$pa)
@@ -21,12 +22,31 @@ namespace skill981
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		\skillbase\skill_delvalue(981,'stage',$pa);
 		\skillbase\skill_delvalue(981,'rm',$pa);
+		\skillbase\skill_delvalue(981,'maxstage',$pa);
 	}
 	
 	function check_unlocked981(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		return 1;
+	}
+		
+	function parse_itmuse_desc($n, $k, $e, $s, $sk){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess($n, $k, $e, $s, $sk);
+		if ($n == '3秒死机的AIPC')
+		{
+			$ret = '可用于解除禁区，进入英灵殿。<br><span class=&quot;yellow b&quot;>“我打黑熊……？诶……真的假的？”</span>';
+		}
+		elseif ($n == '梦境的前路')
+		{
+			$ret = '可用于开启第12-16波次，以达成『幻境解离』胜利';
+		}
+		elseif ($n == '深暗幻想')
+		{
+			$ret = '可用于开启无尽波次的挑战，使用后将会面对<span class=&quot;red b&quot;>极其强大</span>的敌人</span>';
+		}
+		return $ret;
 	}
 	
 	function assault_finish(&$pa,&$pd,$active)
@@ -74,7 +94,8 @@ namespace skill981
 			return;
 		}
 		$stage = (int)\skillbase\skill_getvalue(981,'stage');
-		if ($stage >= 11)
+		$maxstage = (int)\skillbase\skill_getvalue(981,'maxstage');
+		if ($stage >= $maxstage)
 		{
 			$log .= '你已经战胜了所有的敌人。<br>';
 			return;
@@ -84,9 +105,18 @@ namespace skill981
 		addnews($now, 'instance12_nextwave', $stage);
 		eval(import_module('skill981'));
 		$rm = 0;
-		foreach($skill981_enemies[$stage] as $k => $v){
-			\randnpc\add_randnpc($k, $v, 0, 0, 0, 0, array(201));
-			$rm += $v;
+		if ($stage <= 16)
+		{
+			foreach($skill981_enemies[$stage] as $k => $v){
+				\randnpc\add_randnpc($k, $v, 0, 0, 0, 0, array(201));
+				$rm += $v;
+			}
+		}
+		else
+		{
+			$def_tend = ($stage - 17) * 10;
+			\randnpc\add_randnpc(19, 2, 0, $def_tend, 0, array(21, 21, 22), array(201));//用两个21表示武神的权重翻倍，有点幽默但就先这样吧
+			$rm += 2;
 		}
 		\skillbase\skill_setvalue(981,'stage',$stage);
 		\skillbase\skill_setvalue(981,'rm',$rm);
@@ -113,34 +143,66 @@ namespace skill981
 		$itm=&$theitem['itm']; $itmk=&$theitem['itmk'];
 		$itme=&$theitem['itme']; $itms=&$theitem['itms']; $itmsk=&$theitem['itmsk'];
 		
-		if (strpos($itmk, 'Y') === 0 && $itm == '梦境礼盒') 
+		if (strpos($itmk, 'Y') === 0 || strpos($itmk, 'Z') === 0)
 		{
-			$log .= "你使用了<span class=\"yellow b\">{$itm}</span>。<br>";
-			$pbx_choice = get_var_input('pbx_choice');
-			if (!empty($pbx_choice))
+			if ($itm == '梦境礼盒') 
 			{
-				$pbx_choice = (int)$pbx_choice;
-				$pbx_itemlist = \skill981\get_prizebox_itemlist($itme, $itmsk);
-				if (!isset($pbx_itemlist[$pbx_choice-1]))
+				$log .= "你使用了<span class=\"yellow b\">{$itm}</span>。<br>";
+				$pbx_choice = get_var_input('pbx_choice');
+				if (!empty($pbx_choice))
 				{
-					$log .= '参数不合法。<br>';
-					$mode = 'command';
-					return;
+					$pbx_choice = (int)$pbx_choice;
+					$pbx_itemlist = \skill981\get_prizebox_itemlist($itme, $itmsk);
+					if (!isset($pbx_itemlist[$pbx_choice-1]))
+					{
+						$log .= '参数不合法。<br>';
+						$mode = 'command';
+						return;
+					}
+					$prizeitem = $pbx_itemlist[$pbx_choice-1];
+					if ($prizeitem['itmk'] == 'YY')
+					{
+						$money += $prizeitem['itme'];
+						$log .= "你获得了<span class=\"yellow b\">{$prizeitem['itme']}</span>元金钱。<br>";
+					}
+					else
+					{
+						\skill952\skill952_sendin_core($prizeitem, $pa);
+						$log .= "<span class=\"yellow b\">{$prizeitem['itm']}</span>被送到了你的奖励箱中。<br>";
+					}
+					\itemmain\itms_reduce($theitem);
+					$itmsk = '';
 				}
-				$prizeitem = $pbx_itemlist[$pbx_choice-1];
-				\skill952\skill952_sendin_core($prizeitem, $pa);
-				$log .= "<span class=\"yellow b\">{$prizeitem['itm']}</span>被送到了你的奖励箱中。<br>";
-				\itemmain\itms_reduce($theitem);
-				$itmsk = '';
+				if (empty($pbx_choice) || $itms > 0)
+				{
+					ob_start();
+					include template(MOD_SKILL981_USE_PRIZEBOX);
+					$cmd = ob_get_contents();
+					ob_end_clean();
+				}
+				return;
 			}
-			if (empty($pbx_choice) || $itms > 0)
+			//剧情道具
+			elseif ($itm == '梦境的前路')
 			{
-				ob_start();
-				include template(MOD_SKILL981_USE_PRIZEBOX);
-				$cmd = ob_get_contents();
-				ob_end_clean();
+				$log .= "你使用了<span class=\"yellow b\">$itm</span>。<br><span class=\"red b\">你决定挑战更强的敌人。</span><br>";
+				\skillbase\skill_setvalue(981,'maxstage','16',$sdata);
+				cast_skill981();
+				addnews($now, 'instance12_stageup1', $name, $itm);
+				$itm = $itmk = $itmsk = '';
+				$itme = $itms = 0;
+				return;
 			}
-			return;
+			elseif ($itm == '深暗幻想')
+			{
+				$log .= "你使用了<span class=\"yellow b\">$itm</span>。<br><span class=\"red b\">你决定挑战无边的黑暗。</span><br>";
+				\skillbase\skill_setvalue(981,'maxstage','114514',$sdata);
+				cast_skill981();
+				addnews($now, 'instance12_stageup2', $name, $itm);
+				$itm = $itmk = $itmsk = '';
+				$itme = $itms = 0;
+				return;
+			}
 		}
 		$chprocess($theitem);
 	}
@@ -176,9 +238,11 @@ namespace skill981
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skill981'));
-		$pbx_pool = $skill981_prizeitems[$itme];
+		if ($itme <= 16) $pbx_pool = $skill981_prizeitems[$itme];
+		else $pbx_pool = $skill981_prizeitems[999];
 		$pbx_arr = [];
-		for ($i = 0; $i < min(count($pbx_pool), 6); $i++)
+		$c_count = min(count($pbx_pool), 6);
+		for ($i = 0; $i < $c_count; $i++)
 		{
 			if (empty($pbx_pool)) break;
 			$pbx_arr[] = get_prizeitem($pbx_pool);
@@ -231,6 +295,10 @@ namespace skill981
 		
 		if($news == 'instance12_nextwave') 
 			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"yellow b\">第{$a}波次敌人加入了战场！</span></li>";
+		elseif($news == 'instance12_stageup1') 
+			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}使用了{$b}，开始挑战更强的敌人！</span></li>";
+		elseif($news == 'instance12_stageup2') 
+			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}使用了{$b}，开始挑战无边的黑暗！</span></li>";
 		
 		return $chprocess($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr);
 	}
