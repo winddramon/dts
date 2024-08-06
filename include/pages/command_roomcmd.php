@@ -419,60 +419,85 @@ if(room_get_vars($roomdata,'soleroom')){//永续房只进行离开判定
 				}
 				$ulist = fetch_udata_multilist('*', array('username' => $namelist));
 				if(empty($ulist)) return;
-				//所有玩家进入游戏
-				$ownercard = $leadercard = 0;
-				for ($i=0; $i < $rdpnum; $i++)
-					if (!$rdplist[$i]['forbidden'])
-					{
-						$pname = $rdplist[$i]['name'];
-						$pname = (string)$pname;
-						if(!isset($ulist[$pname])) continue;
-						$udata = $ulist[$pname];
-						if(0 == room_get_vars($roomdata,'card-select')){//自选卡片
-							$pcard = $udata['card'];
-						}elseif(1 == room_get_vars($roomdata,'card-select')){//仅挑战者
-							$pcard = 0;
-						}elseif(2 == room_get_vars($roomdata,'card-select')){//与房主相同
-							if(!$i){
-								$pcard = $ownercard = $udata['card'];
-							}else{
-								$pcard = $ownercard;
+				//跳过选卡界面，则在这里把所有玩家的数据插入游戏，并立刻把房间调为停止激活状态
+				if(room_get_vars($roomdata,'without-valid')) {
+					$ownercard = $leadercard = 0;
+					for ($i=0; $i < $rdpnum; $i++)
+						if (!$rdplist[$i]['forbidden'])
+						{
+							$pname = $rdplist[$i]['name'];
+							$pname = (string)$pname;
+							if(!isset($ulist[$pname])) continue;
+							$udata = $ulist[$pname];
+							if(0 == room_get_vars($roomdata,'card-select')){//自选卡片
+								$pcard = $udata['card'];
+							}elseif(1 == room_get_vars($roomdata,'card-select')){//仅挑战者
+								$pcard = 0;
+							}elseif(2 == room_get_vars($roomdata,'card-select')){//与房主相同
+								if(!$i){
+									$pcard = $ownercard = $udata['card'];
+								}else{
+									$pcard = $ownercard;
+								}
+							}elseif(3 == room_get_vars($roomdata,'card-select')){//与队长相同
+								if($i == room_get_vars($roomdata,'leader-position')[$i]) {
+									$pcard = $leadercard = $udata['card'];
+								}else{
+									$pcard = $leadercard;
+								}
 							}
-						}elseif(3 == room_get_vars($roomdata,'card-select')){//与队长相同
-							if($i == room_get_vars($roomdata,'leader-position')[$i]) {
-								$pcard = $leadercard = $udata['card'];
-							}else{
-								$pcard = $leadercard;
+							if (isset($roomtypelist[$roomdata['roomtype']]['card'])){
+								$pcard=$roomtypelist[$roomdata['roomtype']]['card'][$i];
 							}
+							enter_battlefield($udata['username'],$udata['password'],$udata['gender'],$udata['icon'],$pcard,$udata['ip']);
+							$db->query("UPDATE {$tablepre}players SET teamID='{$roomtypelist[$roomdata['roomtype']]['teamID'][$roomtypelist[$roomdata['roomtype']]['leader-position'][$i]]}' WHERE name='$pname' AND type=0");
 						}
-						if (isset($roomtypelist[$roomdata['roomtype']]['card'])){
-							$pcard=$roomtypelist[$roomdata['roomtype']]['card'][$i];
-						}
-						enter_battlefield($udata['username'],$udata['password'],$udata['gender'],$udata['icon'],$pcard,$udata['ip']);
-						$db->query("UPDATE {$tablepre}players SET teamID='{$roomtypelist[$roomdata['roomtype']]['teamID'][$roomtypelist[$roomdata['roomtype']]['leader-position'][$i]]}' WHERE name='$pname' AND type=0");
-					}
-				//进入连斗
-				$opgamestate = room_get_vars($roomdata,'opening-gamestate');
-				$gamestate = 30;
-				if (in_array($roomdata['roomtype'],array(0,1,2,3,4)) && (empty($opgamestate) || 40 == $opgamestate)){
-					$gamestate = 40;
-					addnews($now,'combo');
-					systemputchat($now,'combo');
-				}elseif(!empty($opgamestate)){
-					$gamestate = $opgamestate;
-				}elseif ($roomdata['roomtype'] == 11){
-					$current_go=room_get_vars($roomdata, 'current_game_option');
-					$alvl = (int)$current_go['lvl'];
-					if ($alvl >= 20)
-					{
+					//调整房间状态
+					$opgamestate = room_get_vars($roomdata,'opening-gamestate');
+					$gamestate = 30;
+					if (in_array($roomdata['roomtype'],array(0,1,2,3,4)) && (empty($opgamestate) || 40 == $opgamestate)){
 						$gamestate = 40;
 						addnews($now,'combo');
 						systemputchat($now,'combo');
+					}elseif(!empty($opgamestate)){
+						$gamestate = $opgamestate;
+					}elseif ($roomdata['roomtype'] == 11){
+						$current_go=room_get_vars($roomdata, 'current_game_option');
+						$alvl = (int)$current_go['lvl'];
+						if ($alvl >= 20)
+						{
+							$gamestate = 40;
+							addnews($now,'combo');
+							systemputchat($now,'combo');
+						}
+					}
+				}
+				//不跳过选卡界面，则在这里把房间调整为开放激活，同时给gamevars写入数据
+				//这类游戏的停止激活是在连斗模块gameflow_combo里判定的
+				else{
+					$gamestate = 20;
+					$seat_info = Array();
+					for ($i=0; $i < $rdpnum; $i++)
+						if (!$rdplist[$i]['forbidden'])
+						{
+							$pname = (string)($rdplist[$i]['name']);
+							if(!isset($ulist[$pname])) continue;
+							$seat_info[] = $pname;
+						}
+					$gamevars['seat_info'] = $seat_info;
+					$gamevars['max_player'] = sizeof($seat_info);
+					$gamevars['max_opening_sec'] = 180;//先写死3分钟
+					//判断停止激活后是否立刻连斗
+					$opgamestate = room_get_vars($roomdata,'opening-gamestate');
+					if (in_array($roomdata['roomtype'],array(0,1,2,3,4)) && (empty($opgamestate) || 40 == $opgamestate)){
+						$gamevars['opgamestate'] = 40;
+					}elseif(!empty($opgamestate)){
+						$gamevars['opgamestate'] = $opgamestate;//目前指定游戏状态的功能没用（只要这个变量为真，就会判断是否进连斗，跟具体数值无关），这里只保留代码
 					}
 				}
 				save_gameinfo();
 				
-				//再次广播信息，这次让所有玩家跳转到游戏中
+				//再次广播信息，这次让所有玩家的界面跳转到游戏中
 				$db->query("UPDATE {$gtablepre}game SET groomstatus=40 WHERE groomid='$room_id_r'");
 				$roomdata['timestamp']++;
 				$roomdata['chatdata']=room_init($roomdata['roomtype'])['chatdata'];

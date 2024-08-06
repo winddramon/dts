@@ -218,7 +218,7 @@ namespace map
 		//处理玩家禁区死亡/躲避和NPC躲避
 		addarea_pc_process($atime);
 		//检查是否满足无人参加/停止激活条件
-		check_game_stop_joining();
+		check_game_stop_joining_when_area();
 	}
 
 	//聊天发禁区警告
@@ -349,8 +349,8 @@ namespace map
 		
 	}
 	
-	//判定游戏无人参加/停止激活
-	function check_game_stop_joining(){
+	//判定游戏无人参加/停止激活。这个只在过禁时调用。
+	function check_game_stop_joining_when_area(){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','map'));
 		
@@ -359,7 +359,7 @@ namespace map
 			$now_wavenum = get_area_wavenum();
 			if( $validnum <= 0 && $now_wavenum >= $arealimit ) {//判定无人参加并结束游戏
 				\sys\gameover($areatime-get_area_interval()*60+1,'end4');
-			} elseif( $now_wavenum >= $arealimit || $validnum >= $validlimit ) {//判定游戏停止激活
+			} elseif( $now_wavenum >= $arealimit) {//判定游戏停止激活条件1：禁区波次足够
 				$gamestate = 30;
 			}
 		}
