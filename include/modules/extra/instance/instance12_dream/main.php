@@ -48,7 +48,7 @@ namespace instance12
 		if (22 == $gametype)
 		{
 			$cardChosen = 1201;
-			$card_ownlist[] = array_merge($card_ownlist, array(1201, 1202, 1203, 1204));
+			$card_ownlist = array_merge($card_ownlist, array(1201, 1202, 1203, 1204));
 			$packlist[] = 'Pungeon';
 			$hideDisableButton = 0;
 		}
