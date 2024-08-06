@@ -22,9 +22,18 @@ if(!empty($userdb_remote_storage))
 $udata = udata_check();
 if(!$udata) return;
 
-if($gamestate >= 30 && $udata['groupid'] < 6 && $cuser != $gamefounder) {
-	gexit($_ERROR['valid_stop'],__file__,__line__);
-	return;
+//非管理员，进行入场可能性判定
+if($udata['groupid'] < 6 && $cuser != $gamefounder)
+{
+	if($gamestate >= 30) {//已停止激活
+		gexit($_ERROR['valid_stop'],__file__,__line__);
+		return;
+	}
+	//判断是否有玩家名单，如果有，需要在玩家名单上才能入场
+	if(!empty($gamevars['seat_info']) && !in_array($cuser, $gamevars['seat_info'])) {
+		gexit($_ERROR['no_prepare'],__file__,__line__);
+		return;
+	}
 }
 
 //接收入场命令，这里是在修改用户资料和卡片的页面提交的

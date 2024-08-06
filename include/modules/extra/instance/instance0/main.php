@@ -8,7 +8,7 @@ namespace instance0
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','gameflow_combo'));
 		if(10 == $gametype || 14 == $gametype){//如果不是开局连斗，那么2禁或者死亡数160以上才会判定连斗。组队模式也放这里判定吧。
-			if(\map\get_area_wavenum() <= 2 && $alivenum > 1 && $deathnum < $combonum){
+			if(empty($gamevars['opgamestate']) && \map\get_area_wavenum() <= 2 && $alivenum > 1 && $deathnum < $combonum){
 				return;
 			}
 		}

@@ -46,6 +46,28 @@ namespace gameflow_base
 				gamestate_start_game();
 			}
 		}
+		if($gamestate >= 20 && $gamestate < 30) {//判定游戏是否停止激活
+			check_game_stop_joining_base();
+		}
+	}
+
+	//判定游戏是否停止激活。这里只判定人数和停止激活时间
+	function check_game_stop_joining_base()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		if( !empty($gamevars['max_opening_sec']) && $now - $starttime > $gamevars['max_opening_sec']) {//判定游戏停止激活条件A：超过设定的时间
+			$gamestate = 30;
+			return;
+		}
+		if( $validnum > 0 ) {//判定游戏停止激活条件B：激活人数足够
+			$vlimit = $validlimit;
+			if(!empty($gamevars['max_player']) && (int)$gamevars['max_player'] < $vlimit) $vlimit = (int)$gamevars['max_player'];
+			if($validnum >= $vlimit) {
+				$gamestate = 30;
+				return;
+			}
+		}
 	}
 	
 	//连斗判定，具体在连斗模块重载
