@@ -31,10 +31,10 @@ namespace item_randskills
 	//此处S,A,B,C,X表示技能稀有度
 	$rs_cardskills = array
 	(
-		'S' => array(405, 406, 415, 434, 500, 515, 516, 518, 539, 591, 719),
+		'S' => array(405, 406, 415, 434, 500, 515, 516, 518, 591, 719, 755),//539（狱火鸡的不死）
 		'A' => array(407, 409, 410, 437, 439, 440, 446, 458, 472, 486, 496, 502, 517, 527, 560, 595, 597, 710),
-		'B' => array(416, 420, 429, 443, 447, 453, 454, 464, 465, 467, 473, 534, 556, 567, 590, 598, 705, 723, 728, 731, 738),
-		'C' => array(422, 428, 442, 448, 449, 450, 452, 457, 463, 470, 471, 479, 489, 557, 570, 582, 724, 725, 730, 737, 739),
+		'B' => array(416, 420, 429, 443, 447, 453, 454, 464, 465, 467, 473, 534, 556, 567, 590, 598, 705, 723, 728, 731, 738, 741, 753),
+		'C' => array(422, 428, 442, 448, 449, 450, 452, 457, 463, 470, 471, 479, 489, 557, 570, 582, 724, 725, 730, 737, 739, 746, 747, 752),
 		'X' => array(469, 474, 478, 483, 494, 511, 571, 579, 702, 704, 707, 708, 722),
 	);
 	
@@ -266,14 +266,21 @@ namespace item_randskills
 		else return array();
 		$ls_skills = array_diff($ls_skills, \skillbase\get_acquired_skill_array($sdata));
 		$itmsk = \itemmain\replace_in_itmsk('^scls','',$itmsk);
-		if (!empty($ls_skills))
+		if (count($ls_skills) < 3)
+		{
+			$sclist = array_values($ls_skills);
+			while (count($sclist) < 3)
+			{
+				$sclist[] = 724;
+			}
+		}
+		else
 		{
 			$sclist = array_randompick($ls_skills, 3);
 			$scstr = implode(',',$sclist);
 			$itmsk .= '^scls_'.\attrbase\base64_encode_comp_itmsk($scstr).'1';
-			return $sclist;
 		}
-		else return array();
+		return $sclist;
 	}
 	
 	//获得随机称号技能

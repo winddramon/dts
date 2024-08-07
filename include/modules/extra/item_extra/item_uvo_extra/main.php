@@ -183,6 +183,10 @@ namespace item_uvo_extra
 				array('itm'=>'银色盒子','itmk'=>'p','itme'=>1,'itms'=>55,'itmsk'=>'')
 				);
 		}
+		elseif ($cardid == 290)//狱火鸡
+		{
+			$skills = array('755' => 2);
+		}
 		elseif ($cardid == 292)//邪教徒 
 		{
 			if(defined('MOD_ATTRBASE')) {

@@ -18,7 +18,7 @@
 <span <!--{if $desc}-->style="cursor:pointer;" title="$desc"<!--{/if}-->>
 $v['itm']/<!--{eval echo \itemmain\parse_itmk_words($v['itmk']);}-->/$v['itme']/$v['itms']<!--{eval echo $itmsk_words ? '/'.$itmsk_words : ''}-->
 </span>
-<!--{if $v['itmk'] == 'VS'}-->  
+<!--{if $v['itmk'] == 'VS' && !empty($v['itmsk'])}-->  
 <input type="button" class="cmdbutton" style="min-width:50px;" value="查看" onmouseenter="$('$skilldesc_id').style.display='block';" onmouseleave="$('$skilldesc_id').style.display='none';">
 <div style="position:relative;">
 	<div id="$skilldesc_id" class="skilldesc_show" style="display:none;position:absolute;background-color:#000000;">

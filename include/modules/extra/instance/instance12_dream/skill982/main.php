@@ -32,8 +32,8 @@ namespace skill982
 		$ret=$chprocess($item);
 		if (\skillbase\skill_query(982))
 		{
-			$r = 1.5;
-			if ((int)\skillbase\skill_getvalue(982, 'lvl') > 0) $r = 2;
+			$r = 1.2;
+			if ((int)\skillbase\skill_getvalue(982, 'lvl') > 0) $r = 1.25;
 			$ret['price']=round($ret['price']*$r);
 		}
 		return $ret;
@@ -45,8 +45,8 @@ namespace skill982
 		$ret=$chprocess($sn);
 		if (\skillbase\skill_query(982))
 		{
-			$r = 1.5;
-			if ((int)\skillbase\skill_getvalue(982, 'lvl') > 0) $r = 2;
+			$r = 1.2;
+			if ((int)\skillbase\skill_getvalue(982, 'lvl') > 0) $r = 1.25;
 			for ($i=0; $i<count($ret); $i++)
 				$ret[$i]['price']=round($ret[$i]['price']*$r);
 		}
@@ -60,9 +60,9 @@ namespace skill982
 		if (\skillbase\skill_query(982, $pa) && ((int)\skillbase\skill_getvalue(982, 'lvl', $pa) > 0))
 		{
 			eval(import_module('logger'));
-			if ($active) $log .= "<span class=\"red b\">「梦蚀」使敌人受到的最终伤害降低了20%！</span><br>";
-			else $log .= "<span class=\"red b\">「梦蚀」使敌人造成的最终伤害降低了20%！</span><br>";
-			$r = array(0.8);
+			if ($active) $log .= "<span class=\"red b\">「梦蚀」使敌人受到的最终伤害降低了10%！</span><br>";
+			else $log .= "<span class=\"red b\">「梦蚀」使敌人造成的最终伤害降低了10%！</span><br>";
+			$r = array(0.9);
 		}
 		return array_merge($r,$chprocess($pa,$pd,$active));
 	}

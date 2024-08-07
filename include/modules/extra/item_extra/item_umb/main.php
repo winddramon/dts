@@ -10,6 +10,40 @@ namespace item_umb
 		$itemspkinfo['^mbtime'] = '状态药物技能时效';//这个也是不会显示的
 		$itemspkinfo['^mblvl'] = '状态药物技能等级';//这个还是不会显示的
 	}
+	
+	function parse_itmuse_desc($n, $k, $e, $s, $sk){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess($n, $k, $e, $s, $sk);
+		if (strpos($k, 'MB') === 0)
+		{
+			eval(import_module('clubbase'));
+			$flag = \attrbase\check_in_itmsk('^mbid', $sk);
+			if(!empty($flag)) {
+				$buff_id = (int)$flag;
+			}
+			elseif(is_numeric($itmsk)) {
+				$buff_id = (int)$itmsk;
+			}
+			if(!empty($clubskillname[$buff_id])){
+				$if_temp = '';
+				$buff_time = \attrbase\check_in_itmsk('^mbtime', $sk);
+				if ($buff_time) $if_temp = '临时';
+				$ret .= '使用后获得'.$if_temp.'技能「'.$clubskillname[$buff_id].'」';
+			}
+			if ($buff_id == '400'){
+				$ret .= '：造成物理伤害有概率增加';
+			}elseif ($buff_id == '401') {
+				$ret .= '：受到物理伤害减少';
+			}elseif ($buff_id == '404') {
+				$ret .= '：生命值在50%以下时攻击附加固定物理伤害';
+			}elseif ($buff_id == '461') {
+				$ret .= '：免疫时效性负面状态和异常状态';
+			}elseif ($buff_id == '710') {
+				$ret .= '：解除使用熟练技能书或熟练药物的衰减';
+			}
+		}
+		return $ret;
+	}
 
 	function itemuse_um(&$theitem)
 	{
