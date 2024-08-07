@@ -33,6 +33,7 @@ namespace skill982
 		if (\skillbase\skill_query(982))
 		{
 			$r = 1.2;
+			if ((int)\skillbase\skill_getvalue(982, 'lvl') > 0) $r = 1.25;
 			$ret['price']=round($ret['price']*$r);
 		}
 		return $ret;
@@ -45,6 +46,7 @@ namespace skill982
 		if (\skillbase\skill_query(982))
 		{
 			$r = 1.2;
+			if ((int)\skillbase\skill_getvalue(982, 'lvl') > 0) $r = 1.25;
 			for ($i=0; $i<count($ret); $i++)
 				$ret[$i]['price']=round($ret[$i]['price']*$r);
 		}

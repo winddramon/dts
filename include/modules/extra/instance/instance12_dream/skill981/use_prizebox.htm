@@ -18,14 +18,17 @@
 <span <!--{if $desc}-->style="cursor:pointer;" title="$desc"<!--{/if}-->>
 $v['itm']/<!--{eval echo \itemmain\parse_itmk_words($v['itmk']);}-->/$v['itme']/$v['itms']<!--{eval echo $itmsk_words ? '/'.$itmsk_words : ''}-->
 </span>
-<!--{if $v['itmk'] == 'VS'}-->  
-<input type="button" class="cmdbutton" style="min-width:50px;" value="查看" onmouseenter="$('$skilldesc_id').style.display='block';" onmouseleave="$('$skilldesc_id').style.display='none';">
-<div style="position:relative;">
-	<div id="$skilldesc_id" class="skilldesc_show" style="display:none;position:absolute;background-color:#000000;">
-	<!--{eval echo \item_randskills\parse_skcore_skilldesc($v['itmsk']);}-->
+<!--{if $v['itmk'] == 'VS' || $v['itmk'] == 'MB'}-->  
+	<!--{eval $skid = $v['itmk'] == 'VS' ? $v['itmsk'] : \attrbase\check_in_itmsk('^mbid', $v['itmsk']);}-->
+	<!--{if !empty($skid)}-->
+	<input type="button" class="cmdbutton" style="min-width:50px;" value="查看" onmouseenter="$('$skilldesc_id').style.display='block';" onmouseleave="$('$skilldesc_id').style.display='none';">
+	<div style="position:relative;">
+		<div id="$skilldesc_id" class="skilldesc_show" style="display:none;position:absolute;background-color:#000000;">
+		<!--{eval echo \item_randskills\parse_skcore_skilldesc($skid);}-->
+		</div>
 	</div>
-</div>
-<br>
+	<br>
+	<!--{/if}-->
 <!--{/if}-->
 <br>
 <!--{/loop}-->
