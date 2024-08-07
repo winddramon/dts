@@ -35,6 +35,8 @@ namespace item_uv
 				$ret .= '：可以选择减少移动和探索体力消耗，或增加移动和探索体力消耗并减少冷却时间';
 			}elseif ($sk == '739') {
 				$ret .= '：可用歌魂交换空歌魂上限';
+			}elseif ($sk == '983') {
+				$ret .= '：<span class=&quot;lime b&quot;>遇到一位神秘的伙伴。</span>';
 			}
 		}
 		return $ret;

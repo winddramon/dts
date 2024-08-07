@@ -15,7 +15,7 @@ namespace skill964
 	$packcount_buff = array(//每个卡包的buff的数值，效果
 		0 => array(10,20,35,50,70,95),//标准包，减伤
 		1 => array(10,30,50,90,150,300),//红杀包，物伤增加
-		2 => array(50,110,180,300,700,3000),//玩家包，熟练度增加
+		2 => array(100,300,800,2000,3600,7200),//玩家包，熟练度增加
 		3 => array(2,6,12,18,30,50),//杂烩包，获得经验增加
 		4 => array(3,6,10,18,30,50),//电竞包，先攻增加
 		5 => array(1,2,3,4,5,7),//東埔寨包，灵系射程增加
@@ -192,7 +192,7 @@ namespace skill964
 			{
 				eval(import_module('logger'));
 				if ($active) $log .= "<span class=\"yellow b\">「共振」使你造成的物理伤害增加了{$dmggain}%！</span><br>";
-				else $log .= " <span class=\"yellow b\">「共振」使{$pa['name']}造成的物理伤害增加了{$dmggain}%！</span><br>";
+				else $log .= " <span class=\"yellow b\">「共振」使{$pd['name']}造成的属性伤害增加了{$dmgdown}%！</span><br>";
 				$r = array(1 + $dmggain / 100);
 			}
 		}
@@ -211,7 +211,7 @@ namespace skill964
 			{
 				eval(import_module('logger'));
 				if ($active) $log .= "<span class=\"yellow b\">「共振」使你造成的属性伤害增加了{$dmggain}%！</span><br>";
-				else $log .= " <span class=\"yellow b\">「共振」使{$pa['name']}造成的属性伤害增加了{$dmggain}%！</span><br>";
+				else $log .= " <span class=\"yellow b\">「共振」使{$pd['name']}造成的属性伤害增加了{$dmgdown}%！</span><br>";
 				$r = array(1 + $dmggain / 100);
 			}
 		}
