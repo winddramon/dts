@@ -104,6 +104,15 @@ namespace skill981
 		$stage += 1;
 		$log .= "<span class=\"yellow b\">新的敌人加入了战场！</span><br>";
 		addnews($now, 'instance12_nextwave', $stage);
+		$rm = skill981_add_enemy($stage);
+		
+		\skillbase\skill_setvalue(981,'stage',$stage);
+		\skillbase\skill_setvalue(981,'rm',$rm);
+	}
+	
+	function skill981_add_enemy($stage)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skill981'));
 		$rm = 0;
 		if ($stage <= 16)
@@ -119,8 +128,7 @@ namespace skill981
 			\randnpc\add_randnpc(19, 2, 0, $def_tend, 0, array(21, 21, 22), array(201));//用两个21表示武神的权重翻倍，有点幽默但就先这样吧
 			$rm += 2;
 		}
-		\skillbase\skill_setvalue(981,'stage',$stage);
-		\skillbase\skill_setvalue(981,'rm',$rm);
+		return $rm;
 	}
 	
 	function act()
