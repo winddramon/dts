@@ -15,6 +15,7 @@ namespace skill981
 		\skillbase\skill_setvalue(981,'stage','0',$pa);
 		\skillbase\skill_setvalue(981,'rm','0',$pa);
 		\skillbase\skill_setvalue(981,'maxstage','11',$pa);
+		\skillbase\skill_setvalue(981,'flag','0',$pa);
 	}
 	
 	function lost981(&$pa)
@@ -23,6 +24,7 @@ namespace skill981
 		\skillbase\skill_delvalue(981,'stage',$pa);
 		\skillbase\skill_delvalue(981,'rm',$pa);
 		\skillbase\skill_delvalue(981,'maxstage',$pa);
+		\skillbase\skill_delvalue(981,'flag',$pa);
 	}
 	
 	function check_unlocked981(&$pa)
@@ -161,13 +163,14 @@ namespace skill981
 				if (!empty($pbx_choice))
 				{
 					$pbx_choice = (int)$pbx_choice;
-					$pbx_itemlist = \skill981\get_prizebox_itemlist($itme, $itmsk);
+					$pbx_itemlist = get_prizebox_itemlist($itme, $itmsk);
 					if (!isset($pbx_itemlist[$pbx_choice-1]))
 					{
 						$log .= '参数不合法。<br>';
 						$mode = 'command';
 						return;
 					}
+					if (!\skillbase\skill_getvalue(981,'flag',$sdata)) \skillbase\skill_setvalue(981,'flag','1',$sdata);
 					$prizeitem = $pbx_itemlist[$pbx_choice-1];
 					if ($prizeitem['itmk'] == 'YY')
 					{
@@ -240,6 +243,7 @@ namespace skill981
 			elseif (strpos($v, 'c') === 0) $newitem = array('itm'=>'卡片福袋','itmk'=>'VO1','itme'=>1,'itms'=>1,'itmsk'=>substr($v,1));
 			$pbx_itemlist[] = $newitem;
 		}
+		if (!\skillbase\skill_getvalue(981,'flag')) $pbx_itemlist[] = array('itm'=>'一缕残念','itmk'=>'VS','itme'=>1,'itms'=>1,'itmsk'=>'983');//剧情道具
 		return $pbx_itemlist;
 	}
 	
