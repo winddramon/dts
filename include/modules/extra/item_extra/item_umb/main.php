@@ -34,6 +34,8 @@ namespace item_umb
 				$ret .= '：造成物理伤害有概率增加';
 			}elseif ($buff_id == '401') {
 				$ret .= '：受到物理伤害减少';
+			}elseif ($buff_id == '404') {
+				$ret .= '：生命值在50%以下时攻击附加固定物理伤害';
 			}elseif ($buff_id == '461') {
 				$ret .= '：免疫时效性负面状态和异常状态';
 			}elseif ($buff_id == '710') {
