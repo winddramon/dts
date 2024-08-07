@@ -266,14 +266,21 @@ namespace item_randskills
 		else return array();
 		$ls_skills = array_diff($ls_skills, \skillbase\get_acquired_skill_array($sdata));
 		$itmsk = \itemmain\replace_in_itmsk('^scls','',$itmsk);
-		if (!empty($ls_skills))
+		if (count($ls_skills) < 3)
+		{
+			$sclist = array_values($ls_skills);
+			while (count($sclist) < 3)
+			{
+				$sclist[] = 724;
+			}
+		}
+		else
 		{
 			$sclist = array_randompick($ls_skills, 3);
 			$scstr = implode(',',$sclist);
 			$itmsk .= '^scls_'.\attrbase\base64_encode_comp_itmsk($scstr).'1';
-			return $sclist;
 		}
-		else return array();
+		return $sclist;
 	}
 	
 	//获得随机称号技能
