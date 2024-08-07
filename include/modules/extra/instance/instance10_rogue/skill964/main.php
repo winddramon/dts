@@ -192,7 +192,7 @@ namespace skill964
 			{
 				eval(import_module('logger'));
 				if ($active) $log .= "<span class=\"yellow b\">「共振」使你造成的物理伤害增加了{$dmggain}%！</span><br>";
-				else $log .= " <span class=\"yellow b\">「共振」使{$pd['name']}造成的属性伤害增加了{$dmgdown}%！</span><br>";
+				else $log .= "<span class=\"yellow b\">「共振」使{$pa['name']}造成的物理伤害增加了{$dmggain}%！</span><br>";
 				$r = array(1 + $dmggain / 100);
 			}
 		}
@@ -211,7 +211,7 @@ namespace skill964
 			{
 				eval(import_module('logger'));
 				if ($active) $log .= "<span class=\"yellow b\">「共振」使你造成的属性伤害增加了{$dmggain}%！</span><br>";
-				else $log .= " <span class=\"yellow b\">「共振」使{$pd['name']}造成的属性伤害增加了{$dmgdown}%！</span><br>";
+				else $log .= "<span class=\"yellow b\">「共振」使{$pa['name']}造成的属性伤害增加了{$dmggain}%！</span><br>";
 				$r = array(1 + $dmggain / 100);
 			}
 		}
@@ -243,7 +243,7 @@ namespace skill964
 			{
 				eval(import_module('logger'));
 				if ($active) $log .= "<span class=\"yellow b\">「共振」使{$pd['name']}受到的伤害降低了{$dmgdown}%！</span><br>";
-				else $log .=" <span class=\"yellow b\">「共振」使你受到的伤害降低了{$dmgdown}%！</span><br>";
+				else $log .= "<span class=\"yellow b\">「共振」使你受到的伤害降低了{$dmgdown}%！</span><br>";
 				$r[] = 1 - $dmgdown / 100;
 			}
 		}
