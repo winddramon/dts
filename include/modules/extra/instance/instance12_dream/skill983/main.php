@@ -444,14 +444,14 @@ namespace skill983
 			if ($dmggain > 0)
 			{
 				if ($active) $log .= "<span class=\"yellow b\">「余火」使你造成的伤害增加了{$dmggain}%！</span><br>";
-				else $log .= " <span class=\"yellow b\">「余火」使{$pd['name']}造成的伤害增加了{$dmggain}%！</span><br>";
+				else $log .= " <span class=\"yellow b\">「余火」使{$pa['name']}造成的伤害增加了{$dmggain}%！</span><br>";
 				$r[] = 1 + $dmggain / 100;
 			}
 			elseif ($dmggain < 0)
 			{
 				$dmgdown = -$dmggain;
 				if ($active) $log .= "<span class=\"yellow b\">「余火」使你造成的伤害降低了{$dmgdown}%！</span><br>";
-				else $log .= " <span class=\"yellow b\">「余火」使{$pd['name']}造成的伤害降低了{$dmgdown}%！</span><br>";
+				else $log .= " <span class=\"yellow b\">「余火」使{$pa['name']}造成的伤害降低了{$dmgdown}%！</span><br>";
 				$r[] = 1 + $dmggain / 100;
 			}
 		}
