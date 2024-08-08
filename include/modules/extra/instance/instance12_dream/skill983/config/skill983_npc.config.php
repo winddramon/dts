@@ -75,7 +75,7 @@ namespace skill983
 		'bid' => 0,
 		'inf' => '',
 		'rage' => 0,
-		'pose'=> 4,
+		'pose'=> 1,
 		'tactic' => 3,
 		'killnum' => 0,
 		'teamID' => '',
