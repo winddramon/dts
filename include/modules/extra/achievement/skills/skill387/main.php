@@ -28,9 +28,14 @@ namespace skill387
 	
 	//各级给的切糕奖励
 	$ach387_qiegao_prize = array(
-		1 => 1337,
-		2 => 2333,
-		3 => 5120
+		1 => 777,
+		2 => 1337,
+		3 => 2333
+	);
+	
+	//各级给的卡片奖励
+	$ach387_card_prize = array(
+		3 => 422
 	);
 	
 	function init() 

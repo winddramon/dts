@@ -36,7 +36,7 @@ namespace item_uv
 			}elseif ($sk == '739') {
 				$ret .= '：可用歌魂交换空歌魂上限';
 			}elseif ($sk == '983') {
-				$ret .= '：<span class=&quot;lime b&quot;>遇到一位神秘的伙伴。</span>';
+				$ret .= '：<span class=&quot;lime b&quot;>遇到一位神秘的伙伴，并将面对特殊的强敌</span>';
 			}
 		}
 		return $ret;
