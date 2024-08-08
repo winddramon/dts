@@ -120,7 +120,7 @@ namespace skill756
 			$pd['hp'] += $hpup + 1;
 			if ($active) $log .= "<span class=\"yellow b\">{$pd['name']}完全吸收了你造成的属性伤害，回复了{$hpup}点生命值！</span><br>";
 			else $log .= "<span class=\"yellow b\">你完全吸收了{$pa['name']}造成的属性伤害，回复了{$hpup}点生命值！</span><br>";
-			$pa['ex_dmg_dealt'] = 0;
+			$pa['ex_dmg_dealt'] = 1;
 			$pd['exdmg_nullify_success'] = 1;
 			return 1;
 		}
