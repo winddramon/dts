@@ -420,7 +420,8 @@ if(room_get_vars($roomdata,'soleroom')){//永续房只进行离开判定
 				$ulist = fetch_udata_multilist('*', array('username' => $namelist));
 				if(empty($ulist)) return;
 				//跳过选卡界面，则在这里把所有玩家的数据插入游戏，并立刻把房间调为停止激活状态
-				if(room_get_vars($roomdata,'without-valid')) {
+				//两个条件，一是明确规定了跳过选卡界面（教程、解离、伐木等），二是选择了与房主或者队长相同的卡。后者未来需要再优化一下逻辑
+				if(room_get_vars($roomdata,'without-valid') || (2 == room_get_vars($roomdata,'card-select') || 3 == room_get_vars($roomdata,'card-select'))) {
 					$ownercard = $leadercard = 0;
 					for ($i=0; $i < $rdpnum; $i++)
 						if (!$rdplist[$i]['forbidden'])
@@ -492,7 +493,7 @@ if(room_get_vars($roomdata,'soleroom')){//永续房只进行离开判定
 					if (in_array($roomdata['roomtype'],array(0,1,2,3,4)) && (empty($opgamestate) || 40 == $opgamestate)){
 						$gamevars['opgamestate'] = 40;
 					}elseif(!empty($opgamestate)){
-						$gamevars['opgamestate'] = $opgamestate;//目前指定游戏状态的功能没用（只要这个变量为真，就会判断是否进连斗，跟具体数值无关），这里只保留代码
+						$gamevars['opgamestate'] = $opgamestate;//目前，这个指定某个状态的功能并没有用（只要这个变量为真，就会判断是否进连斗，跟具体数值无关），这里只保留代码
 					}
 				}
 				save_gameinfo();
