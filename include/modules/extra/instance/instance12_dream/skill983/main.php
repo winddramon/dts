@@ -6,7 +6,7 @@ namespace skill983
 	{
 		define('MOD_SKILL983_INFO','card;');
 		eval(import_module('clubbase','player','addnpc'));
-		global $skill983_npc;
+		global $skill983_npc, $skill983_boss_npc;
 		$clubskillname[983] = '余火';
 		$typeinfo[106] = '残像回声';
 		$anpcinfo[106] = $skill983_npc;
@@ -347,7 +347,7 @@ namespace skill983
 		else
 		{
 			eval(import_module('logger'));
-			$log .= "<span class=\"white b\">“……”</span><br><span class=\"yellow b\">新的敌人加入了战场！</span><br>";//待补充台词
+			$log .= "<span class=\"white b\">“……”</span><br>";//待补充台词
 			\addnpc\addnpc(107, 0, 1, 201);
 			return 1;
 		}
