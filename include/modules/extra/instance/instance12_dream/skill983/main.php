@@ -183,7 +183,7 @@ namespace skill983
 						{
 							if (!\skillbase\skill_query($sk_kind, $edata))
 							{
-								$log .= "<span class=\"yellow b\">{$edata['name']}</span>获得了技能「<span class=\"yellow b\">".$clubskillname[$sk_kind]."</span>」'<br>";
+								$log .= "<span class=\"yellow b\">{$edata['name']}</span>获得了技能「<span class=\"yellow b\">".$clubskillname[$sk_kind]."</span>」！<br>";
 								\skillbase\skill_acquire($sk_kind, $edata);
 							}
 						}
