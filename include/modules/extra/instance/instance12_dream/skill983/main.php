@@ -148,12 +148,14 @@ namespace skill983
 					if (strpos($itmk, 'HM') === 0 || strpos($itmk, 'HT') === 0 || $itms == '∞' || $itme * $itms >= 3000)
 					{
 						//$log .= "";//待补充台词
+						$log .= "<span class=\"yellow b\">你感觉自己受到了祝福！</span><br>";
 						$buffid = rand(18,22);//正面buff
 						\skillbase\skill_setvalue(983,'buff',$buffid,$sdata);
 					}
 					else
 					{
 						//$log .= "";//待补充台词
+						$log .= "<span class=\"yellow b\">什么也没有发生。</span><br>";
 					}
 					\itemmain\item_destroy_core('itm'.$itmn, $sdata);
 					$mode = 'command';
@@ -162,6 +164,7 @@ namespace skill983
 				elseif (strpos($itmk, 'P') === 0) //给毒补给
 				{
 					//$log .= "";//待补充台词
+					$log .= "<span class=\"yellow b\">你感觉自己变得虚弱了……</span><br>";
 					$buffid = rand(13,17);//负面buff
 					\skillbase\skill_setvalue(983,'buff',$buffid,$sdata);
 					\itemmain\item_destroy_core('itm'.$itmn, $sdata);
@@ -185,7 +188,11 @@ namespace skill983
 							}
 						}
 					}
-					else $edata['wc'] += $itme * $itms;
+					else
+					{
+						$log .= "<span class=\"yellow b\">$itm</span>化作七色的光芒，融入了<span class=\"yellow b\">{$edata['name']}</span>的身躯中。<br>";
+						$edata['wc'] += $itme * $itms;
+					}
 					\player\player_save($edata);
 					\itemmain\item_destroy_core('itm'.$itmn, $sdata);
 					$mode = 'command';
@@ -194,6 +201,7 @@ namespace skill983
 				elseif (strpos($itmk, 'M') === 0) //给强化药
 				{
 					//$log .= "";//待补充台词
+					$log .= "<span class=\"yellow b\">$itm</span>化作七色的光芒，融入了<span class=\"yellow b\">{$edata['name']}</span>的身躯中。<br>";
 					$edata['wc'] += rand(round(0.2 * $itme * $itms), $itme * $itms);
 					$edata['att'] += rand(round(0.5 * $itme * $itms), $itme * $itms);
 					\player\player_save($edata);
@@ -206,6 +214,7 @@ namespace skill983
 					if (rand(0,3)== 0)
 					{
 						//$log .= "";//待补充台词
+						$log .= "你获得了<span class=\"yellow b\">梦境礼盒</span>。<br>";
 						$itm = '梦境礼盒';
 						$itmk = 'Y';
 						$itme = rand(1,6);
@@ -218,6 +227,7 @@ namespace skill983
 						$hpup = rand(30,100) * $itms;
 						$mhp += $hpup;
 						$hp += $hpup;
+						$log .= "身体里有种力量涌出来！<br>你的生命上限提高了<span class=\"yellow b\">$hpup</span>点！<br>";
 						\itemmain\item_destroy_core('itm'.$itmn, $sdata);
 					}
 					$mode = 'command';
@@ -229,7 +239,14 @@ namespace skill983
 					$hpup = rand(10,30) * $itms;
 					$mhp += $hpup;
 					$hp += $hpup;
+					$log .= "身体里有种力量涌出来！<br>你的生命上限提高了<span class=\"yellow b\">$hpup</span>点！<br>";
 					\itemmain\item_destroy_core('itm'.$itmn, $sdata);
+					$mode = 'command';
+					return;
+				}
+				else
+				{
+					$log .= "<span class=\"white b\">“这个不知道该怎么使用呢……”</span><br>";
 					$mode = 'command';
 					return;
 				}
@@ -353,6 +370,31 @@ namespace skill983
 		}
 	}
 	
+	function skill983_get_dmg_multiplier(&$pa, $t=1)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$dmggain = 0;
+		$buffid = (int)\skillbase\skill_getvalue(983,'buff',$pa);
+		if ($t == 1)//物理伤害系数
+		{
+			$skill983_dmggain = array(7 => -50, 8 => 100, 16 => -80, 21 => 60);
+			if (isset($skill983_dmggain[$buffid])) $dmggain = $skill983_dmggain[$buffid];
+		} 
+		elseif ($t == 2)//属性伤害系数
+		{
+			$skill983_dmggain = array(7 => 100, 8 => -50, 17 => -80, 22 => 60);
+			if (isset($skill983_dmggain[$buffid])) $dmggain = $skill983_dmggain[$buffid];
+		}
+		elseif ($t == 3)//最终伤害系数
+		{
+			$skill983_dmggain = array(11 => 50, 12 => -50, 15 => -50, 20 => 50);
+			if (isset($skill983_dmggain[$buffid])) $dmggain = $skill983_dmggain[$buffid];
+			elseif (($buffid == 1 && $pa['wep_kind'] == 'F') || ($buffid == 2 && $pa['wep_kind'] == 'P') || ($buffid == 3 && $pa['wep_kind'] == 'D') || ($buffid == 4 && $pa['wep_kind'] == 'K') || ($buffid == 5 && $pa['wep_kind'] == 'G') || ($buffid == 6 && $pa['wep_kind'] == 'C')) $dmggain = -50;
+			elseif (($buffid == 1 && $pa['wep_kind'] == 'P') || ($buffid == 2 && $pa['wep_kind'] == 'D') || ($buffid == 3 && $pa['wep_kind'] == 'K') || ($buffid == 4 && $pa['wep_kind'] == 'G') || ($buffid == 5 && $pa['wep_kind'] == 'C') || ($buffid == 6 && $pa['wep_kind'] == 'F')) $dmggain = 100;
+		}
+		return $dmggain;
+	}
+	
 	//物理伤害变化
 	function get_physical_dmg_multiplier(&$pa, &$pd, $active)
 	{
@@ -360,11 +402,9 @@ namespace skill983
 		$r = array();
 		if (\skillbase\skill_query(983, $pa))
 		{
-			$buffid = (int)\skillbase\skill_getvalue(983,'buff',$pa);
-			$skill983_dmggain = array(7 => -50, 8 => 100, 16 => -80, 21 => 60);
-			if (isset($skill983_dmggain[$buffid]))
+			$dmggain = skill983_get_dmg_multiplier($pa, 1);
+			if ($dmggain != 0)
 			{
-				$dmggain = $skill983_dmggain[$buffid];
 				eval(import_module('logger'));
 				if ($dmggain > 0)
 				{
@@ -390,11 +430,9 @@ namespace skill983
 		$r = array();
 		if (\skillbase\skill_query(983, $pa))
 		{
-			$buffid = (int)\skillbase\skill_getvalue(983,'buff',$pa);
-			$skill983_dmggain = array(7 => 100, 8 => -50, 17 => -80, 22 => 60);
-			if (isset($skill983_dmggain[$buffid]))
+			$dmggain = skill983_get_dmg_multiplier($pa, 2);
+			if ($dmggain != 0)
 			{
-				$dmggain = $skill983_dmggain[$buffid];
 				eval(import_module('logger'));
 				if ($dmggain > 0)
 				{
@@ -434,12 +472,7 @@ namespace skill983
 		$r = array();
 		if (\skillbase\skill_query(983, $pa))
 		{
-			$buffid = (int)\skillbase\skill_getvalue(983,'buff',$pa);
-			$skill983_dmggain = array(11 => 50, 12 => -50, 15 => -50, 20 => 50);
-			$dmggain = 0;
-			if (isset($skill983_dmggain[$buffid])) $dmggain = $skill983_dmggain[$buffid];
-			elseif (($buffid == 1 && $pa['wep_kind'] == 'F') || ($buffid == 2 && $pa['wep_kind'] == 'P') || ($buffid == 3 && $pa['wep_kind'] == 'D') || ($buffid == 4 && $pa['wep_kind'] == 'K') || ($buffid == 5 && $pa['wep_kind'] == 'G') || ($buffid == 6 && $pa['wep_kind'] == 'C')) $dmggain = -50;
-			elseif (($buffid == 1 && $pa['wep_kind'] == 'P') || ($buffid == 2 && $pa['wep_kind'] == 'D') || ($buffid == 3 && $pa['wep_kind'] == 'K') || ($buffid == 4 && $pa['wep_kind'] == 'G') || ($buffid == 5 && $pa['wep_kind'] == 'C') || ($buffid == 6 && $pa['wep_kind'] == 'F')) $dmggain = 100;
+			$dmggain = skill983_get_dmg_multiplier($pa, 3);
 			eval(import_module('logger'));
 			if ($dmggain > 0)
 			{

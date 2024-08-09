@@ -88,6 +88,16 @@ namespace skill756
 			eval(import_module('logger','skill756'));
 			$clv = (int)\skillbase\skill_getvalue(756,'lvl',$pd);
 			$phy_dmg = \weapon\get_physical_dmg($pa, $pd, $active);
+			if (\skillbase\skill_query(983, $pa))
+			{
+				$skill983_dmggain = \skill983\skill983_get_dmg_multiplier($pa, 1);
+				if ($skill983_dmggain != 0)
+				{
+					$dmg_r = 100 + $skill983_dmggain;
+					$phy_dmg = (int)($phy_dmg * $dmg_r / 100);
+					$log .= "<span class=\"yellow b\">「余火」使物理伤害变为原先的{$dmg_r}%！</span><br>";
+				}
+			}
 			$hpup = min($phy_dmg, ceil($skill756_recover_rate[$clv] * $pd['mhp'] / 100));
 			$pd['hp'] += $hpup + 1;
 			if ($active) $log .= "<span class=\"yellow b\">{$pd['name']}完全吸收了你造成的物理伤害，回复了{$hpup}点生命值！</span><br>";
@@ -116,6 +126,16 @@ namespace skill756
 			eval(import_module('logger','skill756'));
 			$clv = (int)\skillbase\skill_getvalue(756,'lvl',$pd);
 			$ex_dmg = \ex_dmg_att\calculate_ex_attack_dmg_base($pa, $pd, $active);
+			if (\skillbase\skill_query(983, $pa))
+			{
+				$skill983_dmggain = \skill983\skill983_get_dmg_multiplier($pa, 2);
+				if ($skill983_dmggain != 0)
+				{
+					$dmg_r = 100 + $skill983_dmggain;
+					$ex_dmg = (int)($ex_dmg * $dmg_r / 100);
+					$log .= "<span class=\"yellow b\">「余火」使属性伤害变为原先的{$dmg_r}%！</span><br>";
+				}
+			}
 			$hpup = min($ex_dmg, ceil($skill756_recover_rate[$clv] * $pd['mhp'] / 100));
 			$pd['hp'] += $hpup + 1;
 			if ($active) $log .= "<span class=\"yellow b\">{$pd['name']}完全吸收了你造成的属性伤害，回复了{$hpup}点生命值！</span><br>";
