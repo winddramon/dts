@@ -17,7 +17,7 @@ namespace skill756
 	{
 		define('MOD_SKILL756_INFO','card;feature;');
 		eval(import_module('clubbase'));
-		$clubskillname[756] = '解意';
+		$clubskillname[756] = '种火';
 	}
 	
 	function acquire756(&$pa)

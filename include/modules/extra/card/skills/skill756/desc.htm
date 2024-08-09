@@ -1,12 +1,12 @@
 <!--{eval eval(import_module('skill756'));}-->
+<!--{eval $clv=(int)\skillbase\skill_getvalue(756,'lvl',$who);$bt=(int)\skillbase\skill_getvalue(756,'btype',$who);}-->
 <!--{eval $___TEMP_SKILL_ID=756;}-->
 {template MOD_CLUBBASE_SKILLDESC_START}
 <span>
-$clubskillname[$___TEMP_SKILL_ID]
+$clubskillname[$___TEMP_SKILL_ID]<!--{eval echo $clv+5;}-->
 </span>
 {template MOD_CLUBBASE_SKILLDESC_MID1}
 <td class="skilldesc_left b3"><span class="skilldesc">
-<!--{eval $clv=(int)\skillbase\skill_getvalue(756,'lvl',$who);$bt=(int)\skillbase\skill_getvalue(756,'btype',$who);}-->
 当前状态为：<span class="yellow b">
 <!--{if isset($skill756_buff[$bt])}-->{$skill756_buff[$bt]}<!--{else}-->暂无状态<!--{/if}-->
 </span><br>
