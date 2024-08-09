@@ -211,7 +211,7 @@ namespace skill983
 				}
 				elseif ($itmk == 'X' && strpos($itm, '宝石方块') !== false) //给宝石方块
 				{
-					if (rand(0,3)== 0)
+					if (rand(0,3) == 0)
 					{
 						//$log .= "";//待补充台词
 						$log .= "你获得了<span class=\"yellow b\">梦境礼盒</span>。<br>";

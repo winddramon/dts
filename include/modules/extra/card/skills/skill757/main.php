@@ -44,11 +44,11 @@ namespace skill757
 		if (\skillbase\skill_query(757,$pd) && check_unlocked757($pd) && isset($pd['skill757_hp']) && $pd['hp'] >= $pd['skill757_hp'])
 		{
 			eval(import_module('logger'));
-			if ($active) $log .= "<span class=\"red b\">{$pd['name']}汲取了梦境的力量！</span><br>";
-			else $log .= "<span class=\"red b\">你汲取了梦境的力量！</span><br>";
+			if ($active) $log .= "<span class=\"red b\">你的战意降低了！</span><br>";
+			else $log .= "<span class=\"red b\">{$pa['name']}的战意降低了！</span><br>";
 			$clv = (int)\skillbase\skill_getvalue(757,'lvl',$pd);
 			\skillbase\skill_setvalue(757,'lvl',$clv+1,$pd);
-			addnews(0, 'skill757', $pd['name']);
+			addnews(0, 'skill757', $pa['name']);
 		}
 	}
 	
@@ -58,8 +58,8 @@ namespace skill757
 		if (\skillbase\skill_query(757,$pa) && check_unlocked757($pa) && \skillbase\skill_getvalue(757,'lvl',$pa))
 		{
 			eval(import_module('logger'));
-			if ($active) $log .= "<span class=\"lime b\">你操纵着梦境的力量投射向{$pd['name']}！</span><br>";
-			else $log .= "<span class=\"lime b\">{$pa['name']}操纵着梦境的力量投射向你！</span><br>";
+			if ($active) $log .= "<span class=\"red b\">由于战意降低，{$pd['name']}在梦境中的存在变得不稳定了！</span><br>";
+			else $log .= "<span class=\"red b\">由于战意降低，你在梦境中的存在变得不稳定了！</span><br>";
 		}
 		$chprocess($pa, $pd, $active);
 	}
@@ -84,7 +84,7 @@ namespace skill757
 		eval(import_module('sys','player'));
 		
 		if($news == 'skill757') 
-			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"yellow b\">{$a}汲取了梦境的力量！</span></span></li>";
+			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"red b\">{$a}的战意降低了！</span></span></li>";
 		
 		return $chprocess($nid, $news, $hour, $min, $sec, $a, $b, $c, $d, $e, $exarr);
 	}
