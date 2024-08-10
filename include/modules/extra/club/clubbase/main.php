@@ -490,10 +490,10 @@ namespace clubbase
 		//传入npc数组
 		$who = $pn;
 		foreach (\skillbase\get_acquired_skill_array($pn) as $key) {
-			//第一层，屏蔽成就、战斗技、主动技、限制技、隐藏技能、称号特性（部分特性即天赋加熟练、亡灵复活、全息幻象叫本体特性、空投机器人的两个特性等除外）
+			//第一层，屏蔽成就、战斗技、主动技、限制技、隐藏技能、称号特性（部分特性即天赋加熟练、亡灵复活、全息幻象叫本体特性、空投机器人的两个特性、大种火的技能等除外）
 			if (defined('MOD_SKILL'.$key.'_INFO') && !\skillbase\check_skill_info($key, 'achievement') && !\skillbase\check_skill_info($key, 'battle') 
 				&& !\skillbase\check_skill_info($key, 'active') && !\skillbase\check_skill_info($key, 'limited') 
-				&& !\skillbase\check_skill_info($key, 'hidden') && (!\skillbase\check_skill_info($key, 'feature') || in_array($key, array(58, 70, 512, 803, 804)))) 
+				&& !\skillbase\check_skill_info($key, 'hidden') && (!\skillbase\check_skill_info($key, 'feature') || in_array($key, array(58, 70, 512, 756, 757, 758, 803, 804)))) 
 			{
 				//第二层，屏蔽未解锁的技能、需要升级但是0级的技能，以及10、11、12、233、252号技能（生命、攻防、治愈、网瘾、天眼）
 				$check_unlocked_func = 'skill'.$key.'\\check_unlocked'.$key;

@@ -312,6 +312,7 @@ skill751,extra/card/skills/skill751/,1
 skill752,extra/card/skills/skill752/,1
 skill754,extra/card/skills/skill754/,1
 skill755,extra/card/skills/skill755/,1
+skill757,extra/card/skills/skill757/,1
 wep_g,base/weapon/wep_g/,1
 wep_j,base/weapon/wep_j/,1
 skill273,extra/club/skills/skill273/,1
@@ -520,6 +521,7 @@ skill803,extra/card/skills/skill803/,1
 skill232,extra/club/skills/skill232/,1
 skill432,extra/card/skills/skill432/,1
 skill558,extra/card/skills/skill558/,1
+skill758,extra/card/skills/skill758/,1
 skill513,extra/card/skills/skill513/,1
 item_uu,extra/item_extra/item_uu/,1
 item_umb,extra/item_extra/item_umb/,1
@@ -650,6 +652,7 @@ skill508,extra/card/skills/skill508/,1
 skill233,extra/club/skills/skill233/,1
 smartmix,extra/misc/smartmix/,1
 skill371,extra/achievement/skills/skill371/,1
+skill983,extra/instance/instance12_dream/skill983/,1
 skill363,extra/achievement/skills/skill363/,1
 instance5,extra/instance/instance5/,1
 skill361,extra/activities/lunany2018/skill361/,1
@@ -721,6 +724,7 @@ skill604,extra/club/skills/skill604/,1
 ex_gender_attr,extra/attr/ex_gender_attr/,1
 ex_attr_pierce,extra/attr/ex_attr_pierce/,1
 skill903,extra/instance/instance3_ascension/skill903/,1
+skill756,extra/card/skills/skill756/,1
 ex_alternative,extra/attr/ex_alternative/,1
 skill730,extra/card/skills/skill730/,1
 skill746,extra/card/skills/skill746/,1

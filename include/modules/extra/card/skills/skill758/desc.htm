@@ -1,20 +1,17 @@
-<!--{eval $___TEMP_SKILL_ID=25;}-->
+<!--{eval $___TEMP_SKILL_ID=758;}-->
 {template MOD_CLUBBASE_SKILLDESC_START}
 <span>
-圣光
+$clubskillname[$___TEMP_SKILL_ID]
 </span>
 {template MOD_CLUBBASE_SKILLDESC_MID1}
 <td class="skilldesc_left b3"><span class="skilldesc">
-你造成的属性伤害<span class="yellow b">+25%</span>，<br>
-如果敌人已有对应异常状态，伤害额外增加<span class="yellow b">+50%</span>
+攻击时无视敌人的<span class="yellow b">控伤</span>属性
 </span></td>
 <td class="skilldesc_right b3">
-
 </td>
 {template MOD_CLUBBASE_SKILLDESC_MID2}
 <!--{if empty($___TEMP_THIS_SKILL_ACQUIRED)}-->
 <span class="yellow b">
-15级时解锁
 </span>
 <!--{/if}-->
 {template MOD_CLUBBASE_SKILLDESC_END}

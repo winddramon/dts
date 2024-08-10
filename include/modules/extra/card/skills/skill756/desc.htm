@@ -1,0 +1,22 @@
+<!--{eval eval(import_module('skill756'));}-->
+<!--{eval $clv=(int)\skillbase\skill_getvalue(756,'lvl',$who);$bt=(int)\skillbase\skill_getvalue(756,'btype',$who);}-->
+<!--{eval $___TEMP_SKILL_ID=756;}-->
+{template MOD_CLUBBASE_SKILLDESC_START}
+<span>
+$clubskillname[$___TEMP_SKILL_ID]<!--{eval echo $clv+5;}-->
+</span>
+{template MOD_CLUBBASE_SKILLDESC_MID1}
+<td class="skilldesc_left b3"><span class="skilldesc">
+当前状态为：<span class="yellow b">
+<!--{if isset($skill756_buff[$bt])}-->{$skill756_buff[$bt]}<!--{else}-->暂无状态<!--{/if}-->
+</span><br>
+每次先制攻击或受到攻击之后，切换为以下状态之一：<br><!--{eval echo implode("；<br>",$skill756_buff);}--><br>（此回复效果可超出生命上限，一次最多回复<span class="yellow b">{$skill756_recover_rate[$clv]}%</span>生命上限）
+</span></td>
+<td class="skilldesc_right b3">
+</td>
+{template MOD_CLUBBASE_SKILLDESC_MID2}
+<!--{if empty($___TEMP_THIS_SKILL_ACQUIRED)}-->
+<span class="yellow b">
+</span>
+<!--{/if}-->
+{template MOD_CLUBBASE_SKILLDESC_END}

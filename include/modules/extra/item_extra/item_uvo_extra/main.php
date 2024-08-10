@@ -159,7 +159,11 @@ namespace item_uvo_extra
 		$card_valid_info = $cards[$cardid]['valid'];
 		list($items, $skills) = use_card_uvo_process($card_valid_info, $pa);
 		
-		if ($cardid == 168)//飞雪大大 
+		if ($cardid == 5 || $cardid == 282)//虚子，银盒
+		{
+			$pa['club'] = 0;
+		}
+		elseif ($cardid == 168)//飞雪大大 
 		{
 			$items = array(
 				array('itm'=>'魔王の剑','itmk'=>'WK','itme'=>300,'itms'=>300,'itmsk'=>'u')
@@ -181,6 +185,13 @@ namespace item_uvo_extra
 			$skills = array();
 			$items = array(
 				array('itm'=>'银色盒子','itmk'=>'p','itme'=>1,'itms'=>55,'itmsk'=>'')
+				);
+		}
+		elseif ($cardid == 283)//随便 
+		{
+			$skills = array();
+			$items = array(
+				array('itm'=>'卡片福袋','itmk'=>'VO1','itme'=>1,'itms'=>1,'itmsk'=>array_randompick(array(6,7,8,9,10,11,21,22,23,24,25,26,27,28,80,111,135,137,385,386,403)))
 				);
 		}
 		elseif ($cardid == 290)//狱火鸡
