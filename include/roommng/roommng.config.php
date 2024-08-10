@@ -647,7 +647,7 @@ $roomtypelist = Array(
 		)
 	),
 	14 => Array(
-		'name' => '<font class="lime b">梦境演练</font>',
+		'name' => '<font class="seagreen b">梦境演练</font>',
 		'gtype' => 22, //对应的游戏模式编号
 		'available' => true,
 		'soleroom' => false,//唯一房间，只有不存在时才会新建房间。

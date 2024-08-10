@@ -11,7 +11,7 @@ namespace skill387
 	
 	//各级显示的要求，如果不存在则取低的
 	$ach387_desc= array(
-		1=>'在<span class="lime b">梦境演练</span>中获胜时结算分数达到<:threshold:>分',
+		1=>'在<span class="seagreen b">梦境演练</span>中获胜时结算分数达到<:threshold:>分',
 	);
 	
 	$ach387_proc_words = '最高纪录';

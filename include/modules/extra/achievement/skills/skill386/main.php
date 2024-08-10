@@ -11,7 +11,7 @@ namespace skill386
 	
 	//各级显示的要求，如果不存在则取低的
 	$ach386_desc= array(
-		1=>'在<span class="lime b">梦境演练</span>中完成结局：锁定解除或幻境解离 <:threshold:>次',
+		1=>'在<span class="seagreen b">梦境演练</span>中完成结局：锁定解除或幻境解离，共<:threshold:>次',
 	);
 	
 	$ach386_proc_words = '目前进度';
@@ -31,6 +31,21 @@ namespace skill386
 		1 => 777,
 		2 => 1337,
 		3 => 2333
+	);
+
+	//各级给的卡片奖励
+	$ach386_card_prize = array(
+		2 => 233//阿林百人众
+	);
+
+	//各级给的道具奖励
+	$ach386_logitem_prize = array(
+		3 => 304
+	);
+	
+	//各级给的道具奖励数量
+	$ach386_logitem_prize_num = array(
+		3 => 1
 	);
 	
 	function init() 

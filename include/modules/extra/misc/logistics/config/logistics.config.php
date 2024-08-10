@@ -48,6 +48,7 @@ namespace logistics
 		301 => array('温泉鸽子手办',2,0,'<span class="yellow b">“炖鸽汤，就是用鸽子炖成的汤……”</span>',1),
 		302 => array('水晶骰子组合',2,0,'<span class="gold b">九颗不同颜色的透明骰子，究竟是什么材料制成的？看起来很贵重的样子……</span>',1),
 		303 => array('L5爆发的证明',2,0,'<span class="L5 b">“你突然感觉到一种不可思议的力量贯通全身！”</span>',1),
+		304 => array('《梦的解析》',2,0,'权威心理学家的著作。<span class="seagreen b">“你想干……”</span>',1),
 	);
 	
 	//类别1表示可使用道具（消耗品），2表示装饰品
