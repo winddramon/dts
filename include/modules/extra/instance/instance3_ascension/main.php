@@ -333,6 +333,12 @@ namespace instance3
 				$mode = 'command';
 				return;
 			}
+			elseif (($itm == '代码聚合体的ID卡' || $itm == '杏仁豆腐的ID卡') && 13==$gametype) 
+			{
+				$log .= '<span class="ltcrimson">『忘了我说的话了？』</span><br><br><span class="yellow b">看起来这张ID卡没有任何功能。</span><br>';
+				$mode = 'command';
+				return;
+			}
 		}
 		$chprocess($theitem);
 	}

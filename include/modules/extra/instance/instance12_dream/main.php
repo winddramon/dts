@@ -189,6 +189,18 @@ namespace instance12
 		}
 		$chprocess($pa);
 	}
+
+	//特殊的商店地图
+	//直接每个地区都能访问商店吧
+	function check_in_shop_area($p)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('sys'));
+		if (22 == $gametype){
+			return true;
+		}
+		return $chprocess($p);
+	}
 	
 	//保持0禁
 	function get_area_wavenum(){
