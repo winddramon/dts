@@ -36,7 +36,7 @@ namespace skill580
 		\player\update_sdata();	
 		$edata = \player\fetch_playerdata_by_pid($sid);
 		
-		if (\skillbase\skill_query(580,$edata) && check_unlocked580($edata) && empty(\skillbase\skill_getvalue(1003,'sk580_sid')))
+		if (\skillbase\skill_query(580,$edata) && check_unlocked580($edata) && $edata['hp'] > 0 && empty(\skillbase\skill_getvalue(1003,'sk580_sid')))
 		{
 			eval(import_module('sys'));
 			$dice = rand(0,99);
