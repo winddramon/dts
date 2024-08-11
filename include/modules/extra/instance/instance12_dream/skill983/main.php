@@ -287,7 +287,7 @@ namespace skill983
 					$hpup = rand(10,30) * $itms;
 					$mhp += $hpup;
 					$hp += $hpup;
-					$log .= "身体里有种力量涌出来！<br>你的生命上限提高了<span class=\"yellow b\">$hpup</span>点！<br>";
+					$log .= "你的生命上限提高了<span class=\"yellow b\">$hpup</span>点！<br>";
 					\itemmain\item_destroy_core('itm'.$itmn, $sdata);
 					$mode = 'command';
 					return;
