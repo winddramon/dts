@@ -231,16 +231,19 @@ namespace skill981
 		$pbx_arr = explode(',',$pbx_str);
 		$pbx_itemlist = array();
 		eval(import_module('skill981'));
+		if ($itme <= 16) $pbx_pool = $skill981_prizeitems[$itme];
+		else $pbx_pool = $skill981_prizeitems[999]; 
 		foreach($pbx_arr as $v)
 		{
-			if (is_numeric($v) && isset($skill981_prizeitems[$itme][(int)$v]))
+			if (is_numeric($v) && isset($pbx_pool[(int)$v]))
 			{
-				$pi = $skill981_prizeitems[$itme][(int)$v];
+				$pi = $pbx_pool[(int)$v];
 				$newitem = array('itm'=>$pi[0],'itmk'=>$pi[1],'itme'=>$pi[2],'itms'=>$pi[3],'itmsk'=>$pi[4]);
 				if (!empty($newitem['itmsk'])) $newitem['itmsk'] = \attrbase\config_process_encode_comp_itmsk($newitem['itmsk']);
 			}
 			elseif (strpos($v, 's') === 0) $newitem = array('itm'=>'技能芯片','itmk'=>'VS','itme'=>1,'itms'=>1,'itmsk'=>substr($v,1));
 			elseif (strpos($v, 'c') === 0) $newitem = array('itm'=>'卡片福袋','itmk'=>'VO1','itme'=>1,'itms'=>1,'itmsk'=>substr($v,1));
+			else $newitem = array('itm'=>'一袋金钱','itmk'=>'YY','itme'=>2333,'itms'=>1,'itmsk'=>'');
 			$pbx_itemlist[] = $newitem;
 		}
 		if (!\skillbase\skill_getvalue(981,'flag')) $pbx_itemlist[] = array('itm'=>'一缕残念','itmk'=>'VS','itme'=>1,'itms'=>1,'itmsk'=>'983');//剧情道具
