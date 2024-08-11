@@ -6822,12 +6822,13 @@ $cards = array(
 		'ignore_global_ach' => 1,
 	),
 	422 => array(
-		'name' => '“大种火”',
+		'name' => 'Μ.ΩВТΨЦΨΨΡ',
+		'ruby' => '大种火',
 		'rare' => 'S',
 		'pack' => 'Balefire Rekindle',
-		'desc' => '……',//待补充
-		'effect' => '获得技能「种火5」',
-		'desc_skills' => '「种火5」：每次先制攻击或受到攻击之后，切换为以下状态之一：受到属性伤害变为等量回复；受到物理伤害变为等量回复；受到全部伤害变为等量回复（此回复效果可超出生命上限，一次最多回复50%生命上限）',
+		'desc' => '虽然无法<ruby>拥她入怀<rt style="font-size:9px">ΨПΗТΑΛΨ</rt></ruby>，但是能从这张卡片上感到相同的<ruby>怀旧与温暖<rt style="font-size:9px">ΑПЖИТ ХЖЦЩΑЙΜВКИΨ</rt></ruby>',
+		'effect' => '<ruby>ΔЖИТ ЫΑВХ<rt style="font-size:9px">将受到的痛苦</rt></ruby><br><ruby>ОВЙЙ ЦЖЖЩДΨ ΔЖИ.<rt style="font-size:9px">转化为温柔的动力。</rt></ruby>',
+		'desc_skills' => '获得技能「种火5」：每次先制攻击或受到攻击之后，切换为以下状态之一：受到属性伤害变为等量回复；受到物理伤害变为等量回复；受到全部伤害变为等量回复（此回复效果可超出生命上限，一次最多回复50%生命上限）',
 		'energy' => 100,
 		'valid' => array(
 			'skills' => array(
