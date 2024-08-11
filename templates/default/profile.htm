@@ -76,7 +76,7 @@
 									</tr>
 									<tr>
 										<td class="b2" height="20"><span>{lang team}</span></td>
-										<td class="b3"><span><!--{if $teamID && $gamestate < 40 }-->$teamID<!--{else}--> 无 <!--{/if}--></span></td>
+										<td class="b3"><span><!--{if $teamID && ($gamestate < 40 || in_array($gametype,$teamwin_mode))}-->$teamID<!--{else}--> 无 <!--{/if}--></span></td>
 									</tr>
 									
 									<!--{if defined('MOD_CLUBBASE')}-->

@@ -144,6 +144,10 @@ function enter_battlefield($xuser,$xpass,$xgender,$xicon,$card=0,$ip='')
 	
 	//实际处理由skillbase等模块接管post_enterbattlefield_events()完成
 	\player\post_enterbattlefield_events($sk_pdata);
+
+	//SOLO和组队模式，修改玩家队伍名
+	global $gamevars;
+	if(!empty($gamevars['teamID_info'][$xuser])) $sk_pdata['teamID'] = $gamevars['teamID_info'][$xuser];
 	
 	//第二次保存数据
 	\player\player_save($sk_pdata);

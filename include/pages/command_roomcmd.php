@@ -477,16 +477,19 @@ if(room_get_vars($roomdata,'soleroom')){//永续房只进行离开判定
 				//这类游戏的停止激活是在连斗模块gameflow_combo里判定的
 				else{
 					$gamestate = 20;
-					$seat_info = Array();
+					$seat_info = $teamID_info = Array();
 					for ($i=0; $i < $rdpnum; $i++)
 						if (!$rdplist[$i]['forbidden'])
 						{
 							$pname = (string)($rdplist[$i]['name']);
 							if(!isset($ulist[$pname])) continue;
 							$seat_info[] = $pname;
+							//非常丑陋，兄弟！可以简化，但是能跑就先不管了
+							$teamID_info[$pname] = $roomtypelist[$roomdata['roomtype']]['teamID'][$roomtypelist[$roomdata['roomtype']]['leader-position'][$i]];
 						}
-					$gamevars['seat_info'] = $seat_info;
+					$gamevars['seat_info'] = $seat_info;//玩家名称限制是在command_valid.php实现的。
 					$gamevars['max_player'] = sizeof($seat_info);
+					$gamevars['teamID_info'] = $teamID_info;//teamID_info是在enter_battlefield()内实现的，并且会覆盖卡片的队伍（如果未来有这类卡片的话）
 					$gamevars['max_opening_sec'] = 180;//先写死3分钟
 					//判断停止激活后是否立刻连斗
 					$opgamestate = room_get_vars($roomdata,'opening-gamestate');
