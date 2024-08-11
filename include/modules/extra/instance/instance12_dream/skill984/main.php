@@ -36,7 +36,7 @@ namespace skill984
 			$clv = (int)\skillbase\skill_getvalue(984,'lvl',$pa);
 			if ($clv == 1)
 			{
-				$theitem = array('itm'=>'沾满灰尘的大逃杀卡牌包','itmk'=>'VO8','itme'=>1,'itms'=>1,'itmsk'=>'');
+				$theitem = array('itm'=>'梦境礼盒','itmk'=>'Y','itme'=>1,'itms'=>1,'itmsk'=>'');
 			}
 			elseif ($clv == 2)
 			{
@@ -44,7 +44,7 @@ namespace skill984
 			}
 			elseif ($clv == 3)
 			{
-				$theitem = array('itm'=>'梦境礼盒','itmk'=>'Y','itme'=>1,'itms'=>1,'itmsk'=>'');
+				$theitem = array('itm'=>'沾满灰尘的大逃杀卡牌包','itmk'=>'VO8','itme'=>1,'itms'=>1,'itmsk'=>'');
 			}
 			if (!empty($theitem))
 			{

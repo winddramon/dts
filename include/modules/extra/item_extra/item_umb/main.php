@@ -41,11 +41,11 @@ namespace item_umb
 			}elseif ($buff_id == '710') {
 				$ret .= '：解除使用熟练技能书或熟练药物的衰减';
 			}elseif ($sk == '^mbid984^mblvl1') {
-				$ret .= '：完成每一波次50%获得1个沾满灰尘的大逃杀卡牌包';
-			}elseif ($sk == '^mbid984^mblvl2') {
 				$ret .= '：完成每一波次50%获得1个第1波次的梦境礼盒';
-			}elseif ($sk == '^mbid984^mblvl3') {
+			}elseif ($sk == '^mbid984^mblvl2') {
 				$ret .= '：完成每一波次50%获得1个改造核心·C级';
+			}elseif ($sk == '^mbid984^mblvl3') {
+				$ret .= '：完成每一波次50%获得1个沾满灰尘的大逃杀卡牌包';
 			}
 		}
 		return $ret;
