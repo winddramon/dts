@@ -47,6 +47,13 @@ namespace skill981
 	//道具的数值依次为：名称、类别、效果值、耐久值、属性、权重
 	//特殊的道具属性：rdsk_S、rdsk_A、rdsk_B、rdsk_C表示对应等级的一个随机技能；card_S、card_A、card_B、card_C表示对应等级的一张随机卡片，在生成奖励时确定
 	$skill981_prizeitems = array(
+		0 => array( //初始奖励
+			array('一袋金钱','YY',1500,1,'',1),//额外金钱
+			array('「更大！更好！更强！」','MH',300,1,'',1),//额外生命上限
+			array('■■■的记忆片段','MB',1,1,'^mbid984^mblvl1',1),//额外盒子
+			array('幻铁的记忆片段','MB',1,1,'^mbid984^mblvl2',1),//额外改造核心
+			array('「强欲之壶」','MB',1,1,'^mbid984^mblvl3',1),//额外卡牌包
+		),
 		1 => array(
 			array('德国BOY的键盘','WP',150,'∞','er',5),
 			array('【红杀铁剑·流火】','WK',280,100,'uc',5),

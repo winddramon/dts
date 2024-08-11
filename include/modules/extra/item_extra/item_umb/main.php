@@ -21,8 +21,8 @@ namespace item_umb
 			if(!empty($flag)) {
 				$buff_id = (int)$flag;
 			}
-			elseif(is_numeric($itmsk)) {
-				$buff_id = (int)$itmsk;
+			elseif(is_numeric($sk)) {
+				$buff_id = (int)$sk;
 			}
 			if(!empty($clubskillname[$buff_id])){
 				$if_temp = '';
@@ -40,6 +40,12 @@ namespace item_umb
 				$ret .= '：免疫时效性负面状态和异常状态';
 			}elseif ($buff_id == '710') {
 				$ret .= '：解除使用熟练技能书或熟练药物的衰减';
+			}elseif ($sk == '^mbid984^mblvl1') {
+				$ret .= '：完成每一波次50%获得1个第1波次的梦境礼盒';
+			}elseif ($sk == '^mbid984^mblvl2') {
+				$ret .= '：完成每一波次50%获得1个改造核心·C级';
+			}elseif ($sk == '^mbid984^mblvl3') {
+				$ret .= '：完成每一波次50%获得1个沾满灰尘的大逃杀卡牌包';
 			}
 		}
 		return $ret;

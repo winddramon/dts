@@ -34,9 +34,8 @@ namespace skill952
 		$chprocess($pa);
 		if (\skillbase\skill_query(952, $pa))
 		{
-			//目前入场固定M卡，开局奖励三次随机称号技能三选一，以及一个随机技能组B级技能
-			skill952_sendin_core(array('itm'=>'N型技能核心·改','itmk'=>'SC01','itme'=>1,'itms'=>3,'itmsk'=>''), $pa);
-			skill952_sendin_core(array('itm'=>'B级技能核心','itmk'=>'SCB2','itme'=>1,'itms'=>1,'itmsk'=>''), $pa);
+			//目前入场固定M卡，开局奖励4次随机称号技能三选一
+			skill952_sendin_core(array('itm'=>'N型技能核心·改','itmk'=>'SC01','itme'=>1,'itms'=>4,'itmsk'=>''), $pa);
 			
 			//eval(import_module('cardbase'));
 			//S卡：一个随机称号技能

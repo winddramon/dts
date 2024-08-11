@@ -76,6 +76,7 @@ namespace instance12
 		eval(import_module('sys'));
 		if (22 == $gametype){
 			$ebp['itm5'] = '全恢复药剂'; $ebp['itmk5'] = 'Ca'; $ebp['itme5'] = 1; $ebp['itms5'] = 3;$ebp['itmsk5'] = '';
+			$ebp['itm6'] = '梦境礼盒'; $ebp['itmk6'] = 'Y'; $ebp['itme6'] = 0; $ebp['itms6'] = 1;$ebp['itmsk6'] = '';
 		}
 		return $ebp;
 	}

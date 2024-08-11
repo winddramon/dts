@@ -65,7 +65,7 @@ namespace skill387
 				$inst12_score = \instance12\inst12_get_score($pa);
 				if ($inst12_score > $ret)
 				{
-					$ret = $alvl;
+					$ret = $inst12_score;
 				}
 			}
 		}
