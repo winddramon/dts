@@ -1,0 +1,26 @@
+<!--{eval eval(import_module('skill984'));}-->
+<!--{eval $___TEMP_SKILL_ID=984;}-->
+{template MOD_CLUBBASE_SKILLDESC_START}
+<span>
+$clubskillname[$___TEMP_SKILL_ID]
+</span>
+{template MOD_CLUBBASE_SKILLDESC_MID1}
+<td class="skilldesc_left b3"><span class="skilldesc">
+<!--{eval $clv=(int)\skillbase\skill_getvalue(984,'lvl',$who);}-->
+完成每一波次有<span class="yellow b">50%</span>概率获得
+<!--{if $clv==1}-->
+<span class="yellow b">1</span>个<span class="yellow b">沾满灰尘的大逃杀卡牌包</span>
+<!--{elseif $clv==2}-->
+<span class="yellow b">1</span>个第1波次的<span class="yellow b">梦境礼盒</span>
+<!--{elseif $clv==3}-->
+<span class="yellow b">1</span>个<span class="yellow b">改造核心·C级</span>
+<!--{/if}-->
+</span></td>
+<td class="skilldesc_right b3">
+</td>
+{template MOD_CLUBBASE_SKILLDESC_MID2}
+<!--{if empty($___TEMP_THIS_SKILL_ACQUIRED)}-->
+<span class="yellow b">
+</span>
+<!--{/if}-->
+{template MOD_CLUBBASE_SKILLDESC_END}

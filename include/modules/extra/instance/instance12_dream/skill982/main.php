@@ -73,8 +73,8 @@ namespace skill982
 		$chprocess($pa);
 		if (\skillbase\skill_query(982, $pa) && ((int)\skillbase\skill_getvalue(982, 'lvl', $pa) > 0))
 		{
-			\skillbase\skill_setvalue(952, 'itmarr', '', $pa);
-			for ($i=3; $i<=6; $i++)
+			// \skillbase\skill_setvalue(952, 'itmarr', '', $pa);
+			for ($i=3; $i<=5; $i++)
 			{
 				$pa['itm'.$i] = $pa['itmk'.$i] = $pa['itmsk'.$i] = '';
 				$pa['itme'.$i] = $pa['itms'.$i] = 0;

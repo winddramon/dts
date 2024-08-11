@@ -55,12 +55,12 @@ namespace skill981
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;	
 		//玩家主动攻击打死NPC
-		if (\skillbase\skill_query(981,$pa) && check_unlocked981($pa) && $pd['hp'] <= 0)
+		if (\skillbase\skill_query(981,$pa) && check_unlocked981($pa) && $pd['hp'] <= 0 && $pd['pls'] == 201)
 		{
 			$theplayer = & $pa;
 		}
 		//一般是NPC先制玩家被打死
-		elseif (\skillbase\skill_query(981,$pd) && check_unlocked981($pd) && $pa['hp'] <= 0) {
+		elseif (\skillbase\skill_query(981,$pd) && check_unlocked981($pd) && $pa['hp'] <= 0 && $pa['pls'] == 201) {
 			$theplayer = & $pd;
 		}
 		if(!empty($theplayer)) {
@@ -72,6 +72,13 @@ namespace skill981
 				$prizebox_num = isset($skill981_prizebox_num[$stage]) ? $skill981_prizebox_num[$stage] : 1;
 				$theitem = array('itm'=>'梦境礼盒','itmk'=>'Y','itme'=>$stage,'itms'=>$prizebox_num,'itmsk'=>'');
 				\skill952\skill952_sendin_core($theitem, $theplayer);
+				$bonus_items = skill981_bonus_items($theplayer, $stage);
+				if (!empty($bonus_items))
+				{
+					foreach($bonus_items as $v){
+						\skill952\skill952_sendin_core($v, $theplayer);
+					}
+				}
 				$log .= "<span class=\"lime b\">奖励道具被送到了你的奖励箱中。</span><br>";
 			}
 			$rm = max($rm - 1, 0);
@@ -79,6 +86,12 @@ namespace skill981
 		}
 		
 		$chprocess($pa,$pd,$active);
+	}
+	
+	function skill981_bonus_items(&$pa, $stage)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		return array();
 	}
 	
 	function cast_skill981()
@@ -170,7 +183,7 @@ namespace skill981
 						$mode = 'command';
 						return;
 					}
-					if (!\skillbase\skill_getvalue(981,'flag',$sdata)) \skillbase\skill_setvalue(981,'flag','1',$sdata);
+					if (!\skillbase\skill_getvalue(981,'flag',$sdata) && $itme > 0) \skillbase\skill_setvalue(981,'flag','1',$sdata);
 					$prizeitem = $pbx_itemlist[$pbx_choice-1];
 					if ($prizeitem['itmk'] == 'YY')
 					{
@@ -219,6 +232,7 @@ namespace skill981
 		$chprocess($theitem);
 	}
 	
+	
 	function get_prizebox_itemlist($itme, &$itmsk)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
@@ -246,7 +260,7 @@ namespace skill981
 			else $newitem = array('itm'=>'一袋金钱','itmk'=>'YY','itme'=>2333,'itms'=>1,'itmsk'=>'');
 			$pbx_itemlist[] = $newitem;
 		}
-		if (!\skillbase\skill_getvalue(981,'flag')) $pbx_itemlist[] = array('itm'=>'一缕残念','itmk'=>'VS','itme'=>1,'itms'=>1,'itmsk'=>'983');//剧情道具
+		if ($itme > 0 && !\skillbase\skill_getvalue(981,'flag')) $pbx_itemlist[] = array('itm'=>'一缕残念','itmk'=>'VS','itme'=>1,'itms'=>1,'itmsk'=>'983');//剧情道具
 		return $pbx_itemlist;
 	}
 	
