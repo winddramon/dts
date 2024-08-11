@@ -130,11 +130,11 @@ namespace addnpc
 			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"yellow b\">{$b}名{$a}加入战斗！</span></li>";
 		elseif($news == 'addnpc_pls') {
 			eval(import_module('map'));
-			$plsword = $plsinfo[$c];//注意是c
+			$plsword = $plsinfo_disp[$c];//注意是c
 			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"yellow b\">{$a}乱入了{$plsword}！</span></li>";
 		}elseif($news == 'addnpcs_pls') {
 			eval(import_module('map'));
-			$plsword = $plsinfo[$c];
+			$plsword = $plsinfo_disp[$c];
 			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"yellow b\">{$b}名{$a}乱入了{$plsword}！</span></li>";
 		}elseif($news == 'secphase') 
 			return "<li id=\"nid$nid\">{$hour}时{$min}分{$sec}秒，<span class=\"lime b\">{$a}使用了挑战者之证，让3名幻影执行官加入了战场！打倒他们去获得ID卡来解除游戏吧！</span></li>";
