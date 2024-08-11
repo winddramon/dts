@@ -26,7 +26,37 @@ namespace skill983
 		}
 		
 		$vip = \player\fetch_playerdata_by_pid($vippid[0]);
-		$log .= "<span class=\"yellow b\">{$vip['name']}出现在了你的身旁。</span><br>";//待补充台词
+		
+		$stage = (int)\skillbase\skill_getvalue(981,'stage',$pa);
+		if ($stage < 11)
+		{
+			$log .= "你的眼前出现了一位大约十一二岁的少女，<br>
+				她浑身散发着不可思议的气息，但似乎并没有什么恶意。<br>
+				少女开口说话，虽然你听到的都是奇怪的韵律，<br>
+				但你还是可以理解韵律中的话语。<br>
+				<br>
+				<span class=\"white b\">“我是繁花的种火，可以叫我种火花。<br>
+				如果你同意让我旁观你在这里的战斗，<br>
+				那到你醒来为止，我将和你并肩作战。<br>
+				……此外，从本机体分配的角色的角度来说，<br>
+				如果你能将数据喂食给我，我也可以给你点好处。<br>
+				<br>
+				…………问我什么是数据？<br>
+				你身上的东西，地上的东西，其他实体身上的东西，都是数据。<br>
+				反正小女子照单全收啦~”</span><br>";
+		}
+		else
+		{
+			$log .= "你的眼前出现了一位大约十一二岁的少女，<br>
+			她浑身散发着不可思议的气息，但似乎并没有什么恶意。<br>
+			当然因为理所应当的原因，你是能听懂她的话语的。<br>
+			<br>
+			<span class=\"white b\">“时机太奇怪啦！但规则就是规则，角色就是角色。<br>
+			所以自报家门还是要进行的。<br>
+			本机体名繁花的种火，简称种火花。<br>
+			角色是对数据的吸收和分析，包括你的。<br>
+			所以不要顾虑，来喂我数据吧~”</span><br>";
+		}	
 		$vip['teamID'] = $pa['teamID'];
 		$vip['teamPass'] = $pa['teamPass'];
 		\player\player_save($vip);
@@ -55,10 +85,22 @@ namespace skill983
 		if (\skillbase\skill_getvalue(951,'flag983'))
 		{
 			eval(import_module('logger'));
-			$log .= "<span class=\"yellow b\">你现在无法退出队伍。</span><br>";//待补充台词
+			$log .= "<span class=\"yellow b\">你现在无法退出队伍。</span><br>";
 			return;
 		}
 		$chprocess();
+	}
+	
+	function findteam(&$edata)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if(\skillbase\skill_query(983) && $edata['pid'] == \skillbase\skill_getvalue(983,'vippid'))
+		{
+			eval(import_module('logger'));
+			$met_text = array_randompick(array("“如果有什么用不着的数据就丢给我吧，我会善用的。”","“为什么要收集数据？之前也说了这是分配给本机的角色。”","“没事做就来摸摸我吧！<br>你也没少摸过纸片人吧……虽然我不是呢。”","“我的好感度是可以刷的哦~<br>这也是本机的角色的一部分。<br>虽然我自己都不知道怎么刷以及刷高了会怎么样就是了。”","“在其他地方看见了和我长得一样的实体？<br>日有所思，夜有所梦，这也是很正常的吧。”"));
+			$log .= "<span class=\"white b\">$met_text</span><br><br>";
+		}
+		$chprocess($edata);
 	}
 	
 	//NPC接收道具
@@ -66,6 +108,10 @@ namespace skill983
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','logger','player','metman'));
+		if(!\skillbase\skill_query(983,$sdata)){
+			$chprocess();
+			return;
+		}
 		if('back' == $command){
 			$mode = 'command';
 			return;
@@ -89,7 +135,7 @@ namespace skill983
 				$edata = \player\fetch_playerdata_by_pid($mateid);
 				if (strpos($itmk, 'W') === 0) //给武器
 				{
-					//$log .= "";//待补充台词
+					$log .= "<span class=\"white b\">“获得攻击面升级了，非常感谢！<br>每天都以最新的版本面对挑战可谓是基本呢。”</span><br><br>";
 					$log .= "<span class=\"yellow b\">$itm</span>化作七色的光芒，融入了<span class=\"yellow b\">{$edata['name']}</span>的武器中。<br>";
 					$edata['wepe'] += min(rand(round(0.05 * $itme), round(0.3 * $itme)), round(0.1 * $edata['wepe']));
 					if ($itms == '∞') $itms = 100;
@@ -109,7 +155,7 @@ namespace skill983
 				}
 				elseif (strpos($itmk, 'D') === 0) //给防具
 				{
-					//$log .= "";//待补充台词
+					$log .= "<span class=\"white b\">“获得防御面升级了，非常感谢！<br>每天都以最新的版本面对伤痛也算是基本吧。”</span><br><br>";
 					$log .= "<span class=\"yellow b\">$itm</span>化作七色的光芒，融入了<span class=\"yellow b\">{$edata['name']}</span>的身躯中。<br>";
 					$skillup = min(rand(round(0.05 * $itme), round(0.3 * $itme)), round(0.15 * $edata['wc']));
 					$edata['wc'] += max($skillup, 10);
@@ -128,7 +174,7 @@ namespace skill983
 				}
 				elseif (strpos($itmk, 'A') === 0) //给饰品
 				{
-					//$log .= "";//待补充台词
+					$log .= "<span class=\"white b\">“获得攻击面升级了，非常感谢！<br>每天都以最新的版本面对挑战也算是基本吧。”</span><br><br>";
 					$log .= "<span class=\"yellow b\">$itm</span>化作七色的光芒，融入了<span class=\"yellow b\">{$edata['name']}</span>的身躯中。<br>";
 					if (rand(0,1))
 					{
@@ -147,14 +193,15 @@ namespace skill983
 				{
 					if (strpos($itmk, 'HM') === 0 || strpos($itmk, 'HT') === 0 || $itms == '∞' || $itme * $itms >= 3000)
 					{
-						//$log .= "";//待补充台词
+						$log .= "<span class=\"white b\">“已确定个体稳定性提升，非常感谢！<br>按照说好的那样，为你分享一些我的「性质」。”</span><br><br>";
 						$log .= "<span class=\"yellow b\">你感觉自己受到了祝福！</span><br>";
 						$buffid = rand(18,22);//正面buff
 						\skillbase\skill_setvalue(983,'buff',$buffid,$sdata);
+						$log .= "当前「余火」状态为：<span class=\"yellow b\">".skill983_bufftext($sdata)."</span><br>";
 					}
 					else
 					{
-						//$log .= "";//待补充台词
+						$log .= "<span class=\"white b\">“已确定个体稳定性提升，未确认到特别的质变。<br>因为没有特别的质变，也没办法给你什么特殊的东西，抱歉。”</span><br><br>";
 						$log .= "<span class=\"yellow b\">什么也没有发生。</span><br>";
 					}
 					\itemmain\item_destroy_core('itm'.$itmn, $sdata);
@@ -163,17 +210,18 @@ namespace skill983
 				}
 				elseif (strpos($itmk, 'P') === 0) //给毒补给
 				{
-					//$log .= "";//待补充台词
+					$log .= "<span class=\"white b\">“让我解析一下……<br>唔，这算图灵测试吗？我可是对此特别自豪呢。<br>既然对我恶作剧，那我也相应地恶搞你一下吧~”</span><br><br>";
 					$log .= "<span class=\"yellow b\">你感觉自己变得虚弱了……</span><br>";
 					$buffid = rand(13,17);//负面buff
 					\skillbase\skill_setvalue(983,'buff',$buffid,$sdata);
+					$log .= "当前「余火」状态为：<span class=\"yellow b\">".skill983_bufftext($sdata)."</span><br>";
 					\itemmain\item_destroy_core('itm'.$itmn, $sdata);
 					$mode = 'command';
 					return;
 				}
 				elseif (strpos($itmk, 'V') === 0) //给技能书
 				{
-					//$log .= "";//待补充台词
+					$log .= "<span class=\"white b\">“获得更新数据了，让我解析一下。<br>没关系，不会给你藏着的，马上就用到我们的敌手身上。”</span><br><br>";
 					if (strpos($itmk, 'S') !== false)
 					{
 						eval(import_module('clubbase'));
@@ -200,7 +248,7 @@ namespace skill983
 				}
 				elseif (strpos($itmk, 'M') === 0) //给强化药
 				{
-					//$log .= "";//待补充台词
+					$log .= "<span class=\"white b\">“获得升级数据了，让我应用一下。<br>虽然从我的角度说这件事会比较怪，<br>但是请不要随便喂食可爱的野生AI哟——尤其是我之外的。”</span><br><br>";
 					$log .= "<span class=\"yellow b\">$itm</span>化作七色的光芒，融入了<span class=\"yellow b\">{$edata['name']}</span>的身躯中。<br>";
 					$edata['wc'] += rand(round(0.2 * $itme * $itms), $itme * $itms);
 					$edata['att'] += rand(round(0.5 * $itme * $itms), $itme * $itms);
@@ -213,7 +261,7 @@ namespace skill983
 				{
 					if (rand(0,3) == 0)
 					{
-						//$log .= "";//待补充台词
+						$log .= "<span class=\"white b\">“啊……这个是……？<br>作为送我有趣的数据的回礼，我送你一个对你来说更有趣的东西吧~”</span><br><br>";
 						$log .= "你获得了<span class=\"yellow b\">梦境礼盒</span>。<br>";
 						$itm = '梦境礼盒';
 						$itmk = 'Y';
@@ -223,11 +271,11 @@ namespace skill983
 					}
 					else
 					{
-						//$log .= "";//待补充台词
+						$log .= "<span class=\"white b\">“获得额外数据了，让我为你解析一下，<br>这样就输入完毕。你感觉变强了么？”<br></span>种火花伸出手摸了摸你的头，你感觉变强了。<br><span class=\"white b\">“……什么？想要摸头以外的方式？人类还真是复杂呢。”</span><br><br>";
 						$hpup = rand(30,100) * $itms;
 						$mhp += $hpup;
 						$hp += $hpup;
-						$log .= "身体里有种力量涌出来！<br>你的生命上限提高了<span class=\"yellow b\">$hpup</span>点！<br>";
+						$log .= "你的生命上限提高了<span class=\"yellow b\">$hpup</span>点！<br>";
 						\itemmain\item_destroy_core('itm'.$itmn, $sdata);
 					}
 					$mode = 'command';
@@ -235,7 +283,7 @@ namespace skill983
 				}
 				elseif ($itmk == 'X' && strpos($itm, '方块') !== false) //给方块
 				{
-					//$log .= "";//待补充台词
+					$log .= "<span class=\"white b\">“获得额外数据了，让我为你解析一下，<br>这样就输入完毕。你感觉变强了么？”<br></span>种火花伸出手摸了摸你的头，你感觉变强了。<br><span class=\"white b\">“……什么？想要摸头以外的方式？人类还真是复杂呢。”</span><br><br>";
 					$hpup = rand(10,30) * $itms;
 					$mhp += $hpup;
 					$hp += $hpup;
@@ -246,7 +294,7 @@ namespace skill983
 				}
 				else
 				{
-					$log .= "<span class=\"white b\">“这个不知道该怎么使用呢……”</span><br>";
+					$log .= "<span class=\"white b\">“这个不知道该怎么使用呢……”</span><br><br>";
 					$mode = 'command';
 					return;
 				}
@@ -295,7 +343,8 @@ namespace skill983
 					{
 						eval(import_module('logger'));
 						$log .= "<span class=\"cyan b\">{$vip['name']}的追加攻击！</span><br>";
-						$log .= "<span class=\"white b\">“稍微帮你一点小忙吧！”</span><br>";//待补充台词
+						$att_text = array_randompick(array("“你想的没错，梦里面真的啥都有！”","“选择模式……输出数据攻击。”","“那就继续陪你玩玩！”"));
+						$log .= "<span class=\"white b\">$att_text</span><br>";
 						//补充攻击方式和必要参数
 						$vip['skill983_flag'] = 1;
 						$vip['wep_kind'] = $vip['wepk'][1];
@@ -352,19 +401,19 @@ namespace skill983
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('player'));
 		if (!\skillbase\skill_query(983, $sdata) || $stage > 11) return $chprocess($stage);
+		eval(import_module('logger'));
 		if ($stage < 11)
 		{
 			if ($stage < 5) $buffid = rand(1,12);
 			else $buffid = rand(1,17);
-			eval(import_module('logger'));
-			$log .= "<span class=\"white b\">“……”</span><br><span class=\"yellow b\">你感觉自己受到了祝福！</span><br>";//待补充台词
+			$log .= "<span class=\"white b\">“获得更新数据了，非常感谢！<br>按照说好的那样，为你分享一些我的「性质」。”</span><br><br><span class=\"yellow b\">你感觉自己受到了祝福！</span><br>";
 			\skillbase\skill_setvalue(983,'buff',$buffid,$sdata);
+			$log .= "当前「余火」状态为：<span class=\"yellow b\">".skill983_bufftext($sdata)."</span><br>";
 			return $chprocess($stage);
 		}
 		else
 		{
-			eval(import_module('logger'));
-			$log .= "<span class=\"white b\">“……”</span><br>";//待补充台词
+			$log .= "<span class=\"white b\">“和你说一句哦，场上现在有一个比我可爱强大300倍以上的实体出现了。<br>虽然和我是同种，但她大概没那么好心。<br>不过也别太担心，毕竟这只是一场梦而已对吧？”</span><br>";
 			\addnpc\addnpc(107, 0, 1, 201);
 			return 1;
 		}
