@@ -22,6 +22,7 @@ namespace skill983
 		//如果没有队伍则创建一个
 		if (empty($pa['teamID']))
 		{
+			$pa['sp'] += 200;
 			\team\teammake('试炼者', '2333');
 		}
 		
