@@ -308,6 +308,26 @@ namespace skill981
 		}
 	}
 	
+	//先攻率变化
+	function calculate_active_obbs_multiplier(&$ldata,&$edata)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$r = 1;
+		if (\skillbase\skill_query(981, $ldata)) $r *= 1 - get_active_obbs_debuff981($ldata) / 100;
+		if (\skillbase\skill_query(981, $edata)) $r /= 1 - get_active_obbs_debuff981($edata) / 100;
+		if ($r != 1) $ldata['active_words'] = \attack\multiply_format($r, $ldata['active_words'],0);
+		return $chprocess($ldata,$edata)*$r;
+	}
+	
+	function get_active_obbs_debuff981(&$pa)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$stage = (int)\skillbase\skill_getvalue(981,'stage',$pa);
+		$r = max(0, 2 * ($stage - 17));
+		$r = min($r, 70);
+		return $r;
+	}
+	
 	//判定复合属性是否显示
 	function check_comp_itmsk_visible($cinfo){
 		if (eval(__MAGIC__)) return $___RET_VALUE;

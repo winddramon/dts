@@ -3,7 +3,7 @@
 namespace skill981
 {
 	////////// MODULE HEADER START ///////////////
-	$___MODULE_dependency = 'skillbase clubbase sys player cardbase logger itemmain attrbase randnpc battle skill952';
+	$___MODULE_dependency = 'skillbase clubbase sys player cardbase logger itemmain attrbase randnpc battle enemy skill952';
 	$___MODULE_dependency_optional = 'item_recipe';
 	$___MODULE_conflict = '';
 	$___MODULE_codelist = 'main.php config/skill981.config.php';
