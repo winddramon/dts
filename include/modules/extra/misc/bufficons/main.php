@@ -263,7 +263,7 @@ namespace bufficons
 		if($is_successful){
 			$is_successful = \bufficons\bufficons_set_timestamp($token, $end, $cd, $pa, $tp, $msec);
 			if(!$is_successful) {
-				$fail_hint = '因技能编号错误或者时间为0等原因，发动技能失败！<br>';
+				$fail_hint = '发动技能失败！<br>';
 			}
 		}
 		
@@ -281,7 +281,7 @@ namespace bufficons
 		$fail_hint = '';
 		$is_successful = \bufficons\bufficons_set_timestamp($token, $end, $cd, $pa, $tp, $msec);
 		if(!$is_successful) {
-			$fail_hint = '因技能编号错误或者时间为0等原因，施加异常状态失败！<br>';
+			$fail_hint = '施加异常状态失败！<br>';
 		}
 
 		return Array($is_successful, $fail_hint);
