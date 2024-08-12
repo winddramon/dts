@@ -562,7 +562,7 @@ namespace skill983
 		return array_merge($r,$chprocess($pa,$pd,$active));
 	}
 	
-	//技能描述文字，待完成
+	//技能描述文字
 	function skill983_bufftext(&$pa)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
