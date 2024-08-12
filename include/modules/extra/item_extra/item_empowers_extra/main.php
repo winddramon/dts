@@ -109,9 +109,9 @@ namespace item_empowers_extra
 				else
 				{
 					if ($ec_lvl == 0) $skpool = array('u','e','i','w','p','N','H','c','z');
-					elseif ($ec_lvl == 1) $skpool = array('d','r','u','e','i','w','p','N','H','c');
-					elseif ($ec_lvl == 2) $skpool = array('f','k','t','d','r','L','u','e','i','w','p','N','H');
-					else $skpool = array('f','k','t','d','r','L','n','y','^ac1','N','H');
+					elseif ($ec_lvl == 1) $skpool = array('d','r','u','e','i','w','p','N','H');
+					elseif ($ec_lvl == 2) $skpool = array('f','k','t','d','r','L','u','e','i','w','p','N');
+					else $skpool = array('f','k','t','d','r','L','n','y','^ac1');
 					
 					$skpool = array_diff($skpool, \itemmain\get_itmsk_array($wepsk));
 					if (empty($skpool))
