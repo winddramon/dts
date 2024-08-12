@@ -31,7 +31,7 @@ namespace item_randskills
 	//此处S,A,B,C,X表示技能稀有度
 	$rs_cardskills = array
 	(
-		'S' => array(405, 406, 415, 434, 500, 515, 516, 591, 708, 719, 755, 756),//518（回归）, 539（不死）
+		'S' => array(405, 406, 415, 434, 500, 515, 516, 564, 591, 708, 719, 755, 756),//518（回归）, 539（不死）
 		'A' => array(407, 409, 410, 437, 439, 440, 446, 458, 472, 486, 496, 502, 517, 527, 560, 595, 597, 710),
 		'B' => array(416, 420, 429, 443, 447, 453, 454, 464, 465, 467, 473, 534, 556, 567, 590, 598, 705, 723, 728, 731, 738, 741, 753),
 		'C' => array(422, 428, 442, 448, 449, 450, 452, 457, 463, 470, 471, 479, 489, 557, 570, 582, 724, 725, 730, 737, 739, 746, 747, 752),
@@ -391,6 +391,15 @@ namespace item_randskills
 	function parse_skcore_skilldesc($skillid)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$sk_desc_text = array(
+			486 => '战斗中死亡时有<span class="yellow b">100%</span>概率复活，但之后因此复活的概率减半',
+			517 => '<span class="yellow b">战斗技</span>  物理伤害变成0，但对方随机一件防具的耐久值下降你的武器效果值（可发动<span class="yellow b">2</span>次）',
+			527 => '每局最多<span class="yellow b">4</span>次，你可以在攻击结束时让你的的基础攻击力永久翻倍',
+			534 => '你能把道具存进异空间或者从中取出，最多同时储存<span class="yellow b">2</span>个道具',
+			564 => '每升<span class="yellow b">5</span>级可以从五个称号技能中选择一个学习，总共可学习<span class="yellow b">10</span>次',
+			755 => '被战斗或陷阱杀死时会立即复活（可复活<span class="yellow b">2</span>次）',
+		);
+		if (isset($sk_desc_text[$skillid])) return $sk_desc_text[$skillid];
 		ob_start();
 		include template(constant('MOD_SKILL'.$skillid.'_DESC'));
 		$str=ob_get_contents();
