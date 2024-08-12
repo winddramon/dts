@@ -192,10 +192,12 @@ $cards = array(
 			'itm1' => '面糊饼',
 			'itmk1' => 'HB',
 			'itme1' => '120',
+			'itms1' => '30',
 			'itmsk1' => 'z',
 			'itm2' => '面糊汤',
 			'itmk2' => 'HB',
 			'itme2' => '120',
+			'itms2' => '30',
 			'itmsk2' => 'z',
 		)
 	),
