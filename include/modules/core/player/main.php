@@ -663,7 +663,11 @@ namespace player
 			$sname = $data['name'];
 			//unset($data['pid']);
 			//$ndata=Array();
-			//if(!$spid) writeover('a.txt','seems problem.'.debug_backtrace()[0]['function']);
+
+			//如果死了，判断一下state和deathmark有没有值
+			if($data['hp']<=0){
+				if($data['state'] < 10 && !empty($data['deathmark'])) $data['state'] = (int)$data['deathmark'];
+			}
 			
 			$pdata_pool[$spid] = array_clone($data);
 			//键名合法化
@@ -671,6 +675,7 @@ namespace player
 			//任意列的数值没变就不写数据库
 			$ndata = player_diff_from_poll($ndata);
 			unset($ndata['pid']);
+			//如果角色已死，标记一个单向的布尔字段，防止脏数据导致复活（这是PVP的底线）
 			//建国后不准成精，你们复活别想啦
 			if ($data['hp']<=0) {
 				$ndata['player_dead_flag'] = 1;

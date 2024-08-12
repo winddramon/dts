@@ -209,7 +209,10 @@ namespace attack
 			$pa['battlelog'] .= "<span class=\"yellow b\">{$pd['name']}</span><span class=\"red b\">被你杀死了！</span><br>";
 		}
 		
-		$pd['state']=$pd['deathmark'];
+		//大部分情况deathmark都有值，少部分延迟击杀类的（比如炸弹人），会直接给state写值，这个时候不改变state的值
+		if(!empty($pd['deathmark'])) {
+			$pd['state'] = $pd['deathmark'];
+		}
 		
 		$kilmsg = \player\kill($pa, $pd);
 		show_player_killwords($pa,$pd,$active,$kilmsg);
