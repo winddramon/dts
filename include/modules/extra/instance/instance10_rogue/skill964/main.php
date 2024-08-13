@@ -24,7 +24,7 @@ namespace skill964
 	$card_combo = array(//特定卡片组合，和需要凑够其中几张，count不设置默认为需要全部凑齐
 		1 => array('name' => '红与蓝', 'cards' => array(39,40)),//红暮和蓝凝
 		2 => array('name' => '猫', 'cards' => array(165,289,342,351,386,392,417), 'count' => 3),//NIKO，拷贝猫，三花，阿燐，姬特，猫盒，橙喵
-		3 => array('name' => '熊的力量', 'cards' => array(5,13,95,96), 'count' => 2),//虚子，熊本熊，冰炎
+		3 => array('name' => '熊的力量', 'cards' => array(5,13,95,96,120), 'count' => 3),//虚子，熊本熊，冰炎，熊战士
 		4 => array('name' => '挑战者', 'cards' => array(70,72,74,75,76,77,78,79,81,82,83,84,85,86,97,117,121,122,124,139,150,153,154,155,162,163,164,167,171,189,192,194,251,257,312,347,359,377,387,393,394,395,400,409,420), 'count' => 4),//卡名含有挑战者的卡
 		5 => array('name' => '永夜异变', 'cards' => array(268,358,352,158,186,277,350,273,290), 'count' => 3),//永夜抄
 		);
@@ -88,7 +88,12 @@ namespace skill964
 		if (empty($combo964)) $combo964 = array();
 		$combo964[] = $comboid;
 		\skillbase\skill_setvalue(964, 'combo', encode964($combo964), $pa);
-		if ($comboid == 3)
+		if ($comboid == 1)
+		{
+			\skillbase\skill_acquire(753,$pa);
+			\skillbase\skill_setvalue(753,'lvl','1',$pa);
+		}
+		elseif ($comboid == 3)
 		{
 			\skillbase\skill_acquire(402,$pa);
 			\skillbase\skill_setvalue(402,'lvl','4',$pa);
@@ -109,6 +114,7 @@ namespace skill964
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$cards_uvo = \item_uvo_extra\get_cards_uvo_extra($pa, 1);
+		$cards_uvo_unique = array_unique($cards_uvo);
 		$combo964 = get_combo964($pa);
 		eval(import_module('skill964'));
 		foreach ($card_combo as $k => $v)
@@ -118,7 +124,7 @@ namespace skill964
 			elseif (isset($v['count']))
 			{
 				$c = 0;
-				foreach ($cards_uvo as $cid)
+				foreach ($cards_uvo_unique as $cid)
 				{
 					if (in_array($cid, $v['cards'])) $c += 1;
 					if ($c >= $v['count'])
@@ -297,7 +303,7 @@ namespace skill964
 		$ret = $chprocess($pa, $pd, $active);
 		if (\skillbase\skill_query(964,$pa) && in_array(1, get_combo964($pa)))
 		{
-			$ret = array_merge($ret, array('u','i','f','k','y'));
+			$ret = array_merge($ret, array('f','k','y'));
 		}
 		return $ret;
 	}
@@ -327,7 +333,7 @@ namespace skill964
 			foreach ($combo964 as $c)
 			{
 				if (isset($card_combo[$c])) $w .= "<br><span class=\"lime b\">【{$card_combo[$c]['name']}】</span> ";
-				if ($c == 1) $w .= "视为具有<span class=\"yellow b\">火焰</span>、<span class=\"yellow b\">冻气</span>、<span class=\"yellow b\">灼焰</span>、<span class=\"yellow b\">冰华</span>、<span class=\"yellow b\">属穿</span>属性";
+				if ($c == 1) $w .= "视为具有<span class=\"yellow b\">灼焰</span>、<span class=\"yellow b\">冰华</span>、<span class=\"yellow b\">属穿</span>属性，获得技能“<span class=\"yellow b\">连携</span>”";
 				elseif ($c == 2) $w .= "回避率<span class=\"yellow b\">+95%</span>";
 				elseif ($c == 3) $w .= "获得技能“<span class=\"yellow b\">暴风</span>”和“<span class=\"yellow b\">直死4</span>”";
 				elseif ($c == 4) $w .= "造成物理伤害<span class=\"yellow b\">+150%</span>";
