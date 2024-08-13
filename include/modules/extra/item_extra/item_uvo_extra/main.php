@@ -209,6 +209,8 @@ namespace item_uvo_extra
 		}
 		elseif ($cardid == 299)//⑨
 		{
+			$pa['card'] = 299;
+			$pa['cardname'] = '⑨';
 			$pa['icon'] = 'n_999.gif';
 		}
 		elseif ($cardid == 344)//油库里
