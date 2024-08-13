@@ -14,9 +14,9 @@ namespace skill529
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		\skillbase\skill_setvalue(529,'activated',0,$pa);
 	}
-	
-	//因为lvl是在加载技能后写入的，判定获得道具和技能的效果得后置到玩家入场自动刷新界面时
-	function post_load_profile_event(){
+
+	//因为lvl是在加载技能后写入的，判定获得道具和技能的效果得后置，考虑到中途获得技能，现在后置到post_act()
+	function post_act(){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		if (\skillbase\skill_query(529) && empty(\skillbase\skill_getvalue(529,'activated')))
 		{
@@ -59,6 +59,9 @@ namespace skill529
 					\skillbase\skill_setvalue($getskillid, $gk, $gv, $pa);//获得对应技能
 				}
 			}
+
+			eval(import_module('clubbase', 'logger'));
+			$log .= '你获得了技能「<span class="yellow b">'.$clubskillname[$getskillid].'</span>」！</br>';
 		}
 	}
 	
@@ -135,6 +138,9 @@ namespace skill529
 			$pa['itme'.$pos] = $getitem['itme'];
 			$pa['itms'.$pos] = $getitem['itms'];
 			$pa['itmsk'.$pos] = $getitem['itmsk'];
+
+			eval(import_module('clubbase', 'logger'));
+			$log .= '你获得了道具「<span class="yellow b">'.$getitem['itm'].'</span>」！</br>';
 		}
 	}
 	
