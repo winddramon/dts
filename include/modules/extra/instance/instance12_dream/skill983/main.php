@@ -429,20 +429,25 @@ namespace skill983
 		$buffid = (int)\skillbase\skill_getvalue(983,'buff',$pa);
 		if ($t == 1)//物理伤害系数
 		{
-			$skill983_dmggain = array(7 => -50, 8 => 100, 16 => -80, 21 => 60);
+			$skill983_dmggain = array(7 => -50, 8 => 100, 16 => -80, 22 => 60);
 			if (isset($skill983_dmggain[$buffid])) $dmggain = $skill983_dmggain[$buffid];
 		} 
 		elseif ($t == 2)//属性伤害系数
 		{
-			$skill983_dmggain = array(7 => 100, 8 => -50, 17 => -80, 22 => 60);
+			$skill983_dmggain = array(7 => 100, 8 => -50, 17 => -80, 23 => 60);
 			if (isset($skill983_dmggain[$buffid])) $dmggain = $skill983_dmggain[$buffid];
 		}
 		elseif ($t == 3)//最终伤害系数
 		{
-			$skill983_dmggain = array(11 => 50, 12 => -50, 15 => -50, 20 => 50);
+			$skill983_dmggain = array(11 => 50, 12 => -50, 15 => -50, 21 => 50);
 			if (isset($skill983_dmggain[$buffid])) $dmggain = $skill983_dmggain[$buffid];
 			elseif (($buffid == 1 && $pa['wep_kind'] == 'F') || ($buffid == 2 && $pa['wep_kind'] == 'P') || ($buffid == 3 && $pa['wep_kind'] == 'D') || ($buffid == 4 && $pa['wep_kind'] == 'K') || ($buffid == 5 && $pa['wep_kind'] == 'G') || ($buffid == 6 && $pa['wep_kind'] == 'C')) $dmggain = -50;
 			elseif (($buffid == 1 && $pa['wep_kind'] == 'P') || ($buffid == 2 && $pa['wep_kind'] == 'D') || ($buffid == 3 && $pa['wep_kind'] == 'K') || ($buffid == 4 && $pa['wep_kind'] == 'G') || ($buffid == 5 && $pa['wep_kind'] == 'C') || ($buffid == 6 && $pa['wep_kind'] == 'F')) $dmggain = 100;
+		}
+		elseif ($t == 4)//受最终伤害系数
+		{
+			$skill983_dmggain = array(11 => 50, 12 => -50, 14 => 50, 20 => -50);
+			if (isset($skill983_dmggain[$buffid])) $dmggain = $skill983_dmggain[$buffid];
 		}
 		return $dmggain;
 	}
@@ -512,7 +517,7 @@ namespace skill983
 		{
 			$buffid = (int)\skillbase\skill_getvalue(983,'buff',$pa);
 			if ($buffid == 9 || $buffid == 13) $ret = 1;
-			elseif ($buffid == 10 || $buffid == 18) $ret = 8;
+			elseif ($buffid == 10 || $buffid == 19) $ret = 8;
 		}
 		return $ret;
 	}
@@ -542,10 +547,7 @@ namespace skill983
 		}
 		if (\skillbase\skill_query(983, $pd))
 		{
-			$buffid = (int)\skillbase\skill_getvalue(983,'buff',$pa);
-			$skill983_dmggain = array(11 => 50, 12 => -50, 14 => 50, 19 => -50);
-			$dmggain = 0;
-			if (isset($skill983_dmggain[$buffid])) $dmggain = $skill983_dmggain[$buffid];
+			$dmggain = skill983_get_dmg_multiplier($pd, 4);
 			eval(import_module('logger'));
 			if ($dmggain > 0)
 			{
@@ -568,11 +570,11 @@ namespace skill983
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa, $pd, $active);
-		eval(import_module('logger'));
 		if (\skillbase\skill_query(983, $pa) && (int)\skillbase\skill_getvalue(983,'buff',$pa) == 18)
 		{
 			if ($pa['dmg_dealt'] > 1997)
 			{
+				eval(import_module('logger'));
 				$pa['dmg_dealt'] = 1997;
 				if ($active) $log .= "<span class=\"yellow b\">「余火」使{$pd['name']}受到的伤害被限制到了1997点！</span><br>";
 				else $log .= " <span class=\"yellow b\">「余火」使你受到的伤害被限制到了1997点！</span><br>";
