@@ -40,11 +40,20 @@ namespace skill984
 			}
 			elseif ($clv == 2)
 			{
-				$theitem = array('itm'=>'改造核心·C级','itmk'=>'EC','itme'=>1,'itms'=>1,'itmsk'=>'');
+				$dice = round(rand(0, 999) * (0.01 * $stage + 0.98));
+				if ($dice < 950) $theitem = array('itm'=>'改造核心·C级','itmk'=>'EC','itme'=>1,'itms'=>1,'itmsk'=>'');
+				elseif ($dice < 989) $theitem = array('itm'=>'改造核心·B级','itmk'=>'EC','itme'=>1,'itms'=>1,'itmsk'=>'1');
+				elseif ($dice < 999) $theitem = array('itm'=>'改造核心·A级','itmk'=>'EC','itme'=>1,'itms'=>1,'itmsk'=>'2');
+				else $theitem = array('itm'=>'改造核心·S级','itmk'=>'EC','itme'=>1,'itms'=>1,'itmsk'=>'3');
 			}
 			elseif ($clv == 3)
 			{
-				$theitem = array('itm'=>'沾满灰尘的大逃杀卡牌包','itmk'=>'VO8','itme'=>1,'itms'=>1,'itmsk'=>'');
+				$dice = round(rand(0, 999) * (0.01 * $stage + 0.98));
+				if ($dice < 900) $theitem = array('itm'=>'沾满灰尘的大逃杀卡牌包','itmk'=>'VO8','itme'=>1,'itms'=>1,'itmsk'=>'');
+				elseif ($dice < 960) $theitem = array('itm'=>'陈旧的大逃杀卡牌包','itmk'=>'VO9','itme'=>1,'itms'=>1,'itmsk'=>'');
+				elseif ($dice < 989) $theitem = array('itm'=>'普通的大逃杀卡牌包','itmk'=>'VO2','itme'=>1,'itms'=>1,'itmsk'=>'');
+				elseif ($dice < 999) $theitem = array('itm'=>'精致的大逃杀卡牌包','itmk'=>'VO3','itme'=>1,'itms'=>1,'itmsk'=>'');
+				else $theitem = array('itm'=>'闪耀的大逃杀卡牌包','itmk'=>'VO5','itme'=>1,'itms'=>1,'itmsk'=>'');
 			}
 			if (!empty($theitem))
 			{

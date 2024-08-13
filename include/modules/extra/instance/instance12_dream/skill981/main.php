@@ -263,7 +263,6 @@ namespace skill981
 		}
 		$chprocess($theitem);
 	}
-
 	
 	function get_prizebox_itemlist($itme, &$itmsk)
 	{
