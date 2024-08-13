@@ -40,13 +40,24 @@ namespace skill981
 		{
 			$ret = '可用于解除禁区，进入英灵殿。<br><span class=&quot;yellow b&quot;>“我打黑熊……？诶……真的假的？”</span>';
 		}
-		elseif ($n == '梦境的前路')
+		elseif (strpos($k,'Y')===0 || strpos($k,'Z')===0)
 		{
-			$ret = '可用于开启第12-16波次，以达成『幻境解离』胜利';
-		}
-		elseif ($n == '深暗幻想')
-		{
-			$ret = '可用于开启无尽波次的挑战，使用后将会面对<span class=&quot;red b&quot;>极其强大</span>的敌人</span>';
+			if ($n == '「金满之壶」')
+			{
+				$ret .= '使用后获得700元金钱，且购买物品时价格打七五折';
+			}
+			elseif ($n == '「更大！更好！更强！」')
+			{
+				$ret .= '使用后生命上限+200，且生命上限成长增加';
+			}
+			elseif ($n == '梦境的前路')
+			{
+				$ret = '可用于开启第12-16波次，以达成『幻境解离』胜利';
+			}
+			elseif ($n == '深暗幻想')
+			{
+				$ret = '可用于开启无尽波次的挑战，使用后将会面对<span class=&quot;red b&quot;>极其强大</span>的敌人</span>';
+			}
 		}
 		return $ret;
 	}
@@ -228,10 +239,30 @@ namespace skill981
 				$itme = $itms = 0;
 				return;
 			}
+			//开局增益道具
+			elseif ($itm == '「金满之壶」')
+			{
+				$log .= "你使用了<span class=\"yellow b\">$itm</span>。<br><span class=\"yellow b\">你感觉自己变得富裕了。</span><br>";
+				$money_tmp = $money;
+				\skillbase\skill_acquire(69, $sdata);
+				$money = $money_tmp + 700;
+				$itm = $itmk = $itmsk = '';
+				$itme = $itms = 0;
+				return;
+			}
+			elseif ($itm == '「更大！更好！更强！」')
+			{
+				$log .= "你使用了<span class=\"yellow b\">$itm</span>。<br><span class=\"yellow b\">你感觉自己变得强壮了。</span><br>";
+				\skillbase\skill_lost(10, $sdata);
+				\skillbase\skill_acquire(29, $sdata);
+				\skillbase\skill_acquire(31, $sdata);
+				$itm = $itmk = $itmsk = '';
+				$itme = $itms = 0;
+				return;
+			}
 		}
 		$chprocess($theitem);
 	}
-	
 	
 	function get_prizebox_itemlist($itme, &$itmsk)
 	{

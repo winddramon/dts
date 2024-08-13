@@ -207,6 +207,12 @@ namespace item_uvo_extra
 					);
 			}
 		}
+		elseif ($cardid == 299)//⑨
+		{
+			$pa['card'] = 299;
+			$pa['cardname'] = '⑨';
+			$pa['icon'] = 'n_999.gif';
+		}
 		elseif ($cardid == 344)//油库里
 		{
 			$skills = array();
@@ -502,7 +508,8 @@ namespace item_uvo_extra
 		//丑陋但有效
 		if ($rare1 == $rare2)
 		{
-			if ($rare1 == 'A') $rare = 'S';
+			if ($rare1 == 'S') $rare = 'S';
+			elseif ($rare1 == 'A') $rare = 'S';
 			elseif ($rare1 == 'B') $rare = 'A';
 			elseif ($rare1 == 'C') $rare = 'B';
 			elseif ($rare1 == 'M') $rare = 'S';

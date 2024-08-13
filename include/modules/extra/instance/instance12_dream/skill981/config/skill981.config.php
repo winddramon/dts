@@ -48,8 +48,8 @@ namespace skill981
 	//特殊的道具属性：rdsk_S、rdsk_A、rdsk_B、rdsk_C表示对应等级的一个随机技能；card_S、card_A、card_B、card_C表示对应等级的一张随机卡片，在生成奖励时确定
 	$skill981_prizeitems = array(
 		0 => array( //初始奖励
-			array('一袋金钱','YY',1500,1,'',1),//额外金钱
-			array('「更大！更好！更强！」','MH',300,1,'',1),//额外生命上限
+			array('「金满之壶」','Y',1,1,'',1),//额外金钱
+			array('「更大！更好！更强！」','Y',1,1,'',1),//额外生命上限
 			array('■■■的记忆片段','MB',1,1,'^mbid984^mblvl1',1),//额外盒子
 			array('幻铁的记忆片段','MB',1,1,'^mbid984^mblvl2',1),//额外改造核心
 			array('「强欲之壶」','MB',1,1,'^mbid984^mblvl3',1),//额外卡牌包
@@ -380,6 +380,7 @@ namespace skill981
 			array('★神卡认证★','X',12,1,'',2),
 			//
 			array('★荆棘王冠★','DHS',300,30,'^hu300',5),
+			array('★王♂之逆转★','VS',1,1,'754',5),
 			array('《ACFUN大逃杀攻略》','VV',40,40,'',10),
 			array('《魔导百科全书·终》','VF',100,3,'^alt_<:comp_itmsk:>{SC02,SCB2,SCB2,SCB2,SCA2,SCA2,SCA2,SCA2,SCS2,SCS2}1^ahid2',4),
 			array('S级技能核心·改','SCS1',1,1,'',5),
@@ -490,7 +491,8 @@ namespace skill981
 			array('武器改造晶体·绯金','EI',1,2,'2',8),
 			array('改造核心·A级','EC',1,1,'2',20),
 			array('改造核心·S级','EC',1,1,'3',4),
-			array('一袋金钱','YY',6000,1,'',8),
+			array('『灵魂宝石』','Y',1,3,'Z',1),
+			array('『祝福宝石』','Y',1,3,'Z',1),
 			array('★Ranmen奖券★','VO1',1,3,'1104',1),
 			array('★東埔寨Protoject奖券★','VO1',1,3,'1105',1),
 			array('★Top Players奖券★','VO1',1,3,'1106',1),
