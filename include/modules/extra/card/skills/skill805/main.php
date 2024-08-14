@@ -2,7 +2,7 @@
 
 namespace skill805
 {
-	$skill805_except_skilllist = array(952,964,981); //不计入总数，也不能被遗忘的技能
+	$skill805_except_skilllist = array(952,964,981,982,983,1001,1002); //不计入总数，也不能被遗忘的技能
 	
 	function init() 
 	{
