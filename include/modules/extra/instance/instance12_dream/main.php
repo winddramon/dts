@@ -7,7 +7,7 @@ namespace instance12
 		if(!isset($valid_skills[22])) {
 			$valid_skills[22] = array();
 		}
-		$valid_skills[22] += array(68,181,252,951,952,964,981);
+		$valid_skills[22] += array(181,252,951,952,964,981);
 		//地图显示的配置组
 		$map_display_group[2] = Array(
 			'x' => 10,
