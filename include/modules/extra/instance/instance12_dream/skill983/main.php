@@ -138,9 +138,9 @@ namespace skill983
 				{
 					$log .= "<span class=\"white b\">“获得攻击面升级了，非常感谢！<br>每天都以最新的版本面对挑战可谓是基本呢。”</span><br><br>";
 					$log .= "<span class=\"yellow b\">$itm</span>化作七色的光芒，融入了<span class=\"yellow b\">{$edata['name']}</span>的武器中。<br>";
-					$edata['wepe'] += min(rand(round(0.05 * $itme), round(0.3 * $itme)), round(0.1 * $edata['wepe']));
+					$edata['wepe'] += min(rand(round(0.05 * $itme), round(0.3 * $itme)), round(0.15 * $edata['wepe']));
 					if ($itms == '∞') $itms = 100;
-					$edata['weps'] += min(rand(round(0.05 * $itms), round(0.3 * $itme)), round(0.1 * $edata['weps']));
+					$edata['weps'] += min(rand(round(0.05 * $itms), round(0.3 * $itme)), round(0.15 * $edata['weps']));
 					if (rand(0,1))
 					{
 						$tmpsk = array_intersect(\itemmain\get_itmsk_array($itmsk) ,array('f','k','t','d','r','N','L','n','y','u','e','i','w','p','c','N','H','B','b','Z','h','A','a','^ac1','^wc1','h','v','V'));
@@ -158,7 +158,7 @@ namespace skill983
 				{
 					$log .= "<span class=\"white b\">“获得防御面升级了，非常感谢！<br>每天都以最新的版本面对伤痛也算是基本吧。”</span><br><br>";
 					$log .= "<span class=\"yellow b\">$itm</span>化作七色的光芒，融入了<span class=\"yellow b\">{$edata['name']}</span>的身躯中。<br>";
-					$skillup = min(rand(round(0.05 * $itme), round(0.3 * $itme)), round(0.15 * $edata['wc']));
+					$skillup = min(rand(round(0.05 * $itme), round(0.3 * $itme)), round(0.2 * $edata['wc']));
 					$edata['wc'] += max($skillup, 10);
 					if (rand(0,1))
 					{

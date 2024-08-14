@@ -47,6 +47,16 @@ namespace skill484
 		}
 		return $ret;
 	}
+	
+	//成功选择称号后失去此技能
+	function player_selectclub($id)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess($id);
+		if ($ret == 0) \skillbase\skill_lost(484);
+		return $ret;
+	}
+	
 }
 
 ?>
