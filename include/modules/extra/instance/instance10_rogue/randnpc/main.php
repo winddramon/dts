@@ -66,6 +66,13 @@ namespace randnpc
 			}
 			$npc['type'] = $ntype;
 			$npc['pls'] = 99;
+			$dice = rand(0,10);
+			if ($dice < 4) $npc['wepsk'] = generate_randnpc_itmsk($rank, $npc['wepk'], $npc['wepsk']);
+			elseif ($dice < 5) $npc['arbsk'] = generate_randnpc_itmsk($rank, 'DB', $npc['arbsk']);
+			elseif ($dice < 6) $npc['arhsk'] = generate_randnpc_itmsk($rank, 'DH', $npc['arhsk']);
+			elseif ($dice < 7) $npc['arfsk'] = generate_randnpc_itmsk($rank, 'DF', $npc['arfsk']);
+			elseif ($dice < 8) $npc['arask'] = generate_randnpc_itmsk($rank, 'DA', $npc['arask']);
+			else $npc['artsk'] = generate_randnpc_itmsk($rank, 'A', $npc['artsk']);
 		}
 		else
 		{
@@ -308,7 +315,7 @@ namespace randnpc
 		elseif ($sk_count == 1) $itmsk_arr[] = array_randompick($skpool);
 		$itmsk_arr = array_unique($itmsk_arr);
 		//灵系和重枪特判
-		if ($itmk == 'WF' || $itmk == 'WJ') $itmsk_arr = array_diff($itmsk_arr, array('r'));
+		if (($itmk == 'WF' || $itmk == 'WJ') && $rank < 17) $itmsk_arr = array_diff($itmsk_arr, array('r'));
 		$itmsk = implode('', $itmsk_arr);
 		return $itmsk;
 	}
