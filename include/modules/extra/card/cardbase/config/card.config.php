@@ -6839,7 +6839,7 @@ $cards = array(
 		),
 	),
 	423 => array(
-		'name' => '宝可梦',
+		'name' => '帕可梦',
 		'rare' => 'M',
 		'pack' => 'Ranmen',
 		'desc' => '异世界的神秘又不可思议的<del>高级苦力</del>生物',
