@@ -29,24 +29,6 @@ namespace skill805
 		return 1;
 	}
 	
-	//统计持有技能数
-	function skill805_get_skill_count(&$pa)
-	{
-		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$acquired_skills = \skillbase\get_acquired_skill_array($pa);
-		$count = 0;
-		if (!empty($acquired_skills))
-		{
-			eval(import_module('clubbase','skill805'));
-			foreach ($acquired_skills as $skillid)
-			{
-				if (in_array($skillid, $skill805_except_skilllist)) continue;
-				if (isset($clubskillname[$skillid]) && (strpos(constant('MOD_SKILL'.$skillid.'_INFO'),'hidden;') === false)) $count += 1;
-			}
-		}
-		return $count;
-	}
-	
 	//可遗忘的技能列表和无法被遗忘的技能列表（feature类技能会计入技能数但不能遗忘）
 	function skill805_get_sklist(&$pa)
 	{
@@ -77,14 +59,16 @@ namespace skill805
 			$chprocess();
 			return;
 		}
-		if (\skillbase\skill_query(805, $sdata))
+		if (\skillbase\skill_query(805, $sdata) && $hp > 0 && !$itms0)
 		{
-			$skcount = skill805_get_skill_count($sdata);
+			$ls = skill805_get_sklist($sdata);
+			$skcount = count($ls[0]);
+			$totskcount = $skcount + count($ls[1]);
 			$clv = (int)\skillbase\skill_getvalue(805,'lvl',$sdata);
-			if ($skcount > $clv)
+			if ($totskcount > $clv && $skcount > 0)
 			{
 				eval(import_module('sys','logger'));
-				$log .= "<span class=\"yellow b\">你最多只能同时记住{$clv}个技能（现有{$skcount}个），请先遗忘技能！</span><br>";
+				$log .= "<span class=\"yellow b\">你最多只能同时记住{$clv}个技能（现有{$totskcount}个），请先遗忘技能！</span><br>";
 				$mode = 'special'; $command = 'skill805_special';
 			}
 		}
@@ -115,8 +99,8 @@ namespace skill805
 	function skill805_forget_skill($skillid)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		eval(import_module('clubbase','skill805','logger'));
-		if (!\skillbase\skill_query($skillid))
+		eval(import_module('clubbase','skill805','player','logger'));
+		if (!\skillbase\skill_query($skillid, $sdata))
 		{
 			$log .= "你没有此技能！<br>";
 			return;
@@ -126,7 +110,15 @@ namespace skill805
 			$log .= "输入参数有误！<br>";
 			return;
 		}
-		\skillbase\skill_lost($skillid);
+		$ls = skill805_get_sklist($sdata);
+		$totskcount = count($ls[0]) + count($ls[1]);
+		$clv = (int)\skillbase\skill_getvalue(805,'lvl',$sdata);
+		if ($totskcount <= $clv)
+		{
+			$log .= "输入参数有误！<br>";
+			return;
+		}
+		\skillbase\skill_lost($skillid, $sdata);
 		$log .= "<span class=\"yellow b\">你忘记了技能【{$clubskillname[$skillid]}】！</span><br>";
 		return;
 	}

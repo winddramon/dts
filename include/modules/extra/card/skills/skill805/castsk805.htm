@@ -3,22 +3,32 @@
 <input type="hidden" id="command" name="command" value="skill805_special">
 <input type="hidden" id="skill805_skillid" name="skill805_skillid" value="0">
 请选择要遗忘的技能：<br><br>
-<!--{eval $ls=\skill805\skill805_get_sklist($who);$sklist=$ls[0];$locksklist=$ls[1];}-->
+<!--{eval $ls=\skill805\skill805_get_sklist($who); $sklist=$ls[0]; $locksklist=$ls[1];}-->
 <!--{loop $sklist $k $i}-->
-<!--{eval $id = $k+1; $skilldesc_id='skilldesc_show_'.$id;}-->
-<input type="button" class="cmdbutton" value="{$clubskillname[$i]}" onclick="$('skill805_skillid').value='{$i}';postCmd('gamecmd','command.php');this.disabled=true;" onmouseenter="$('$skilldesc_id').style.display='block';" onmouseleave="$('$skilldesc_id').style.display='none';">	
-<div style="position:relative;">
-	<div id="$skilldesc_id" class="skilldesc_show" style="display:none;position:absolute;background-color:#000000;">
-	<!--{eval echo \skill805\skill805_parse_skilldesc($i);}-->
+<!--{eval $id=$k+1;$skilldesc_id='skilldesc_show_'.$id;$m=0;}-->
+<input type="button" class="cmdbutton" value="{$clubskillname[$i]}" onclick="$('skill805_skillid').value='{$i}';postCmd('gamecmd','command.php');this.disabled=true;" onmouseenter="$('$skilldesc_id').style.display='block';" onmouseleave="$('$skilldesc_id').style.display='none';">
+	<!--{if $id % 3 == 0 || $id == count($sklist)}-->
+	<!--{loop range($m,$k) $j}-->
+	<div style="position:relative;">
+		<div id="skilldesc_show_<!--{eval echo $j+1;}-->" class="skilldesc_show" style="display:none;position:absolute;background-color:#000000;">
+		<!--{eval echo \skill805\skill805_parse_skilldesc($sklist[$j]);}-->
+		</div>
 	</div>
-</div>
+	<!--{/loop}-->
+	<!--{eval $m+=3;}-->
+	<!--{/if}-->
 <!--{/loop}-->
 <!--{loop $locksklist $k $i}-->
-<!--{eval $id = $k+1000; $skilldesc_id='skilldesc_show_'.$id;}-->
+<!--{eval $id=$k+1000; $skilldesc_id='skilldesc_show_'.$id;$m=0;}-->
 <input type="button" class="cmdbutton" value="{$clubskillname[$i]}" disabled onmouseenter="$('$skilldesc_id').style.display='block';" onmouseleave="$('$skilldesc_id').style.display='none';">	
-<div style="position:relative;">
-	<div id="$skilldesc_id" class="skilldesc_show" style="display:none;position:absolute;background-color:#000000;">
-	<!--{eval echo \skill805\skill805_parse_skilldesc($i);}-->
+	<!--{if $id % 3 == 0 || $id == count($locksklist)+999}-->
+	<!--{loop range($m,$k) $j}-->
+	<div style="position:relative;">
+		<div id="skilldesc_show_<!--{eval echo $j+1000;}-->" class="skilldesc_show" style="display:none;position:absolute;background-color:#000000;">
+		<!--{eval echo \skill805\skill805_parse_skilldesc($locksklist[$j]);}-->
+		</div>
 	</div>
-</div>
+	<!--{/loop}-->
+	<!--{eval $m+=3;}-->
+	<!--{/if}-->
 <!--{/loop}-->
