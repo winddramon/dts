@@ -20,7 +20,10 @@ namespace ex_attr_song
 		$itemspkinfo['^sa4'] = '激奏4';
 		$itemspkinfo['^sa5'] = '激奏5';
 		$itemspkinfo['^sa6'] = '激奏6';
-
+		$itemspkinfo['^sa7'] = '激奏7';
+		$itemspkinfo['^sa8'] = '激奏8';
+		$itemspkinfo['^sa9'] = '激奏9';
+		$itemspkinfo['^sa10'] = '激奏10';
 	}
 	
 	//变奏改变歌唱效果
