@@ -2,7 +2,7 @@
 
 namespace skill981
 {
-	//每一个等级的敌人配置，共16级
+	//每一个波次的敌人配置，共16级
 	//每个数组中键名为随机敌人的等级（randnpc模块中的rank），键值为刷新数量
 	$skill981_enemies = array(
 		1 => array(3=>3,4=>1),
@@ -78,6 +78,8 @@ namespace skill981
 			array('陈旧的大逃杀卡牌包','VO9',1,2,'',6),
 			array('【神经强化剂】','ME',20,2,'',10),
 			array('改造核心·C级','EC',1,2,'',15),
+			array('铁壁药水','MB',1,1,'^mbid806^mblvl1^mbtime360',4),
+			array('巨力药水','MB',1,1,'^mbid806^mblvl32^mbtime480',4),
 			array('红宝石方块','X',1,2,'',1),
 			array('绿宝石方块','X',1,2,'',1),
 			array('蓝宝石方块','X',1,2,'',1),
@@ -111,6 +113,8 @@ namespace skill981
 			array('钢钉','Y',60,7,'',4),
 			array('贤者之磨刀石','Y',60,6,'',4),
 			array('改造核心·C级','EC',1,3,'',15),
+			array('铁壁药水','MB',1,1,'^mbid806^mblvl1^mbtime360',4),
+			array('巨力药水','MB',1,1,'^mbid806^mblvl32^mbtime480',4),
 			array('红宝石方块','X',1,2,'',1),
 			array('绿宝石方块','X',1,2,'',1),
 			array('蓝宝石方块','X',1,2,'',1),
@@ -158,6 +162,8 @@ namespace skill981
 			array('贤者之磨刀石','Y',60,7,'',4),
 			array('改造核心·C级','EC',1,4,'',15),
 			array('自动叠甲装置','YS',20,20,'',4),
+			array('铁壁药水','MB',1,1,'^mbid806^mblvl1^mbtime360',4),
+			array('巨力药水','MB',1,1,'^mbid806^mblvl32^mbtime480',4),
 			array('红宝石方块','X',1,2,'',1),
 			array('绿宝石方块','X',1,2,'',1),
 			array('蓝宝石方块','X',1,2,'',1),
@@ -202,6 +208,9 @@ namespace skill981
 			array('贤者之磨刀石','Y',60,10,'',4),
 			array('改造核心·B级','EC',1,1,'1',12),
 			array('自动叠甲装置','YS',20,30,'',4),
+			array('铁壁药水','MB',1,1,'^mbid806^mblvl1^mbtime360',3),
+			array('爽喉喷雾','MB',1,1,'^mbid806^mblvl5^mbtime360',2),
+			array('纯化药水','MB',1,1,'^mbid806^mblvl33^mbtime360',2),
 			array('红宝石方块','X',1,3,'',1),
 			array('蓝宝石方块','X',1,3,'',1),
 			array('绿宝石方块','X',1,3,'',1),
@@ -209,7 +218,7 @@ namespace skill981
 			array('四面的腿','PB4',1,1,'x',1),
 			array('四面的腿','PB4',1,1,'x',1),
 			array('四面的腿','PB4',1,1,'x',1),
-			array('四面的腿','PB4',1,1,'x',1),
+			array('四面的腿','PB4',1,1,'x^res_<:comp_itmsk:>{武器师安雅的奖赏,Y,1,3,z,}1^rtype1',114514),
 			array('一袋金钱','YY',2000,1,'',8),
 		),
 		5 => array(
@@ -248,6 +257,9 @@ namespace skill981
 			array('贤者之磨刀石','Y',60,14,'',4),
 			array('改造核心·B级','EC',1,1,'1',12),
 			array('自动叠甲装置','YS',20,40,'',4),
+			array('爽喉喷雾','MB',1,1,'^mbid806^mblvl5^mbtime360',2),
+			array('穿透药水','MB',1,1,'^mbid806^mblvl31^mbtime360',3),
+			array('纯化药水','MB',1,1,'^mbid806^mblvl33^mbtime360',2),
 			array('红宝石方块','X',1,3,'',1),
 			array('蓝宝石方块','X',1,3,'',1),
 			array('绿宝石方块','X',1,3,'',1),
@@ -296,6 +308,9 @@ namespace skill981
 			array('武器改造晶体·山铜','EI',1,1,'',12),
 			array('改造核心·B级','EC',1,2,'1',12),
 			array('自动叠甲装置','YS',20,50,'',4),
+			array('爽喉喷雾','MB',1,1,'^mbid806^mblvl5^mbtime360',2),
+			array('穿透药水','MB',1,1,'^mbid806^mblvl31^mbtime360',3),
+			array('纯化药水','MB',1,1,'^mbid806^mblvl33^mbtime360',2),
 			array('红宝石方块','X',1,3,'',1),
 			array('蓝宝石方块','X',1,3,'',1),
 			array('绿宝石方块','X',1,3,'',1),
@@ -339,6 +354,8 @@ namespace skill981
 			array('武器改造晶体·山铜','EI',1,1,'',12),
 			array('改造核心·B级','EC',1,2,'1',12),
 			array('自动叠甲装置','YS',20,60,'',4),
+			array('活力药水','MB',1,1,'^mbid806^mblvl4^mbtime360',3),
+			array('穿透药水','MB',1,1,'^mbid806^mblvl31^mbtime360',3),
 			array('一袋金钱','YY',3500,1,'',8),
 		),
 		8 => array(
@@ -372,6 +389,8 @@ namespace skill981
 			array('武器改造晶体·山铜','EI',1,1,'',12),
 			array('改造核心·B级','EC',1,3,'1',12),
 			array('自动叠甲装置','YS',20,70,'',4),
+			array('活力药水','MB',1,1,'^mbid806^mblvl4^mbtime360',3),
+			array('穿透药水','MB',1,1,'^mbid806^mblvl31^mbtime360',3),
 			array('悲叹之种','X',1,1,'',2),
 			array('一袋金钱','YY',4000,1,'',8),
 		),
@@ -396,6 +415,8 @@ namespace skill981
 			array('武器改造晶体·精钢','EI',1,2,'1',8),
 			array('改造核心·A级','EC',1,1,'2',12),
 			array('自动叠甲装置','YS',20,80,'',4),
+			array('神佑药水','MB',1,1,'^mbid806^mblvl2^mbtime360',2),
+			array('活力药水','MB',1,1,'^mbid806^mblvl4^mbtime360',3),
 			array('悲叹之种','X',1,1,'',2),
 			array('一袋金钱','YY',5000,1,'',8),
 		),
@@ -416,6 +437,9 @@ namespace skill981
 			array('武器改造晶体·绯金','EI',1,2,'2',8),
 			array('改造核心·A级','EC',1,1,'2',20),
 			array('改造核心·S级','EC',1,1,'3',2),
+			array('神佑药水','MB',1,1,'^mbid806^mblvl2^mbtime360',2),
+			array('护心药水','MB',1,1,'^mbid806^mblvl3^mbtime360',2),
+			array('活力药水','MB',1,1,'^mbid806^mblvl4^mbtime360',3),
 			array('一袋金钱','YY',6000,1,'',8),
 		),
 		11 => array(
@@ -434,6 +458,8 @@ namespace skill981
 			array('武器改造晶体·绯金','EI',1,2,'2',8),
 			array('改造核心·A级','EC',1,1,'2',20),
 			array('改造核心·S级','EC',1,1,'3',3),
+			array('护心药水','MB',1,1,'^mbid806^mblvl3^mbtime360',2),
+			array('心眼药水','MB',1,1,'^mbid806^mblvl34^mbtime360',2),
 			array('一袋金钱','YY',6000,1,'',8),
 		),
 		13 => array(
@@ -447,6 +473,9 @@ namespace skill981
 			array('武器改造晶体·绯金','EI',1,2,'2',8),
 			array('改造核心·A级','EC',1,1,'2',20),
 			array('改造核心·S级','EC',1,1,'3',3),
+			array('护心药水','MB',1,1,'^mbid806^mblvl3^mbtime360',2),
+			array('心眼药水','MB',1,1,'^mbid806^mblvl34^mbtime360',2),
+			array('神力药水','MB',1,1,'^mbid806^mblvl35^mbtime180',2),
 			array('一袋金钱','YY',6000,1,'',8),
 		),
 		14 => array(
@@ -460,6 +489,9 @@ namespace skill981
 			array('武器改造晶体·绯金','EI',1,2,'2',8),
 			array('改造核心·A级','EC',1,1,'2',20),
 			array('改造核心·S级','EC',1,1,'3',3),
+			array('护心药水','MB',1,1,'^mbid806^mblvl3^mbtime360',2),
+			array('心眼药水','MB',1,1,'^mbid806^mblvl34^mbtime360',2),
+			array('神力药水','MB',1,1,'^mbid806^mblvl35^mbtime180',2),
 			array('一袋金钱','YY',6000,1,'',8),
 		),
 		15 => array(
@@ -473,6 +505,8 @@ namespace skill981
 			array('武器改造晶体·绯金','EI',1,2,'2',8),
 			array('改造核心·A级','EC',1,1,'2',20),
 			array('改造核心·S级','EC',1,1,'3',4),
+			array('护心药水','MB',1,1,'^mbid806^mblvl3^mbtime360',2),
+			array('神性药水','MB',1,1,'^mbid806^mblvl36^mbtime180',1),
 			array('一袋金钱','YY',6000,1,'',8),
 		),
 		16 => array(
@@ -496,6 +530,7 @@ namespace skill981
 			array('『灵魂宝石』','Y',1,3,'Z',1),
 			array('『祝福宝石』','Y',1,3,'Z',1),
 			array('自动叠甲装置-改','YS',300,10,'',4),
+			array('神性药水','MB',1,1,'^mbid806^mblvl36^mbtime180',1),
 			array('★Ranmen奖券★','VO1',1,3,'1104',1),
 			array('★東埔寨Protoject奖券★','VO1',1,3,'1105',1),
 			array('★Top Players奖券★','VO1',1,3,'1106',1),
