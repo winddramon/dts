@@ -506,7 +506,7 @@ namespace skill981
 			array('改造核心·A级','EC',1,1,'2',20),
 			array('改造核心·S级','EC',1,1,'3',4),
 			array('护心药水','MB',1,1,'^mbid806^mblvl3^mbtime360',2),
-			array('神性药水','MB',1,1,'^mbid806^mblvl36^mbtime180',1),
+			array('神性药水','MB',1,1,'^mbid806^mblvl36^mbtime90',1),
 			array('一袋金钱','YY',6000,1,'',8),
 		),
 		16 => array(
@@ -530,7 +530,7 @@ namespace skill981
 			array('『灵魂宝石』','Y',1,3,'Z',1),
 			array('『祝福宝石』','Y',1,3,'Z',1),
 			array('自动叠甲装置-改','YS',300,10,'',4),
-			array('神性药水','MB',1,1,'^mbid806^mblvl36^mbtime180',1),
+			array('神性药水','MB',1,1,'^mbid806^mblvl36^mbtime90',1),
 			array('★Ranmen奖券★','VO1',1,3,'1104',1),
 			array('★東埔寨Protoject奖券★','VO1',1,3,'1105',1),
 			array('★Top Players奖券★','VO1',1,3,'1106',1),
