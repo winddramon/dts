@@ -391,6 +391,7 @@ namespace item_randskills
 	function parse_skcore_skilldesc($skillid)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('clubbase'));//载入$clubskillname
 		$sk_desc_text = array(
 			486 => '战斗中死亡时有<span class="yellow b">100%</span>概率复活，但之后因此复活的概率减半',
 			517 => '<span class="yellow b">战斗技</span>  物理伤害变成0，但对方随机一件防具的耐久值下降你的武器效果值（可发动<span class="yellow b">2</span>次）',

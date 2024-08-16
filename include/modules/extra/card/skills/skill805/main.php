@@ -139,6 +139,7 @@ namespace skill805
 	function skill805_parse_skilldesc($skillid)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		eval(import_module('player','clubbase'));//载入变量以避免大规模的错误提示
 		ob_start();
 		include template(constant('MOD_SKILL'.$skillid.'_DESC'));
 		$str=ob_get_contents();
