@@ -63,7 +63,8 @@ namespace skill273
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('skill273'));
-		$c = $min_chance273 + $pd['wc'] * $chance_gain273;
+		$pdwc = !empty($pd['wc']) ? $pd['wc'] : 0;
+		$c = $min_chance273 + $pdwc * $chance_gain273;
 		if(!$pa['type']) $cmax = $max_chance273_pc;
 		else $cmax = $max_chance273_npc;
 		$c = min($c, $cmax);
