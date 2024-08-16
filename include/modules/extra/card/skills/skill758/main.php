@@ -4,7 +4,7 @@ namespace skill758
 {
 	function init()
 	{
-		define('MOD_SKILL758_INFO','card;feature;');
+		define('MOD_SKILL758_INFO','card;');
 		eval(import_module('clubbase'));
 		$clubskillname[758] = '梦隙';
 	}

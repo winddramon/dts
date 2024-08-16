@@ -84,10 +84,9 @@ namespace skill806
 		return $ret;
 	}
 	
-	function skill806_attrtext(&$pa)
+	function skill806_attrtext($clv)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
-		$clv = (int)\skillbase\skill_getvalue(806,'lvl',$pa);
 		eval(import_module('skill806'));
 		$attrs = isset($skill806_attr[$clv]) ? $skill806_attr[$clv] : $skill806_attr[0];
 		$s = '';

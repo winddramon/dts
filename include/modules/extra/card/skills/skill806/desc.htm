@@ -6,7 +6,9 @@ $clubskillname[$___TEMP_SKILL_ID]
 </span>
 {template MOD_CLUBBASE_SKILLDESC_MID1}
 <td class="skilldesc_left b3"><span class="skilldesc">
-你视为具有<span class="yellow b"><!--{eval echo \skill806\skill806_attrtext($who);}--></span>属性
+<!--{eval $clv = (int)\skillbase\skill_getvalue(806,'lvl',$who);}-->
+你视为具有<span class="yellow b"><!--{eval echo \skill806\skill806_attrtext($clv);}--></span>属性<br>
+（只能同时存在一种“<span class="yellow b">药水</span>”效果）
 </span></td>
 <td class="skilldesc_right b3">
 </td>
