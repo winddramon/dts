@@ -218,7 +218,7 @@ namespace skill981
 			array('四面的腿','PB4',1,1,'x',1),
 			array('四面的腿','PB4',1,1,'x',1),
 			array('四面的腿','PB4',1,1,'x',1),
-			array('四面的腿','PB4',1,1,'x^res_<:comp_itmsk:>{武器师安雅的奖赏,Y,1,3,z,}1^rtype1',114514),
+			array('四面的腿','PB4',1,1,'x^res_<:comp_itmsk:>{武器师安雅的奖赏,Y,1,3,z,}1^rtype1',1),
 			array('一袋金钱','YY',2000,1,'',8),
 		),
 		5 => array(
