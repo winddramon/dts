@@ -230,7 +230,7 @@ namespace item_uvo_extra
 			$skills = array();
 			$items = array();
 			
-			$weplist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance10_rogue/config/stwep.config.php');
+			$weplist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance12_dream/config/stwep.config.php');
 			do {
 				$index = rand(1,count($weplist)-1);
 				$newitem = array();
@@ -240,7 +240,7 @@ namespace item_uvo_extra
 				}
 			} while(!$newitem['itms']);
 			$items[] = $newitem;
-			$stitemlist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance10_rogue/config/stitem.config.php');
+			$stitemlist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance12_dream/config/stitem.config.php');
 			for($i=1;$i<=2;$i++){
 				do {
 					$index = rand(1,count($stitemlist)-1);
