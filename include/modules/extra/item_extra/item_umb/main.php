@@ -26,26 +26,31 @@ namespace item_umb
 			}
 			if(!empty($clubskillname[$buff_id])){
 				$if_temp = '';
-				$buff_time = \attrbase\check_in_itmsk('^mbtime', $sk);
+				$buff_lvl = (int)\attrbase\check_in_itmsk('^mblvl', $sk);
+				$buff_time = (int)\attrbase\check_in_itmsk('^mbtime', $sk);
 				if ($buff_time) $if_temp = '临时';
 				$ret .= '使用后获得'.$if_temp.'技能「'.$clubskillname[$buff_id].'」';
-			}
-			if ($buff_id == '400'){
-				$ret .= '：造成物理伤害有概率增加';
-			}elseif ($buff_id == '401') {
-				$ret .= '：受到物理伤害减少';
-			}elseif ($buff_id == '404') {
-				$ret .= '：生命值在50%以下时攻击附加固定物理伤害';
-			}elseif ($buff_id == '461') {
-				$ret .= '：免疫时效性负面状态和异常状态';
-			}elseif ($buff_id == '710') {
-				$ret .= '：解除使用熟练技能书或熟练药物的衰减';
-			}elseif ($sk == '^mbid984^mblvl1') {
-				$ret .= '：完成每一波次50%获得1个第1波次的梦境礼盒';
-			}elseif ($sk == '^mbid984^mblvl2') {
-				$ret .= '：完成每一波次50%获得1个改造核心，且随波次数增加有更高概率出现高等级的改造核心';
-			}elseif ($sk == '^mbid984^mblvl3') {
-				$ret .= '：完成每一波次50%获得1个卡牌包，且随波次数增加有更高概率出现高等级的卡牌包';
+				if ($buff_time) $ret .= '（'.$buff_time.'秒）';
+				//技能描述
+				if ($buff_id == 400){
+					$ret .= '：造成物理伤害有概率增加';
+				}elseif ($buff_id == 401) {
+					$ret .= '：受到物理伤害减少';
+				}elseif ($buff_id == 404) {
+					$ret .= '：生命值在50%以下时攻击附加固定物理伤害';
+				}elseif ($buff_id == 461) {
+					$ret .= '：免疫时效性负面状态和异常状态';
+				}elseif ($buff_id == 710) {
+					$ret .= '：解除使用熟练技能书或熟练药物的衰减';
+				}elseif ($buff_id == 806) {
+					$ret .= '：视为具有'.\skill806\skill806_attrtext($buff_lvl).'属性';
+				}elseif ($buff_id == 984 && $buff_lvl == 1) {
+					$ret .= '：完成每一波次50%获得1个第1波次的梦境礼盒';
+				}elseif ($buff_id == 984 && $buff_lvl == 2) {
+					$ret .= '：完成每一波次50%获得1个改造核心，且随波次数增加有更高概率出现高等级的改造核心';
+				}elseif ($buff_id == 984 && $buff_lvl == 3) {
+					$ret .= '：完成每一波次50%获得1个卡牌包，且随波次数增加有更高概率出现高等级的卡牌包';
+				}
 			}
 		}
 		return $ret;

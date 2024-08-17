@@ -66,7 +66,6 @@ namespace item_uee_extra
 			{
 				$log .= "输入参数错误。<br>";
 				$mode = 'command';
-				return true;
 			}
 			else
 			{
@@ -79,6 +78,7 @@ namespace item_uee_extra
 					addnews($now,'hack',$name);
 					\sys\systemputchat($now,'hack');
 					save_gameinfo();
+					return true;
 				}
 				else
 				{
@@ -86,9 +86,8 @@ namespace item_uee_extra
 					$cmd = ob_get_contents();
 					ob_end_clean();
 				}
-				return $ret;//没解开不耗电
 			}
-			return true;
+			return false;
 		}
 	}
 	
