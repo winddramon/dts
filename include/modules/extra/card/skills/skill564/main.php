@@ -107,6 +107,7 @@ namespace skill564
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('clubbase','skill564'));	
+		$ls_skills_feature = array();
 		$ls_skills = array();
 		foreach ($clublist as $club => $arr)
 		{
@@ -117,19 +118,18 @@ namespace skill564
 					//不会随机出已学会的技能和被ban的技能
 					if (sklearn_basecheck($skillid) && !\skillbase\skill_query($skillid))
 					{
-						//第一次必然为三个称号特性选一
+						//第一次必然为称号特性
 						if (1 === $first)
 						{
-							if (strpos(constant('MOD_SKILL'.$skillid.'_INFO'),'feature;')!==false) $ls_skills[] = $skillid;
+							if (strpos(constant('MOD_SKILL'.$skillid.'_INFO'),'feature;')!==false) $ls_skills_feature[] = $skillid;
 						}
-						else $ls_skills[] = $skillid;
+						$ls_skills[] = $skillid;
 					}
 				}
 			}
 		}
-		$randkeys = array_rand($ls_skills, 5);
-		$ls = array();
-		foreach ($randkeys as $key) $ls[] = $ls_skills[$key];
+		if (1 === $first && count($ls_skills_feature) >= 5) $ls_skills = $ls_skills_feature;
+		$ls = array_randompick($ls_skills, 5);
 		$choices = implode('_', $ls);
 		return $choices;
 	}
