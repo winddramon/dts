@@ -11,8 +11,9 @@ if (isset($user_prefix)) {
 	$user_prefix = room_prefix_kind($room_prefix);
 }
 if (isset($show_all)) $showall=$show_all; else $showall=1;
-for($i=1;$i<=8;$i++) if(!isset(${'winner_show_wmode_'.$i})) ${'winner_show_wmode_'.$i}=0;
-for($i=0;$i<=20;$i++) if(!isset(${'winner_show_gtype_'.$i})) ${'winner_show_gtype_'.$i}=0;
+$wmode_max = 8; $gtype_max = 30;
+for($i=1;$i<=$wmode_max;$i++) if(!isset(${'winner_show_wmode_'.$i})) ${'winner_show_wmode_'.$i}=0;
+for($i=0;$i<=$gtype_max;$i++) if(!isset(${'winner_show_gtype_'.$i})) ${'winner_show_gtype_'.$i}=0;
 if (!isset($winner_show_winner)) $winner_show_winner='';
 $room_gprefix = '';
 if (room_check_subroom($room_prefix)) $room_gprefix = ((string)$room_prefix).'.';
@@ -112,7 +113,7 @@ else
 	$query_gid = $start > 0 ? "gid<='$start'" : "";
 	//gmode条件（游戏模式）
 	$query_gtype = ''; $show_gtype_arr = array();
-	for($i=0;$i<=20;$i++) {
+	for($i=0;$i<=$gtype_max;$i++) {
 		if(!empty(${'winner_show_gtype_'.$i})) $show_gtype_arr[] = $i;
 	}
 	sort($show_gtype_arr);
@@ -121,7 +122,7 @@ else
 	}
 	//wmode条件（胜利类型）
 	$query_wmode = ''; $show_wmode_arr = array();
-	for($i=1;$i<=8;$i++) {
+	for($i=1;$i<=$wmode_max;$i++) {
 		if(!empty(${'winner_show_wmode_'.$i})) $show_wmode_arr[] = $i;
 	}
 	sort($show_wmode_arr);
