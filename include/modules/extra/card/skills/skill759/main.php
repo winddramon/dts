@@ -27,7 +27,7 @@ namespace skill759
 		if (eval(__MAGIC__)) return $___RET_VALUE;	
 		if (\skillbase\skill_query(759))
 		{
-			$rpls = (int)\skillbase\skill_getvalue(759,'rpls',$pa);
+			$rpls = (int)\skillbase\skill_getvalue(759,'rpls');
 			eval(import_module('map', 'logger'));
 			$tip_chars = array('常', '地', '高', '幻', '界', '精', '究', '林', '梦', '墓', '森', '社', '神', '使', '世', '斯', '天', '校', '学', '研', '镇', '之', '中');
 			shuffle($tip_chars);
@@ -59,7 +59,7 @@ namespace skill759
 		$itme = 1;
 		$itms = 1;
 		$itmsk = '3';
-		$db->query("INSERT INTO {$tablepre}mapitem (itm, itmk, itme, itms, itmsk , pls) VALUES ('$itm', '$itmk', '$itme', '$itms', '$itmsk', '$rpls')");
+		$db->query("INSERT INTO {$tablepre}mapitem (itm, itmk, itme, itms, itmsk, pls) VALUES ('$itm', '$itmk', '$itme', '$itms', '$itmsk', '$rpls')");
 		return $rpls;
 	}
 	
