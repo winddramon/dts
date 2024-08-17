@@ -94,9 +94,38 @@ namespace skill753
 					foreach ($skill753_arr as $v)
 					{
 						\skill81\swapitem81($pa, 'wep', $v);
+						if(strpos($pa['itmk'.$v] , 'WN') === 0 || !$pa['itms'.$v])
+						{
+							$pa['itm'.$v] = $pa['itmk'.$v] = $pa['itmsk'.$v] = '';
+							$pa['itme'.$v] = $pa['itms'.$v] = 0;
+						}
 						$log .= "<span class=\"cyan b\">追加攻击！</span><br>";
 						$pa['wep_kind'] = \weapon\get_attack_method($pa);
 						$chprocess($pa,$pd,$active);
+					}
+					$v = $skill753_arr[0];
+					if(strpos($pa['itmk'.$v] , 'WN') !== 0 && $pa['itms'.$v])
+					{
+						swap($pa['wep'], $pa['itm'.$v]);
+						swap($pa['wepk'], $pa['itmk'.$v]);
+						swap($pa['wepe'], $pa['itme'.$v]);
+						swap($pa['weps'], $pa['itms'.$v]);
+						swap($pa['wepsk'], $pa['itmsk'.$v]);
+						if(strpos($pa['itmk'.$v] , 'WN') === 0 || !$pa['itms'.$v])
+						{
+							$pa['itm'.$v] = $pa['itmk'.$v] = $pa['itmsk'.$v] = '';
+							$pa['itme'.$v] = $pa['itms'.$v] = 0;
+						}
+					}
+					for ($i=1; $i<count($skill753_arr); $i++)
+					{
+						$v1 = $skill753_arr[$i-1];
+						$v2 = $skill753_arr[$i];
+						swap($pa['itm'.$v1], $pa['itm'.$v2]);
+						swap($pa['itmk'.$v1], $pa['itmk'.$v2]);
+						swap($pa['itme'.$v1], $pa['itme'.$v2]);
+						swap($pa['itms'.$v1], $pa['itms'.$v2]);
+						swap($pa['itmsk'.$v1], $pa['itmsk'.$v2]);
 					}
 				}
 			}
