@@ -136,6 +136,7 @@ namespace item_uvo_extra
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('logger'));
+		$success_flag = 1;
 		$cards_uvo = get_cards_uvo_extra($pa);
 		if (!in_array($cardid, $cards_uvo))
 		{
@@ -217,6 +218,14 @@ namespace item_uvo_extra
 		{
 			$skills = array();
 		}
+		elseif ($cardid == 362)//阿Q
+		{
+			if ($pa['lvl'] >= 30)
+			{
+				$skills = array();
+				$success_flag = 0;
+			}
+		}
 		elseif ($cardid == 381)//双料特工
 		{
 			$skills = array();
@@ -230,7 +239,7 @@ namespace item_uvo_extra
 			$skills = array();
 			$items = array();
 			
-			$weplist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance10_rogue/config/stwep.config.php');
+			$weplist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance12_dream/config/stwep.config.php');
 			do {
 				$index = rand(1,count($weplist)-1);
 				$newitem = array();
@@ -240,7 +249,7 @@ namespace item_uvo_extra
 				}
 			} while(!$newitem['itms']);
 			$items[] = $newitem;
-			$stitemlist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance10_rogue/config/stitem.config.php');
+			$stitemlist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance12_dream/config/stitem.config.php');
 			for($i=1;$i<=2;$i++){
 				do {
 					$index = rand(1,count($stitemlist)-1);
@@ -258,6 +267,7 @@ namespace item_uvo_extra
 		add_card_uvo_extra($cardid_o, $pa, 1);
 		
 		$log .= "<span class=\"yellow b\">卡片「{$cards[$cardid_o]['name']}」的力量融入了你的体内！</span><br>";
+		if (!$success_flag) $log .= "<span class=\"yellow b\">但是这股力量瞬间消散了……</span><br>";
 		
 		//获得技能
 		$acquired_skills = \skillbase\get_acquired_skill_array($pa);
@@ -531,10 +541,15 @@ namespace item_uvo_extra
 		{
 			if (in_array($pack, $pack_ignore_kuji)) $cardpool = array_merge($cardpool, $cardindex['EB_'.$rare]);
 			$c = 0;
-			do{
-				$get_card_id = array_randompick($cardpool);
+			$k = array_rand($cardpool);
+			$get_card_id = $cardpool[$k];
+			while($cards[$get_card_id]['pack'] !== $pack && $c < 99 && !empty($cardpool))//不会真有人写爆炸吧
+			{
+				unset($cardpool[$k]);
+				$k = array_rand($cardpool);
+				$get_card_id = $cardpool[$k];
 				$c += 1;
-			}while($cards[$get_card_id]['pack'] !== $pack && $c < 99);//不会真有人写爆炸吧
+			}
 		}
 		else $get_card_id = array_randompick($cardpool);
 		return $get_card_id;

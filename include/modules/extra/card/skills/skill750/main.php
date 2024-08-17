@@ -28,8 +28,8 @@ namespace skill750
 		{
 			unset($ret[1][750]);
 			$ebp = &$ret[0];
-			//获得1个肉鸽模式开局武器和2个肉鸽模式开局道具
-			$weplist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance10_rogue/config/stwep.config.php');
+			//获得1个梦境演练开局武器和2个梦境演练开局道具
+			$weplist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance12_dream/config/stwep.config.php');
 			do {
 				$index = rand(1,count($weplist)-1);
 				list($ebp['itm4'],$ebp['itmk4'],$ebp['itme4'],$ebp['itms4'],$ebp['itmsk4']) = \itemmain\startingitem_row_data_seperate($weplist[$index]);
@@ -37,7 +37,7 @@ namespace skill750
 					$ebp['itmsk4'] = \attrbase\config_process_encode_comp_itmsk($ebp['itmsk4']);
 				}
 			} while(!$ebp['itms4']);
-			$stitemlist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance10_rogue/config/stitem.config.php');
+			$stitemlist = openfile(GAME_ROOT.'./include/modules/extra/instance/instance12_dream/config/stitem.config.php');
 			for($i=5;$i<=6;$i++){
 				do {
 					$index = rand(1,count($stitemlist)-1);
