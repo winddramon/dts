@@ -531,10 +531,15 @@ namespace item_uvo_extra
 		{
 			if (in_array($pack, $pack_ignore_kuji)) $cardpool = array_merge($cardpool, $cardindex['EB_'.$rare]);
 			$c = 0;
-			do{
-				$get_card_id = array_randompick($cardpool);
+			$k = array_rand($cardpool);
+			$get_card_id = $cardpool[$k];
+			while($cards[$get_card_id]['pack'] !== $pack && $c < 99 && !empty($cardpool))//不会真有人写爆炸吧
+			{
+				unset($cardpool[$k]);
+				$k = array_rand($cardpool);
+				$get_card_id = $cardpool[$k];
 				$c += 1;
-			}while($cards[$get_card_id]['pack'] !== $pack && $c < 99);//不会真有人写爆炸吧
+			}
 		}
 		else $get_card_id = array_randompick($cardpool);
 		return $get_card_id;
