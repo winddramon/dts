@@ -116,16 +116,16 @@ namespace skill753
 							$pa['itm'.$v] = $pa['itmk'.$v] = $pa['itmsk'.$v] = '';
 							$pa['itme'.$v] = $pa['itms'.$v] = 0;
 						}
-					}
-					for ($i=1; $i<count($skill753_arr); $i++)
-					{
-						$v1 = $skill753_arr[$i-1];
-						$v2 = $skill753_arr[$i];
-						swap($pa['itm'.$v1], $pa['itm'.$v2]);
-						swap($pa['itmk'.$v1], $pa['itmk'.$v2]);
-						swap($pa['itme'.$v1], $pa['itme'.$v2]);
-						swap($pa['itms'.$v1], $pa['itms'.$v2]);
-						swap($pa['itmsk'.$v1], $pa['itmsk'.$v2]);
+						for ($i=1; $i<count($skill753_arr); $i++)
+						{
+							$v1 = $skill753_arr[$i-1];
+							$v2 = $skill753_arr[$i];
+							swap($pa['itm'.$v1], $pa['itm'.$v2]);
+							swap($pa['itmk'.$v1], $pa['itmk'.$v2]);
+							swap($pa['itme'.$v1], $pa['itme'.$v2]);
+							swap($pa['itms'.$v1], $pa['itms'.$v2]);
+							swap($pa['itmsk'.$v1], $pa['itmsk'.$v2]);
+						}
 					}
 				}
 			}
