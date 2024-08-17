@@ -10,7 +10,27 @@ namespace itemmain
 		global $item_equip_list;
 		$equip_list=array_merge($equip_list,$item_equip_list);
 	}
+
+	//对从数据库里读出来的raw数据的处理
+	function playerdata_construct_process($data){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$data = $chprocess($data);
+		//php8.0以上版本，对字符串进行数学运算会除错，因此对itms这类的字段需要先进行处理，把字符串变成数字（无限耐不用）
+		eval(import_module('player','itemmain'));
+		foreach($equip_list as $v) {
+			if('itm' == substr($v, 0, 3)) {
+				$c = 'itms'. substr($v, 3);
+			}else{
+				$c = $v.'s';
+			}
+			if($nosta !== $data[$c]) {
+				$data[$c] = (int)$data[$c];
+			}
+		}
+		return $data;
+	}
 	
+	//判定道具可合并性
 	//1:一般可合并道具  2:食物  0:不可合并
 	function check_mergable($ik){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
