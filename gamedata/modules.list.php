@@ -314,6 +314,7 @@ skill754,extra/card/skills/skill754/,1
 skill755,extra/card/skills/skill755/,1
 skill757,extra/card/skills/skill757/,1
 skill805,extra/card/skills/skill805/,1
+skill759,extra/card/skills/skill759/,1
 wep_g,base/weapon/wep_g/,1
 wep_j,base/weapon/wep_j/,1
 skill273,extra/club/skills/skill273/,1

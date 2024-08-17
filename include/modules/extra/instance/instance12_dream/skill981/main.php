@@ -291,7 +291,7 @@ namespace skill981
 			else $newitem = array('itm'=>'一袋金钱','itmk'=>'YY','itme'=>2333,'itms'=>1,'itmsk'=>'');
 			$pbx_itemlist[] = $newitem;
 		}
-		if ($itme > 0 && !\skillbase\skill_getvalue(981,'flag')) $pbx_itemlist[] = array('itm'=>'一缕残念','itmk'=>'VS','itme'=>1,'itms'=>1,'itmsk'=>'983');//剧情道具
+		if ($itme > 0 && \skillbase\skill_query(981) && !\skillbase\skill_getvalue(981,'flag')) $pbx_itemlist[] = array('itm'=>'一缕残念','itmk'=>'VS','itme'=>1,'itms'=>1,'itmsk'=>'983');//剧情道具
 		return $pbx_itemlist;
 	}
 	
