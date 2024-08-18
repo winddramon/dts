@@ -6,9 +6,9 @@ namespace supplycrate_event
 	{
 		global $crate_npc;
 		eval(import_module('player','addnpc','npc'));
-		$typeinfo[26] = '幻境速递';
-		$npcinfo[26] = $crate_npc;
-		$anpcinfo[26] = $crate_npc;
+		$typeinfo[31] = '幻境速递';
+		$npcinfo[31] = $crate_npc;
+		$anpcinfo[31] = $crate_npc;
 	}
 	
 	function kill(&$pa, &$pd)
@@ -40,9 +40,9 @@ namespace supplycrate_event
 				\sys\addchat(6, $chatlog, '红暮');
 			}
 			$dice = rand(0,99);
-			if ($dice < 5) \addnpc\addnpc(26,0,1,1);
-			elseif ($dice < 40) \addnpc\addnpc(26,1,1,1);
-			else \addnpc\addnpc(26,2,1,1);
+			if ($dice < 5) \addnpc\addnpc(31,0,1,1);
+			elseif ($dice < 40) \addnpc\addnpc(31,1,1,1);
+			else \addnpc\addnpc(31,2,1,1);
 		}
 	}
 	
