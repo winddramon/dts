@@ -182,6 +182,12 @@ namespace skill981
 		{
 			if ($itm == '梦境礼盒') 
 			{
+				if (!\skillbase\skill_query(981,$sdata) && !empty($itms0))
+				{
+					$log .= '<span class="yellow b">盒子正被你攥着呢，还是先把它放下再打开吧！</span><br>';
+					$mode = 'command';
+					return;
+				}
 				$log .= "你使用了<span class=\"yellow b\">{$itm}</span>。<br>";
 				$pbx_choice = get_var_input('pbx_choice');
 				if (!empty($pbx_choice))
@@ -194,7 +200,7 @@ namespace skill981
 						$mode = 'command';
 						return;
 					}
-					if (!\skillbase\skill_getvalue(981,'flag',$sdata) && $itme > 0) \skillbase\skill_setvalue(981,'flag','1',$sdata);
+					if (\skillbase\skill_query(981,$sdata) && !\skillbase\skill_getvalue(981,'flag',$sdata) && $itme > 0) \skillbase\skill_setvalue(981,'flag','1',$sdata);
 					$prizeitem = $pbx_itemlist[$pbx_choice-1];
 					if ($prizeitem['itmk'] == 'YY')
 					{
@@ -203,13 +209,27 @@ namespace skill981
 					}
 					else
 					{
-						\skill952\skill952_sendin_core($prizeitem, $pa);
-						$log .= "<span class=\"yellow b\">{$prizeitem['itm']}</span>被送到了你的奖励箱中。<br>";
+						if (\skillbase\skill_query(981,$sdata))
+						{
+							\skill952\skill952_sendin_core($prizeitem, $sdata);
+							$log .= "<span class=\"yellow b\">{$prizeitem['itm']}</span>被送到了你的奖励箱中。<br>";
+							\itemmain\itms_reduce($theitem);
+							$itmsk = '';
+						}
+						else
+						{
+							$itm0 = $prizeitem['itm'];
+							$itmk0 = $prizeitem['itmk'];
+							$itme0 = $prizeitem['itme'];
+							$itms0 = $prizeitem['itms'];
+							$itmsk0 = $prizeitem['itmsk'];
+							\itemmain\itms_reduce($theitem);
+							$itmsk = '';
+							\itemmain\itemget();
+						}
 					}
-					\itemmain\itms_reduce($theitem);
-					$itmsk = '';
 				}
-				if (empty($pbx_choice) || $itms > 0)
+				if ((empty($pbx_choice) || $itms > 0) && (\skillbase\skill_query(981,$sdata) || !$itms0))
 				{
 					ob_start();
 					include template(MOD_SKILL981_USE_PRIZEBOX);
