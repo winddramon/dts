@@ -29,27 +29,29 @@ namespace randnpc
 	//offens_tend：攻击倾向（0-100整数），越高NPC越容易有高攻击力和熟练度，越容易出现强袭姿态和重视反击
 	//defens_tend：防御倾向（0-100整数），越高NPC越容易有高生命值和防御力，越容易出现作战姿态和重视防御
 	//variety：变化范围（0-50整数），越高则随机属性的变化范围越大
-	//use_preset：是否基于预设生成，若为数组，表示基于数组中元素的npc类别生成，若为1，则基于本模块中的预设生成，若为0，则不按预设生成
-	function generate_randnpc($rank, $num=1, $offens_tend=0, $defens_tend=0, $variety=0, $use_preset=1)
+	//use_preset：是否基于预设生成，若为数组，表示基于数组中元素的npc类别生成，若为正整数且本模块config中$randnpc_presets该键名有定义，则按该预设生成，若为0，则不按预设生成
+	//chara_preset：是否基于npc皮套预设生成，若非0且本模块config中$randnpc_chara_presets该键名有定义，则按该预设组生成，若为0，则按默认设置生成
+	//use_preset会设置完整的npc（包括npc的装备和属性数值），而chara_preset仅设置npc的类别、名字、头像和性别，use_preset生效时chara_preset不会生效
+	function generate_randnpc($rank, $num=1, $offens_tend=0, $defens_tend=0, $variety=0, $use_preset=1, $chara_preset=0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$randnpcs = array();
 		for ($i=0; $i<$num; $i++)
 		{
-			$randnpcs[] = generate_single_randnpc($rank, $offens_tend, $defens_tend, $variety, $use_preset);
+			$randnpcs[] = generate_single_randnpc($rank, $offens_tend, $defens_tend, $variety, $use_preset, $chara_preset);
 		}
 		return $randnpcs;
 	}
 	
-	function generate_single_randnpc($rank, $offens_tend=0, $defens_tend=0, $variety=0, $use_preset=1)
+	function generate_single_randnpc($rank, $offens_tend=0, $defens_tend=0, $variety=0, $use_preset=1, $chara_preset=0)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		//生成npc基础属性
-		eval(import_module('npc'));
-		if ($use_preset == 1)
+		eval(import_module('npc','randnpc'));
+		if (is_numeric($use_preset) && $use_preset > 0)
 		{
-			eval(import_module('randnpc'));
-			$npc = array_merge($npcinit, array_randompick($randnpc_presets[$rank]));
+			$npc = array_merge($npcinit, array_randompick($randnpc_presets[$use_preset]));
+			if ($npc['gd'] == 'r') $npc['gd'] = rand(0,1) ? 'm':'f';
 		}
 		elseif (is_array($use_preset))
 		{
@@ -77,44 +79,20 @@ namespace randnpc
 		else
 		{
 			$npc = $npcinit;
-			//生成名字和头像，待修改
-			if ($rank < 3) $npc['name'] = $rank.'级虚像';
-			elseif ($rank < 7)
+			//生成NPC类别、名字、头像、性别
+			if (!$chara_preset)
 			{
-				$dice = rand(0,3);
-				if ($dice == 0) $npc['name'] = '攻击型人形';
-				elseif ($dice == 1) $npc['name'] = '防御型人形';
-				elseif ($dice == 2) $npc['name'] = '攻击型魔像';
-				else $npc['name'] = '防御型魔像';
-				$npc['icon'] = 420 + $dice;
-				if ($rank > 4) $npc['name'] .= ' LV2';
+				if ($rank < 3) $chara_preset = 999;
+				elseif ($rank < 5) $chara_preset = 1;
+				elseif ($rank < 7) $chara_preset = 2;
+				elseif ($rank < 9) $chara_preset = 3;
+				elseif ($rank < 11) $chara_preset = 4;
+				elseif ($rank < 13) $chara_preset = 5;
+				else $chara_preset = 6;
 			}
-			elseif ($rank < 11)
-			{
-				$dice = rand(0,5);
-				if ($dice == 0) $npc['name'] = '草妖精 米迦';
-				elseif ($dice == 1) $npc['name'] = '水妖精 苏';
-				elseif ($dice == 2) $npc['name'] = '太阳妖精 李';
-				elseif ($dice == 3) $npc['name'] = '月亮妖精 雅斯特';
-				elseif ($dice == 4) $npc['name'] = '火龙 锭蓝';
-				else $npc['name'] = '水龙 玫红';
-				$npc['icon'] = 424 + $dice;
-			}
-			else
-			{
-				$dice = rand(0,7);
-				if ($dice == 0) $npc['name'] = '影9643';//为什么是这些个数字？
-				elseif ($dice == 1) $npc['name'] = '影9580';
-				elseif ($dice == 2) $npc['name'] = '影9545';
-				elseif ($dice == 3) $npc['name'] = '影9501';
-				elseif ($dice == 4) $npc['name'] = '影9502';
-				elseif ($dice == 5) $npc['name'] = '影9496';
-				elseif ($dice == 6) $npc['name'] = '影9450';
-				else $npc['name'] = '影9543';
-				if ($dice < 4) $npc['icon'] = 430 + $dice;
-				else $npc['icon'] = 426 + $dice;
-			}
-			if (rand(0,1)) $npc['gd'] = 'f';
+			if (!isset($randnpc_chara_presets[$chara_preset])) $chara_preset = 999; 
+			$npc = array_merge($npcinit, array_randompick($randnpc_chara_presets[$chara_preset]));
+			if ($npc['gd'] == 'r') $npc['gd'] = rand(0,1) ? 'm':'f';
 			$var1 = pow(1.35, $rank);
 			$var2 = pow(1.25, $rank);
 			$npc['mhp'] = $var1 * 320;
@@ -353,7 +331,6 @@ namespace randnpc
 		for($i=0;$i<$num;$i++)
 		{
 			$npc = $randnpcs[$i];
-			if ($use_preset == 0) $npc['type'] = 50 + min(ceil($rank / 2), 7);
 			$npc['sNo'] = $i;
 			$npc = \npc\init_npcdata($npc,$pls_available);
 			$npc = \player\player_format_with_db_structure($npc);

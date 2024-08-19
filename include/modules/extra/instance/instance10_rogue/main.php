@@ -407,8 +407,8 @@ namespace instance10
 				elseif ($itm == '挑战者之证')
 				{
 					$log .= "你使用了<span class=\"yellow b\">$itm</span>。<br>新的敌人加入了战场！<br>";
-					\randnpc\add_randnpc(19, 1, 0, 0, 0, 1, array(0), 1);
-					\randnpc\add_randnpc(18, 3, 0, 0, 0, 1, array(0), 1);
+					\randnpc\add_randnpc(19, 1, 0, 0, 0, 6, array(0), 1);
+					\randnpc\add_randnpc(18, 3, 0, 0, 0, 5, array(0), 1);
 					addnews($now, 'instance10_end7npc', $name, $itm);
 					$itm = $itmk = $itmsk = '';
 					$itme = $itms = 0;
@@ -417,7 +417,7 @@ namespace instance10
 				elseif ($itm == '最后的钥匙')
 				{
 					$log .= "你使用了<span class=\"yellow b\">$itm</span>。<br>新的敌人加入了战场！<br>";
-					\randnpc\add_randnpc(20, 1, 0, 0, 0, 1, array(0), 1);
+					\randnpc\add_randnpc(20, 1, 0, 0, 0, 7, array(0), 1);
 					addnews($now, 'instance10_end5npc', $name, $itm);
 					$itm = $itmk = $itmsk = '';
 					$itme = $itms = 0;
@@ -521,15 +521,15 @@ namespace instance10
 					//刷新boss
 					if ($i == 3)
 					{
-						\randnpc\add_randnpc(7, 1, 0, 0, 0, 1, $pls_available, 1);
+						\randnpc\add_randnpc(7, 1, 0, 0, 0, 2, $pls_available, 1);
 					}
 					elseif ($i == 5)
 					{
-						\randnpc\add_randnpc(11, 1, 0, 0, 0, 1, $pls_available, 1);
+						\randnpc\add_randnpc(11, 1, 0, 0, 0, 3, $pls_available, 1);
 					}
 					elseif ($i == 7)
 					{
-						\randnpc\add_randnpc(15, 1, 0, 0, 0, 1, $pls_available, 1);
+						\randnpc\add_randnpc(15, 1, 0, 0, 0, 4, $pls_available, 1);
 					}
 				}
 				$gamevars['instance10_stage'] = $stage_new;
