@@ -182,6 +182,12 @@ namespace skill981
 		{
 			if ($itm == '梦境礼盒') 
 			{
+				if (!\skillbase\skill_query(981,$sdata) && !empty($itms0))
+				{
+					$log .= '<span class="yellow b">盒子正被你攥着呢，还是先把它放下再打开吧！</span><br>';
+					$mode = 'command';
+					return;
+				}
 				$log .= "你使用了<span class=\"yellow b\">{$itm}</span>。<br>";
 				$pbx_choice = get_var_input('pbx_choice');
 				if (!empty($pbx_choice))
@@ -223,7 +229,7 @@ namespace skill981
 						}
 					}
 				}
-				if ((empty($pbx_choice) || $itms > 0) && !$itms0)
+				if ((empty($pbx_choice) || $itms > 0) && (\skillbase\skill_query(981,$sdata) || !$itms0))
 				{
 					ob_start();
 					include template(MOD_SKILL981_USE_PRIZEBOX);
