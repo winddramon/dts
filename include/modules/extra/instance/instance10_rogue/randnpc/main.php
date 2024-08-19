@@ -176,7 +176,7 @@ namespace randnpc
 		{
 			$pos = array_randompick(array('arb','arh','arf','ara','art'));
 			$npc[$pos.'sk'] .= '^st1^vol'.rand(1,4);
-			$npc[$pos] = '空间之'.$npc[$pos];
+			$npc[$pos] = array_randompick($randnpc_item_randname['special_prefix']['st']).$npc[$pos];
 		}
 		elseif ($dice == 1)
 		{
@@ -185,14 +185,14 @@ namespace randnpc
 			{
 				$pos = array_randompick(array('arb','arh','arf','ara','art'));
 				$npc[$pos.'sk'] .= '^eqpsk'.$skillid;
-				$npc[$pos] = '秘传之'.$npc[$pos];
+				$npc[$pos] = array_randompick($randnpc_item_randname['special_prefix']['eqpsk']).$npc[$pos];
 			}
 		}
 		elseif ($dice == 2)
 		{
 			$pos = array_randompick(array('arb','arh','arf','ara'));
 			$npc[$pos.'k'] .= 'S';
-			$npc[$pos] = '战甲之'.$npc[$pos];
+			$npc[$pos] = array_randompick($randnpc_item_randname['special_prefix']['S']).$npc[$pos];
 		}
 		elseif ($dice == 3)
 		{

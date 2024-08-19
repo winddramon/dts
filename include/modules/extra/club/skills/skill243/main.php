@@ -32,7 +32,7 @@ namespace skill243
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		if (!\skillbase\skill_query(243,$pa) || !check_unlocked243($pa)) return $chprocess($pa,$pd,$active);
 		eval(import_module('ex_phy_def'));
-		$s=\skillbase\skill_getvalue(243,'l',$pa);
+		$s=(string)\skillbase\skill_getvalue(243,'l',$pa);
 		if (strpos($s,$def_kind[$pa['wep_kind']])===false) return $chprocess($pa,$pd,$active);
 		return 0;
 	}
@@ -45,7 +45,7 @@ namespace skill243
 		if (!$z)	//没有生效
 		{
 			eval(import_module('ex_phy_def'));
-			$s=\skillbase\skill_getvalue(243,'l',$pa);
+			$s=(string)\skillbase\skill_getvalue(243,'l',$pa);
 			if (strpos($s,$def_kind[$pa['wep_kind']])===false)
 			{
 				$s.=$def_kind[$pa['wep_kind']];
@@ -60,7 +60,7 @@ namespace skill243
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		if (!\skillbase\skill_query(243,$pa) || !check_unlocked243($pa)) return $chprocess($pa,$pd,$active,$key);
 		eval(import_module('ex_dmg_def'));
-		$s=\skillbase\skill_getvalue(243,'l',$pa);
+		$s=(string)\skillbase\skill_getvalue(243,'l',$pa);
 		if (strpos($s,$def_kind[$key])===false) return $chprocess($pa,$pd,$active,$key);
 		return 0;
 	}
@@ -73,7 +73,7 @@ namespace skill243
 		if (!$z)	//没有生效
 		{
 			eval(import_module('ex_dmg_def'));
-			$s=\skillbase\skill_getvalue(243,'l',$pa);
+			$s=(string)\skillbase\skill_getvalue(243,'l',$pa);
 			if (strpos($s,$def_kind[$key])===false)
 			{
 				$s.=$def_kind[$key];
@@ -87,7 +87,7 @@ namespace skill243
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$r = $chprocess($pa, $pd, $active);
-		$s=\skillbase\skill_getvalue(243,'l',$pa);
+		$s=(string)\skillbase\skill_getvalue(243,'l',$pa);
 		if (strpos($s,'R')!==false) $r = 0;
 		return $r;
 	}
@@ -98,7 +98,7 @@ namespace skill243
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$z=$chprocess($pa, $pd, $active);
 		if (!$z && \skillbase\skill_query(243,$pa) && check_unlocked243($pa)){
-			$s=\skillbase\skill_getvalue(243,'l',$pa);
+			$s=(string)\skillbase\skill_getvalue(243,'l',$pa);
 			if (strpos($s,'R')===false)
 			{
 				$s.='R';
