@@ -2,7 +2,7 @@
 
 namespace boxes
 {
-	$room_mode_can_get_card_from_boxes = Array(0,1,4,6,18,19);//能够从礼品盒开出卡片的游戏模式
+	$room_mode_can_get_card_from_boxes = Array(0,1,4,6,18,19,22);//能够从礼品盒开出卡片的游戏模式
 	
 	//各礼品盒对应的文件
 	$item_boxes_list_file = Array(
@@ -13,6 +13,7 @@ namespace boxes
 		'fy' => '/config/fybox.config.php',
 		'kj3' => '/config/kj3box.config.php',
 		'prd' => '/config/rdoll.config.php',
+		'mc' => '/config/matcard.config.php',
 	);
 		
 	function init()
@@ -25,6 +26,7 @@ namespace boxes
 		$iteminfo['fy'] = '全图唯一的野生浮云礼盒';
 		$iteminfo['kj3'] = '礼包';
 		$iteminfo['prd'] = '礼盒？';
+		$iteminfo['mc'] = '素材卡盒';
 	}
 	
 	//各种礼物盒的核心函数，从对应的文件里读取记录并随机选择一个
