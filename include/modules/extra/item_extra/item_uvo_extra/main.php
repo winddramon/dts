@@ -2,11 +2,11 @@
 
 namespace item_uvo_extra
 {
-	//允许卡牌包额外功能的模式，包括肉鸽模式和梦境演练
-	$allow_uvo_extra_gametype = array(20,22);
+	//允许卡牌包额外功能的模式，包括卡片乱斗、肉鸽模式和梦境演练
+	$allow_uvo_extra_gametype = array(7,20,22);
 	
-	//允许组队赠送卡片的模式，暂时仅有肉鸽模式
-	$allow_uvo_extra_cardsend_gametype = array(20);
+	//允许组队赠送卡片的模式，包括卡片乱斗、肉鸽模式
+	$allow_uvo_extra_cardsend_gametype = array(7,20);
 	
 	//素材卡
 	$material_cards = array(1101,1102,1103,1104,1105,1106,1107,1108,1109,1110,1111,1112,1113);
