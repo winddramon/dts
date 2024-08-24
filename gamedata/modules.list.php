@@ -267,7 +267,6 @@ skill590,extra/card/skills/skill590/,1
 skill539,extra/card/skills/skill539/,1
 skill591,extra/card/skills/skill591/,1
 skill594,extra/card/skills/skill594/,1
-skill574,extra/card/skills/skill574/,1
 skill702,extra/card/skills/skill702/,1
 skill704,extra/card/skills/skill704/,1
 skill703,extra/card/skills/skill703/,1
@@ -359,6 +358,7 @@ skill982,extra/instance/instance12_dream/skill982/,1
 skill403,extra/card/skills/skill403/,1
 skill203,extra/club/skills/skill203/,1
 ammunition,base/items/ammunition/,1
+skill574,extra/card/skills/skill574/,1
 skill901,extra/instance/instance3_ascension/skill901/,1
 armor_art,base/armor_art/,1
 skill23,extra/club/skills/skill23/,1
