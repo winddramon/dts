@@ -143,6 +143,7 @@ namespace item_uv
 				if ($cardpresent_type == '7') $cardpresent_desc = '从中可以获得一张'.$card_rarity_html['B'].'级卡片';
 				if ($cardpresent_type == '8') $cardpresent_desc = '从中可以获得一张'.$card_rarity_html['C'].'级卡片';
 				if ($cardpresent_type == '9') $cardpresent_desc = '从中有机会获得'.$card_rarity_html['B'].'级或'.$card_rarity_html['C'].'级卡片';
+				if ($cardpresent_type == 'p') $cardpresent_desc = '从中可以获得一张'.$packlist[(int)$itmsk].'卡片';
 				
 				if ($cardpresent_desc == 'N/A')
 				{
@@ -182,24 +183,42 @@ namespace item_uv
 						if ($cardpresent_type == '7') $cardraw_pr = Array('S'=>0, 'A'=>0, 'B'=>100, 'C'=>0);
 						if ($cardpresent_type == '8') $cardraw_pr = Array('S'=>0, 'A'=>0, 'B'=>0, 'C'=>100);
 						if ($cardpresent_type == '9') $cardraw_pr = Array('S'=>0, 'A'=>0, 'B'=>30, 'C'=>70);
-						$dice=rand(1,100); $kind='';
-						foreach ($cardraw_pr as $key => $value)
+						if (is_numeric($cardpresent_type))
 						{
-							if ($dice<=$value)
+							$dice=rand(1,100); $kind='';
+							foreach ($cardraw_pr as $key => $value)
 							{
-								$kind=$key; break;
+								if ($dice<=$value)
+								{
+									$kind=$key; break;
+								}
+								else
+								{
+									$dice-=$value;
+								}
 							}
-							else
+							if ($kind=='')
 							{
-								$dice-=$value;
+								$log.='物品代码配置错误，请联系管理员。<br>';
+								return;
+							}
+							$get_card_id = $cardindex[$kind][rand(0,count($cardindex[$kind])-1)];
+						}
+						elseif ($cardpresent_type == 'p')
+						{
+							$pack = $packlist[(int)$itmsk];
+							$cardpool = array_keys($cards);
+							$c = 0;
+							$k = array_rand($cardpool);
+							$get_card_id = $cardpool[$k];
+							while($cards[$get_card_id]['pack'] !== $pack && $c < 233 && !empty($cardpool))
+							{
+								unset($cardpool[$k]);
+								$k = array_rand($cardpool);
+								$get_card_id = $cardpool[$k];
+								$c += 1;
 							}
 						}
-						if ($kind=='')
-						{
-							$log.='物品代码配置错误，请联系管理员。<br>';
-							return;
-						}
-						$get_card_id = $cardindex[$kind][rand(0,count($cardindex[$kind])-1)];
 					}
 					
 					if ($get_card_id==0)

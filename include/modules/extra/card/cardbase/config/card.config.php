@@ -98,6 +98,8 @@ $cardindex=array(//已停止更新，现在$cardindex是自动生成的，文件
 	//pop子实际爆率是B
 );
 
+$cardindex_bugprize = array(190, 308, 368, 369, 383, 384, 398, 402, 411, 421);//bug奖励卡
+
 if(file_exists($card_index_file)) include $card_index_file;//载入真正的$cardindex
 
 $card_rarecolor=array(

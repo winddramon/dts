@@ -126,9 +126,9 @@
 				<input type="submit" name="submit" value="发送站内邮件" onclick="$('urcmd').value='sendmessage'">
 				<br>
 				给附件添加卡片：
-				<!--{eval $cards = get_var_in_module('cards','cardbase'); $arr = Array(); foreach($cards as $i => $v) if(!empty($v['ignore_global_ach'])) $arr[$i] = $v['name'];}-->
-				<!--{loop $arr $i $n}-->
-				<a style="color: #000;" onclick="$('senclosure').value=$('senclosure').value.replace(/getcard_\d+?;/s, 'getcard_{$i};')">$n</a>&nbsp;&nbsp;
+				<!--{eval $cards = get_var_in_module('cards','cardbase'); $cis = get_var_in_module('cardindex_bugprize','cardbase');}-->
+				<!--{loop $cis $i}-->
+				<a style="color: #000;" onclick="$('senclosure').value=$('senclosure').value.replace(/getcard_\d+?;/s, 'getcard_{$i};')">$cards[$i]['name']</a>&nbsp;&nbsp;
 				<!--{/loop}-->
 				<br>
 				<br>

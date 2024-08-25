@@ -564,6 +564,7 @@ namespace item_uvo_extra
 		if(!in_array($gametype, $allow_uvo_extra_gametype)) return;
 		if(empty($gameover_plist)) return;
 		eval(import_module('cardbase'));
+		$cis_special = array_merge(array(159,165,420), $cardindex_bugprize);//特判氪金、NIKO、肉鸽挑战者和BUG奖励卡
 		foreach($gameover_plist as $key => $pa)
 		{
 			$pa_cards = array_merge(get_cards_uvo_extra($pa), get_cards_uvo_extra($pa, 1));
@@ -572,7 +573,7 @@ namespace item_uvo_extra
 				$prizepack_count = array(206=>0, 204=>0, 203=>0, 202=>0);
 				foreach ($pa_cards as $get_card_id)
 				{
-					if (in_array($cards[$get_card_id]['pack'], $pack_ignore_kuji) && !in_array($get_card_id, array(159,165,420)))//特判氪金、NIKO、肉鸽挑战者
+					if (in_array($cards[$get_card_id]['pack'], $pack_ignore_kuji) && !in_array($get_card_id, $cis_special))
 					{
 						if($cards[$get_card_id]['rare'] == 'S') $prizepack_count[206] += 2;
 						elseif($cards[$get_card_id]['rare'] == 'A') $prizepack_count[204] += 2;

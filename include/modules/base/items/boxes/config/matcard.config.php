@@ -50,3 +50,5 @@
 ★Event Bonus奖券★,VO1,1,1,1113,
 ★Balefire Rekindle奖券★,VO1,1,2,1112,
 ★Event Bonus奖券★,VO1,1,2,1113,
+★纪念卡包·复燃★,VOp,1,1,8,
+★纪念卡包·复燃★,VOp,1,1,8,
