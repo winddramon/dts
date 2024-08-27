@@ -188,6 +188,10 @@ namespace item_uvo_extra
 				array('itm'=>'银色盒子','itmk'=>'p','itme'=>1,'itms'=>55,'itmsk'=>'')
 				);
 		}
+		elseif ($cardid == 220)//钓鱼吧老哥
+		{
+			$items[0]['itmsk'] = '^eqpsk768';
+		}
 		elseif ($cardid == 283)//随便 
 		{
 			$skills = array();

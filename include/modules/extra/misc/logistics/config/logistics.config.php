@@ -50,6 +50,7 @@ namespace logistics
 		303 => array('L5爆发的证明',2,0,'<span class="L5 b">“你突然感觉到一种不可思议的力量贯通全身！”</span>',1),
 		304 => array('《梦的解析》',2,0,'权威心理学家的著作。<span class="seagreen b">“你想干……”</span>',1),
 		305 => array('金色王冠',2,0,'<span class="gold b">一个绘有王冠的金色瓶盖。在爱好者间有很高的收藏价值。</span>',1),
+		306 => array('钻石钓竿',2,0,'<span class="cyan b">一根不会磨损的钓竿。</span>',1),
 	);
 	
 	//类别1表示可使用道具（消耗品），2表示装饰品
