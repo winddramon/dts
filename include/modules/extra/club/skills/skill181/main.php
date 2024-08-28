@@ -13,7 +13,7 @@ namespace skill181
 		eval(import_module('clubbase','skillbase'));
 		$clubskillname[181] = '音感';
 
-		foreach(Array(0, 4, 6, 10, 13, 14, 15, 16, 18, 19) as $i) {//大部分模式开局追加音感
+		foreach(Array(0, 4, 6, 7, 10, 13, 14, 15, 16, 18, 19) as $i) {//大部分模式开局追加音感
 			if(!isset($valid_skills[$i])) {
 				$valid_skills[$i] = array();
 			}
@@ -38,8 +38,10 @@ namespace skill181
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa);
-		if (\skillbase\skill_query(181,$pa) && ($pa['club'] != 17))
+		if (\skillbase\skill_query(181,$pa))
 		{
+			eval(import_module('sys'));
+			if ($pa['club'] == 17 && !in_array($gametype, array(7,20,22))) return;
 			eval(import_module('skill181'));
 			$lvupss += rand(1,2);
 			$lvupssref += rand(3,6);
@@ -51,7 +53,7 @@ namespace skill181
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$r = $chprocess($v, $pa);
 		eval(import_module('skill181'));
-		if (\skillbase\skill_query(181,$pa) && ($pa['club'] != 17) && $lvupss)
+		if (\skillbase\skill_query(181,$pa) && $lvupss)
 		{
 			eval(import_module('sys','player','logger'));
 			$pa['mss'] += $lvupss;
