@@ -1,0 +1,29 @@
+<!--{eval eval(import_module('skill768','sys','bufficons'));}-->
+<!--{eval $___TEMP_SKILL_ID=768;}-->
+{template MOD_CLUBBASE_SKILLDESC_START}
+<span>
+$clubskillname[$___TEMP_SKILL_ID]
+</span>
+{template MOD_CLUBBASE_SKILLDESC_MID1}
+<td class="skilldesc_left b3"><span class="skilldesc">
+<!--{eval $st = \bufficons\bufficons_check_buff_state(768,$who);$rm=$tmp_totsec-$tmp_nowsec;}-->
+随机获得一个鱼类（？）物品<br>
+<!--{if 2 == $st}-->
+<span class="cyan b">技能冷却中，冷却时间还剩<span>$rm</span>秒。</span><br>
+<!--{/if}-->
+<!--{eval $fishids768 = \skill768\get_fishids768($who);}-->
+已钓到过：<br>
+<!--{if empty($fishids768)}-->
+<span class="yellow b">无</span>
+<!--{else}-->
+<span class="yellow b"><!--{loop $fishids768 $i}-->{$skill768_items[$i][0]} <!--{/loop}--></span>
+<!--{/if}-->
+</span></td>
+<td class="skilldesc_right b3">
+</td>
+{template MOD_CLUBBASE_SKILLDESC_MID2}
+<!--{if empty($___TEMP_THIS_SKILL_ACQUIRED)}-->
+<span class="yellow b">
+</span>
+<!--{/if}-->
+{template MOD_CLUBBASE_SKILLDESC_END}

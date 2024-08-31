@@ -271,6 +271,16 @@ namespace instance12
 		$chprocess($theitem);
 	}
 	
+	//不会PC杀
+	function calculate_post_hack_proc_rate()
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		list($v1, $v2) = $chprocess();
+		eval(import_module('sys'));
+		if (22 == $gametype) $v2 = 0;
+		return array($v1,$v2);
+	}
+	
 	//结算分数
 	function inst12_get_score(&$pa)
 	{
