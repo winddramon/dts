@@ -1,0 +1,18 @@
+<!--{eval $___TEMP_SKILL_ID=965;}-->
+{template MOD_CLUBBASE_SKILLDESC_START}
+<span>
+$clubskillname[$___TEMP_SKILL_ID]
+</span>
+{template MOD_CLUBBASE_SKILLDESC_MID1}
+<td class="skilldesc_left b3"><span class="skilldesc">
+<!--{eval $defdown=\skill965\get_defdown965($who);}-->
+“<span class="yellow b">共振</span>”中每记录使用过一种不同卡包的卡片，<br>计算物理伤害时敌人装备防御力<span class="yellow b">-10%</span>（当前<span class="yellow b">-{$defdown}%</span>）
+</span></td>
+<td class="skilldesc_right b3">
+</td>
+{template MOD_CLUBBASE_SKILLDESC_MID2}
+<!--{if empty($___TEMP_THIS_SKILL_ACQUIRED)}-->
+<span class="yellow b">
+</span>
+<!--{/if}-->
+{template MOD_CLUBBASE_SKILLDESC_END}
