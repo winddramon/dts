@@ -31,10 +31,10 @@ namespace skill984
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$ret = $chprocess($pa, $stage);
-		if (\skillbase\skill_query(984,$pa) && check_unlocked984($pa) && rand(0,1))
+		if (\skillbase\skill_query(984,$pa) && check_unlocked984($pa))
 		{
 			$clv = (int)\skillbase\skill_getvalue(984,'lvl',$pa);
-			if ($clv == 1)
+			if ($clv == 1 && rand(0,1))
 			{
 				$theitem = array('itm'=>'梦境礼盒','itmk'=>'Y','itme'=>1,'itms'=>1,'itmsk'=>'');
 			}
