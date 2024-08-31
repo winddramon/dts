@@ -83,7 +83,7 @@ namespace gtype7
 		
 		if (!$disable_event){
 			list($sec,$min,$hour,$day,$month,$year,$wday) = explode(',',date("s,i,H,j,n,Y,w",$now));
- 			if ($wday==6 && $hour>=19 && $hour<21){ //周六19点-21点
+ 			if (($wday==4 || $wday==6) && $hour>=19 && $hour<21){ //周四和周六19点-21点
  				$gametype=7;
  			}
  		}
