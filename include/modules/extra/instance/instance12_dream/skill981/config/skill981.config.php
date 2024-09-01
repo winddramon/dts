@@ -237,7 +237,8 @@ namespace skill981
 			//
 			array('★共享单车★','DFS',100,10,'^hu100',5),
 			array('★王♂之威压★','MB',1,1,'^mbid404^mblvl4',5),
-			array('亲手制作的鲷鱼烧','HB',500,100,'',15),
+			array('「团结之力」','VS',1,1,'965',30),
+			array('亲手制作的鲷鱼烧','HB',500,150,'',15),
 			array('礼品盒','p',1,8,'',3),
 			array('《魔导百科全书·起》','VF',50,1,'^alt_<:comp_itmsk:>{SC02,SC02,SC02,SC02,SCC2,SCC2,SCB2,SCB2,SCA2,SCS2}1^ahid2',3),
 			array('★技能手册·A级★','VS',1,1,'rdsk_A',6),
@@ -282,6 +283,7 @@ namespace skill981
 			//
 			array('★振金神盾★','DAS',200,20,'^hu200',4),
 			array('★王♂之威压★','MB',1,1,'^mbid404^mblvl4',5),
+			array('「团结之力」','VS',1,1,'965',20),
 			array('『动力外骨骼』','DBS',500,100,'R',1),
 			array('真-红色的发圈','DH',500,150,'KG',2),
 			array('小空','DA',500,150,'CD',2),
@@ -331,6 +333,7 @@ namespace skill981
 			//
 			array('★振金神盾★','DAS',200,20,'^hu200',4),
 			array('★王♂之逆转★','VS',1,1,'754',5),
+			array('「团结之力」','VS',1,1,'965',10),
 			array('『动力外骨骼』','DBS',500,100,'R',1),
 			array('真-红色的发圈','DH',500,150,'KG',2),
 			array('小空','DA',500,150,'CD',2),
@@ -371,6 +374,7 @@ namespace skill981
 			array('★荆棘王冠★','DHS',300,30,'^hu300',5),
 			array('★轮椅★','DFS',888,888,'m^sa8^eqpsk405',1),
 			array('★王♂之逆转★','VS',1,1,'754',5),
+			array('「团结之力」','VS',1,1,'965',5),
 			array('黄金秋刀鱼','HB',960,320,'',15),
 			array('礼品盒','p',1,20,'',3),
 			array('《魔导百科全书·终》','VF',100,2,'^alt_<:comp_itmsk:>{SC02,SCB2,SCB2,SCB2,SCA2,SCA2,SCA2,SCA2,SCS2,SCS2}1^ahid2',3),
