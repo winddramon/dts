@@ -19,7 +19,11 @@ if(!file_exists($writefile) || filemtime($mixfile) > filemtime($writefile)){
 		if($mix['class'] !== 'hidden'){
 			$mixitmk = \itemmain\parse_itmk_words($mix['result'][1],1);
 			$mixitmsk = '';
-			if(!empty($mix['result'][4])) $mixitmsk = \itemmain\parse_itmsk_words($mix['result'][4]);
+			if(!empty($mix['result'][4]))
+			{
+				$mix['result'][4] = \attrbase\config_process_encode_comp_itmsk($mix['result'][4]);
+				$mixitmsk = \itemmain\parse_itmsk_words($mix['result'][4]);
+			}
 			if ($mixitmsk == '--') $mixitmsk = '';
 			$resultjwords = get_resultjwords($mix['result']);
 			if (!empty($mix['tips'])) $resultjwords = '<span class=\'yellow b\'>'.$mix['tips'].'</span><br>'.$resultjwords;//多态或余物的提示在这里手动加入
@@ -119,7 +123,11 @@ if(!file_exists($writefile) || filemtime($syncfile) > filemtime($writefile)){
 		$sync_arr=array_combine(array('itm', 'itmk', 'itme', 'itms', 'itmsk', 'star', 'special'), array_slice(explode(',',$sync), 0, 7));
 		$sync_arr['resultjwords'] = get_resultjwords($sync_arr);
 		$sync_arr['itmk'] = \itemmain\parse_itmk_words($sync_arr['itmk'],1);
-		$sync_arr['itmsk'] = \itemmain\parse_itmsk_words($sync_arr['itmsk']);
+		if(!empty($sync_arr['itmsk']))
+		{
+			$sync_arr['itmsk'] = \attrbase\config_process_encode_comp_itmsk($sync_arr['itmsk']);
+			$sync_arr['itmsk'] = \itemmain\parse_itmsk_words($sync_arr['itmsk']);
+		}
 		if(!empty($sync_arr['special'])){
 			$sync_arr['special'] = explode('+',$sync_arr['special']);
 			$special_tags = preg_replace('/\d/', '', $sync_arr['special']);
@@ -230,7 +238,11 @@ if(!file_exists($writefile) || filemtime($overlayfile) > filemtime($writefile)){
 		$overlay_arr=array_combine(array('itm', 'itmk', 'itme', 'itms', 'itmsk', 'star', 'num'), array_slice(explode(',',$overlay), 0, 7));
 		$overlay_arr['resultjwords'] = get_resultjwords($overlay_arr);
 		$overlay_arr['itmk'] = \itemmain\parse_itmk_words($overlay_arr['itmk'],1);
-		$overlay_arr['itmsk'] = \itemmain\parse_itmsk_words($overlay_arr['itmsk']);
+		if(!empty($overlay_arr['itmsk']))
+		{
+			$overlay_arr['itmsk'] = \attrbase\config_process_encode_comp_itmsk($overlay_arr['itmsk']);
+			$overlay_arr['itmsk'] = \itemmain\parse_itmsk_words($overlay_arr['itmsk']);
+		}
 		
 		$overlayitem[] = $overlay_arr;
 	}
