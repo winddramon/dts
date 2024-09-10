@@ -10,6 +10,7 @@ namespace boxes
 		'p2' => '/config/present2.config.php',
 		'ygo' => '/config/ygobox.config.php',
 		'ygo2' => '/config/newygobox.config.php',
+		'ygo3' => '/config/ygoban.config.php',
 		'fy' => '/config/fybox.config.php',
 		'kj3' => '/config/kj3box.config.php',
 		'prd' => '/config/rdoll.config.php',
@@ -23,6 +24,7 @@ namespace boxes
 		$iteminfo['p2'] = '礼盒';
 		$iteminfo['ygo'] = '卡包';
 		$iteminfo['ygo2'] = '卡包';
+		$iteminfo['ygo3'] = '卡包';
 		$iteminfo['fy'] = '全图唯一的野生浮云礼盒';
 		$iteminfo['kj3'] = '礼包';
 		$iteminfo['prd'] = '礼盒？';

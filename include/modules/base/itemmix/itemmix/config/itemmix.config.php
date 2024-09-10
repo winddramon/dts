@@ -437,7 +437,7 @@ $mixinfo = array
 	array('class' => 'ocg', 'stuff' => array('『流天类星龙』 ★12 -仮','★神卡认证★'),'result' => array('『流天类星龙』 ★12','WC12',16000,'∞','crtZny^001'),),
 	array('class' => 'ocg', 'stuff' => array('No39.希望皇 霍普 ☆4','CNo.39 希望皇 霍普雷 ☆4'),'result' => array('闪光No.39 希望皇 霍普·电光皇 ☆5','WC',600,'∞','be^xyz5'),),
 	array('class' => 'ocg', 'stuff' => array('☆五星认证☆','☆七星认证☆','游戏王三星素材'),'result' => array('「调整中」','WC',573,573,'z'),),
-	array('class' => 'ocg', 'stuff' => array('「调整中」','☆十星认证☆'),'result' => array('「禁卡表」','WC',573,'∞','konami'),),
+	array('class' => 'ocg', 'stuff' => array('「调整中」','☆十星认证☆'),'result' => array('「禁卡表」','ygo3',573,1,'konami'),),
 	array('class' => 'ocg', 'stuff' => array('「黄金卿 埃尔德里奇」-仮','☆十星认证☆'),'result' => array('「黄金卿 埃尔德里奇」 ★10','WC10',3500,'∞','j'),),
 	array('class' => 'ocg', 'stuff' => array('「效果遮蒙者」 ★1-仮','☆手坑认证☆'),'result' => array('「效果遮蒙者」 ★1','WC01',0,'∞','Bs'),),
 	array('class' => 'ocg', 'stuff' => array('「幽鬼兔」 ★3-仮','☆手坑认证☆'),'result' => array('「幽鬼兔」 ★3','WC03',50,'∞','dbs'),),
