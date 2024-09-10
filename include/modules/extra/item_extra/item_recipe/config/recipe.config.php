@@ -51,7 +51,7 @@ namespace item_recipe
 		6 => array
 		(
 			'stuffa' => array('extra'=>'ygo'),
-			'result' => array('「梦幻崩影·凤凰」-仮','R',1,1,'7'),
+			'result' => array('「梦幻崩影·凤凰」-仮','WC',160,80,'uj'),
 			'extra' => array('link'=>2, 'materials'=>2, 'allow_repeat'=>false, 'consume_recipe'=>true,),
 		),
 		7 => array
@@ -75,7 +75,7 @@ namespace item_recipe
 		10 => array
 		(
 			'stuffa' => array('extra'=>'ygo'),
-			'result' => array('「三栅极男巫」-仮','R',1,1,'11'),
+			'result' => array('「三栅极男巫」-仮','WC',140,'∞','rj'),
 			'extra' => array('link'=>3, 'materials'=>'>1', 'consume_recipe'=>true,),
 		),
 		11 => array
@@ -111,19 +111,19 @@ namespace item_recipe
 		16 => array
 		(
 			'stuffa' => array('extra'=>'ygo'),
-			'result' => array('「召命之神弓-阿波罗萨」-仮','R',1,1,'17'),
+			'result' => array('「召命之神弓-阿波罗萨」-仮','WB',80,1,'iLj'),
 			'extra' => array('link'=>4, 'materials'=>'>1', 'allow_repeat'=>false, 'consume_recipe'=>true,),
 		),
 		17 => array
 		(
 			'stuff1' => array('itm'=>'★连接认证4★','itm_match'=>0),
-			'result' => array('「召命之神弓-阿波罗萨」LINK-4','WB',320,1,'rkHA^l4'),
+			'result' => array('「召命之神弓-阿波罗萨」LINK-4','WB',320,1,'rkHAL^l4'),
 			'extra' => array('materials'=>1, 'consume_recipe'=>true,),
 		),
 		18 => array
 		(
 			'stuffa' => array('extra'=>'ygo'),
-			'result' => array('「访问码语者」-仮','R',1,1,'19'),
+			'result' => array('「访问码语者」-仮','WD',180,80,'dcj'),
 			'extra' => array('link'=>4, 'materials'=>'>1', 'consume_recipe'=>true,),
 		),
 		19 => array
@@ -135,7 +135,7 @@ namespace item_recipe
 		20 => array
 		(
 			'stuffa' => array('extra'=>'ygo'),
-			'result' => array('「防火龙·暗流体」-仮','R',1,1,'21'),
+			'result' => array('「防火龙·暗流体」-仮','WC',200,'∞','eNj'),
 			'extra' => array('link'=>5, 'materials'=>'>2', 'consume_recipe'=>true,),
 		),
 		21 => array
