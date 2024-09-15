@@ -206,6 +206,8 @@ namespace skill981
 					{
 						$money += $prizeitem['itme'];
 						$log .= "你获得了<span class=\"yellow b\">{$prizeitem['itme']}</span>元金钱。<br>";
+						\itemmain\itms_reduce($theitem);
+						$itmsk = '';
 					}
 					else
 					{

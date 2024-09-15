@@ -40,10 +40,10 @@ namespace skill984
 			}
 			elseif ($clv == 2)
 			{
-				$dice = round(rand(0, 999) * (0.01 * $stage + 0.98));
-				if ($dice < 950) $theitem = array('itm'=>'改造核心·C级','itmk'=>'EC','itme'=>1,'itms'=>1,'itmsk'=>'');
-				elseif ($dice < 989) $theitem = array('itm'=>'改造核心·B级','itmk'=>'EC','itme'=>1,'itms'=>1,'itmsk'=>'1');
-				elseif ($dice < 999) $theitem = array('itm'=>'改造核心·A级','itmk'=>'EC','itme'=>1,'itms'=>1,'itmsk'=>'2');
+				$dice = round(rand(0, 999) * (0.03 * $stage + 0.9));
+				if ($dice < 700) $theitem = array('itm'=>'改造核心·C级','itmk'=>'EC','itme'=>1,'itms'=>1,'itmsk'=>'');
+				elseif ($dice < 850) $theitem = array('itm'=>'改造核心·B级','itmk'=>'EC','itme'=>1,'itms'=>1,'itmsk'=>'1');
+				elseif ($dice < 950) $theitem = array('itm'=>'改造核心·A级','itmk'=>'EC','itme'=>1,'itms'=>1,'itmsk'=>'2');
 				else $theitem = array('itm'=>'改造核心·S级','itmk'=>'EC','itme'=>1,'itms'=>1,'itmsk'=>'3');
 			}
 			elseif ($clv == 3)

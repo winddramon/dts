@@ -482,6 +482,15 @@ namespace attrbase
 		}
 		$chprocess($theitem);
 	}
+	
+	//道具合成结果显示
+	function parse_itemmix_resultshow($rarr){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if(!empty($rarr[4])) {
+			$rarr[4] = config_process_encode_comp_itmsk($rarr[4]);
+		}
+		return $chprocess($rarr);
+	}
 
 }
 
