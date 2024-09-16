@@ -5,6 +5,8 @@ if(empty($GLOBALS['___IN_HELP'])) {
 
 eval(import_module('pose','tactic','itemmain','npc'));
 
+if(defined('MOD_EX_ALTERNATIVE')) eval(import_module('ex_alternative'));
+
 include_once GAME_ROOT . './include/itemplace.func.php';
 
 
@@ -31,10 +33,27 @@ if(!file_exists($writefile) || filemtime($mixfile) > filemtime($writefile)){
 			{
 				if (strpos($mix['result'][4], '^eqpsk') !== false || strpos($mix['result'][4], '^alt') !== false)
 				{
+					if (strpos($mix['result'][4], '^alt') !== false)
+					{
+						$i = strpos($mix['result'][4], '^ahid');
+						if(false !== $i) {
+							$tmp_ex_alternative_atype = 4;
+						}
+						else
+						{
+							$i = strpos($mix['result'][4], '^atype');
+							if(false !== $i) {
+								$tmp_ex_alternative_atype = (int)substr($mix['result'][4], $i+6, 1);
+							}
+						}
+					}
 					$sk_arr = \itemmain\get_itmsk_array($mix['result'][4]);
 					foreach($sk_arr as $sv){
-						if (strpos($sv, '^eqpsk')===0) $resultjwords .= \itemmain\get_itmsk_desc_single($sv);
-						if (strpos($sv, '^alt')===0) $resultjwords .= \itemmain\get_itmsk_desc_single($sv);
+						if (strpos($sv, '^eqpsk')===0 || strpos($sv, '^alt')===0)
+						{
+							if ($resultjwords) $resultjwords .= '<br>';
+							$resultjwords .= \itemmain\get_itmsk_desc_single($sv);
+						}
 					}
 				}
 			}
