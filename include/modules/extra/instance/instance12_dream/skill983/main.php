@@ -100,6 +100,31 @@ namespace skill983
 			eval(import_module('logger'));
 			$met_text = array_randompick(array("“如果有什么用不着的数据就丢给我吧，我会善用的。”","“为什么要收集数据？之前也说了这是分配给本机的角色。”","“没事做就来摸摸我吧！<br>你也没少摸过纸片人吧……虽然我不是呢。”","“我的好感度是可以刷的哦~<br>这也是本机的角色的一部分。<br>虽然我自己都不知道怎么刷以及刷高了会怎么样就是了。”","“在其他地方看见了和我长得一样的实体？<br>日有所思，夜有所梦，这也是很正常的吧。”"));
 			$log .= "<span class=\"white b\">$met_text</span><br><br>";
+			$vip_wepsk = \itemmain\parse_itmsk_words($edata['wepsk']);
+			$vip_armorsk = \itemmain\parse_itmsk_words('aBbM'.$edata['artsk']);
+			$chprocess($edata);
+			$log .= "<br><span class=\"yellow b\" onmouseenter=\"$('fsprofile_show').style.display='block';\" onmouseleave=\"$('fsprofile_show').style.display='none';\">>>查看额外信息<<</span><br><br>";
+			$log .= "<div style=\"position:relative;\">
+			<div id=\"fsprofile_show\" class=\"fsprofile_show\" style=\"display:none;position:absolute;z-index:30;top:0;\">
+				<table border='0' width=280px cellspacing='0' cellpadding='0' valign='middle'>
+				<tr>
+					<td class='b2' width=70px height=20px><span>熟练度</span></td>
+					<td class='b3'><span>{$edata['wc']}</span></td>
+					<td class='b2' width=70px><span>攻击力</span></td>
+					<td class='b3'><span>{$edata['att']}</span></td>
+				</tr>
+				<tr>
+					<td class='b2' height=20px><span>武器属性</span></td>
+					<td class='b3' colspan=3><span>{$vip_wepsk}</span></td>
+				</tr>
+				<tr>
+					<td class='b2' height=20px><span>防具属性</span></td>
+					<td class='b3' colspan=3><span>{$vip_armorsk}</span></td>
+				</tr>
+			</table>
+			</div>
+			</div>";
+			return;
 		}
 		$chprocess($edata);
 	}
