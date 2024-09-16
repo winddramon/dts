@@ -288,10 +288,8 @@ namespace instance12
 		$stage = (int)\skillbase\skill_getvalue(981,'stage',$pa);
 		$rm = (int)\skillbase\skill_getvalue(981,'rm',$pa);
 		if ($rm > 0) $stage -= 1;
-		$inst12_difficulty = array(1201 => 1, 1202 => 2, 1203 => 4, 1204 => 8);
-		$r = 0;
-		if (isset($inst12_difficulty[$pa['card']])) $r = $inst12_difficulty[$pa['card']];
-		$score = max($r * $stage, 0);
+		$dd = (int)\skillbase\skill_getvalue(951,'inst12_dd',$pa);
+		$score = max($dd * $stage, 0);
 		return $score;
 	}
 	
