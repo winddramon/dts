@@ -129,7 +129,7 @@ namespace item_recipe
 		19 => array
 		(
 			'stuff1' => array('itm'=>'★连接认证4★','itm_match'=>0),
-			'result' => array('「访问码语者」LINK-4','WD',530,'∞','rdNy^ac1^l4'),
+			'result' => array('「访问码语者」LINK-4','WD',530,'∞','rdNy^ac1^eqpsk741^l4'),
 			'extra' => array('materials'=>1, 'consume_recipe'=>true,),
 		),
 		20 => array

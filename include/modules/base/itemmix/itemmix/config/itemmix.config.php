@@ -160,6 +160,11 @@ $mixinfo = array
 	array('class' => 'd', 'stuff' => array('数据……碎片','电子马克笔','天然属性也是很可怕的！'),'result' => array('黑色夺魂曲','DB',1777,777,'ZBb'),),
 	array('class' => 'd', 'stuff' => array('『午夜钟声』','『午夜钟声』','『午夜钟声』'),'result' => array('电子马克笔','DA',53,75,'Z'),),
 	array('class' => 'd', 'stuff' => array('探测器电池','实验装甲A','电子马克笔'),'result' => array('电磁充能手套','DA',45,15,'E'),),
+	array('class' => 'd', 'stuff' => array('电磁充能手套','某种电子零件','脉冲蓄电池'),'result' => array('电磁脉冲手套','DA',320,160,'Ney'),),
+	array('class' => 'd', 'stuff' => array('电磁充能手套','增幅设备','波动防御护盾'),'result' => array('电磁力场手套','DA',320,160,'aH^hu200'),),
+	array('class' => 'd', 'stuff' => array('面具','手机','☆开完变30元的卡牌包☆'),'result' => array('★骑士假面★','DH',220,120,'A^eqpsk45'),),
+	array('class' => 'd', 'stuff' => array('轮椅','电磁发射装置','某种机械设备'),'result' => array('电动轮椅','DFS',199,'∞','m^eqpsk405'),),
+	array('class' => 'd', 'stuff' => array('埃克法-明足','全息幻象的虚拟手套','幻之靴'),'result' => array('★动力鞋★','DF',140,70,'M^eqpsk255^alt_<:comp_itmsk:>{M^eqpsk409,M^eqpsk226}1^atype2'),),
 
 	array('class' => 'item', 'stuff' => array('生命探测器','增幅设备'),'result' => array('广域生命探测器','ER',1,1,'^rdsk2'),),
 	array('class' => 'item', 'stuff' => array('广域生命探测器','笔记本电脑','某种电子零件'),'result' => array('高清型生命探测器','ER',1,1,'^rdsk10'),),
@@ -446,8 +451,8 @@ $mixinfo = array
 	array('class' => 'ocg', 'stuff' => array('「D.D.乌鸦」 ★1-仮','☆手坑认证☆'),'result' => array('「D.D.乌鸦」 ★1','WC01',100,'∞','^ac1z'),),
 	array('class' => 'ocg', 'stuff' => array('抒情歌鸲-合唱小琉璃 ☆1 -仮','夜雀歌谱','『祝福宝石』'),'result' => array('抒情歌鸲-合唱小琉璃 ☆1','DA',220,'∞','wA^sv1^sa4^xyz1'),),
 	array('class' => 'ocg', 'stuff' => array('彼岸的旅人 但丁 ☆3','☆四星认证☆'),'result' => array('彼岸的旅人 但丁 ☆3（攻击表示）','WC',180,'∞','uR^xyz3'),),
-	array('class' => 'ocg', 'stuff' => array('彼岸的旅人 但丁 ☆3（攻击表示）','☆叠♂放☆','☆六星认证☆'),'result' => array('永远的淑女 贝阿特丽切 ☆6','WC',320,'∞','urR^xyz6'),),
-	array('class' => 'ocg', 'stuff' => array('电子龙·新星 ☆5','☆叠♂放☆','☆五星认证☆'),'result' => array('电子龙·无限 ☆5','WC',250,'∞','rdnya^xyz5'),),
+	array('class' => 'ocg', 'stuff' => array('彼岸的旅人 但丁 ☆3（攻击表示）','☆六星认证☆'),'result' => array('永远的淑女 贝阿特丽切 ☆6','WC',250,'∞','uiR^eqpsk67^xyz6'),),
+	array('class' => 'ocg', 'stuff' => array('电子龙·新星 ☆5','☆叠♂放☆'),'result' => array('电子龙·无限 ☆5','WC',250,'∞','rdnya^xyz5'),),
 	array('class' => 'ocg', 'stuff' => array('星圣 欧米伽星云 ☆4','☆六星认证☆'),'result' => array('星圣神龙 托勒密星团M7 ☆6','DFS',270,'∞','HNn^xyz6'),),
 	array('class' => 'ocg', 'stuff' => array('宵星之机神 丁吉尔苏 ☆8 -仮','某种机械设备','钢琴线','☆八星认证☆'),'result' => array('宵星之机神 丁吉尔苏 ☆8','WC',260,'∞','dA^sa3Z^xyz8'),),
 	
