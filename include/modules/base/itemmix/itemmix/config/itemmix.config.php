@@ -455,6 +455,11 @@ $mixinfo = array
 	array('class' => 'ocg', 'stuff' => array('电子龙·新星 ☆5','☆叠♂放☆'),'result' => array('电子龙·无限 ☆5','WC',250,'∞','rdnya^xyz5'),),
 	array('class' => 'ocg', 'stuff' => array('星圣 欧米伽星云 ☆4','☆六星认证☆'),'result' => array('星圣神龙 托勒密星团M7 ☆6','DFS',270,'∞','HNn^xyz6'),),
 	array('class' => 'ocg', 'stuff' => array('宵星之机神 丁吉尔苏 ☆8 -仮','某种机械设备','钢琴线','☆八星认证☆'),'result' => array('宵星之机神 丁吉尔苏 ☆8','WC',260,'∞','dA^sa3Z^xyz8'),),
+	array('class' => 'ocg', 'stuff' => array('刻印群魔的刻魔锻冶师 ★6 -仮','☆六星认证☆'),'result' => array('刻印群魔的刻魔锻冶师 ★6','WC06',180,120,'ud'),),
+	array('class' => 'ocg', 'stuff' => array('刻印群魔的刻魔锻冶师 ★6','★连接认证1★'),'result' => array('「刻魔的镇魂棺」LINK-1','WC',60,60,'j^l1'),),
+	array('class' => 'ocg', 'stuff' => array('红泪之魔 落泪之日 ★4','刻印群魔的刻魔锻冶师 ★6','★连接认证2★'),'result' => array('「刻魔的大圣棺」LINK-2','DBS',180,180,'^st_<:comp_itmsk:>{刻魔 落泪之日 ★6,WC06,240,240,rdu,;刻魔 震怒之日 ★9 -仮,WC,280,140,,}1^vol2^l2'),),
+	array('class' => 'ocg', 'stuff' => array('「刻魔的大圣棺」LINK-2','★连接认证3★'),'result' => array('「刻魔的神圣棺」LINK-3','DBS',240,240,'AnL^st1^vol6^l3'),),
+	array('class' => 'ocg', 'stuff' => array('刻魔 震怒之日 ★9 -仮','☆六星认证☆','☆六星认证☆','☆六星认证☆'),'result' => array('刻魔 震怒之日 ★9','WC09',666,'∞','ryNdZ'),),
 	
 	array('class' => 'hidden', 'stuff' => array('歌词卡片【海洋】','歌词卡片【大地】','歌词卡片【星空】'),'result' => array('破灭之诗','Y',1,1,95),),
 	array('class' => 'hidden', 'stuff' => array('『随心所欲的虚拟笔』','『铭刻记忆的单词本』','『命定身体的契约书』'),'result' => array('破灭之诗','Y',1,1,95),),
