@@ -14,7 +14,7 @@ namespace item_recipe
 	//extra: 素材额外条件，'ygo'表示为游戏王道具，'edible'表示为回复道具，'weapon'表示为武器，'armor'表示为防具
 	//tips: 素材的文字说明，设置后会覆盖自动生成的文字说明
 	//result: 合成结果数组
-	//extra: 合成额外条件，'link':连接合成的link数，'materials':需要的合成材料数（具体数字或大于数字），'allow_repeat':是否允许重复，默认为true， 'consume_recipe':是否消耗配方，默认为false，'if_learnable':配方是否能学习，如果配方不消耗则默认为true，配方消耗则默认为false，'ex_learn':合成后学习到的额外配方，可为单个配方id或id数组
+	//extra: 合成额外条件，'link':连接合成的link数，'materials':需要的合成材料数（具体数字或大于数字），'allow_repeat':是否允许重复，默认为true， 'consume_recipe':是否消耗配方，默认为false，'if_learnable':配方是否能学习，如果配方不消耗则默认为true，配方消耗则默认为false，'ex_learn':合成后学习到的额外配方，可为单个配方id或id数组，'next':下一级合成的配方id
 	$recipe_mixinfo = array
 	(
 		1 => array
@@ -52,7 +52,7 @@ namespace item_recipe
 		(
 			'stuffa' => array('extra'=>'ygo'),
 			'result' => array('「梦幻崩影·凤凰」-仮','WC',160,80,'uj'),
-			'extra' => array('link'=>2, 'materials'=>2, 'allow_repeat'=>false, 'consume_recipe'=>true,),
+			'extra' => array('link'=>2, 'materials'=>2, 'allow_repeat'=>false, 'consume_recipe'=>true, 'next'=>7,),
 		),
 		7 => array
 		(
@@ -76,7 +76,7 @@ namespace item_recipe
 		(
 			'stuffa' => array('extra'=>'ygo'),
 			'result' => array('「三栅极男巫」-仮','WC',140,'∞','rj'),
-			'extra' => array('link'=>3, 'materials'=>'>1', 'consume_recipe'=>true,),
+			'extra' => array('link'=>3, 'materials'=>'>1', 'consume_recipe'=>true, 'next'=>11,),
 		),
 		11 => array
 		(
@@ -99,8 +99,8 @@ namespace item_recipe
 		14 => array
 		(
 			'stuffa' => array('extra'=>'ygo'),
-			'result' => array('「刺刀枪管龙」-仮','R',1,1,'15'),
-			'extra' => array('link'=>4, 'materials'=>'>2', 'consume_recipe'=>true,),
+			'result' => array('「刺刀枪管龙」-仮','WGK',150,30,'erj'),
+			'extra' => array('link'=>4, 'materials'=>'>2', 'consume_recipe'=>true, 'next'=>15,),
 		),		
 		15 => array
 		(
@@ -112,7 +112,7 @@ namespace item_recipe
 		(
 			'stuffa' => array('extra'=>'ygo'),
 			'result' => array('「召命之神弓-阿波罗萨」-仮','WB',80,1,'iLj'),
-			'extra' => array('link'=>4, 'materials'=>'>1', 'allow_repeat'=>false, 'consume_recipe'=>true,),
+			'extra' => array('link'=>4, 'materials'=>'>1', 'allow_repeat'=>false, 'consume_recipe'=>true, 'next'=>17,),
 		),
 		17 => array
 		(
@@ -124,7 +124,7 @@ namespace item_recipe
 		(
 			'stuffa' => array('extra'=>'ygo'),
 			'result' => array('「访问码语者」-仮','WD',180,80,'dcj'),
-			'extra' => array('link'=>4, 'materials'=>'>1', 'consume_recipe'=>true,),
+			'extra' => array('link'=>4, 'materials'=>'>1', 'consume_recipe'=>true, 'next'=>19,),
 		),
 		19 => array
 		(
@@ -136,7 +136,7 @@ namespace item_recipe
 		(
 			'stuffa' => array('extra'=>'ygo'),
 			'result' => array('「防火龙·暗流体」-仮','WC',200,'∞','eNj'),
-			'extra' => array('link'=>5, 'materials'=>'>2', 'consume_recipe'=>true,),
+			'extra' => array('link'=>5, 'materials'=>'>2', 'consume_recipe'=>true, 'next'=>21,),
 		),
 		21 => array
 		(
