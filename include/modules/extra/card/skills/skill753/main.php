@@ -27,20 +27,28 @@ namespace skill753
 		return 1;
 	}
 	
-	function skill753_get_wepchange_list($wep, $wepsk)
+	function skill753_get_wepchange_list($wep, $wepk, $wepe, $weps, $wepsk)
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$weplist = array();
+		if (\itemmain\check_in_itmsk('T', $wepsk))
+		{
+			foreach(array('/锋利的/si','/电气/si','/毒性/si','/-改/si') as $v)
+			{
+				$wep = preg_replace($v,'',$wep);
+			}
+		}
 		$wep_o = $wep;
 		while (1)
 		{
-			if (!\itemmain\check_in_itmsk('j', $wepsk)) return $weplist;
+			if (!\itemmain\check_in_itmsk('j', $wepsk) && !\itemmain\check_in_itmsk('T', $wepsk)) return $weplist;
 			$wobj = \wepchange\get_weaponswap_obj($wep);
 			if (empty($wobj)) return $weplist;
-			list($null,$wep,$wepk,$wepe,$weps,$wepsk) = $wobj;
+			list($wep,$wepk,$wepe,$weps,$wepsk) = \wepchange\get_weaponswap_obj_extra_process($wep, $wepk, $wepe, $weps, $wepsk, $wobj);
 			if ($wep == $wep_o) return $weplist;
 			if (strpos($wepk,'W') !== 0) return $weplist;
 			if (\itemmain\check_in_itmsk('J', $wepsk)) return $weplist;
+			if (($wepk[1] == 'G' || $wepk[1] == 'J') && $weps == '∞') $weps = 6;
 			$newwep = array($wep,$wepk,$wepe,$weps,$wepsk);
 			if (in_array($newwep, $weplist)) return $weplist;
 			$weplist[] = $newwep;
@@ -56,7 +64,7 @@ namespace skill753
 			$clv = (int)\skillbase\skill_getvalue(753, 'lvl', $pa);
 			if ($clv == 0)
 			{
-				$skill753_weplist = skill753_get_wepchange_list($pa['wep'], $pa['wepsk']);
+				$skill753_weplist = skill753_get_wepchange_list($pa['wep'], $pa['wepk'], $pa['wepe'], $pa['weps'], $pa['wepsk']);
 				if (!empty($skill753_weplist))
 				{
 					eval(import_module('logger','weapon'));
