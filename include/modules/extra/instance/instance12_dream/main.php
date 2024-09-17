@@ -260,12 +260,15 @@ namespace instance12
 		$itm=&$theitem['itm']; $itmk=&$theitem['itmk'];
 		$itme=&$theitem['itme']; $itms=&$theitem['itms']; $itmsk=&$theitem['itmsk'];
 		
-		if (strpos ( $itmk, 'Y' ) === 0 || strpos ( $itmk, 'Z' ) === 0) {
-			if (in_array($itm, array('奇怪的按钮','不要按这个按钮','好想按这个按钮','这个是什么按钮')))
-			{
-				$log .= '<span class="yellow b">看起来这个按钮没有任何功能。</span><br>';
-				$mode = 'command';
-				return;
+		if (22 == $gametype)
+		{
+			if (strpos ( $itmk, 'Y' ) === 0 || strpos ( $itmk, 'Z' ) === 0) {
+				if (in_array($itm, array('奇怪的按钮','不要按这个按钮','好想按这个按钮','这个是什么按钮')))
+				{
+					$log .= '<span class="yellow b">看起来这个按钮没有任何功能。</span><br>';
+					$mode = 'command';
+					return;
+				}
 			}
 		}
 		$chprocess($theitem);
