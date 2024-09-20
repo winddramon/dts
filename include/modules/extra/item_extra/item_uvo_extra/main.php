@@ -164,6 +164,12 @@ namespace item_uvo_extra
 		{
 			$pa['club'] = 0;
 		}
+		elseif ($cardid == 165)//NIKO
+		{
+			$items = array(
+				array('itm'=>'「巨大灯泡」','itmk'=>'DA','itme'=>100,'itms'=>2,'itmsk'=>'Hh')
+				);
+		}
 		elseif ($cardid == 168)//飞雪大大 
 		{
 			$items = array(

@@ -296,7 +296,7 @@ namespace item_recipe
 			'stuff1' => array('itm'=>'风符『风神一扇』','itm_match'=>0),
 			'stuff2' => array('itm'=>'「D.D.乌鸦」 ★1','itm_match'=>0),
 			'stuff3' => array('itm'=>'☆爆裂模式☆','itm_match'=>0),
-			'result' => array('「幻想风靡」','WF',1444,'∞','rdnc^res_$$CK-aOO%-We%pyo%Y+@-ZqQ-Lqr%pyv$$CLLFZTLDEsMSwyNTEs1^reptype1'),
+			'result' => array('「幻想风靡」','WF',2888,'∞','rdnc^res_$$CK-aOO%-We%pyo%Y+@-ZqQ-Lqr%pyv$$CLLFZTLDEsMSwyNTEs1^reptype1'),
 			'extra' => array('materials'=>3, 'consume_recipe'=>true,),
 		),
 		//极速模式配方留空结束
