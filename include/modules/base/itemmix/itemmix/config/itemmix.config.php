@@ -393,7 +393,7 @@ $mixinfo = array
 	array('class' => 'ocg', 'stuff' => array('「Y-龙头」-仮','☆四星认证☆'),'result' => array('「Y-龙头」 ★4','WC04',150,'160','e^alt_<:comp_itmsk:>{DH04}1'),),
 	array('class' => 'ocg', 'stuff' => array('「Z-金属履带」-仮','☆四星认证☆'),'result' => array('「Z-金属履带」 ★4','WC04',150,'130','w^alt_<:comp_itmsk:>{DF04}1'),),
 	array('class' => 'ocg', 'stuff' => array('「V-喷气虎」 ★4','「W-弹射飞翼」 ★4'),'result' => array('「VW-强击虎」 ★6','WC06',200,'∞','pu^alt_<:comp_itmsk:>{DA06,DF06}1'),),
-	array('class' => 'ocg', 'stuff' => array('「X-首领加农」 ★4','「Y-龙头」 ★4','「Z-金属履带」 ★4'),'result' => array('「XYZ-神龙炮」 ★8','WC08',280,'∞','iew^alt_<:comp_itmsk:>{DH08,DF08}1'),),
+	array('class' => 'ocg', 'stuff' => array('「X-首领加农」 ★4','「Y-龙头」 ★4','「Z-金属履带」 ★4'),'result' => array('「XYZ-神龙炮」 ★8','WC08',280,'∞','iew^alt_<:comp_itmsk:>{DB08,DH08}1'),),
 	array('class' => 'ocg', 'stuff' => array('「VW-强击虎」 ★6','「XYZ-神龙炮」 ★8'),'result' => array('「VWXYZ-神龙强击炮」 ★8','WC08',320,'∞','puiewy^alt_<:comp_itmsk:>{DB08,DH08,DA08,DF08}1'),),
 	array('class' => 'ocg', 'stuff' => array('「V-喷气虎」 ★4','「W-弹射飞翼」 ★4','「X-首领加农」 ★4','「Y-龙头」 ★4','「Z-金属履带」 ★4'),'result' => array('「VWXYZ-神龙强击炮」 ★8','WC08',450,'∞','puiewy^alt_<:comp_itmsk:>{DB08,DH08,DA08,DF08}1'),),
 	array('class' => 'ocg', 'stuff' => array('「人造人-念力震慑者」-仮','☆六星认证☆'),'result' => array('「人造人-念力震慑者」 ★6','WC06',240,'∞','NM'),),
