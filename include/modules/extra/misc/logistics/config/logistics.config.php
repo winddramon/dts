@@ -33,6 +33,7 @@ namespace logistics
 		11 => array('黑熊手办',2,1888,'<span class="linen b black-shadow">“这个游戏不爆的咯！”</span>',0),
 		12 => array('威严的红暮手办',2,2333,'<span class="ltcrimson b black-shadow">“任务执行的成功率越来越低了。”</span>',0),
 		13 => array('睿智的蓝凝手办',2,2333,'<span class="ltazure b black-shadow">“什么，是手办？给我也整一个！”</span>',0),
+		14 => array('黑白色的种火花手办',2,1777,'<span class="white b">“如果有什么用不着的数据就丢给我吧，我会善用的。”</span>',0),
 		51 => array('魔法芝士',2,1000,'<span class="red b">一块浸透了红黑色魔力的芝士，似乎有很多个侧面。</span>',0),
 		52 => array('男人至死是少年',2,1000,'<span class="orange b">一根特别直的树枝。没什么特别的，现在该我玩了。</span>',0),
 		61 => array('咔咔手办',2,1333,'<span class="seagreen b">“我的力量无人能及！”</span>',0),

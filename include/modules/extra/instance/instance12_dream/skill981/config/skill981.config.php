@@ -527,6 +527,7 @@ namespace skill981
 		999 => array(
 			array('《魔导百科全书·终》','VF',100,3,'^alt_<:comp_itmsk:>{SC02,SCB2,SCB2,SCB2,SCA2,SCA2,SCA2,SCA2,SCS2,SCS2}1^ahid2',4),
 			array('N型技能核心·改','SC01',1,4,'',5),
+			array('B级技能核心·改','SCB1',1,4,'',3),
 			array('A级技能核心·改','SCA1',1,2,'',5),
 			array('S级技能核心·改','SCS1',1,1,'',4),
 			array('★透明卡砖·S级★','VO1',1,1,'card_S',4),
