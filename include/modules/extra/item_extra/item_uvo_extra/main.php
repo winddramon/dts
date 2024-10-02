@@ -186,6 +186,7 @@ namespace item_uvo_extra
 			$items = array(
 				array('itm'=>'界线『Curse of Dimensionality』','itmk'=>'WFD','itme'=>233,'itms'=>'∞','itmsk'=>'trend')
 				);
+			if (!rand(0,99)) $items[0]['itmsk'] .= '^eqpsk530';
 		}
 		elseif ($cardid == 209)//林无月 
 		{
