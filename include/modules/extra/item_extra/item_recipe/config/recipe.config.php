@@ -225,6 +225,113 @@ namespace item_recipe
 			'result' => array('自奏圣乐·伽拉忒亚 LINK-2','WC',180,120,'wA^sv1j^l2'),
 			'extra' => array('link'=>2, 'materials'=>2, 'consume_recipe'=>true,),
 		),
+		34 => array
+		(
+			'stuff1' => array('itm'=>'游戏王卡包','itm_match'=>0),
+			'stuff2' => array('itm'=>'黑色方块','itm_match'=>0),
+			'result' => array('郁郁妖@火灵天星 ★4','WC04',40,160,'p'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true, 'if_learnable'=>true, 'ex_learn'=>array(35,36,37,38,39,40,41,42,43,44,45)),
+		),
+		35 => array
+		(
+			'stuff1' => array('itm'=>'游戏王卡包','itm_match'=>0),
+			'stuff2' => array('itm'=>'黄色方块','itm_match'=>0),
+			'result' => array('沉沉妖@火灵天星 ★1','WC01',10,80,'c'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		36 => array
+		(
+			'stuff1' => array('itm'=>'游戏王卡包','itm_match'=>0),
+			'stuff2' => array('itm'=>'蓝色方块','itm_match'=>0),
+			'result' => array('冰冰妖@火灵天星 ★1','WC01',30,40,'ik'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		37 => array
+		(
+			'stuff1' => array('itm'=>'游戏王卡包','itm_match'=>0),
+			'stuff2' => array('itm'=>'红色方块','itm_match'=>0),
+			'result' => array('辣辣妖@火灵天星 ★2','WC02',80,80,'u'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		38 => array
+		(
+			'stuff1' => array('itm'=>'游戏王卡包','itm_match'=>0),
+			'stuff2' => array('itm'=>'金色方块','itm_match'=>0),
+			'result' => array('闪闪妖@火灵天星 ★4','WC04',120,60,'e'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		39 => array
+		(
+			'stuff1' => array('itm'=>'游戏王卡包','itm_match'=>0),
+			'stuff2' => array('itm'=>'绿色方块','itm_match'=>0), 
+			'result' => array('抖抖妖@火灵天星 ★3','WC03',60,100,'ws'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		40 => array
+		(
+			'stuff1' => array('itm'=>'郁郁妖@火灵天星 ★4','itm_match'=>2),
+			'stuff2' => array('itm'=>'★连接认证3★','itm_match'=>0),
+			'result' => array('暗骑士@火灵天星 LINK-3','WC',230,'∞','rpAaZ^l3'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		41 => array
+		(
+			'stuff1' => array('itm'=>'沉沉妖@火灵天星 ★1','itm_match'=>2),
+			'stuff2' => array('itmsk'=>'^l','itmsk_match'=>1),
+			'stuff3' => array('itm'=>'☆七星认证☆','itm_match'=>0),
+			'result' => array('地石人@火灵天星 ★7','WC07',230,'∞','BbNc'),
+			'extra' => array('materials'=>3, 'consume_recipe'=>true),
+		),
+		42 => array
+		(
+			'stuff1' => array('itm'=>'冰冰妖@火灵天星 ★1','itm_match'=>2),
+			'stuff2' => array('itm'=>'☆七星认证☆','itm_match'=>0),
+			'result' => array('水海龙@火灵天星 ★7','WC07',230,'∞','ikNc'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		43 => array
+		(
+			'stuff1' => array('itm'=>'辣辣妖@火灵天星 ★2','itm_match'=>2), 
+			'stuff2' => array('itm'=>'★连接认证3★','itm_match'=>0),
+			'result' => array('炎凤凰@火灵天星 LINK-3','WC',230,'∞','ufdy^l3'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		44 => array
+		(
+			'stuff1' => array('itm'=>'闪闪妖@火灵天星 ★4','itm_match'=>2),
+			'stuff2' => array('itmk'=>'4','itmk_match'=>2),
+			'stuff3' => array('itm'=>'☆叠♂放☆','itm_match'=>0),
+			'result' => array('光龙王@火灵天星 ☆4','WC',230,'∞','rdNZ^xyz4'),
+			'extra' => array('materials'=>3, 'consume_recipe'=>true),
+		),
+		45 => array
+		(
+			'stuff1' => array('itm'=>'抖抖妖@火灵天星 ★3','itm_match'=>2),
+			'stuff2' => array('itmk'=>'4','itmk_match'=>2),
+			'stuff3' => array('itm'=>'☆七星认证☆','itm_match'=>0),
+			'result' => array('风飞马@火灵天星 ★7','WC07',230,'∞','wtmM^001'),
+			'extra' => array('materials'=>3, 'consume_recipe'=>true),
+		),
+		46 => array
+		(
+			'stuff1' => array('itm'=>'No39.希望皇 霍普 ☆4','itm_match'=>2),
+			'stuff2' => array('itm'=>'☆叠♂放☆','itm_match'=>0),
+			'result' => array('闪光No.39 希望皇 霍普一 ☆4','WC',251,'∞','d^xyz4^reptype1^res_<:comp_itmsk:>{「潘多拉之力」,MB,1,1,^mbid404^mblvl4,}1'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		47 => array
+		(
+			'stuffa' => array('itm'=>'No.','itm_match'=>1,'extra'=>'ygo'),
+			'result' => array('CNo.1000 梦幻虚神 原数天灵 ☆12 -仮','R',1,1,'48'),
+			'extra' => array('materials'=>4, 'consume_recipe'=>true),
+		),
+		48 => array
+		(
+			'stuff1' => array('itm'=>'☆叠♂放☆','itm_match'=>0),
+			'stuff2' => array('itm'=>'★神卡认证★','itm_match'=>0),
+			'result' => array('CNo.1000 梦幻虚神 原数天灵 ☆12','DB',10000,10,'BbN^xyz12^rtype5^res_<:comp_itmsk:>{CNo.1000 梦幻虚光神 原数天灵·原数天地 ☆13,DB,100000,100000,BbN^eqpsk508^hu1000^xyz13,}1'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
 		//以上为游戏王相关配方合成
 		50 => array
 		(

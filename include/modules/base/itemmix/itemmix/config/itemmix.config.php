@@ -460,6 +460,7 @@ $mixinfo = array
 	array('class' => 'ocg', 'stuff' => array('红泪之魔 落泪之日 ★4','刻印群魔的刻魔锻冶师 ★6','★连接认证2★'),'result' => array('「刻魔的大圣棺」LINK-2','DBS',180,180,'^st_<:comp_itmsk:>{刻魔 落泪之日 ★6,WC06,240,240,rdu,;刻魔 震怒之日 ★9 -仮,WC,280,140,,}1^vol2^l2'),),
 	array('class' => 'ocg', 'stuff' => array('「刻魔的大圣棺」LINK-2','★连接认证3★'),'result' => array('「刻魔的神圣棺」LINK-3','DBS',240,240,'AnL^st1^vol6^l3'),),
 	array('class' => 'ocg', 'stuff' => array('刻魔 震怒之日 ★9 -仮','☆六星认证☆','☆六星认证☆','☆六星认证☆'),'result' => array('刻魔 震怒之日 ★9','WC09',666,'∞','ryNdZ'),),
+	array('class' => 'ocg', 'stuff' => array('暗骑士@火灵天星 LINK-3','地石人@火灵天星 ★7','水海龙@火灵天星 ★7','炎凤凰@火灵天星 LINK-3','光龙王@火灵天星 ☆4','风飞马@火灵天星 ★7'),'result' => array('「电子界到临者@火灵天星」LINK-6','WC',30000,'∞','rd^ac1bhLnyZ^eqpsk508^l6'),'tips' => '素材通过《现代游戏王》中的特定道具按要求合成得到',),
 	
 	array('class' => 'hidden', 'stuff' => array('歌词卡片【海洋】','歌词卡片【大地】','歌词卡片【星空】'),'result' => array('破灭之诗','Y',1,1,95),),
 	array('class' => 'hidden', 'stuff' => array('『随心所欲的虚拟笔』','『铭刻记忆的单词本』','『命定身体的契约书』'),'result' => array('破灭之诗','Y',1,1,95),),
