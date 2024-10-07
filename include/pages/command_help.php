@@ -45,6 +45,7 @@ if(!file_exists($writefile) || filemtime($mixfile) > filemtime($writefile)){
 							if(false !== $i) {
 								$tmp_ex_alternative_atype = (int)substr($mix['result'][4], $i+6, 1);
 							}
+							else $tmp_ex_alternative_atype = 0;
 						}
 					}
 					$sk_arr = \itemmain\get_itmsk_array($mix['result'][4]);
