@@ -52,6 +52,7 @@ namespace logistics
 		304 => array('《梦的解析》',2,0,'权威心理学家的著作。<span class="seagreen b">“你想干……”</span>',1),
 		305 => array('金色王冠',2,0,'<span class="gold b">一个绘有王冠的金色瓶盖。在爱好者间有很高的收藏价值。</span>',1),
 		306 => array('钻石钓竿',2,0,'<span class="cyan b">一根不会磨损的钓竿。</span>',1),
+		307 => array('粉色的大种火手办',2,0,'为梦境演练模式做出贡献的奖励。<span class="lightpink b">“不要太紧张，将这一切看作一场突击测试吧。”</span>',1),
 	);
 	
 	//类别1表示可使用道具（消耗品），2表示装饰品

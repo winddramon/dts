@@ -66,12 +66,13 @@ namespace skill981
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;	
 		//玩家主动攻击打死NPC
-		if (\skillbase\skill_query(981,$pa) && check_unlocked981($pa) && $pd['hp'] <= 0 && $pd['pls'] == 201)
+		if (\skillbase\skill_query(981,$pa) && check_unlocked981($pa) && $pd['hp'] <= 0 && $pd['pls'] == 201 && $pd['type'] != 106)
 		{
 			$theplayer = & $pa;
 		}
 		//一般是NPC先制玩家被打死
-		elseif (\skillbase\skill_query(981,$pd) && check_unlocked981($pd) && $pa['hp'] <= 0 && $pa['pls'] == 201) {
+		elseif (\skillbase\skill_query(981,$pd) && check_unlocked981($pd) && $pa['hp'] <= 0 && $pa['pls'] == 201 && $pd['type'] != 106)
+		{
 			$theplayer = & $pd;
 		}
 		if(!empty($theplayer)) {

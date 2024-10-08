@@ -4,7 +4,7 @@ namespace ex_uselog
 {
 	////////// MODULE HEADER START ///////////////
 	$___MODULE_dependency = 'sys player itemmain attrbase logger';
-	$___MODULE_dependency_optional = '';
+	$___MODULE_dependency_optional = 'song';
 	$___MODULE_conflict = '';
 	$___MODULE_codelist = 'main.php';
 	$___MODULE_templatelist = '';
