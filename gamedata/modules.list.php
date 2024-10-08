@@ -659,6 +659,7 @@ smartmix,extra/misc/smartmix/,1
 skill371,extra/achievement/skills/skill371/,1
 skill983,extra/instance/instance12_dream/skill983/,1
 skill984,extra/instance/instance12_dream/skill984/,1
+skill985,extra/instance/instance12_dream/skill985/,1
 skill363,extra/achievement/skills/skill363/,1
 instance5,extra/instance/instance5/,1
 skill361,extra/activities/lunany2018/skill361/,1

@@ -50,6 +50,10 @@ namespace skill981
 			{
 				$ret .= '使用后生命上限+200，且生命上限成长增加';
 			}
+			elseif ($n == '大光头头套')
+			{
+				$ret .= '使用后每一波次可以刷新一次梦境礼盒选项';
+			}
 			elseif ($n == '梦境的前路')
 			{
 				$ret = '可用于开启第12-16波次，以达成『幻境解离』胜利';
@@ -279,6 +283,14 @@ namespace skill981
 				\skillbase\skill_lost(10, $sdata);
 				\skillbase\skill_acquire(29, $sdata);
 				\skillbase\skill_acquire(31, $sdata);
+				$itm = $itmk = $itmsk = '';
+				$itme = $itms = 0;
+				return;
+			}
+			elseif ($itm == '大光头头套')
+			{
+				$log .= "你使用了<span class=\"yellow b\">$itm</span>。<br><span class=\"yellow b\">你感觉自己充满了可能性！</span><br>";
+				\skillbase\skill_acquire(985, $sdata);
 				$itm = $itmk = $itmsk = '';
 				$itme = $itms = 0;
 				return;

@@ -1,0 +1,3 @@
+<!--{if \skillbase\skill_query(985, $sdata)}-->
+<input type="button" class="cmdbutton" <!--{if \skillbase\skill_getvalue(985, 'rflag', $sdata)}-->disabled="true"<!--{/if}--> value="刷新" onclick="$('pbx_choice').value='-1'; postCmd('gamecmd','command.php');this.disabled=true;">
+<!--{/if}-->
