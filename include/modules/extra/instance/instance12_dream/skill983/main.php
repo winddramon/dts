@@ -357,7 +357,7 @@ namespace skill983
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa,$pd,$active);
-		if (\skillbase\skill_query(983,$pa) && $pd['type'] != 107)
+		if (\skillbase\skill_query(983,$pa) && $pd['type'] != 106 && $pd['type'] != 107)
 		{
 			if (rand(0,99) < 20)
 			{
@@ -428,21 +428,38 @@ namespace skill983
 		eval(import_module('player'));
 		if (!\skillbase\skill_query(983, $sdata) || $stage > 11) return $chprocess($stage);
 		eval(import_module('logger'));
+		$flag983 = (int)\skillbase\skill_getvalue(951,'flag983', $sdata);
 		if ($stage < 11)
 		{
-			if ($stage < 7) $buffid = rand(1,12);
-			else $buffid = rand(1,18);
-			$log .= "<span class=\"white b\">“获得更新数据了，非常感谢！<br>按照说好的那样，为你分享一些我的「性质」。”</span><br><br>";
-			if ($buffid <= 12) $log .= "<span class=\"yellow b\">你感觉自己受到了祝福！</span><br>";
-			else $log .= "<span class=\"yellow b\">你感觉自己受到了祝福……对、对吗？</span><br><span class=\"lime b\">试着送她一些补给品类型的道具吧……</span><br>";
-			\skillbase\skill_setvalue(983,'buff',$buffid,$sdata);
-			$log .= "当前「余火」状态为：<span class=\"yellow b\">".skill983_bufftext($sdata)."</span><br>";
+			if ($flag983 == 1)
+			{
+				if ($stage < 7) $buffid = rand(1,12);
+				else $buffid = rand(1,18);
+				$log .= "<span class=\"white b\">“获得更新数据了，非常感谢！<br>按照说好的那样，为你分享一些我的「性质」。”</span><br><br>";
+				if ($buffid <= 12) $log .= "<span class=\"yellow b\">你感觉自己受到了祝福！</span><br>";
+				else $log .= "<span class=\"yellow b\">你感觉自己受到了祝福……对、对吗？</span><br><span class=\"lime b\">试着送她一些补给品类型的道具吧……</span><br>";
+				\skillbase\skill_setvalue(983,'buff',$buffid,$sdata);
+				$log .= "当前「余火」状态为：<span class=\"yellow b\">".skill983_bufftext($sdata)."</span><br>";
+			}
 			return $chprocess($stage);
 		}
 		else
 		{
-			$log .= "<span class=\"white b\">“和你说一句哦，场上现在有一个比我可爱强大300倍以上的实体出现了。<br>虽然和我是同种，但她大概没那么好心。<br>不过也别太担心，毕竟这只是一场梦而已对吧？”</span><br>";
-			\addnpc\addnpc(107, 0, 1, 201);
+			$bpid = \addnpc\addnpc(107, 0, 1, 201);
+			if ($flag983 == 1)
+			{
+				$log .= "<span class=\"white b\">“和你说一句哦，场上现在有一个比我可爱强大300倍以上的实体出现了。<br>虽然和我是同种，但她大概没那么好心。<br>不过也别太担心，毕竟这只是一场梦而已对吧？”</span><br>";
+			}
+			elseif ($flag983 == 2)
+			{
+				$bnpc = \player\fetch_playerdata_by_pid($bpid[0]);
+				$bnpc['mhp'] *= 30;
+				$bnpc['hp'] *= 30;
+				$bnpc['att'] *= 30;
+				$bnpc['wc'] *= 30;
+				$bnpc['wepsk'] .= 'dN';
+				\player\player_save($bnpc);
+			}
 			return 1;
 		}
 	}
@@ -643,6 +660,16 @@ namespace skill983
 		);
 		if (isset($bufftext[$buffid])) $s = $bufftext[$buffid];
 		return $s;
+	}
+	
+	function player_kill_enemy(&$pa,&$pd,$active)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$chprocess($pa,$pd,$active);
+		if ($pd['type'] == 106 && $pd['hp'] <= 0 && \skillbase\skill_query(983, $pa))
+		{
+			\skillbase\skill_setvalue(951,'flag983','2',$pa);
+		}
 	}
 	
 }
