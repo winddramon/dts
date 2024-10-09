@@ -315,6 +315,8 @@ skill757,extra/card/skills/skill757/,1
 skill805,extra/card/skills/skill805/,1
 skill759,extra/card/skills/skill759/,1
 skill768,extra/card/skills/skill768/,1
+skill760,extra/card/skills/skill760/,1
+skill761,extra/card/skills/skill761/,1
 wep_g,base/weapon/wep_g/,1
 wep_j,base/weapon/wep_j/,1
 skill273,extra/club/skills/skill273/,1
@@ -448,7 +450,6 @@ ex_weapon_crack,extra/attr/ex_weapon_crack/,1
 skill568,extra/card/skills/skill568/,1
 skill585,extra/card/skills/skill585/,1
 skill705,extra/card/skills/skill705/,1
-ex_uselog,extra/attr/ex_uselog/,1
 skill89,extra/club/skills/skill89/,1
 skill96,extra/club/skills/skill96/,1
 skill102,extra/club/skills/skill102/,1
@@ -635,6 +636,7 @@ skill504,extra/card/skills/skill504/,1
 user_settings,extra/misc/user_settings/,1
 skill740,extra/card/skills/skill740/,1
 instance3,extra/instance/instance3_ascension/,1
+ex_uselog,extra/attr/ex_uselog/,1
 skill182,extra/club/skills/skill182/,1
 cooldown,base/cooldown/,1
 skill458,extra/card/skills/skill458/,1
