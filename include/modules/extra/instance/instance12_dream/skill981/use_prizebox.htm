@@ -31,3 +31,6 @@ $v['itm']/<!--{eval echo \itemmain\parse_itmk_words($v['itmk']);}-->/$v['itme']/
 <!--{/loop}-->
 <br>
 <input type="button" class="cmdbutton"  id="x" value="[X]返回" onclick="$('command').value='menu'; postCmd('gamecmd','command.php');this.disabled=true;">
+<!--{if defined('MOD_SKILL985')}-->
+{template MOD_SKILL985_SKCMD985}
+<!--{/if}-->

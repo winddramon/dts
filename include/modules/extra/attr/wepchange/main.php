@@ -8,6 +8,9 @@ namespace wepchange
 		$itemspkinfo['j'] = '多重';
 		$itemspkdesc['j']='能切换武器模式';
 		$itemspkremark['j']='部分转换不可逆；不能使用任何方式强化或改造这个装备';
+		$itemspkinfo['T'] = '变形';
+		$itemspkdesc['T']='能切换武器模式';
+		$itemspkremark['T']='部分转换不可逆；切换时会保留武器的数值强化';
 	}
 	
 	function weaponswap()
@@ -15,17 +18,24 @@ namespace wepchange
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		eval(import_module('sys','player','logger'));
 		
-		if (!\itemmain\check_in_itmsk('j', $wepsk))
+		if (!\itemmain\check_in_itmsk('j', $wepsk) && !\itemmain\check_in_itmsk('T', $wepsk))
 		{
 			$log.='你的武器不能变换。<br>';
 			$mode = 'command';
 			return;
 		}
-		
-		$oldw=$wep;
-		$wobj = get_weaponswap_obj($wep);
+		$oldw = $wep;
+		$twep = $wep;
+		if (\itemmain\check_in_itmsk('T', $wepsk))
+		{
+			foreach(array('/锋利的/si','/电气/si','/毒性/si','/-改/si') as $v)
+			{
+				$twep = preg_replace($v,'',$twep);
+			}
+		}
+		$wobj = get_weaponswap_obj($twep);
 		if(!empty($wobj)){
-			list($null,$wep,$wepk,$wepe,$weps,$wepsk) = $wobj;
+			list($wep,$wepk,$wepe,$weps,$wepsk) = get_weaponswap_obj_extra_process($wep, $wepk, $wepe, $weps, $wepsk, $wobj);
 			$log.="<span class=\"yellow b\">{$oldw}</span>变换成了<span class=\"yellow b\">{$wep}</span>。<br>";
 			if(strpos($wepk,'W')!==0) {//变出非武器时自动卸下
 				\itemmain\itemoff('wep');
@@ -33,6 +43,19 @@ namespace wepchange
 			return;
 		}
 		$log.="<span class=\"yellow b\">{$oldw}</span>由于改造或其他原因不能变换。<br>";
+	}
+	
+	function get_weaponswap_obj_extra_process($wep, $wepk, $wepe, $weps, $wepsk, $wobj)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		list($null,$wep_n,$wepk_n,$wepe_n,$weps_n,$wepsk_n) = $wobj;
+		if (\itemmain\check_in_itmsk('T', $wepsk))
+		{
+			$wepe_n = max($wepe, $wepe_n);
+			if ($weps_n == '∞' || $weps == '∞') $weps_n = '∞';
+			else $weps_n = max($weps, $weps_n);
+		}
+		return array($wep_n,$wepk_n,$wepe_n,$weps_n,$wepsk_n);
 	}
 	
 	function get_weaponswap_obj($wn)

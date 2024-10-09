@@ -14,7 +14,7 @@ namespace item_recipe
 	//extra: 素材额外条件，'ygo'表示为游戏王道具，'edible'表示为回复道具，'weapon'表示为武器，'armor'表示为防具
 	//tips: 素材的文字说明，设置后会覆盖自动生成的文字说明
 	//result: 合成结果数组
-	//extra: 合成额外条件，'link':连接合成的link数，'materials':需要的合成材料数（具体数字或大于数字），'allow_repeat':是否允许重复，默认为true， 'consume_recipe':是否消耗配方，默认为false，'if_learnable':配方是否能学习，如果配方不消耗则默认为true，配方消耗则默认为false，'ex_learn':合成后学习到的额外配方，可为单个配方id或id数组
+	//extra: 合成额外条件，'link':连接合成的link数，'materials':需要的合成材料数（具体数字或大于数字），'allow_repeat':是否允许重复，默认为true， 'consume_recipe':是否消耗配方，默认为false，'if_learnable':配方是否能学习，如果配方不消耗则默认为true，配方消耗则默认为false，'ex_learn':合成后学习到的额外配方，可为单个配方id或id数组，'next':下一级合成的配方id
 	$recipe_mixinfo = array
 	(
 		1 => array
@@ -52,7 +52,7 @@ namespace item_recipe
 		(
 			'stuffa' => array('extra'=>'ygo'),
 			'result' => array('「梦幻崩影·凤凰」-仮','WC',160,80,'uj'),
-			'extra' => array('link'=>2, 'materials'=>2, 'allow_repeat'=>false, 'consume_recipe'=>true,),
+			'extra' => array('link'=>2, 'materials'=>2, 'allow_repeat'=>false, 'consume_recipe'=>true, 'next'=>7,),
 		),
 		7 => array
 		(
@@ -76,7 +76,7 @@ namespace item_recipe
 		(
 			'stuffa' => array('extra'=>'ygo'),
 			'result' => array('「三栅极男巫」-仮','WC',140,'∞','rj'),
-			'extra' => array('link'=>3, 'materials'=>'>1', 'consume_recipe'=>true,),
+			'extra' => array('link'=>3, 'materials'=>'>1', 'consume_recipe'=>true, 'next'=>11,),
 		),
 		11 => array
 		(
@@ -99,8 +99,8 @@ namespace item_recipe
 		14 => array
 		(
 			'stuffa' => array('extra'=>'ygo'),
-			'result' => array('「刺刀枪管龙」-仮','R',1,1,'15'),
-			'extra' => array('link'=>4, 'materials'=>'>2', 'consume_recipe'=>true,),
+			'result' => array('「刺刀枪管龙」-仮','WGK',150,30,'erj'),
+			'extra' => array('link'=>4, 'materials'=>'>2', 'consume_recipe'=>true, 'next'=>15,),
 		),		
 		15 => array
 		(
@@ -112,7 +112,7 @@ namespace item_recipe
 		(
 			'stuffa' => array('extra'=>'ygo'),
 			'result' => array('「召命之神弓-阿波罗萨」-仮','WB',80,1,'iLj'),
-			'extra' => array('link'=>4, 'materials'=>'>1', 'allow_repeat'=>false, 'consume_recipe'=>true,),
+			'extra' => array('link'=>4, 'materials'=>'>1', 'allow_repeat'=>false, 'consume_recipe'=>true, 'next'=>17,),
 		),
 		17 => array
 		(
@@ -124,19 +124,19 @@ namespace item_recipe
 		(
 			'stuffa' => array('extra'=>'ygo'),
 			'result' => array('「访问码语者」-仮','WD',180,80,'dcj'),
-			'extra' => array('link'=>4, 'materials'=>'>1', 'consume_recipe'=>true,),
+			'extra' => array('link'=>4, 'materials'=>'>1', 'consume_recipe'=>true, 'next'=>19,),
 		),
 		19 => array
 		(
 			'stuff1' => array('itm'=>'★连接认证4★','itm_match'=>0),
-			'result' => array('「访问码语者」LINK-4','WD',530,'∞','rdNy^ac1^l4'),
+			'result' => array('「访问码语者」LINK-4','WD',530,'∞','rdNy^ac1^eqpsk741^l4'),
 			'extra' => array('materials'=>1, 'consume_recipe'=>true,),
 		),
 		20 => array
 		(
 			'stuffa' => array('extra'=>'ygo'),
 			'result' => array('「防火龙·暗流体」-仮','WC',200,'∞','eNj'),
-			'extra' => array('link'=>5, 'materials'=>'>2', 'consume_recipe'=>true,),
+			'extra' => array('link'=>5, 'materials'=>'>2', 'consume_recipe'=>true, 'next'=>21,),
 		),
 		21 => array
 		(
@@ -225,6 +225,113 @@ namespace item_recipe
 			'result' => array('自奏圣乐·伽拉忒亚 LINK-2','WC',180,120,'wA^sv1j^l2'),
 			'extra' => array('link'=>2, 'materials'=>2, 'consume_recipe'=>true,),
 		),
+		34 => array
+		(
+			'stuff1' => array('itm'=>'游戏王卡包','itm_match'=>0),
+			'stuff2' => array('itm'=>'黑色方块','itm_match'=>0),
+			'result' => array('郁郁妖@火灵天星 ★4','WC04',40,160,'p'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true, 'if_learnable'=>true, 'ex_learn'=>array(35,36,37,38,39,40,41,42,43,44,45)),
+		),
+		35 => array
+		(
+			'stuff1' => array('itm'=>'游戏王卡包','itm_match'=>0),
+			'stuff2' => array('itm'=>'黄色方块','itm_match'=>0),
+			'result' => array('沉沉妖@火灵天星 ★1','WC01',10,80,'c'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		36 => array
+		(
+			'stuff1' => array('itm'=>'游戏王卡包','itm_match'=>0),
+			'stuff2' => array('itm'=>'蓝色方块','itm_match'=>0),
+			'result' => array('冰冰妖@火灵天星 ★1','WC01',30,40,'ik'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		37 => array
+		(
+			'stuff1' => array('itm'=>'游戏王卡包','itm_match'=>0),
+			'stuff2' => array('itm'=>'红色方块','itm_match'=>0),
+			'result' => array('辣辣妖@火灵天星 ★2','WC02',80,80,'u'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		38 => array
+		(
+			'stuff1' => array('itm'=>'游戏王卡包','itm_match'=>0),
+			'stuff2' => array('itm'=>'金色方块','itm_match'=>0),
+			'result' => array('闪闪妖@火灵天星 ★4','WC04',120,60,'e'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		39 => array
+		(
+			'stuff1' => array('itm'=>'游戏王卡包','itm_match'=>0),
+			'stuff2' => array('itm'=>'绿色方块','itm_match'=>0), 
+			'result' => array('抖抖妖@火灵天星 ★3','WC03',60,100,'ws'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		40 => array
+		(
+			'stuff1' => array('itm'=>'郁郁妖@火灵天星 ★4','itm_match'=>2),
+			'stuff2' => array('itm'=>'★连接认证3★','itm_match'=>0),
+			'result' => array('暗骑士@火灵天星 LINK-3','WC',230,'∞','rpAaZ^l3'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		41 => array
+		(
+			'stuff1' => array('itm'=>'沉沉妖@火灵天星 ★1','itm_match'=>2),
+			'stuff2' => array('itmsk'=>'^l','itmsk_match'=>1),
+			'stuff3' => array('itm'=>'☆七星认证☆','itm_match'=>0),
+			'result' => array('地石人@火灵天星 ★7','WC07',230,'∞','BbNc'),
+			'extra' => array('materials'=>3, 'consume_recipe'=>true),
+		),
+		42 => array
+		(
+			'stuff1' => array('itm'=>'冰冰妖@火灵天星 ★1','itm_match'=>2),
+			'stuff2' => array('itm'=>'☆七星认证☆','itm_match'=>0),
+			'result' => array('水海龙@火灵天星 ★7','WC07',230,'∞','ikNc'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		43 => array
+		(
+			'stuff1' => array('itm'=>'辣辣妖@火灵天星 ★2','itm_match'=>2), 
+			'stuff2' => array('itm'=>'★连接认证3★','itm_match'=>0),
+			'result' => array('炎凤凰@火灵天星 LINK-3','WC',230,'∞','ufdy^l3'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		44 => array
+		(
+			'stuff1' => array('itm'=>'闪闪妖@火灵天星 ★4','itm_match'=>2),
+			'stuff2' => array('itmk'=>'4','itmk_match'=>2),
+			'stuff3' => array('itm'=>'☆叠♂放☆','itm_match'=>0),
+			'result' => array('光龙王@火灵天星 ☆4','WC',230,'∞','rdNZ^xyz4'),
+			'extra' => array('materials'=>3, 'consume_recipe'=>true),
+		),
+		45 => array
+		(
+			'stuff1' => array('itm'=>'抖抖妖@火灵天星 ★3','itm_match'=>2),
+			'stuff2' => array('itmk'=>'4','itmk_match'=>2),
+			'stuff3' => array('itm'=>'☆七星认证☆','itm_match'=>0),
+			'result' => array('风飞马@火灵天星 ★7','WC07',230,'∞','wtmM^001'),
+			'extra' => array('materials'=>3, 'consume_recipe'=>true),
+		),
+		46 => array
+		(
+			'stuff1' => array('itm'=>'No39.希望皇 霍普 ☆4','itm_match'=>2),
+			'stuff2' => array('itm'=>'☆叠♂放☆','itm_match'=>0),
+			'result' => array('闪光No.39 希望皇 霍普一 ☆4','WC',251,'∞','d^xyz4^reptype1^res_<:comp_itmsk:>{「潘多拉之力」,MB,1,1,^mbid404^mblvl4,}1'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
+		47 => array
+		(
+			'stuffa' => array('itm'=>'No.','itm_match'=>1,'extra'=>'ygo'),
+			'result' => array('CNo.1000 梦幻虚神 原数天灵 ☆12 -仮','R',1,1,'48'),
+			'extra' => array('materials'=>4, 'consume_recipe'=>true),
+		),
+		48 => array
+		(
+			'stuff1' => array('itm'=>'☆叠♂放☆','itm_match'=>0),
+			'stuff2' => array('itm'=>'★神卡认证★','itm_match'=>0),
+			'result' => array('CNo.1000 梦幻虚神 原数天灵 ☆12','DB',10000,10,'BbN^xyz12^rtype5^res_<:comp_itmsk:>{CNo.1000 梦幻虚光神 原数天灵·原数天地 ☆13,DB,100000,100000,BbN^eqpsk508^hu1000^xyz13,}1'),
+			'extra' => array('materials'=>2, 'consume_recipe'=>true),
+		),
 		//以上为游戏王相关配方合成
 		50 => array
 		(
@@ -296,7 +403,7 @@ namespace item_recipe
 			'stuff1' => array('itm'=>'风符『风神一扇』','itm_match'=>0),
 			'stuff2' => array('itm'=>'「D.D.乌鸦」 ★1','itm_match'=>0),
 			'stuff3' => array('itm'=>'☆爆裂模式☆','itm_match'=>0),
-			'result' => array('「幻想风靡」','WF',1444,'∞','rdnc^res_$$CK-aOO%-We%pyo%Y+@-ZqQ-Lqr%pyv$$CLLFZTLDEsMSwyNTEs1^reptype1'),
+			'result' => array('「幻想风靡」','WF',2888,'∞','rdnc^res_$$CK-aOO%-We%pyo%Y+@-ZqQ-Lqr%pyv$$CLLFZTLDEsMSwyNTEs1^reptype1'),
 			'extra' => array('materials'=>3, 'consume_recipe'=>true,),
 		),
 		//极速模式配方留空结束

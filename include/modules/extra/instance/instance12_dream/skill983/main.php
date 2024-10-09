@@ -100,6 +100,31 @@ namespace skill983
 			eval(import_module('logger'));
 			$met_text = array_randompick(array("“如果有什么用不着的数据就丢给我吧，我会善用的。”","“为什么要收集数据？之前也说了这是分配给本机的角色。”","“没事做就来摸摸我吧！<br>你也没少摸过纸片人吧……虽然我不是呢。”","“我的好感度是可以刷的哦~<br>这也是本机的角色的一部分。<br>虽然我自己都不知道怎么刷以及刷高了会怎么样就是了。”","“在其他地方看见了和我长得一样的实体？<br>日有所思，夜有所梦，这也是很正常的吧。”"));
 			$log .= "<span class=\"white b\">$met_text</span><br><br>";
+			$vip_wepsk = \itemmain\parse_itmsk_words($edata['wepsk']);
+			$vip_armorsk = \itemmain\parse_itmsk_words('aBbM'.$edata['artsk']);
+			$chprocess($edata);
+			$log .= "<br><span class=\"yellow b\" onmouseenter=\"$('fsprofile_show').style.display='block';\" onmouseleave=\"$('fsprofile_show').style.display='none';\">>>查看额外信息<<</span><br><br>";
+			$log .= "<div style=\"position:relative;\">
+			<div id=\"fsprofile_show\" class=\"fsprofile_show\" style=\"display:none;position:absolute;z-index:30;top:0;\">
+				<table border='0' width=280px cellspacing='0' cellpadding='0' valign='middle'>
+				<tr>
+					<td class='b2' width=70px height=20px><span>熟练度</span></td>
+					<td class='b3'><span>{$edata['wc']}</span></td>
+					<td class='b2' width=70px><span>攻击力</span></td>
+					<td class='b3'><span>{$edata['att']}</span></td>
+				</tr>
+				<tr>
+					<td class='b2' height=20px><span>武器属性</span></td>
+					<td class='b3' colspan=3><span>{$vip_wepsk}</span></td>
+				</tr>
+				<tr>
+					<td class='b2' height=20px><span>防具属性</span></td>
+					<td class='b3' colspan=3><span>{$vip_armorsk}</span></td>
+				</tr>
+			</table>
+			</div>
+			</div>";
+			return;
 		}
 		$chprocess($edata);
 	}
@@ -332,7 +357,7 @@ namespace skill983
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa,$pd,$active);
-		if (\skillbase\skill_query(983,$pa) && $pd['type'] != 107)
+		if (\skillbase\skill_query(983,$pa) && $pd['type'] != 106 && $pd['type'] != 107)
 		{
 			if (rand(0,99) < 20)
 			{
@@ -403,21 +428,38 @@ namespace skill983
 		eval(import_module('player'));
 		if (!\skillbase\skill_query(983, $sdata) || $stage > 11) return $chprocess($stage);
 		eval(import_module('logger'));
+		$flag983 = (int)\skillbase\skill_getvalue(951,'flag983', $sdata);
 		if ($stage < 11)
 		{
-			if ($stage < 7) $buffid = rand(1,12);
-			else $buffid = rand(1,18);
-			$log .= "<span class=\"white b\">“获得更新数据了，非常感谢！<br>按照说好的那样，为你分享一些我的「性质」。”</span><br><br>";
-			if ($buffid <= 12) $log .= "<span class=\"yellow b\">你感觉自己受到了祝福！</span><br>";
-			else $log .= "<span class=\"yellow b\">你感觉自己受到了祝福……对、对吗？</span><br><span class=\"lime b\">试着送她一些补给品类型的道具吧……</span><br>";
-			\skillbase\skill_setvalue(983,'buff',$buffid,$sdata);
-			$log .= "当前「余火」状态为：<span class=\"yellow b\">".skill983_bufftext($sdata)."</span><br>";
+			if ($flag983 == 1)
+			{
+				if ($stage < 7) $buffid = rand(1,12);
+				else $buffid = rand(1,18);
+				$log .= "<span class=\"white b\">“获得更新数据了，非常感谢！<br>按照说好的那样，为你分享一些我的「性质」。”</span><br><br>";
+				if ($buffid <= 12) $log .= "<span class=\"yellow b\">你感觉自己受到了祝福！</span><br>";
+				else $log .= "<span class=\"yellow b\">你感觉自己受到了祝福……对、对吗？</span><br><span class=\"lime b\">试着送她一些补给品类型的道具吧……</span><br>";
+				\skillbase\skill_setvalue(983,'buff',$buffid,$sdata);
+				$log .= "当前「余火」状态为：<span class=\"yellow b\">".skill983_bufftext($sdata)."</span><br>";
+			}
 			return $chprocess($stage);
 		}
 		else
 		{
-			$log .= "<span class=\"white b\">“和你说一句哦，场上现在有一个比我可爱强大300倍以上的实体出现了。<br>虽然和我是同种，但她大概没那么好心。<br>不过也别太担心，毕竟这只是一场梦而已对吧？”</span><br>";
-			\addnpc\addnpc(107, 0, 1, 201);
+			$bpid = \addnpc\addnpc(107, 0, 1, 201);
+			if ($flag983 == 1)
+			{
+				$log .= "<span class=\"white b\">“和你说一句哦，场上现在有一个比我可爱强大300倍以上的实体出现了。<br>虽然和我是同种，但她大概没那么好心。<br>不过也别太担心，毕竟这只是一场梦而已对吧？”</span><br>";
+			}
+			elseif ($flag983 == 2)
+			{
+				$bnpc = \player\fetch_playerdata_by_pid($bpid[0]);
+				$bnpc['mhp'] *= 30;
+				$bnpc['hp'] *= 30;
+				$bnpc['att'] *= 30;
+				$bnpc['wc'] *= 30;
+				$bnpc['wepsk'] .= 'dN';
+				\player\player_save($bnpc);
+			}
 			return 1;
 		}
 	}
@@ -618,6 +660,16 @@ namespace skill983
 		);
 		if (isset($bufftext[$buffid])) $s = $bufftext[$buffid];
 		return $s;
+	}
+	
+	function player_kill_enemy(&$pa,&$pd,$active)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$chprocess($pa,$pd,$active);
+		if ($pd['type'] == 106 && $pd['hp'] <= 0 && \skillbase\skill_query(983, $pa))
+		{
+			\skillbase\skill_setvalue(951,'flag983','2',$pa);
+		}
 	}
 	
 }

@@ -136,6 +136,9 @@ namespace item_recipe
 		if (('R' === $recipe['result'][1]) && isset($recipe['result'][4])) {
 			$recipe_tip .= '<br><br>下一级配方公式为：<br>'.show_recipe($recipe['result'][4]);
 		}
+		elseif (isset($recipe['extra']['next'])) {
+			$recipe_tip .= '<br><br>下一级配方公式为：<br>'.show_recipe($recipe['extra']['next']);
+		}
 		
 		return $recipe_tip;
 	}

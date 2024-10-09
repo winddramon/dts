@@ -260,12 +260,15 @@ namespace instance12
 		$itm=&$theitem['itm']; $itmk=&$theitem['itmk'];
 		$itme=&$theitem['itme']; $itms=&$theitem['itms']; $itmsk=&$theitem['itmsk'];
 		
-		if (strpos ( $itmk, 'Y' ) === 0 || strpos ( $itmk, 'Z' ) === 0) {
-			if (in_array($itm, array('奇怪的按钮','不要按这个按钮','好想按这个按钮','这个是什么按钮')))
-			{
-				$log .= '<span class="yellow b">看起来这个按钮没有任何功能。</span><br>';
-				$mode = 'command';
-				return;
+		if (22 == $gametype)
+		{
+			if (strpos ( $itmk, 'Y' ) === 0 || strpos ( $itmk, 'Z' ) === 0) {
+				if (in_array($itm, array('奇怪的按钮','不要按这个按钮','好想按这个按钮','这个是什么按钮')))
+				{
+					$log .= '<span class="yellow b">看起来这个按钮没有任何功能。</span><br>';
+					$mode = 'command';
+					return;
+				}
 			}
 		}
 		$chprocess($theitem);
@@ -288,10 +291,8 @@ namespace instance12
 		$stage = (int)\skillbase\skill_getvalue(981,'stage',$pa);
 		$rm = (int)\skillbase\skill_getvalue(981,'rm',$pa);
 		if ($rm > 0) $stage -= 1;
-		$inst12_difficulty = array(1201 => 1, 1202 => 2, 1203 => 4, 1204 => 8);
-		$r = 0;
-		if (isset($inst12_difficulty[$pa['card']])) $r = $inst12_difficulty[$pa['card']];
-		$score = max($r * $stage, 0);
+		$dd = (int)\skillbase\skill_getvalue(951,'inst12_dd',$pa);
+		$score = max($dd * $stage, 0);
 		return $score;
 	}
 	

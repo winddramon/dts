@@ -27,6 +27,7 @@ namespace skill964
 		3 => array('name' => '熊的力量', 'cards' => array(5,13,95,96,120), 'count' => 3),//虚子，熊本熊，冰炎，熊战士
 		4 => array('name' => '挑战者', 'cards' => array(70,72,74,75,76,77,78,79,81,82,83,84,85,86,97,117,121,122,124,139,150,153,154,155,162,163,164,167,171,189,192,194,251,257,312,347,359,377,387,393,394,395,400,409,420), 'count' => 4),//卡名含有挑战者的卡
 		5 => array('name' => '永夜异变', 'cards' => array(268,358,352,158,186,277,350,273,290), 'count' => 3),//永夜抄
+		6 => array('name' => '高塔奇梦', 'cards' => array(292,390,393,409,428,429), 'count' => 3),//邪教徒，鸡煲，甜圈，八体，大红地精，观者
 		);
 	
 	function init()
@@ -99,6 +100,15 @@ namespace skill964
 			\skillbase\skill_setvalue(402,'lvl','4',$pa);
 			\skillbase\skill_acquire(403,$pa);
 			\skillbase\skill_setvalue(403,'lvl','5',$pa);
+		}
+		elseif ($comboid == 6)
+		{
+			$citems = array(
+				array('itm'=>'回忆的红宝石钥匙', 'itmk'=>'Y', 'itme'=>1, 'itms'=>1, 'itmsk'=>''),
+				array('itm'=>'力量的绿宝石钥匙', 'itmk'=>'Y', 'itme'=>1, 'itms'=>1, 'itmsk'=>''),
+				array('itm'=>'抉择的蓝宝石钥匙', 'itmk'=>'Y', 'itme'=>1, 'itms'=>1, 'itmsk'=>''),
+			);
+			\skill1006\multi_itemget($citems, $pa, 1);
 		}
 	}
 	
@@ -338,6 +348,7 @@ namespace skill964
 				elseif ($c == 3) $w .= "获得技能“<span class=\"yellow b\">暴风</span>”和“<span class=\"yellow b\">直死4</span>”";
 				elseif ($c == 4) $w .= "造成物理伤害<span class=\"yellow b\">+150%</span>";
 				elseif ($c == 5) $w .= "受到伤害<span class=\"yellow b\">-90%</span><br>";
+				elseif ($c == 6) $w .= "获得三把神奇的钥匙<br>";
 			}
 		}
 		return $w;

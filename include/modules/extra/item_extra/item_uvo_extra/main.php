@@ -164,6 +164,12 @@ namespace item_uvo_extra
 		{
 			$pa['club'] = 0;
 		}
+		elseif ($cardid == 165)//NIKO
+		{
+			$items = array(
+				array('itm'=>'「巨大灯泡」','itmk'=>'DA','itme'=>100,'itms'=>2,'itmsk'=>'Hh')
+				);
+		}
 		elseif ($cardid == 168)//飞雪大大 
 		{
 			$items = array(
@@ -180,6 +186,7 @@ namespace item_uvo_extra
 			$items = array(
 				array('itm'=>'界线『Curse of Dimensionality』','itmk'=>'WFD','itme'=>233,'itms'=>'∞','itmsk'=>'trend')
 				);
+			if (!rand(0,99)) $items[0]['itmsk'] .= '^eqpsk530';
 		}
 		elseif ($cardid == 209)//林无月 
 		{
