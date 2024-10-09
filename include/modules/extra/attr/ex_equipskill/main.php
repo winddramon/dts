@@ -8,6 +8,7 @@ namespace ex_equipskill
 		$itemspkinfo['^eqpsk'] = '秘传';
 		$itemspkdesc['^eqpsk'] = "装备时视为拥有技能<span class='yellow b' style='font-size:12px;'>「<:skn:>」</span>";
 		$itemspkremark['^eqpsk'] = '该属性仅在装备上时有效';
+		$itemspkinfo['^eqpsklvl'] = '秘传技能等级';//暂不考虑秘传技能参数更多的情况
 	}
 	
 	function itemuse(&$theitem)
@@ -17,6 +18,7 @@ namespace ex_equipskill
 		$itmk=&$theitem['itmk']; $itmsk=&$theitem['itmsk'];
 		
 		$eqpsk_id = (int)\itemmain\check_in_itmsk('^eqpsk', $itmsk);
+		$eqpsklvl = (int)\itemmain\check_in_itmsk('^eqpsklvl', $itmsk);
 		if ((in_array($itmk[0], array('W','D','A'))) && $eqpsk_id)
 		{
 			$eqpsk_flag = 1;
@@ -35,6 +37,7 @@ namespace ex_equipskill
 					eval(import_module('logger'));
 					\skillbase\skill_acquire($eqpsk_id, $sdata);
 					\skillbase\skill_setvalue($eqpsk_id, 'eqpsk_flag', 1, $sdata);
+					if ($eqpsklvl != 0) \skillbase\skill_setvalue($eqpsk_id, 'lvl', $eqpsklvl, $sdata);
 					$log .= "你现在能使用技能<span class=\"yellow b\">「{$clubskillname[$eqpsk_id]}」</span>了！";
 				}
 			}
@@ -69,6 +72,16 @@ namespace ex_equipskill
 			return '';
 		}
 		return $chprocess($skk, $skn, $sks);
+	}
+	
+	//判定复合属性是否显示
+	function check_comp_itmsk_visible($cinfo){
+		if (eval(__MAGIC__)) return $___RET_VALUE;	
+		$ret = $chprocess($cinfo);
+		if ($ret) {
+			if ('^eqpsklvl' == $cinfo[0]) return false;
+		}
+		return $ret;
 	}
 	
 }
