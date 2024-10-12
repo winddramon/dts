@@ -68,7 +68,7 @@ $pack_ignore_kuji = Array('Balefire Rekindle','Event Bonus','Pungeon');
 
 //卡包实装的时间戳，可以用来隐藏卡包
 $packstart = array(
-	'Cyber Zealots' => 4476654671,
+	// 'Cyber Zealots' => 4476654671,
 	//'東埔寨Protoject' => 4476654671,
 	'Stealth' => 4476654671,
 	'hidden' => 4476654671,
@@ -6966,6 +6966,19 @@ $cards = array(
 				'761' => '0', 
 			),
 		)
+	),
+	430 => array(
+		'name' => '忍者',
+		'rare' => 'S',
+		'pack' => 'Cyber Zealots',
+		'desc' => '问候之前允许偷袭一次，此事在古事记中亦有记载！',
+		'effect' => '你主动探索遇到未与你战斗过的角色时不会被先攻',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'762' => '0',
+			),
+		),
 	),
 	
 	1000 => array(
