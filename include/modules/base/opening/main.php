@@ -2,6 +2,8 @@
 
 namespace opening
 {
+	$op_skip_word = '跳过剧情';
+	
 	function init() {}
 	
 	function opening_by_shootings_available()
@@ -24,7 +26,7 @@ namespace opening
 				\skillbase\skill_setvalue(1003,'opening_skip',1);
 			}elseif(opening_by_shootings_available()){
 				eval(import_module('logger'));
-				$log .= '<br><span class="yellow b">点击以下任意按钮皆可跳过开场剧情。</span><br>';
+				$log .= '<br><span class="grey b">点击以下任意按钮皆可跳过开场剧情。</span><br>';
 			}
 		}
 		
