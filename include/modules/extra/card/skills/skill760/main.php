@@ -31,7 +31,7 @@ namespace skill760
 	{
 		if (eval(__MAGIC__)) return $___RET_VALUE;
 		$chprocess($pa, $pd, $active);
-		if (\skillbase\skill_query(760, $pd) && $pa['bskill'] != 0)
+		if (\skillbase\skill_query(760, $pd) && !empty($pa['bskill']))
 		{
 			$clv = (int)\skillbase\skill_getvalue(760,'lvl',$pd);
 			\skillbase\skill_setvalue(760,'lvl',$clv+1,$pd);
