@@ -6967,6 +6967,19 @@ $cards = array(
 			),
 		)
 	),
+	430 => array(
+		'name' => '忍者',
+		'rare' => 'S',
+		'pack' => 'Cyber Zealots',
+		'desc' => '问候之前允许偷袭一次，此事在古事记中亦有记载！',
+		'effect' => '你主动探索遇到未与你战斗过的角色时不会被先攻',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'762' => '0',
+			),
+		),
+	),
 	
 	1000 => array(
 		'name'=>'萌新',
