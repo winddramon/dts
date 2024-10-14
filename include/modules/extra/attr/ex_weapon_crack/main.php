@@ -36,6 +36,12 @@ namespace ex_weapon_crack
 				else $pa['wepimp'] *= round(0.01 * $pa['weps']) + 1;
 				//再根据攻击方武器是否有连击决定第三个倍率
 				if (\attrbase\check_in_itmsk('r', \attrbase\get_ex_attack_array($pa, $pd, $active))) $pa['wepimp'] *= rand(2,4);
+				//保险机制
+				if (!$pa['type'])
+				{
+					if ($pa['weps'] == $nosta) $pa['wepimp'] = min($pa['wepimp'], max(round($pa['wepe'] / 2), 10000));
+					else $pa['wepimp'] = min($pa['wepimp'], max(round($pa['weps'] / 2), 10000));
+				}
 				$pa['wcflag'] = 1;
 			}
 		}

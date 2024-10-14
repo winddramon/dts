@@ -105,8 +105,8 @@ namespace skill964
 		{
 			$citems = array(
 				array('itm'=>'回忆的红宝石钥匙', 'itmk'=>'Y', 'itme'=>1, 'itms'=>1, 'itmsk'=>''),
-				array('itm'=>'力量的绿宝石钥匙', 'itmk'=>'Y', 'itme'=>1, 'itms'=>1, 'itmsk'=>''),
-				array('itm'=>'抉择的蓝宝石钥匙', 'itmk'=>'Y', 'itme'=>1, 'itms'=>1, 'itmsk'=>''),
+				array('itm'=>'力量的绿宝石钥匙', 'itmk'=>'WF', 'itme'=>1, 'itms'=>1, 'itmsk'=>'Q'),
+				array('itm'=>'抉择的蓝宝石钥匙', 'itmk'=>'SCX1', 'itme'=>1, 'itms'=>1, 'itmsk'=>''),
 			);
 			\skill1006\multi_itemget($citems, $pa, 1);
 		}
@@ -352,6 +352,51 @@ namespace skill964
 			}
 		}
 		return $w;
+	}
+	
+	function parse_itmuse_desc($n, $k, $e, $s, $sk){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess($n, $k, $e, $s, $sk);
+		if ($n == '回忆的红宝石钥匙')
+		{
+			$ret = '使用后获得一把随机神器';
+		}
+		return $ret;
+	}
+	
+	function itemuse(&$theitem)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		
+		eval(import_module('sys','player','logger'));
+		
+		$itm=&$theitem['itm']; $itmk=&$theitem['itmk'];
+		$itme=&$theitem['itme']; $itms=&$theitem['itms']; $itmsk=&$theitem['itmsk'];
+		
+		if (strpos($itmk, 'Y') === 0 || strpos($itmk, 'Z') === 0)
+		{
+			if ($itm == '回忆的红宝石钥匙') 
+			{
+				$itempool = array(
+					array('itm'=>'【死神绝界】', 'itmk'=>'WP', 'itme'=>6666, 'itms'=>666, 'itmsk'=>'ZBbdrV'),
+					array('itm'=>'绝冲大剑【神威】', 'itmk'=>'WK', 'itme'=>80000, 'itms'=>'∞', 'itmsk'=>'ZNnyrdh^ac1'),
+					array('itm'=>'『地底蔷薇』', 'itmk'=>'WFD', 'itme'=>51415, 'itms'=>'∞', 'itmsk'=>'rBfknyLZ'),
+					array('itm'=>'◎光之创造神 哈拉克提◎', 'itmk'=>'WC', 'itme'=>111210, 'itms'=>'∞', 'itmsk'=>'nyNrfktZv'),
+					array('itm'=>'模式『EX』', 'itmk'=>'WF', 'itme'=>72000, 'itms'=>'∞', 'itmsk'=>'crZyVLn'),
+					array('itm'=>'狱魇之都『泷庭』', 'itmk'=>'WFJ', 'itme'=>20131026, 'itms'=>'∞', 'itmsk'=>'LOVxMad'),
+					array('itm'=>'概念武装『破则』', 'itmk'=>'WFB', 'itme'=>20110424, 'itms'=>'∞', 'itmsk'=>'myBEstFriendchAN'),
+				);
+				$newitem = array_randompick($itempool);
+				$log .= "你使用了<span class=\"yellow b\">$itm</span>。<br><span class=\"yellow b\">$itm</span>变成了<span class=\"yellow b\">{$newitem['itm']}</span>。<br>";
+				$itm = $newitem['itm'];
+				$itmk = $newitem['itmk'];
+				$itme = $newitem['itme'];
+				$itms = $newitem['itms'];
+				$itmsk = $newitem['itmsk'];
+				return;
+			}			
+		}
+		$chprocess($theitem);
 	}
 	
 }
