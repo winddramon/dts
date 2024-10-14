@@ -126,6 +126,8 @@ namespace skill981
 			array('魂银方块','X',1,2,'',1),
 			array('MEGA宝石方块','X',1,2,'',1),
 			array('一袋金钱','YY',1000,1,'',8),
+			//自定义部分
+			array('苍蓝星的猫饭','HB',300,30,'^res_<:comp_itmsk:>{炎火村的团子,HS,100,10,^res_<:comp_itmsk:>{结云村的可乐,PS,50,1,,}1^rtype2,}1^rtype2',4000),
 		),
 		3 => array(
 			array('冰棍棒','WP',19,39,'ir',4),
@@ -176,6 +178,8 @@ namespace skill981
 			array('魂银方块','X',1,2,'',1),
 			array('MEGA宝石方块','X',1,2,'',1),
 			array('一袋金钱','YY',1500,1,'',8),
+			//自定义部分
+			array('苍蓝星的猫饭','HB',300,30,'^res_<:comp_itmsk:>{炎火村的团子,HS,100,10,^res_<:comp_itmsk:>{结云村的可乐,PS,50,1,,}1^rtype2,}1^rtype2',4),
 		),
 		4 => array(
 			array('幻葬『夜雾幻影杀人鬼』','WC',400,'∞','krnyN',2),
@@ -226,6 +230,8 @@ namespace skill981
 			array('四面的腿','PB4',1,1,'x',1),
 			array('四面的腿','PB4',1,1,'x^res_<:comp_itmsk:>{武器师安雅的奖赏,Y,1,3,z,}1^rtype1',1),
 			array('一袋金钱','YY',2000,1,'',8),
+			//自定义部分
+			array('苍蓝星的猫饭','HB',300,30,'^res_<:comp_itmsk:>{炎火村的团子,HS,100,10,^res_<:comp_itmsk:>{结云村的可乐,PS,50,1,,}1^rtype2,}1^rtype2',4),
 		),
 		5 => array(
 			array('★血腥玛丽★Bloody Mary','WD',310,150,'dw^ac1',3),
@@ -433,6 +439,8 @@ namespace skill981
 			array('活力药水','MB',1,1,'^mbid806^mblvl4^mbtime360',3),
 			array('悲叹之种','X',1,1,'',2),
 			array('一袋金钱','YY',5000,1,'',8),
+			//自定义部分
+			array('毛血旺','Y',1,1,'',1),
 		),
 		10 => array(
 			array('火水木金土符『贤者之石』','WF',5000,'∞','uipwe',2),
@@ -455,6 +463,8 @@ namespace skill981
 			array('护心药水','MB',1,1,'^mbid806^mblvl3^mbtime360',2),
 			array('活力药水','MB',1,1,'^mbid806^mblvl4^mbtime360',3),
 			array('一袋金钱','YY',6000,1,'',8),
+			//自定义部分
+			array('毛血旺','Y',1,1,'',1),
 		),
 		11 => array(
 			array('游戏解除钥匙','Y',1,1,'',1),
@@ -475,6 +485,8 @@ namespace skill981
 			array('护心药水','MB',1,1,'^mbid806^mblvl3^mbtime360',2),
 			array('心眼药水','MB',1,1,'^mbid806^mblvl34^mbtime360',2),
 			array('一袋金钱','YY',6000,1,'',8),
+			//自定义部分
+			array('毛血旺','Y',1,1,'',1),
 		),
 		13 => array(
 			array('《魔导百科全书·终》','VF',100,3,'^alt_<:comp_itmsk:>{SC02,SCB2,SCB2,SCB2,SCA2,SCA2,SCA2,SCA2,SCS2,SCS2}1^ahid2',4),
@@ -491,6 +503,8 @@ namespace skill981
 			array('心眼药水','MB',1,1,'^mbid806^mblvl34^mbtime360',2),
 			array('神力药水','MB',1,1,'^mbid806^mblvl35^mbtime180',2),
 			array('一袋金钱','YY',6000,1,'',8),
+			//自定义部分
+			array('毛血旺','Y',1,1,'',1),
 		),
 		14 => array(
 			array('《魔导百科全书·终》','VF',100,3,'^alt_<:comp_itmsk:>{SC02,SCB2,SCB2,SCB2,SCA2,SCA2,SCA2,SCA2,SCS2,SCS2}1^ahid2',4),
@@ -507,6 +521,8 @@ namespace skill981
 			array('心眼药水','MB',1,1,'^mbid806^mblvl34^mbtime360',2),
 			array('神力药水','MB',1,1,'^mbid806^mblvl35^mbtime180',2),
 			array('一袋金钱','YY',6000,1,'',8),
+			//自定义部分
+			array('毛血旺','Y',1,1,'',1),
 		),
 		15 => array(
 			array('《魔导百科全书·终》','VF',100,3,'^alt_<:comp_itmsk:>{SC02,SCB2,SCB2,SCB2,SCA2,SCA2,SCA2,SCA2,SCS2,SCS2}1^ahid2',4),
@@ -522,6 +538,8 @@ namespace skill981
 			array('护心药水','MB',1,1,'^mbid806^mblvl3^mbtime360',2),
 			array('神性药水','MB',1,1,'^mbid806^mblvl36^mbtime90',1),
 			array('一袋金钱','YY',6000,1,'',8),
+			//自定义部分
+			array('毛血旺','Y',1,1,'',1),
 		),
 		16 => array(
 			array('『G.A.M.E.O.V.E.R』','Y',1,1,'',1),
@@ -552,7 +570,9 @@ namespace skill981
 			array('★Standard Pack奖券★','VO1',1,3,'1108',1),
 			array('★Crimson Swear奖券★','VO1',1,3,'1109',1),
 			array('★Way of Life奖券★','VO1',1,3,'1110',1),
-			array('★Best DOTO奖券★','VO1',1,3,'1111',1)
+			array('★Best DOTO奖券★','VO1',1,3,'1111',1),
+			//自定义部分
+			array('毛血旺','Y',1,1,'',1),
 		)
 	);
 	

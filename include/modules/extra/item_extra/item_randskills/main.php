@@ -35,7 +35,8 @@ namespace item_randskills
 		'A' => array(407, 409, 410, 437, 439, 440, 446, 458, 472, 486, 496, 502, 517, 527, 560, 595, 597, 710),
 		'B' => array(416, 420, 429, 443, 447, 453, 454, 464, 465, 467, 473, 534, 556, 567, 590, 598, 705, 723, 728, 731, 738, 741, 753),
 		'C' => array(422, 428, 442, 448, 449, 450, 452, 457, 463, 470, 471, 479, 489, 557, 570, 582, 724, 725, 730, 737, 739, 746, 747, 752),
-		'X' => array(469, 474, 478, 483, 494, 511, 571, 579, 702, 704, 707, 708, 722),
+		// 'X' => array(469, 474, 478, 483, 494, 511, 571, 579, 702, 704, 707, 708, 722),
+		'X' => array(103, 113, 412, 500, 513, 519, 758),
 	);
 	
 	function init()
@@ -88,9 +89,13 @@ namespace item_randskills
 		{
 			$ret .= '使用后可以随机习得一个S级技能';
 		}
+		elseif (strpos($k,'SCX1')===0)
+		{
+			$ret .= '使用后可以在三个强力技能中选择一个习得';
+		}
 		elseif (strpos($k,'SCX2')===0)
 		{
-			$ret .= '使用后可以随机习得一个奇怪的技能';
+			$ret .= '使用后可以随机习得一个强力技能';
 		}
 		elseif(strpos($k,'Y')===0 || strpos($k,'Z')===0)
 		{
@@ -178,6 +183,7 @@ namespace item_randskills
 							foreach ($rs_feature[$skillid] as $extra_skillid) \skillbase\skill_acquire($extra_skillid, $pa);
 						}
 						$log .= "你习得了技能<span class=\"yellow b\">「{$clubskillname[$skillid]}」</span>！<br>";
+						$itmsk = '';//清空上一次的选项
 						use_skcore_success($sdata);
 					}
 				}
