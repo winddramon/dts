@@ -13,7 +13,7 @@ namespace ex_seckill
 		$itemspkdesc['V']='攻击命中时，有一定可能性直接杀死对方';
 		$itemspkremark['V']='30%概率生效';
 		$itemspkinfo['Q'] = '抹杀';
-		$itemspkdesc['Q']='攻击必定造成等同于敌人生命值的伤害，攻击后武器会消失';
+		$itemspkdesc['Q']='攻击必定直接杀死对方，但攻击后武器会消失';
 	}
 	
 	function get_ex_seckill_proc_rate(&$pa, &$pd, $active)

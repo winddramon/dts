@@ -460,7 +460,7 @@ $mixinfo = array
 	array('class' => 'ocg', 'stuff' => array('刻魔 震怒之日 ★9 -仮','☆六星认证☆','☆六星认证☆','☆六星认证☆'),'result' => array('刻魔 震怒之日 ★9','WC09',666,'∞','ryNdZ'),),
 	array('class' => 'ocg', 'stuff' => array('暗骑士@火灵天星 LINK-3','地石人@火灵天星 ★7','水海龙@火灵天星 ★7','炎凤凰@火灵天星 LINK-3','光龙王@火灵天星 ☆4','风飞马@火灵天星 ★7'),'result' => array('「电子界到临者@火灵天星」LINK-6','WC',30000,'∞','rd^ac1bhLnyZ^eqpsk508^l6'),'tips' => '素材通过《现代游戏王》中的特定道具按要求合成得到',),
 	array('class' => 'ocg', 'stuff' => array('念力终结处刑者 ★11 -仮','☆十星认证☆'),'result' => array('念力终结处刑者 ★11','WC11',700,'∞','Yb^dd20^eqpsk404^eqpsklvl3^001'),),
-	array('class' => 'ocg', 'stuff' => array('八咫镜','★全图唯一的野生巨大香蕉★'),'result' => array('【余晖】','WF',1,1,'Qx'),),
+	array('class' => 'ocg', 'stuff' => array('八咫镜','★全图唯一的野生巨大香蕉★'),'result' => array('【余晖】','WF',8000,'∞','Qx'),),
 	
 	array('class' => 'hidden', 'stuff' => array('歌词卡片【海洋】','歌词卡片【大地】','歌词卡片【星空】'),'result' => array('破灭之诗','Y',1,1,95),),
 	array('class' => 'hidden', 'stuff' => array('『随心所欲的虚拟笔』','『铭刻记忆的单词本』','『命定身体的契约书』'),'result' => array('破灭之诗','Y',1,1,95),),

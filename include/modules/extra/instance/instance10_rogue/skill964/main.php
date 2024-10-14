@@ -105,7 +105,7 @@ namespace skill964
 		{
 			$citems = array(
 				array('itm'=>'回忆的红宝石钥匙', 'itmk'=>'Y', 'itme'=>1, 'itms'=>1, 'itmsk'=>''),
-				array('itm'=>'力量的绿宝石钥匙', 'itmk'=>'WF', 'itme'=>1, 'itms'=>1, 'itmsk'=>'Q'),
+				array('itm'=>'力量的绿宝石钥匙', 'itmk'=>'WF', 'itme'=>10000, 'itms'=>'∞', 'itmsk'=>'Q'),
 				array('itm'=>'抉择的蓝宝石钥匙', 'itmk'=>'SCX1', 'itme'=>1, 'itms'=>1, 'itmsk'=>''),
 			);
 			\skill1006\multi_itemget($citems, $pa, 1);
