@@ -409,7 +409,7 @@ namespace item_recipe
 		(
 			'stuff1' => array('itm'=>'手机','itm_match'=>0),
 			'stuff2' => array('itm'=>'落穴','itm_match'=>1),
-			'result' => array('★爱缝手机★','HM',80,1,''),
+			'result' => array('★爱缝手机★','HM',120,1,''),
 			'extra' => array('materials'=>2),
 		),
 		//留空结束
