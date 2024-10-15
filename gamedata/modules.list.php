@@ -386,6 +386,7 @@ skill33,extra/club/skills/skill33/,1
 skill579,extra/card/skills/skill579/,1
 tactic,base/tactic/,1
 skill906,extra/instance/instance3_ascension/skill906/,1
+skill763,extra/card/skills/skill763/,1
 weather,base/weather/,1
 npcinfo,extra/misc/npcinfo/,1
 skill502,extra/card/skills/skill502/,1
