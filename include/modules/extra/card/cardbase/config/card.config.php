@@ -7043,6 +7043,32 @@ $cards = array(
 			'itmsk6' => '59',
 		)
 	),
+	434 => array(
+		'name' => '伊14514',
+		'rare' => 'A',
+		'pack' => 'Cyber Zealots',
+		'desc' => '东之国的新型潜艇，每天会进行重复的鱼塘巡逻工作',
+		'effect' => '对获胜场数低于你的角色造成伤害+30%，反之-10%',
+		'energy' => 100,
+		'valid' => array(
+			'skills' => array(
+				'764' => '0',
+			),
+		),
+	),
+	435 => array(
+		'name' => '老教授',
+		'rare' => 'M',
+		'pack' => 'Cyber Zealots',
+		'desc' => '“你竟敢用我的魔法来对付我！”',
+		'effect' => '其他玩家攻击你时会视为使用你的一个随机战斗技',
+		'energy' => 0,
+		'valid' => array(
+			'skills' => array(
+				'765' => '0',
+			),
+		),
+	),
 	
 	1000 => array(
 		'name'=>'萌新',

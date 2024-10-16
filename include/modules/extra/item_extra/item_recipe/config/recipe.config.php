@@ -105,7 +105,7 @@ namespace item_recipe
 		15 => array
 		(
 			'stuff1' => array('itm'=>'★连接认证4★','itm_match'=>0),
-			'result' => array('「刺刀枪管龙」LINK-4','WGK',300,77,'bArReLZ^l4'),
+			'result' => array('「刺刀枪管龙」LINK-4','WGK',300,77,'bArReLZ^dfl50^l4'),
 			'extra' => array('materials'=>1, 'consume_recipe'=>true,),
 		),	
 		16 => array
