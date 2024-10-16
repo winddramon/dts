@@ -318,6 +318,7 @@ skill768,extra/card/skills/skill768/,1
 skill760,extra/card/skills/skill760/,1
 skill761,extra/card/skills/skill761/,1
 skill762,extra/card/skills/skill762/,1
+skill765,extra/card/skills/skill765/,1
 wep_g,base/weapon/wep_g/,1
 wep_j,base/weapon/wep_j/,1
 skill273,extra/club/skills/skill273/,1
@@ -459,6 +460,7 @@ skill103,extra/club/skills/skill103/,1
 skill104,extra/club/skills/skill104/,1
 skill732,extra/card/skills/skill732/,1
 skill806,extra/card/skills/skill806/,1
+ex_deflect,extra/attr/ex_deflect/,1
 skill1000,extra/instance/instance7_tutorial/skill1000/,1
 skill711,extra/card/skills/skill711/,1
 skill1007,extra/npc_action/skill1007/,1
@@ -544,6 +546,7 @@ ending,base/ending/,1
 song,base/items/song/,1
 extra_event,extra/misc/extra_event/,1
 news_observe,extra/misc/news_observe/,1
+skill764,extra/card/skills/skill764/,1
 skill429,extra/instance/gtype1/skill429/,1
 skill108,extra/club/skills/skill108/,1
 skill109,extra/club/skills/skill109/,1

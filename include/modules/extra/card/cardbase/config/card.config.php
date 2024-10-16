@@ -68,7 +68,7 @@ $pack_ignore_kuji = Array('Balefire Rekindle','Event Bonus','Pungeon');
 
 //卡包实装的时间戳，可以用来隐藏卡包
 $packstart = array(
-	'Cyber Zealots' => 4476654671,
+	//'Cyber Zealots' => 4476654671,
 	//'東埔寨Protoject' => 4476654671,
 	'Stealth' => 4476654671,
 	'hidden' => 4476654671,
@@ -7057,11 +7057,11 @@ $cards = array(
 		),
 	),
 	435 => array(
-		'name' => '老教授',
+		'name' => '回旋镖',
 		'rare' => 'M',
-		'pack' => 'Cyber Zealots',
+		'pack' => 'Way of Life',
 		'desc' => '“你竟敢用我的魔法来对付我！”',
-		'effect' => '其他玩家攻击你时会视为使用你的一个随机战斗技',
+		'effect' => '敌人攻击你时若未发动战斗技，则会视为随机发动你的一个战斗技（需满足发动条件但不消耗怒气）',
 		'energy' => 0,
 		'valid' => array(
 			'skills' => array(
