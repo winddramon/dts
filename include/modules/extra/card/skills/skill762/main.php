@@ -88,7 +88,7 @@ namespace skill762
 			$pa['domoflag'] = 0;
 			if ($pd['hp'] > 0)//尸体不需要问候
 			{
-				$msg = "Domo，{$pd['name']}=san，{$pa['name']} desu。";
+				$msg = "DOMO，{$pd['name']}=SAN，{$pa['name']} DESU.";
 				\sys\addchat(0, $msg, $pa['name']);
 			}
 		}

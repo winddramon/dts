@@ -93,13 +93,13 @@ namespace itemmain
 		//o   ammunition 枪械一发
 		//P   ex_phy_def 防殴
 		//p   ex_dmg_att 带毒
-		//Q   ///////////////////////////
+		//Q   ex_seckill 抹杀
 		//q   ex_dmg_def 防毒
 		//R   ex_rapid_def 防连
 		//r   ex_rapid_attr 连击		
 		//S   ex_attr_silencer 消音
 		//s   itemmix_sync 调整（同调合成必需）
-		//T   ///////////////////////////
+		//T   wepchange 变形
 		//t   ex_dmg_att 音爆
 		//U   ex_dmg_def 防火
 		//u   ex_dmg_att 火焰

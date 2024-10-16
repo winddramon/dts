@@ -62,6 +62,10 @@ namespace skill981
 			{
 				$ret = '可用于开启无尽波次的挑战，使用后将会面对<span class=&quot;red b&quot;>极其强大</span>的敌人</span>';
 			}
+			elseif ($n == '毛血旺')
+			{
+				$ret = '使用后使生命上限变为当前生命值';
+			}
 		}
 		return $ret;
 	}
@@ -293,6 +297,16 @@ namespace skill981
 				\skillbase\skill_acquire(985, $sdata);
 				$itm = $itmk = $itmsk = '';
 				$itme = $itms = 0;
+				return;
+			}
+			elseif ($itm == '毛血旺')
+			{
+				$log .= "你使用了<span class=\"yellow b\">$itm</span>。<br>";
+				if ($hp > $mhp) $log .= "<span class=\"lime b\">你感到气血充盈，生命上限提高至{$hp}点！</span><br>";	
+				elseif ($hp == $mhp) $log .= "<span class=\"yellow b\">但是什么也没有发生。</span><br>";
+				else $log .= "<span class=\"red b\">你虚不受补，生命上限降低至{$hp}点！</span><br>";
+				$mhp = $hp;
+				\itemmain\itms_reduce($theitem);
 				return;
 			}
 		}

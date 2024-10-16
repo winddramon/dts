@@ -1,10 +1,10 @@
 <?php
 
-namespace skill760
+namespace skill763
 {
 	////////// MODULE HEADER START ///////////////
-	$___MODULE_dependency = 'sys player skillbase clubbase logger attack weapon';
-	$___MODULE_dependency_optional = 'skill765';
+	$___MODULE_dependency = 'sys player skillbase clubbase logger rage lvlctl itemmain wound bufficons skill600';
+	$___MODULE_dependency_optional = '';
 	$___MODULE_conflict = '';
 	$___MODULE_codelist = 'main.php';
 	$___MODULE_templatelist = 'desc';

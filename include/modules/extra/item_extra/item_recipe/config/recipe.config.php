@@ -105,7 +105,7 @@ namespace item_recipe
 		15 => array
 		(
 			'stuff1' => array('itm'=>'★连接认证4★','itm_match'=>0),
-			'result' => array('「刺刀枪管龙」LINK-4','WGK',300,77,'bArReLZ^l4'),
+			'result' => array('「刺刀枪管龙」LINK-4','WGK',300,77,'bArReLZ^dfl50^l4'),
 			'extra' => array('materials'=>1, 'consume_recipe'=>true,),
 		),	
 		16 => array
@@ -397,7 +397,6 @@ namespace item_recipe
 			'result' => array('土&木符「打灰仙人」','WF',325,'∞','cAd^res_%Z@RLEhSLDk%LDEsLA==1^reptype1'),
 			'extra' => array('materials'=>2),
 		),
-		//极速模式配方
 		58 => array
 		(
 			'stuff1' => array('itm'=>'风符『风神一扇』','itm_match'=>0),
@@ -406,7 +405,14 @@ namespace item_recipe
 			'result' => array('「幻想风靡」','WF',2888,'∞','rdnc^res_$$CK-aOO%-We%pyo%Y+@-ZqQ-Lqr%pyv$$CLLFZTLDEsMSwyNTEs1^reptype1'),
 			'extra' => array('materials'=>3, 'consume_recipe'=>true,),
 		),
-		//极速模式配方留空结束
+		59 => array
+		(
+			'stuff1' => array('itm'=>'手机','itm_match'=>0),
+			'stuff2' => array('itm'=>'落穴','itm_match'=>1),
+			'result' => array('★爱缝手机★','HM',120,1,''),
+			'extra' => array('materials'=>2),
+		),
+		//留空结束
 		//杂项配方
 		71 => array
 		(
