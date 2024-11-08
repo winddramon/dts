@@ -215,7 +215,7 @@ namespace itemmix
 		}
 
 		if(!$itms) { return; }
-		if($itms !== $nosta && preg_match('/^(Y|B|C|X|TN|GB|H|P|V|M|R)/',$itmk)){
+		if($itms !== $nosta && preg_match('/^(Y|B|C|X|TN|GB|H|P|V|M|R|ygo)/',$itmk)){
 			$itms--;
 		}
 		else{

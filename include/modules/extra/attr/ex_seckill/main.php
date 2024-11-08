@@ -12,6 +12,8 @@ namespace ex_seckill
 		$itemspkinfo['V'] = '弑神';
 		$itemspkdesc['V']='攻击命中时，有一定可能性直接杀死对方';
 		$itemspkremark['V']='30%概率生效';
+		$itemspkinfo['Q'] = '抹杀';
+		$itemspkdesc['Q']='攻击必定直接杀死对方，但攻击后武器会消失';
 	}
 	
 	function get_ex_seckill_proc_rate(&$pa, &$pd, $active)
@@ -25,6 +27,18 @@ namespace ex_seckill
 	
 	function apply_total_damage_modifier_seckill(&$pa,&$pd,$active){
 		if (eval(__MAGIC__)) return $___RET_VALUE;
+		if (\attrbase\check_in_itmsk('Q', $pa['wepsk']))//只检查武器属性
+		{
+			$pa['dmg_dealt']=$pd['hp'];
+			eval(import_module('logger'));
+			if ($active) $log .= "<span class=\"red b\">敌人的生命在可能性的光芒中化为了虚无！</span><br>";
+			else $log .= "<span class=\"red b\">你的生命在可能性的光芒中化为了虚无！</span><br>";
+			\itemmain\item_destroy_core('wep', $pa);
+			
+			$pa['seckill'] = 1;
+			$chprocess($pa,$pd,$active);
+			return;
+		}
 		if ($pa['is_hit'] && rand(0,99) < get_ex_seckill_proc_rate($pa, $pd, $active)){
 			$pa['dmg_dealt']=$pd['hp'];
 			eval(import_module('logger'));

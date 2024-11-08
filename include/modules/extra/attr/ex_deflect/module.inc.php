@@ -1,13 +1,13 @@
 <?php
 
-namespace skill760
+namespace ex_deflect
 {
 	////////// MODULE HEADER START ///////////////
-	$___MODULE_dependency = 'sys player skillbase clubbase logger attack weapon';
-	$___MODULE_dependency_optional = 'skill765';
+	$___MODULE_dependency = 'sys player itemmain attrbase logger weapon';
+	$___MODULE_dependency_optional = '';
 	$___MODULE_conflict = '';
 	$___MODULE_codelist = 'main.php';
-	$___MODULE_templatelist = 'desc';
+	$___MODULE_templatelist = '';
 	////////// MODULE HEADER END /////////////////
 	require __INIT_MODULE__(__NAMESPACE__,__DIR__);
 }

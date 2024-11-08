@@ -28,6 +28,7 @@ namespace skill964
 		4 => array('name' => '挑战者', 'cards' => array(70,72,74,75,76,77,78,79,81,82,83,84,85,86,97,117,121,122,124,139,150,153,154,155,162,163,164,167,171,189,192,194,251,257,312,347,359,377,387,393,394,395,400,409,420), 'count' => 4),//卡名含有挑战者的卡
 		5 => array('name' => '永夜异变', 'cards' => array(268,358,352,158,186,277,350,273,290), 'count' => 3),//永夜抄
 		6 => array('name' => '高塔奇梦', 'cards' => array(292,390,393,409,428,429), 'count' => 3),//邪教徒，鸡煲，甜圈，八体，大红地精，观者
+		7 => array('name' => '来组乐队吧', 'cards' => array(188,272,310,358,385,404,417), 'count' => 3),//mtk，鼓哥，袿姬，夜雀，吉吉国民，跑路大师，橙喵
 		);
 	
 	function init()
@@ -105,8 +106,18 @@ namespace skill964
 		{
 			$citems = array(
 				array('itm'=>'回忆的红宝石钥匙', 'itmk'=>'Y', 'itme'=>1, 'itms'=>1, 'itmsk'=>''),
-				array('itm'=>'力量的绿宝石钥匙', 'itmk'=>'Y', 'itme'=>1, 'itms'=>1, 'itmsk'=>''),
-				array('itm'=>'抉择的蓝宝石钥匙', 'itmk'=>'Y', 'itme'=>1, 'itms'=>1, 'itmsk'=>''),
+				array('itm'=>'力量的绿宝石钥匙', 'itmk'=>'WF', 'itme'=>10000, 'itms'=>'∞', 'itmsk'=>'Q'),
+				array('itm'=>'抉择的蓝宝石钥匙', 'itmk'=>'SCX1', 'itme'=>1, 'itms'=>1, 'itmsk'=>''),
+			);
+			\skill1006\multi_itemget($citems, $pa, 1);
+		}
+		elseif ($comboid == 7)
+		{
+			\skillbase\skill_acquire(94,$pa);
+			$citems = array(
+				array('itm'=>'《ぼくのフレンド》', 'itmk'=>'ss', 'itme'=>110, 'itms'=>1, 'itmsk'=>''),
+				array('itm'=>'【春日影】', 'itmk'=>'ss', 'itme'=>20, 'itms'=>1, 'itmsk'=>''),
+				array('itm'=>'意味不明的假面', 'itmk'=>'HM', 'itme'=>2333, 'itms'=>1, 'itmsk'=>'g'),
 			);
 			\skill1006\multi_itemget($citems, $pa, 1);
 		}
@@ -352,6 +363,51 @@ namespace skill964
 			}
 		}
 		return $w;
+	}
+	
+	function parse_itmuse_desc($n, $k, $e, $s, $sk){
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		$ret = $chprocess($n, $k, $e, $s, $sk);
+		if ($n == '回忆的红宝石钥匙')
+		{
+			$ret = '使用后获得一把随机神器';
+		}
+		return $ret;
+	}
+	
+	function itemuse(&$theitem)
+	{
+		if (eval(__MAGIC__)) return $___RET_VALUE;
+		
+		eval(import_module('sys','player','logger'));
+		
+		$itm=&$theitem['itm']; $itmk=&$theitem['itmk'];
+		$itme=&$theitem['itme']; $itms=&$theitem['itms']; $itmsk=&$theitem['itmsk'];
+		
+		if (strpos($itmk, 'Y') === 0 || strpos($itmk, 'Z') === 0)
+		{
+			if ($itm == '回忆的红宝石钥匙') 
+			{
+				$itempool = array(
+					array('itm'=>'【死神绝界】', 'itmk'=>'WP', 'itme'=>6666, 'itms'=>666, 'itmsk'=>'ZBbdrV'),
+					array('itm'=>'绝冲大剑【神威】', 'itmk'=>'WK', 'itme'=>80000, 'itms'=>'∞', 'itmsk'=>'ZNnyrdh^ac1'),
+					array('itm'=>'『地底蔷薇』', 'itmk'=>'WFD', 'itme'=>51415, 'itms'=>'∞', 'itmsk'=>'rBfknyLZ'),
+					array('itm'=>'◎光之创造神 哈拉克提◎', 'itmk'=>'WC', 'itme'=>111210, 'itms'=>'∞', 'itmsk'=>'nyNrfktZv'),
+					array('itm'=>'模式『EX』', 'itmk'=>'WF', 'itme'=>72000, 'itms'=>'∞', 'itmsk'=>'crZyVLn'),
+					array('itm'=>'狱魇之都『泷庭』', 'itmk'=>'WFJ', 'itme'=>20131026, 'itms'=>'∞', 'itmsk'=>'LOVxMad'),
+					array('itm'=>'概念武装『破则』', 'itmk'=>'WFB', 'itme'=>20110424, 'itms'=>'∞', 'itmsk'=>'myBEstFriendchAN'),
+				);
+				$newitem = array_randompick($itempool);
+				$log .= "你使用了<span class=\"yellow b\">$itm</span>。<br><span class=\"yellow b\">$itm</span>变成了<span class=\"yellow b\">{$newitem['itm']}</span>。<br>";
+				$itm = $newitem['itm'];
+				$itmk = $newitem['itmk'];
+				$itme = $newitem['itme'];
+				$itms = $newitem['itms'];
+				$itmsk = $newitem['itmsk'];
+				return;
+			}			
+		}
+		$chprocess($theitem);
 	}
 	
 }
