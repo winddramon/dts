@@ -87,7 +87,7 @@ namespace skill65
 		if (!\skillbase\skill_query(65,$pa) || !check_unlocked65($pa)) return $chprocess($pa, $pd, $active);
 		eval(import_module('skill65'));
 		$clv = (int)\skillbase\skill_getvalue(65,'lvl',$pa);
-		return round($chprocess($pa, $pd, $active)*(1-$spredrate[$clv]/100));
+		return max(round($chprocess($pa, $pd, $active)*(1-$spredrate[$clv]/100)),1);
 	}
 }
 
