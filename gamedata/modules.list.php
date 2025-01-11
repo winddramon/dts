@@ -315,7 +315,6 @@ skill757,extra/card/skills/skill757/,1
 skill805,extra/card/skills/skill805/,1
 skill759,extra/card/skills/skill759/,1
 skill768,extra/card/skills/skill768/,1
-skill760,extra/card/skills/skill760/,1
 skill761,extra/card/skills/skill761/,1
 skill762,extra/card/skills/skill762/,1
 skill765,extra/card/skills/skill765/,1
@@ -360,6 +359,7 @@ skill274,extra/club/skills/skill274/,1
 skill511,extra/card/skills/skill511/,1
 skill545,extra/card/skills/skill545/,1
 skill982,extra/instance/instance12_dream/skill982/,1
+skill760,extra/card/skills/skill760/,1
 skill403,extra/card/skills/skill403/,1
 skill203,extra/club/skills/skill203/,1
 ammunition,base/items/ammunition/,1
@@ -387,7 +387,6 @@ skill33,extra/club/skills/skill33/,1
 skill579,extra/card/skills/skill579/,1
 tactic,base/tactic/,1
 skill906,extra/instance/instance3_ascension/skill906/,1
-skill763,extra/card/skills/skill763/,1
 weather,base/weather/,1
 npcinfo,extra/misc/npcinfo/,1
 skill502,extra/card/skills/skill502/,1
@@ -477,6 +476,7 @@ dualwep,base/weapon/dualwep/,1
 wep_b_extra_reloading,extra/item_extra/wep_b_extra_reloading/,1
 skill28,extra/club/skills/skill28/,1
 skill254,extra/club/skills/skill254/,1
+skill763,extra/card/skills/skill763/,1
 skill535,extra/card/skills/skill535/,1
 skill37,extra/club/skills/skill37/,1
 skill73,extra/club/skills/skill73/,1

@@ -26,7 +26,7 @@ namespace ex_armor_crack
 		if (empty($position) || empty($pd['ar'.$position])) return 0;
 		eval(import_module('itemmain'));
 		//无限耐防具则判定效果值
-		if($nosta == $pd['ar'.$position]) $pdardef = $pd['ar'.$position.'e'];
+		if($nosta == $pd['ar'.$position.'s']) $pdardef = $pd['ar'.$position.'e'];
 		else $pdardef = $pd['ar'.$position.'s'];
 		$pawepatt = $pa['wepe'];
 		//损耗值是攻击方武器效果值的根号，加上防御方耐久的10%左右，并向上取整
