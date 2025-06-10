@@ -29,6 +29,7 @@ $admin_cmd_list = Array(
 	'rankclear' => 9,
 	'roomclose' => 5,
 	'dbmng' => 9,
+	'replaymng' => 6,
 );
 
 if(($udata['groupid'] <= 1)&&($cuser!==$gamefounder)) { gexit($_ERROR['no_admin'], __file__, __line__); }

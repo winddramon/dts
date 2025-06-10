@@ -69,6 +69,9 @@ $lang = array
 	'replay_remote_storage_sign_comment' => '读写远端录像的标记，需要与该服务器设置一致',
 	'replay_remote_storage_key' => '远端录像读写密码',
 	'replay_remote_storage_key_comment' => '读写远端录像的密码，需要与该服务器设置一致',
+
+	'replaymng' => '回放文件管理',
+	'replaymng_comment' => '管理本地和远程回放文件，支持备份到Cloudreve网盘',
 	
 	'save_config' => '保存配置信息',
 
