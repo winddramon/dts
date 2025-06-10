@@ -1,0 +1,266 @@
+<!--{include template('header')}-->
+
+<style>
+.replay-stats {
+    background: #f5f5f5;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+.replay-stats .stat-item {
+    display: inline-block;
+    margin-right: 30px;
+}
+.file-list {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+}
+.file-item {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+}
+.file-item:hover {
+    background-color: #f9f9f9;
+}
+.file-info {
+    flex: 1;
+    margin-left: 10px;
+}
+.file-actions {
+    margin-left: auto;
+}
+.file-actions button {
+    margin-left: 5px;
+    padding: 2px 8px;
+    font-size: 12px;
+}
+.config-section {
+    background: #f9f9f9;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 5px;
+}
+.form-group {
+    margin: 10px 0;
+}
+.form-group label {
+    display: inline-block;
+    width: 150px;
+    font-weight: bold;
+}
+.form-group input, .form-group select {
+    width: 300px;
+    padding: 5px;
+}
+.btn {
+    padding: 8px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.btn-primary { background: #007cba; color: white; }
+.btn-success { background: #28a745; color: white; }
+.btn-warning { background: #ffc107; color: black; }
+.btn-danger { background: #dc3545; color: white; }
+.btn-info { background: #17a2b8; color: white; }
+.message { padding: 10px; margin: 10px 0; border-radius: 3px; }
+.message.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+.message.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+</style>
+
+<script>
+function selectAllFiles(checkbox) {
+    var checkboxes = document.querySelectorAll('input[name="selected_files[]"]');
+    for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = checkbox.checked;
+    }
+}
+
+function confirmAction(message) {
+    return confirm(message);
+}
+
+function toggleConfig() {
+    var configDiv = document.getElementById('config-section');
+    if (configDiv.style.display === 'none') {
+        configDiv.style.display = 'block';
+    } else {
+        configDiv.style.display = 'none';
+    }
+}
+</script>
+
+<h2>回放文件管理</h2>
+
+<!--{if $message}-->
+<div class="message success"><!--{$message}--></div>
+<!--{/if}-->
+
+<!--{if $error}-->
+<div class="message error"><!--{$error}--></div>
+<!--{/if}-->
+
+<!-- 统计信息 -->
+<div class="replay-stats">
+    <div class="stat-item">
+        <strong>本地文件:</strong> <!--{$local_file_count}--> 个文件, 总大小: <!--{format_file_size($local_total_size)}-->
+    </div>
+    <div class="stat-item">
+        <strong>远程文件:</strong> <!--{$remote_file_count}--> 个文件, 总大小: <!--{format_file_size($remote_total_size)}-->
+    </div>
+</div>
+
+<!-- 操作按钮 -->
+<div style="margin: 15px 0;">
+    <button class="btn btn-info" onclick="toggleConfig()">配置设置</button>
+    <form method="post" style="display: inline;">
+        <input type="hidden" name="action" value="test_connection">
+        <button type="submit" class="btn btn-primary">测试连接</button>
+    </form>
+</div>
+
+<!-- 配置区域 -->
+<div id="config-section" class="config-section" style="display: none;">
+    <h3>Cloudreve 配置</h3>
+    <form method="post">
+        <input type="hidden" name="action" value="update_config">
+        
+        <div class="form-group">
+            <label>服务器地址:</label>
+            <input type="text" name="host" value="<!--{$cloudreve_config['host']}-->" placeholder="https://your-cloudreve-server.com">
+        </div>
+        
+        <div class="form-group">
+            <label>用户名:</label>
+            <input type="text" name="username" value="<!--{$cloudreve_config['username']}-->">
+        </div>
+
+        <div class="form-group">
+            <label>密码:</label>
+            <input type="password" name="password" value="<!--{$cloudreve_config['password']}-->">
+        </div>
+
+        <div class="form-group">
+            <label>存储路径:</label>
+            <input type="text" name="replay_storage_path" value="<!--{$cloudreve_config['replay_storage_path']}-->" placeholder="/replays">
+        </div>
+
+        <div class="form-group">
+            <label>自动删除本地文件(天):</label>
+            <input type="number" name="auto_delete_local_days" value="<!--{$cloudreve_config['auto_delete_local_days']}-->" min="0">
+            <small>0表示不自动删除</small>
+        </div>
+        
+        <div class="form-group">
+            <label>启用备份:</label>
+            <input type="checkbox" name="enabled" value="1" <!--{if $cloudreve_config['enabled']}-->checked<!--{/if}-->>
+        </div>
+        
+        <button type="submit" class="btn btn-success">保存配置</button>
+    </form>
+</div>
+
+<!-- 本地文件列表 -->
+<h3>本地回放文件</h3>
+<form method="post" id="local-files-form">
+    <div style="margin: 10px 0;">
+        <input type="checkbox" onchange="selectAllFiles(this)"> 全选
+        <button type="submit" name="action" value="batch_backup" class="btn btn-success" 
+                onclick="return confirmAction('确定要批量备份选中的文件吗？')">批量备份</button>
+        <button type="submit" name="action" value="batch_delete_local" class="btn btn-danger" 
+                onclick="return confirmAction('确定要批量删除选中的本地文件吗？此操作不可恢复！')">批量删除本地</button>
+    </div>
+    
+    <div class="file-list">
+        <!--{if empty($local_files)}-->
+        <div style="padding: 20px; text-align: center; color: #666;">
+            没有找到本地回放文件
+        </div>
+        <!--{else}-->
+        <!--{loop $local_files $file}-->
+        <div class="file-item">
+            <input type="checkbox" name="selected_files[]" value="<!--{$file['name']}-->">
+            <div class="file-info">
+                <strong><!--{$file['name']}--></strong><br>
+                <small>大小: <!--{format_file_size($file['size'])}--> | 修改时间: <!--{date('Y-m-d H:i:s', $file['mtime'])}--></small>
+                <!--{if is_file_in_remote($file['name'], $remote_files)}-->
+                <span style="color: green;">✓ 已备份</span>
+                <!--{else}-->
+                <span style="color: orange;">⚠ 未备份</span>
+                <!--{/if}-->
+            </div>
+            <div class="file-actions">
+                <!--{if !is_file_in_remote($file['name'], $remote_files)}-->
+                <form method="post" style="display: inline;">
+                    <input type="hidden" name="action" value="backup">
+                    <input type="hidden" name="filename" value="<!--{$file['name']}-->">
+                    <button type="submit" class="btn btn-success">备份</button>
+                </form>
+                <!--{/if}-->
+                <form method="post" style="display: inline;">
+                    <input type="hidden" name="action" value="delete_local">
+                    <input type="hidden" name="filename" value="<!--{$file['name']}-->">
+                    <button type="submit" class="btn btn-danger"
+                            onclick="return confirmAction('确定要删除本地文件 <!--{$file['name']}--> 吗？')">删除本地</button>
+                </form>
+            </div>
+        </div>
+        <!--{/loop}-->
+        <!--{/if}-->
+    </div>
+</form>
+
+<!-- 远程文件列表 -->
+<h3>远程回放文件 (Cloudreve)</h3>
+<!--{if $cloudreve_config['enabled']}-->
+<div class="file-list">
+    <!--{if empty($remote_files)}-->
+    <div style="padding: 20px; text-align: center; color: #666;">
+        没有找到远程回放文件
+    </div>
+    <!--{else}-->
+    <!--{loop $remote_files $file}-->
+    <div class="file-item">
+        <div class="file-info">
+            <strong><!--{$file['name']}--></strong><br>
+            <small>
+                <!--{if isset($file['size'])}-->大小: <!--{format_file_size($file['size'])}--> | <!--{/if}-->
+                <!--{if isset($file['date'])}-->修改时间: <!--{$file['date']}--><!--{/if}-->
+            </small>
+            <!--{if is_file_in_local($file['name'], $local_files)}-->
+            <span style="color: green;">✓ 本地存在</span>
+            <!--{else}-->
+            <span style="color: orange;">⚠ 本地不存在</span>
+            <!--{/if}-->
+        </div>
+        <div class="file-actions">
+            <!--{if !is_file_in_local($file['name'], $local_files)}-->
+            <form method="post" style="display: inline;">
+                <input type="hidden" name="action" value="download">
+                <input type="hidden" name="filename" value="<!--{$file['name']}-->">
+                <button type="submit" class="btn btn-info">下载</button>
+            </form>
+            <!--{/if}-->
+            <form method="post" style="display: inline;">
+                <input type="hidden" name="action" value="delete_remote">
+                <input type="hidden" name="filename" value="<!--{$file['name']}-->">
+                <button type="submit" class="btn btn-danger"
+                        onclick="return confirmAction('确定要删除远程文件 <!--{$file['name']}--> 吗？')">删除远程</button>
+            </form>
+        </div>
+    </div>
+    <!--{/loop}-->
+    <!--{/if}-->
+</div>
+<!--{else}-->
+<div style="padding: 20px; text-align: center; color: #666;">
+    Cloudreve备份未启用，请先在配置中启用
+</div>
+<!--{/if}-->
+
+<!--{include template('footer')}-->
