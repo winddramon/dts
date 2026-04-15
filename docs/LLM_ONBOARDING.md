@@ -1,0 +1,5 @@
+# LLM_ONBOARDING
+
+本文件为 `docs/09_LLM_ONBOARDING.md` 的别名入口，请优先阅读：
+
+- [09_LLM_ONBOARDING.md](./09_LLM_ONBOARDING.md)
