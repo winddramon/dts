@@ -23,6 +23,22 @@
 - 能将模块化源代码自动编译为高效执行代码的模块化引擎，兼顾代码组织、多人协作和运行效率优化
 - 基于socket的驻留daemon，支持Linux和WIN
 
+## 维护文档入口（Onboarding / 维护手册）
+
+> 面向新维护者与 AI 助手的仓库文档索引：
+
+- [00_START_HERE](./docs/00_START_HERE.md)
+- [01_RUNTIME_FLOW](./docs/01_RUNTIME_FLOW.md)
+- [02_MODULE_SYSTEM](./docs/02_MODULE_SYSTEM.md)
+- [03_DIRECTORY_MAP](./docs/03_DIRECTORY_MAP.md)
+- [04_ADD_NEW_MODE](./docs/04_ADD_NEW_MODE.md)
+- [05_ADD_NEW_CARD](./docs/05_ADD_NEW_CARD.md)
+- [06_ADD_NEW_SKILL](./docs/06_ADD_NEW_SKILL.md)
+- [07_ADD_NEW_MECHANIC](./docs/07_ADD_NEW_MECHANIC.md)
+- [08_DEBUGGING_GUIDE](./docs/08_DEBUGGING_GUIDE.md)
+- [09_LLM_ONBOARDING](./docs/09_LLM_ONBOARDING.md)
+- [10_MAINTAINER_CHEATSHEET](./docs/10_MAINTAINER_CHEATSHEET.md)
+
 ## 部署指南
 
 0. 环境要求：php 7.0以上，推荐8.0以上（测试稳定的最高版本为8.2.9）。必须开启curl和socket两项扩展。必须支持本地对本地php文件的http访问，并准备一个不需经过dns解析的本地文件地址（类似于`http://127.0.0.1/dts`）。php进程内存限制最少需要有256M。建议将php进程内存限制修改为512M或更高，将php最大执行时间修改为180秒或更高，将php.ini中`output_buffering`一项打开（一般设为`output_buffering = 4096`）。
