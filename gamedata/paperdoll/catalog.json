@@ -1,0 +1,1090 @@
+{
+  "unit_price": 20,
+  "canvas": {
+    "width": 110,
+    "height": 160
+  },
+  "base": "img/paperdoll/base.png",
+  "default": {
+    "hair": {
+      "id": "hair01",
+      "color": "#323849"
+    },
+    "top": {
+      "id": "top02",
+      "color": "#48516e"
+    },
+    "bottom": {
+      "id": "bottom01",
+      "color": "#54515e"
+    },
+    "accessories": []
+  },
+  "hair": [
+    {
+      "id": "hair01",
+      "label": "短碎发",
+      "src": "img/paperdoll/hair01.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "hair02",
+      "label": "偏分短发",
+      "src": "img/paperdoll/hair02.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "hair03",
+      "label": "齐刘海短发",
+      "src": "img/paperdoll/hair03.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "hair04",
+      "label": "侧扫短发",
+      "src": "img/paperdoll/hair04.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "hair05",
+      "label": "刺猬短发",
+      "src": "img/paperdoll/hair05.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "hair06",
+      "label": "后梳短发",
+      "src": "img/paperdoll/hair06.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "hair07",
+      "label": "中分短发",
+      "src": "img/paperdoll/hair07.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "hair08",
+      "label": "圆弧短发",
+      "src": "img/paperdoll/hair08.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "hair09",
+      "label": "齐肩直发",
+      "src": "img/paperdoll/hair09.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "hair10",
+      "label": "微卷中发",
+      "src": "img/paperdoll/hair10.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "hair11",
+      "label": "高马尾",
+      "src": "img/paperdoll/hair11.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "hair12",
+      "label": "短双马尾",
+      "src": "img/paperdoll/hair12.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "hair13",
+      "label": "双丸子头",
+      "src": "img/paperdoll/hair13.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "hair14",
+      "label": "单侧编发",
+      "src": "img/paperdoll/hair14.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "hair15",
+      "label": "披肩长发",
+      "src": "img/paperdoll/hair15.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "hair16",
+      "label": "侧分削发",
+      "src": "img/paperdoll/hair16.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    }
+  ],
+  "top": [
+    {
+      "id": "top01",
+      "label": "翻领衬衫",
+      "src": "img/paperdoll/top01.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "top02",
+      "label": "缎带制服",
+      "src": "img/paperdoll/top02.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "top03",
+      "label": "水手领上衣",
+      "src": "img/paperdoll/top03.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "top04",
+      "label": "修身西装",
+      "src": "img/paperdoll/top04.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "top05",
+      "label": "衬衫马甲",
+      "src": "img/paperdoll/top05.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "top06",
+      "label": "绗缝背心",
+      "src": "img/paperdoll/top06.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "top07",
+      "label": "拉链运动衫",
+      "src": "img/paperdoll/top07.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "top08",
+      "label": "高领连帽衫",
+      "src": "img/paperdoll/top08.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "top09",
+      "label": "开襟连帽衫",
+      "src": "img/paperdoll/top09.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "top10",
+      "label": "机车皮夹克",
+      "src": "img/paperdoll/top10.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "top11",
+      "label": "贴身运动衫",
+      "src": "img/paperdoll/top11.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "top12",
+      "label": "多袋工装衫",
+      "src": "img/paperdoll/top12.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "top13",
+      "label": "高领毛衣",
+      "src": "img/paperdoll/top13.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "top14",
+      "label": "飞行夹克",
+      "src": "img/paperdoll/top14.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "top15",
+      "label": "斜襟短外套",
+      "src": "img/paperdoll/top15.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "top16",
+      "label": "宽松卫衣",
+      "src": "img/paperdoll/top16.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    }
+  ],
+  "bottom": [
+    {
+      "id": "bottom01",
+      "label": "直筒长裤",
+      "src": "img/paperdoll/bottom01.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "bottom02",
+      "label": "多袋工装裤",
+      "src": "img/paperdoll/bottom02.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "bottom03",
+      "label": "修身牛仔裤",
+      "src": "img/paperdoll/bottom03.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "bottom04",
+      "label": "宽腿长裤",
+      "src": "img/paperdoll/bottom04.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "bottom05",
+      "label": "束脚运动裤",
+      "src": "img/paperdoll/bottom05.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "bottom06",
+      "label": "格纹卷边裤",
+      "src": "img/paperdoll/bottom06.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "bottom07",
+      "label": "休闲短裤",
+      "src": "img/paperdoll/bottom07.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "bottom08",
+      "label": "工装短裤",
+      "src": "img/paperdoll/bottom08.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "bottom09",
+      "label": "膝下七分裤",
+      "src": "img/paperdoll/bottom09.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "bottom10",
+      "label": "百褶短裙",
+      "src": "img/paperdoll/bottom10.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "bottom11",
+      "label": "直身半裙",
+      "src": "img/paperdoll/bottom11.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "bottom12",
+      "label": "伞摆半裙",
+      "src": "img/paperdoll/bottom12.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "bottom13",
+      "label": "荷叶层裙",
+      "src": "img/paperdoll/bottom13.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "bottom14",
+      "label": "贴袋长裙",
+      "src": "img/paperdoll/bottom14.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "bottom15",
+      "label": "星纹半裙",
+      "src": "img/paperdoll/bottom15.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    },
+    {
+      "id": "bottom16",
+      "label": "开衩罩裙裤",
+      "src": "img/paperdoll/bottom16.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ]
+    }
+  ],
+  "accessories": [
+    {
+      "id": "accessory01",
+      "label": "细框眼镜",
+      "src": "img/paperdoll/accessory01.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ],
+      "slot": "eyes",
+      "z": 50
+    },
+    {
+      "id": "accessory02",
+      "label": "窄框墨镜",
+      "src": "img/paperdoll/accessory02.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ],
+      "slot": "eyes",
+      "z": 50
+    },
+    {
+      "id": "accessory03",
+      "label": "战术目镜",
+      "src": "img/paperdoll/accessory03.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ],
+      "slot": "eyes",
+      "z": 50
+    },
+    {
+      "id": "accessory04",
+      "label": "棒球帽",
+      "src": "img/paperdoll/accessory04.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ],
+      "slot": "head",
+      "z": 50,
+      "hair_clip": 18
+    },
+    {
+      "id": "accessory05",
+      "label": "针织帽",
+      "src": "img/paperdoll/accessory05.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ],
+      "slot": "head",
+      "z": 50,
+      "hair_clip": 18
+    },
+    {
+      "id": "accessory06",
+      "label": "魔女帽",
+      "src": "img/paperdoll/accessory06.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ],
+      "slot": "head",
+      "z": 50,
+      "hair_clip": 18
+    },
+    {
+      "id": "accessory07",
+      "label": "蝴蝶结发饰",
+      "src": "img/paperdoll/accessory07.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ],
+      "slot": "head",
+      "z": 50
+    },
+    {
+      "id": "accessory08",
+      "label": "额前护目镜",
+      "src": "img/paperdoll/accessory08.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ],
+      "slot": "head",
+      "z": 50
+    },
+    {
+      "id": "accessory09",
+      "label": "宽围巾",
+      "src": "img/paperdoll/accessory09.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ],
+      "slot": "neck",
+      "z": 50
+    },
+    {
+      "id": "accessory10",
+      "label": "细项圈",
+      "src": "img/paperdoll/accessory10.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ],
+      "slot": "neck",
+      "z": 50
+    },
+    {
+      "id": "accessory11",
+      "label": "领结",
+      "src": "img/paperdoll/accessory11.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ],
+      "slot": "neck",
+      "z": 50
+    },
+    {
+      "id": "accessory12",
+      "label": "日用背包",
+      "src": "img/paperdoll/accessory12.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ],
+      "slot": "back",
+      "z": -5
+    },
+    {
+      "id": "accessory13",
+      "label": "工具背包",
+      "src": "img/paperdoll/accessory13.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ],
+      "slot": "back",
+      "z": -5
+    },
+    {
+      "id": "accessory14",
+      "label": "腰侧挎包",
+      "src": "img/paperdoll/accessory14.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ],
+      "slot": "waist",
+      "z": 50
+    },
+    {
+      "id": "accessory15",
+      "label": "符纸腰带",
+      "src": "img/paperdoll/accessory15.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ],
+      "slot": "waist",
+      "z": 50
+    },
+    {
+      "id": "accessory16",
+      "label": "单侧护膝",
+      "src": "img/paperdoll/accessory16.png",
+      "color": "#323849",
+      "colors": [
+        "#323849",
+        "#d8d9d5",
+        "#92705b",
+        "#7f3d48",
+        "#6d8197",
+        "#727b54",
+        "#9a85ad",
+        "#b99660"
+      ],
+      "slot": "legs",
+      "z": 50
+    }
+  ]
+}

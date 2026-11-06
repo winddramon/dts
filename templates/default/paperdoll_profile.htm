@@ -1,0 +1,15 @@
+<div class="paperdoll-stage paperdoll-classic">
+	<canvas width="110" height="160" data-pd-state="$pd_state_json" data-pd-fill="1" data-pd-hp="$pd_hp" data-pd-sp="$pd_sp" role="img" aria-label="纸娃娃：左半体力，右半生命"></canvas>
+	<!--{if defined('MOD_WOUND')}-->
+	<!--{eval eval(import_module('wound'));}-->
+	<!--{loop array('h'=>'头部','b'=>'躯干','a'=>'手臂','f'=>'腿部') $pd_wound $pd_wound_name}-->
+		<!--{if strpos($inf,$pd_wound)!==false}-->
+			<!--{if $mode == 'command'}-->
+			<button type="button" class="paperdoll-wound paperdoll-wound-$pd_wound" title="消耗{$inf_sp}点体力，包扎{$pd_wound_name}伤口" aria-label="包扎{$pd_wound_name}伤口" onclick="$('mode').value='special';$('command').value='inf{$pd_wound}';postCmd('gamecmd','command.php',this);return false;"><img src="img/hurt.gif" alt=""></button>
+			<!--{else}-->
+			<span class="paperdoll-wound paperdoll-wound-$pd_wound"><img src="img/hurt.gif" alt="{$pd_wound_name}受伤"></span>
+			<!--{/if}-->
+		<!--{/if}-->
+	<!--{/loop}-->
+	<!--{/if}-->
+</div>

@@ -1,0 +1,21 @@
+<!--{if isset($paperdoll_boot) && $paperdoll_boot}-->
+<script type="application/json" id="paperdoll-bootstrap">{$paperdoll_boot}</script>
+<form id="paperdoll-editor" method="post" action="user.php?mode=paperdoll">
+	<h3>自定义纸娃娃</h3>
+	<p>首次修改形象免费；之后每个本次改动的部件消耗 20 切糕，换色计作一次改动。同一位置更换或摘下饰品计一个部件。保存后立即生效。</p>
+	<div class="pd-editor-body">
+		<div class="pd-preview">
+			<div><canvas width="150" height="210" data-pd-preview="normal" role="img" aria-label="纸娃娃彩色预览"></canvas><span>彩色形象预览</span></div>
+			<div><canvas width="110" height="160" data-pd-preview="classic" role="img" aria-label="游戏内纸娃娃生命体力满值预览"></canvas><span>游戏内 · 左体力／右生命</span></div>
+		</div>
+		<div class="pd-fields"></div>
+	</div>
+	<div class="pd-footer">
+		<label class="pd-preference"><input type="checkbox" data-pd-classic> 游戏界面使用纸娃娃（两套界面均适用；取消勾选显示人形线框，切换不收费）</label>
+		<p>剩余切糕：<span data-pd-balance></span>　<span class="pd-cost" aria-live="polite"></span></p>
+		<p class="pd-insufficient" hidden>切糕不足，请减少本次改动。</p>
+		<button type="submit" data-pd-save disabled>载入形象…</button>
+		<p class="pd-message" role="status" aria-live="polite"></p>
+	</div>
+</form>
+<!--{/if}-->
