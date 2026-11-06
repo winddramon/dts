@@ -113,10 +113,10 @@ function global_shutdown_function(){
 		//清除玩家锁
 		if(function_exists('\player\release_player_lock_from_pool'))
 			\player\release_player_lock_from_pool();
-		//清除用户锁
-		if(function_exists('release_user_lock_from_pool'))
-			release_user_lock_from_pool();
 	}
+	//用户锁按所有权释放；警告或异常退出也不能遗留本请求的锁。
+	if(function_exists('release_user_lock_from_pool'))
+		release_user_lock_from_pool();
 }
 
 //循环判断锁是否存在，如果存在则挂起10毫秒之后继续判定，直到时间耗尽，起到阻塞作用

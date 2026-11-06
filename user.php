@@ -6,6 +6,31 @@ require './include/common.inc.php';
 
 eval(import_module('cardbase'));
 
+require_once GAME_ROOT.'./include/paperdoll.func.php';
+
+if(isset($mode) && $mode === 'paperdoll') {
+	header('Content-Type: application/json; charset=utf-8');
+	header('Cache-Control: no-store');
+	if(ob_get_length()) ob_clean();
+	try {
+		if(empty($cuser) || empty($cpass) || empty($cudata) || (int)$cudata['groupid'] <= 0 || !pass_compare($cuser, $cpass, $cudata['password'])) throw new InvalidArgumentException('登录状态已失效，请重新登录。');
+		if(($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') throw new InvalidArgumentException('请通过形象编辑器保存。');
+		// 直接读取 JSON，不经过旧表单过滤对引号的替换。
+		$paperdoll_body = file_get_contents('php://input', false, null, 0, 8193);
+		$paperdoll_input = strlen($paperdoll_body) <= 8192 ? json_decode($paperdoll_body, true) : null;
+		if(!is_array($paperdoll_input) || !isset($paperdoll_input['csrf']) || !is_string($paperdoll_input['csrf']) || !hash_equals(hash_hmac('sha256', 'paperdoll:'.$cuser, $cpass), $paperdoll_input['csrf'])) throw new InvalidArgumentException('页面已失效，请刷新后重试。');
+		echo paperdoll_json(paperdoll_request($cuser, $cpass, $paperdoll_input));
+	} catch(InvalidArgumentException $e) {
+		http_response_code(409);
+		echo paperdoll_json(array('error' => $e->getMessage()));
+	} catch(Throwable $e) {
+		http_response_code(503);
+		error_log('Paperdoll: '.$e->getMessage());
+		echo paperdoll_json(array('error' => '形象暂时无法保存，请稍后重试。'));
+	} finally { release_user_lock_from_pool(); }
+	exit;
+}
+
 $udata = udata_check();
 
 if(!isset($mode)){
@@ -79,8 +104,7 @@ if($mode == 'edit') {
 		$updarr = array_merge($updarr, $passarr);
 	
 	if(!empty($updarr)) {
-		update_udata_by_username($updarr, $cuser);
-		$gamedata['innerHTML']['info'] .= $_INFO['data_success'];
+		$gamedata['innerHTML']['info'] .= update_udata_by_username($updarr, $cuser) !== false ? $_INFO['data_success'] : $_INFO['data_failure'];
 	}else{
 		$gamedata['innerHTML']['info'] .= $_INFO['data_failure'];
 	}
@@ -124,8 +148,18 @@ if($mode == 'edit') {
 		$u_settings = Array();
 	}
 	extract($u_settings);
+
+	header('Cache-Control: no-store');
+	try {
+		$paperdoll_account = paperdoll_current_user($cuser, $cpass);
+		if(!empty($userdb_remote_storage) && empty($userdb_forced_local) && !paperdoll_sync_local($cuser, $paperdoll_account['u_settings'])) throw new RuntimeException('游戏形象镜像尚未同步。');
+		$paperdoll_boot = paperdoll_json(paperdoll_account_state($paperdoll_account) + array('catalog' => paperdoll_catalog(), 'csrf' => hash_hmac('sha256', 'paperdoll:'.$cuser, $cpass), 'endpoint' => 'user.php?mode=paperdoll'));
+	} catch(Throwable $e) {
+		error_log('Paperdoll bootstrap: '.$e->getMessage());
+		$paperdoll_boot = paperdoll_json(array('error' => '形象编辑器暂时无法载入，请稍后重试。'));
+	}
 	
 	include template('user');
 }
 
-?> 
+?>

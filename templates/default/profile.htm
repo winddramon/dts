@@ -1,3 +1,4 @@
+{template paperdoll_state}
 <div style="position:relative;">
 	<div id="profile_container" style="width:720px;margin-bottom: 10px;position:relative;">
 		<table border="0" id="profile" width="720" cellspacing="0" cellpadding="0" valign="middle" >
@@ -178,7 +179,7 @@
 									<table border="0" width=215px height=160px cellspacing="0" cellpadding="0">
 										
 										<tr>
-											<td height=160px width=160px background="img/state1.gif" style="position:relative;background-repeat:no-repeat;background-position:right top;">
+											<td height=160px width=160px <!--{if !$pd_enabled}-->background="img/state1.gif"<!--{/if}--> style="position:relative;background-repeat:no-repeat;background-position:right top;">
 												<div style="border:0; margin:0; cellspacing:0; cellpadding:0; position:absolute;z-index:3;top:0;left:0;">
 													<!--{if defined('MOD_WOUND')}-->
 													{template MOD_WOUND_WOUND_PICTURE}
@@ -193,6 +194,9 @@
 													<img src="img/fine.gif" style="position:absolute;top:120;left:12;width:81;height:38">
 													<!--{/if}-->
 												</div>
+												<!--{if $pd_enabled}-->
+												{template paperdoll_profile}
+												<!--{else}-->
 												<div style="border:0; margin:0; cellspacing:0; cellpadding:0; position:absolute;top:0px;left:105px;z-index:2;">
 													$newspimg
 												</div>
@@ -201,8 +205,10 @@
 													$splt
 												</div>
 												<!--{/if}-->
+												<!--{/if}-->
 											</td>
-											<td height=160px width=55px background="img/state2.gif" style="position:relative;background-repeat:no-repeat;background-position:left top;">
+											<td height=160px width=55px <!--{if !$pd_enabled}-->background="img/state2.gif"<!--{/if}--> style="position:relative;background-repeat:no-repeat;background-position:left top;">
+												<!--{if !$pd_enabled}-->
 												<div style="border:0; margin:0; cellspacing:0; cellpadding:0; position:absolute;top:0px;right:55px;z-index:2;">
 													$newhpimg
 												</div>
@@ -210,6 +216,7 @@
 												<div style="border:0; margin:0; cellspacing:0; cellpadding:0; position:absolute;top:0px;right:55px;z-index:1;">
 													$hplt
 												</div>
+												<!--{/if}-->
 												<!--{/if}-->
 											</td>
 										</tr>

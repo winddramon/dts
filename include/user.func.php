@@ -8,6 +8,8 @@ if(!defined('IN_GAME')) {
 //在create_user_lock及fetch_udata里都用到
 function user_lock_unnecessity()
 {
+	//结算可能由通常只读的 end/winner 等页面触发，此时仍必须锁住待写回的账户。
+	if(!empty($GLOBALS['user_lock_required'])) return false;
 	if(!defined('CURSCRIPT')) return true;
 	elseif(in_array(CURSCRIPT, array('roomupdate','roomcmd','chat','valid','end','winner','rank','alive','help','news','aranking_receive'))) return true;
 	elseif (!empty($GLOBALS['page']) && in_array($GLOBALS['page'], array('command_roomcmd','command_valid','command_end','command_winner','command_rank','command_alive','command_help','command_news','command_aranking'))) return true;
@@ -30,23 +32,42 @@ function create_user_lock($un, $key='')
 	elseif(!$un || user_lock_unnecessity()) return 3;
 	$dir = GAME_ROOT.'./gamedata/tmp/userlock/';
 	$file = $un.'.nlk';
-	$lstate = check_lock($dir, $file, 3000, $key);//最多允许3秒等待，之后穿透
-	$res = 2;
-	if(!$lstate) {
-		if(create_lock($dir, $file, $key)) $res = 0;
+	$lockkey = $key ? (string)$key : 'local-'.bin2hex(random_bytes(16));
+	//同一远端请求的多次 RPC 继续持有原锁。
+	if($key && is_file($dir.$file) && trim(file_get_contents($dir.$file)) === $lockkey) {
+		touch($dir.$file);
+		$udata_lock_pool[$un] = 1;
+		return 0;
 	}
-	//writeover('b.txt', $key.' '.$res."\r\n", 'ab+');
-	$udata_lock_pool[$un] = 1;
-	return $res;
+	//超时只表示本次获取失败，不能继续读出旧余额后覆盖其他请求的扣费。
+	if(check_lock($dir, $file, 3000, $lockkey)) return 2;
+	dir_init($dir);
+	//x 模式原子创建；竞争失败的预期警告不应污染 shutdown 的 error_get_last。
+	set_error_handler(function() { return true; });
+	$handle = fopen($dir.$file, 'x');
+	restore_error_handler();
+	if(!$handle) return 2;
+	$written = fwrite($handle, $lockkey);
+	fclose($handle);
+	if($written !== strlen($lockkey)) {
+		unlink($dir.$file);
+		return 2;
+	}
+	//本地保存所有权；远端仍由调用方携带显式 key 释放，接收端退出时不提前释放。
+	$udata_lock_pool[$un] = $key ? 1 : $lockkey;
+	return 0;
 }
 
 //释放用户锁文件
 function release_user_lock($un, $key='')
 {
 	global $udata_lock_pool;
+	if(!isset($udata_lock_pool[$un])) return;
 	$dir = GAME_ROOT.'./gamedata/tmp/userlock/';
 	$file = $un.'.nlk';
-	release_lock($dir, $file, $key);
+	if(!$key && is_string($udata_lock_pool[$un])) $key = $udata_lock_pool[$un];
+	//不能因锁已超过若干秒，就释放另一个仍在结算的请求的锁。
+	if($key && is_file($dir.$file) && trim(file_get_contents($dir.$file)) === (string)$key) unlink($dir.$file);
 	unset($udata_lock_pool[$un]);
 }
 
@@ -104,12 +125,14 @@ function curl_udata_cmd($command, $para1='', $para2='', $para3='', $para4='', $p
 	);
 	for($t=0;$t<$userdb_remote_reconnect_times;$t++){
 		$ret_raw = curl_post($url, $context);
-		$ret = gdecode($ret_raw,1);
+		// 空网络响应不能当成 gdecode('') 返回的成功空数组；付费请求可安全重试。
+		$ret = $command === 'paperdoll_save' && (!$ret_raw || strpos($ret_raw, 'Error') === 0) ? NULL : gdecode($ret_raw,1);
 		if(NULL!==$ret || strpos($ret_raw, 'Error')===0) break;
 		else usleep($userdb_remote_reconnect_duration * 1000);//挂起0.2秒再试
 	}
 	//writeover('a.txt', debug_backtrace()[2]['file'].' '.debug_backtrace()[3]['file'].' '.$userdb_remote_key."\r\n", 'ab+');
 	if(NULL===$ret || ('fetch_udata' == $command && !is_array($ret))) {
+		if($command === 'paperdoll_save') throw new RuntimeException(strpos($ret_raw, 'Error') === 0 ? '远端账户服务暂时无法保存形象。' : '远端形象服务暂时无法连接，请稍后重试。');
 		$error_message = '连接远程数据库失败';
 		if(strpos($ret_raw, 'Error')===0) $error_message .= ' '.$ret_raw;
 		if(!in_array(CURSCRIPT, array('chat'))) gexit($error_message,__file__,__line__);
@@ -174,9 +197,12 @@ function fetch_udata($fields='', $where='', $sort='', $keytype=0, $nolock=0){
 	if(!$nolock && strpos($fields, 'COUNT(')===false){
 		$unlist = get_where_username($where);
 		if(!empty($unlist)){
-			if(sizeof($unlist) <= 500) {
-				foreach($unlist as $un) {
-					create_user_lock($un, $userdb_forced_key);
+			foreach($unlist as $un) {
+				if(create_user_lock($un, $userdb_forced_key) == 2) {
+					release_user_lock_from_pool($userdb_forced_key);
+					if(defined('CURSCRIPT') && CURSCRIPT == 'userdb_receive') exit('Error: Account data is busy');
+					gexit('账户数据正在处理中，请稍后重试。', __FILE__, __LINE__);
+					return array();
 				}
 			}
 		}else{
@@ -186,7 +212,12 @@ function fetch_udata($fields='', $where='', $sort='', $keytype=0, $nolock=0){
 			if($db->num_rows($result)) {
 				while($r = $db->fetch_array($result)) {
 					$un = $r['username'];
-					create_user_lock($un, $userdb_forced_key);
+					if(create_user_lock($un, $userdb_forced_key) == 2) {
+						release_user_lock_from_pool($userdb_forced_key);
+						if(defined('CURSCRIPT') && CURSCRIPT == 'userdb_receive') exit('Error: Account data is busy');
+						gexit('账户数据正在处理中，请稍后重试。', __FILE__, __LINE__);
+						return array();
+					}
 				}
 			}
 		}
@@ -295,9 +326,13 @@ function update_udata($udata, $where)
 	//远程储存时
 	if($userdb_remote_storage && empty($userdb_forced_local)) {
 		$ret = curl_udata_cmd('update_udata', $udata, $where);
+		if($ret === false) return false;
 		
 		//检查本地是否有数据，有则更新，无则不管
-		$db->array_update("{$gtablepre}users", $udata, $where);
+		if(array_key_exists('u_settings', $udata)) {
+			require_once GAME_ROOT.'./include/paperdoll.func.php';
+			paperdoll_preserve_settings_update($udata, $where);
+		} else $db->array_update("{$gtablepre}users", $udata, $where);
 		//本来想没有数据则插入的，但其实这里插入的话会导致本地数据严重缺失。插入在fetch的时候做
 //		$unlist = get_where_username($where);
 //		if(!empty($unlist)) {
@@ -312,6 +347,10 @@ function update_udata($udata, $where)
 	}	
 	
 	//非远程储存时
+	if(array_key_exists('u_settings', $udata)) {
+		require_once GAME_ROOT.'./include/paperdoll.func.php';
+		return paperdoll_preserve_settings_update($udata, $where);
+	}
 	return $db->array_update("{$gtablepre}users", $udata, $where);
 }
 
@@ -319,6 +358,15 @@ function update_udata($udata, $where)
 function update_udata_multilist($updatelist)
 {
 	global $db, $gtablepre, $userdb_remote_storage, $userdb_forced_local;
+	// 含设置快照的记录逐条合并受保护的外观，其他记录仍走原批量更新。
+	$remaining = array(); $has_settings = false; $settings_ok = true;
+	foreach($updatelist as $row) {
+		if(array_key_exists('u_settings', $row)) {
+			$has_settings = true;
+			if(update_udata_by_username($row) === false) $settings_ok = false;
+		} else $remaining[] = $row;
+	}
+	if($has_settings) return (!$remaining || update_udata_multilist($remaining) !== false) && $settings_ok;
 	
 	//远程储存时
 	if($userdb_remote_storage && empty($userdb_forced_local)) {

@@ -1,0 +1,39 @@
+.paperdoll-stage { position: relative; display: block; flex: none; margin: 0; padding: 0; }
+.paperdoll-stage canvas { display: block; image-rendering: pixelated; }
+.paperdoll-classic { position: absolute; left: 105px; top: 0; width: 110px; height: 160px; }
+.state_panel .paperdoll-classic { top: 5px; }
+.paperdoll-normal { width: 150px; height: 210px; }
+.paperdoll-wound { position: absolute; z-index: 11; width: 24px; height: 24px; transform: translate(-50%,-50%); }
+.paperdoll-normal .paperdoll-wound { width: 28px; height: 28px; }
+.paperdoll-wound img { display: block; width: 100%; height: 100%; border: 0; }
+button.paperdoll-wound { padding: 0; border: 0; background: transparent; cursor: pointer; }
+.paperdoll-wound-h { left: 50%; top: 16%; }
+.paperdoll-wound-b { left: 50%; top: 47%; }
+.paperdoll-wound-a { left: 27%; top: 54%; }
+.paperdoll-wound-f { left: 56%; top: 85%; }
+#paperdoll-editor { width: min(760px,100%); box-sizing: border-box; margin: 28px auto 18px; padding: 16px; border: 1px solid #526058; background: #101813; color: #d9e1db; text-align: left; }
+#paperdoll-editor h3 { margin: 0 0 8px; color: #e4d49d; font-size: 16px; }
+#paperdoll-editor p { margin: 6px 0 12px; }
+#paperdoll-editor .pd-editor-body { display: flex; gap: 18px; align-items: flex-start; }
+#paperdoll-editor .pd-preview { flex: 0 0 150px; text-align: center; }
+#paperdoll-editor .pd-preview canvas { display: block; margin: 0 auto 8px; image-rendering: pixelated; background: #080e0b; }
+#paperdoll-editor .pd-preview span { display: block; margin: 4px 0 10px; color: #adbab0; font-size: 12px; }
+#paperdoll-editor .pd-fields { flex: 1; min-width: 0; }
+#paperdoll-editor .pd-field { display: grid; grid-template-columns: 84px minmax(120px,1fr) 34px; gap: 5px 8px; align-items: center; padding-bottom: 10px; }
+#paperdoll-editor .pd-field select { min-width: 0; width: 100%; box-sizing: border-box; }
+#paperdoll-editor input[type=color] { width: 32px; height: 26px; padding: 1px; cursor: pointer; }
+#paperdoll-editor .pd-colors { grid-column: 2 / 4; display: flex; flex-wrap: wrap; gap: 5px; }
+#paperdoll-editor .pd-colors button { width: 20px; height: 18px; border: 1px solid #7a827a; padding: 0; cursor: pointer; }
+#paperdoll-editor .pd-colors button:disabled { opacity: .35; cursor: default; }
+#paperdoll-editor .pd-preference { display: block; margin: 10px 0; }
+#paperdoll-editor .pd-footer { border-top: 1px solid #36483a; padding-top: 12px; }
+#paperdoll-editor .pd-cost { color: #f0d38c; }
+#paperdoll-editor .pd-message { min-height: 1.5em; color: #f0d38c; }
+#paperdoll-editor .pd-insufficient { color: #ff9a8c; }
+@media(max-width:580px) {
+    #paperdoll-editor { padding: 12px; }
+    #paperdoll-editor .pd-editor-body { flex-direction: column; }
+    #paperdoll-editor .pd-preview { width: 100%; display: flex; gap: 16px; justify-content: center; align-items: center; }
+    #paperdoll-editor .pd-fields { width: 100%; }
+    #paperdoll-editor .pd-field { grid-template-columns: 76px minmax(100px,1fr) 34px; }
+}

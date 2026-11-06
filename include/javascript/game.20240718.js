@@ -312,6 +312,7 @@ function showData(sdata) {
 				}
 			}
 		}
+		if (window.PHPDTSPaperdoll) PHPDTSPaperdoll.refresh();
 		//log div处理
 		if (1 == logshow) {
 			jQuery('#log').css({ 'display': log_display });

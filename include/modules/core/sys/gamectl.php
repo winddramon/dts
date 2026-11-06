@@ -150,12 +150,6 @@ namespace sys
 		//游戏未准备的情况下直接返回
 		if($gamestate < 5) return;
 
-		//先把游戏关闭并设置游戏时间
-		$gamestate = 0;
-		$gamevars['o_starttime'] = $starttime; $starttime = 0; //偶尔会发生穿透事故，先这么一修看看情况
-		save_gameinfo();
-		$starttime = $gamevars['o_starttime'];
-		
 		//提取所有入场玩家的pdata和udata数据备用
 		$gameover_plist = $gameover_alivelist = array();
 		$result = $db->query("SELECT name FROM {$tablepre}players WHERE type=0");
@@ -168,11 +162,26 @@ namespace sys
 			if($gameover_plist[$r['name']]['hp'] > 0) $gameover_alivelist[$r['name']] = &$gameover_plist[$r['name']];
 		}
 		if(!empty($gameover_plist)) {
-			$gameover_ulist = fetch_udata_multilist('*', array('username' => array_keys($gameover_plist)));
+			global $user_lock_required;
+			$previous_user_lock_required = $user_lock_required;
+			$user_lock_required = true;
+			try {
+				$gameover_ulist = fetch_udata_multilist('*', array('username' => array_keys($gameover_plist)));
+			} finally {
+				$user_lock_required = $previous_user_lock_required;
+			}
 			if(empty($gameover_ulist)) return; //如果对应的玩家都不存在（一般是远端数据库无响应），直接返回，避免污染数据库
 		}else{
 			$gameover_ulist = array();
 		}
+		//等待账户锁期间另一请求可能已经完成结算，不能沿用等待前的房间状态。
+		load_gameinfo();
+		if($gamestate < 5) return;
+		//取得结算所需的账户锁之后才关局，锁冲突时可稍后重试，避免留下未完成的结算。
+		$gamestate = 0;
+		$gamevars['o_starttime'] = $starttime; $starttime = 0;
+		save_gameinfo();
+		$starttime = $gamevars['o_starttime'];
 		$validnum = count($gameover_plist);
 		$alivenum = count($gameover_alivelist);
 		

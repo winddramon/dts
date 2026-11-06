@@ -20,6 +20,10 @@
 <link rel="stylesheet" type="text/css" href="gamedata/css/style_buttons.20240219.css">
 <link rel="stylesheet" type="text/css" href="gamedata/css/style_glowbuttons.20230807.css">
 <link rel="stylesheet" type="text/css" href="gamedata/css/style_bubblebox.20240223.css">
+<!--{if CURSCRIPT == 'game' || CURSCRIPT == 'user'}-->
+<link rel="stylesheet" type="text/css" href="include/paperdoll.css?v=20261106">
+<script type="text/javascript" src="include/paperdoll.js?v=20261106" defer></script>
+<!--{/if}-->
 <!--{if CURSCRIPT=='messages'}-->
 	<link rel="stylesheet" type="text/css" href="gamedata/css/style_messages.20230712.css">
 <!--{/if}-->
@@ -41,7 +45,7 @@ jQuery.noConflict();
 <!-- jScrollPanel Utility End -->
 
 <script type="text/javascript" src="include/javascript/common.20240405.js"></script>
-<script type="text/javascript" src="include/javascript/game.20240718.js"></script>
+<script type="text/javascript" src="include/javascript/game.20240718.js?v=20261106"></script>
 <!--{if $u_templateid == 2 || defined('IN_REPLAY')}-->
 	<script type="text/javascript" src="include/javascript/interface_2.20230924.js"></script>
 <!--{/if}-->

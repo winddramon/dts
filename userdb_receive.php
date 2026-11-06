@@ -67,6 +67,19 @@ if(empty($_POST['command'])) {
 		//更改1次不可超过500条涉及对象
 		if(sizeof($para1) > 500) exit('Error: Too many updates');
 		$ret = update_udata_multilist($para1, $para2, $para3, $para4, $para5);
+	}elseif('paperdoll_save' == $command){
+		require_once GAME_ROOT.'./include/paperdoll.func.php';
+		try {
+			if(!is_string($para1) || !is_string($para2) || !is_string($para3) || strlen($para3) > 16384) throw new InvalidArgumentException('形象请求无效。');
+			$paperdoll_input = gdecode($para3, true);
+			if(!is_array($paperdoll_input)) throw new InvalidArgumentException('形象请求无效。');
+			$ret = paperdoll_save(paperdoll_current_user($para1, $para2), $paperdoll_input);
+		} catch(InvalidArgumentException $e) {
+			$ret = array('error' => $e->getMessage());
+		} catch(Throwable $e) {
+			error_log('Paperdoll remote: '.$e->getMessage());
+			$ret = array('error' => '形象暂时无法保存，请稍后重试。');
+		} finally { userdb_receive_save_pool($userdb_forced_key); }
 	}elseif('release_user_lock_from_pool' == $command){
 		userdb_receive_load_pool($userdb_forced_key);
 		release_user_lock_from_pool($userdb_forced_key);
